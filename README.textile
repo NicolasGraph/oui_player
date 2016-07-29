@@ -206,7 +206,7 @@ bc.. <txp:oui_if_video video="https://Dailymotion.com/86295452">
 
 h2(#help-section05). Author
 
-"Nicolas Morand":https://github.com/NicolasGraph, from "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com plugins and "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion by "Nicolas Morand":https://github.com/NicolasGraph.
+"Nicolas Morand":https://github.com/NicolasGraph, from "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com and "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion by "Nicolas Morand":https://github.com/NicolasGraph.
 
 h2(#help-section06). License
 
