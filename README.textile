@@ -27,9 +27,9 @@ h2(#help-section03). Tags
 
 h3. oui_video
 
-Embeds a Dailymotion video in the page using an iframe.
+Embeds a video in the page using an iframe.
 
-bc. <txp:oui_dailymotion />
+bc. <txp:oui_video />
 
 h4. Video attributes
 
