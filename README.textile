@@ -33,71 +33,72 @@ bc. <txp:oui_video />
 
 h4. Video attributes
 
-* _video_ - Video url for the video you want to embed
-* _custom_ - Name of the custom field containing video IDs/urls associated with article
-* _start_ - Start position (in seconds) of the video as an integer
-* _autoplay_ - '1' to autoplay the video, '0' to turn off autoplay (default)
+* @video@ - Video url for the video you want to embed
+* @provider@ - The video provider to check against before to continue
+* @custom@ - Name of the custom field containing video IDs/urls associated with article
+* @start@ - Start position (in seconds) of the video as an integer
+* @autoplay@ - '1' to autoplay the video, '0' to turn off autoplay (default)
 
 h4. Basic attributes
 
-* _label_ - Label for the video
-* _labeltag_ - Independent wraptag for label
-* _wraptag_ - HTML tag to be used as the wraptag, without brackets
-* _class_ - CSS class attribute for wraptag
+* @label@ - Label for the video
+* @labeltag@ - Independent wraptag for label
+* @wraptag@ - HTML tag to be used as the wraptag, without brackets
+* @class@ - CSS class attribute for wraptag
 
-h3. Customising the Vimeo player
+h4. Customising the Vimeo player
 
 You can customise the appearance of the Vimeo player using this plugin to define things like colours and size.
 More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding
 
-* @autopause = "…"@ - Value: 0 or 1 - Default:
-* @autoplay = "…"@ - Value: 0 or 1 - Default:
-* @badge = "…"@ - Value: 0 or 1 - Default:
-* @byline = "…"@ - Value: 0 or 1 - Default:
-* @color = "…"@ - Value: hexadecimal color value (do not include the @#@) - Default:
-* @loop = "…"@ - Value: 0 or 1 - Default:
-* @player_id = "…"@ - Value: a unique id - Default:
-* @portrait = "…"@ - Value: 0 or 1 - Default:
-* @info = "…"@ - (@title@ Vimeo attribute) - Value: 0 or 1 - Default:
+* @autopause = "1"@ - Value: 0 or 1
+* @autoplay = "0"@ - Value: 0 or 1
+* @badge = "1"@ - Value: 0 or 1
+* @byline = "1"@ - Value: 0 or 1
+* @color = "00adef"@ - Value: hexadecimal color value (do not include the @#@)
+* @loop = "0"@ - Value: 0 or 1
+* @player_id = ""@ - Value: a unique id
+* @portrait = "1"@ - Value: 0 or 1
+* @info = "1"@ - (@title@ Vimeo attribute) - Value: 0 or 1
 
-h3. Customising the Youtube player
+h4. Customising the Youtube player
 
 You can customise the appearance of the Youtube player using this plugin to define things like colours and size.
 More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters
 
-* @autohide = "…"@ - Value: 0, 1, 2 - Default:
-* @autoplay = "…"@ - Value: 0 or 1 - Default:
-* @user_prefs = "…"@ (@cc_load_policy@) - Value: 0 or 1 - Default:
-* @color = "…"@ - Value: hexadecimal color value (do not include the @#@) - Default:
-* @controls = "…"@ - Value: 0, 1, 2 - Default:
-* @api = "…"@ (@enablejsapi@) - Value: 0 or 1 - Default:
-* @full_screen = "…"@ (@fs@) - Value: 0 or 1 - Default:
-* @annotations = "…"@ (@iv_load_policy@) - Value: 1 or 3 - Default:
-* @loop = "…"@ - Value: 0 or 1 - Default:
-* @logo = "…"@ (alterate @modestbranding@) - Value: 0 or 1 - Default:
-* @player_id = "…"@ (@playerapiid@) - Value: 0 or 1 - Default:
-* @related = "…"@ (@rel@) - Value: 0 or 1 - Default:
-* @start = "…"@ - Value: an integer - Default:
-* @info = "…"@ (@show_info@) - Value: 0 or 1 - Default:
-* @theme = "…"@ - Value: dark or light - Default:
+* @autohide = "2"@ - Value: 0, 1, 2
+* @autoplay = "0"@ - Value: 0 or 1
+* @user_prefs = "1"@ (@cc_load_policy@) - Value: 0 or 1
+* @color = "red"@ - Value: red or white
+* @controls = "1"@ - Value: 0, 1, 2
+* @api = "0"@ (@enablejsapi@) - Value: 0 or 1
+* @full_screen = "1"@ (@fs@) - Value: 0 or 1
+* @annotations = "1"@ (@iv_load_policy@) - Value: 1 or 3
+* @loop = "0"@ - Value: 0 or 1 - Default:
+* @logo = "1"@ (alterate @modestbranding@) - Value: 0 or 1
+* @player_id = ""@ (@playerapiid@) - Value: 0 or 1
+* @related = "1"@ (@rel@) - Value: 0 or 1
+* @start = ""@ - Value: an integer
+* @info = "1"@ (@show_info@) - Value: 0 or 1
+* @theme = "dark"@ - Value: dark or light
 
-h3. Customising the Dailymotion player
+h4. Customising the Dailymotion player
 
 You can customise the appearance of the Dailymotion player using this plugin to define things like colours and size.
 More informations on "this Youtube webpage":https://developer.dailymotion.com/player#player-parameters
 
-* @api = "…"@ - Value: postMessage, fragment or location - Default:
-* @autoplay = "…"@ - Value: 0 or 1 - Default:
-* @controls = "…"@ - Value: 0 or 1 - Default:
-* @related = "…"@ (@endscreen-enable@) - Value: 0 or 1 - Default:
-* @player_id = "…"@ (@id@) - Value: 0 or 1 - Default:
-* @origin = "…"@ - Value: - Default:
-* @quality = "…"@ - Value: 0 or 1 - Default: 240, 380, 480, 720, 1080, 1440 or 2160
-* @start = "…"@ - Value: an integer - Default:
-* @syndication = "…"@ - Value: a valid key - Default:
-* @color = "…"@ (@ui-highlight@) - Value: hexadecimal color value (do not include the @#@) - Default:
-* @logo = "…"@ (@ui-logo@) - Value: 0 or 1 - Default:
-* @info = "…"@ (@ui-start-screen-info@) - Value: 0 or 1 - Default:
+* @api = "false"@ - Value: postMessage, location or 1
+* @autoplay = "false"@ - Value: false or 1
+* @controls = "true"@ - Value: false or true
+* @related = "true"@ (@endscreen-enable@) - Value: false or true
+* @player_id = ""@ (@id@) - Value: A unique id
+* @origin = ""@ - Value: - Default:
+* @quality = "auto"@ - Value: 240, 380, 480, 720, 1080, 1440 or 2160
+* @start = ""@ - Value: an integer - Default:
+* @syndication = ""@ - Value: a valid key - Default:
+* @color = "ffcc33"@ (@ui-highlight@) - Value: hexadecimal color value (do not include the @#@) - Default:
+* @logo = "true"@ (@ui-logo@) - Value: false or true - Default:
+* @info = "true"@ (@ui-start-screen-info@) - Value: false or true - Default:
 
 h2. oui_if_video
 
