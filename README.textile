@@ -1,4 +1,4 @@
-h1. oui_dailymotion
+h1. oui_video
 
 *Work in process: this plugin is not officially released yet!*
 
