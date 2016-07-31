@@ -29,17 +29,20 @@ function oui_video($atts, $thing)
         'byline'       => '', // Vimeo (1).
         'controls'     => '', // Youtube (1), Dailymotion (true).
         'color'        => '', // Youtube (red), Dailymotion (ffcc33).
+        'end'        => '', // Youtube.
         'info'         => '', // Youtube (1), Dailymotion (true).
         'full_screen'  => '', // Youtube (1).
-        'lang'         => '', // Youtube.
+        'lang'         => '', // Youtube, Dailymotion.
         'logo'         => '', // Youtube (1), Dailymotion (true).
         'loop'         => '', // Vimeo (0), Youtube (0).
+        'mute'         => '', // Dailymotion (false).
         'no_cookie'    => '1', // Youtube.
         'origin'       => '', // Youtube, Dailymotion.
         'player_id'    => '', // Vimeo, Youtube, Dailymotion.
         'portrait'     => '', // Vimeo (1).
         'quality'      => '', // Dailymotion.
         'related'      => '', // Youtube (1), Dailymotion (true).
+        'sharing'      => '', // Dailymotion (true).
         'start'        => '', // Youtube, Dailymotion.
         'user_prefs'   => '', // Youtube (1).
         'syndication'  => '', // Dailymotion.
@@ -58,7 +61,7 @@ function oui_video($atts, $thing)
     }
 
     /*
-     * Check for video URL to extract ID from
+     * Check for video URL to extract provider and ID from
      */
     $match = _oui_video($video);
 
@@ -72,7 +75,7 @@ function oui_video($atts, $thing)
             // Wrong provider, do nothing.
             return;
         } else {
-            // Provider is ok, continue…
+            // Provider is ok, here are the related variable…
             switch ($match_provider) {
                 case 'vimeo':
                     $src = '//player.vimeo.com/video/' . $video_id;
@@ -97,11 +100,14 @@ function oui_video($atts, $thing)
                         'color'          => array($color => 'red, white'),
                         'controls'       => array($controls => '0, 1, 2'),
                         'enablejsapi'    => array($api => '0, 1'),
+                        'end'            => $end,
                         'fs'             => array($full_screen => '0, 1'),
+                        'hl'             => $lang,
                         'iv_load_policy' => array($annotations => '1, 3'),
                         'lang'           => array($loop => '0, 1'),
                         'loop'           => array($loop => '0, 1'),
                         'modestbranding' => array($modest_branding => '0, 1'),
+                        'origin'         => $origin,
                         'playerapiid'    => array($player_id => '0, 1'),
                         'rel'            => array($related => '0, 1'),
                         'start'          => $start,
@@ -112,23 +118,31 @@ function oui_video($atts, $thing)
                 case 'dailymotion':
                     $src = '//www.dailymotion.com/embed/video/' . $video_id;
                     $qAtts = array(
-                        'api'                  => array($api => 'postMessage, fragment, location'),
+                        'api'                  => array($api => 'postMessage, location, 1'),
                         'autoplay'             => array($autoplay => 'false, true'),
                         'controls'             => array($controls => 'false, true'),
                         'endscreen-enable'     => array($related => 'false, true'),
                         'id'                   => $player_id,
+                        'mute'                 => array($mute => 'false, true'),
                         'origin'               => $origin,
                         'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
+                        'sharing-enable'       => array($mute => 'false, true'),
                         'start'                => $start,
+                        'subtitles-default'    => $lang,
                         'syndication'          => $syndication,
                         'ui-highlight'         => $color,
                         'ui-logo'              => array($logo => 'false, true'),
+                        'ui-theme'             => array($theme => 'dark, light')
                         'ui-start-screen-info' => array($info => 'false, true'),
                     );
                     break;
             }
 
+            /*
+             * Check variable values and store player parameters
+             */
             $qString = array();
+
             foreach ($qAtts as $att => $value) {
                 if ($value) {
                     if (!is_array($value)) {
@@ -140,7 +154,7 @@ function oui_video($atts, $thing)
                                     $qString[] = $att . '=' . $val;
                                 } else {
                                     trigger_error(
-                                        "unknown attribute value; oui_dailymotion " . $att .
+                                        "unknown attribute value; the " . $att .
                                         " attribute accepts the following values: " . $valid
                                     );
                                     return;
@@ -149,18 +163,18 @@ function oui_video($atts, $thing)
                         }
                     }
                 }
-            };
+            }
 
             /*
-             * Check if we need to append a query string to the video src.
+             * Check if we need to append some parameters.
              */
             if (!empty($qString)) {
                 $src .= '?' . implode('&amp;', $qString);
             }
 
             /*
-             * If the width and/or height has not been set we want to calculate new
-             * ones using the aspect ratio.
+             * If the width and/or height has not been set
+             * we want to calculate new ones using the aspect ratio.
              */
             if (!$width || !$height) {
                 $toolbarHeight = 25;
