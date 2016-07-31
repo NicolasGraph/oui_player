@@ -33,10 +33,10 @@ bc. <txp:oui_video />
 
 h4. Presentational attributes
 
-* @label=""@ - Label for the video
-* @labeltag=""@ - Independent wraptag for label
-* @wraptag=""@ - HTML tag to be used as the wraptag, without brackets
-* @class=""@ - CSS class attribute for wraptag
+* @label=""@ - Label for the video.
+* @labeltag=""@ - HTML wraptag for the label, without brackets.
+* @wraptag=""@ - HTML tag to be used as the content wraptag, without brackets.
+* @class=""@ - CSS class for HTML content wraptag.
 
 h4. Main tag attributes
 
@@ -44,21 +44,26 @@ h4. Main tag attributes
 * @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article
 * @provider=""@ - The video provider to check against before to continue
 
-h4. Vimeo player parameters
+h4. Common player parameters
+
+* @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
+* @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
+
+h4. Vimeo additional player parameters
 
 More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding
 
-* @autopause="1"@ - @0@ or @1@
-* @autoplay="0"@ - @0@ or @1@
-* @badge="1"@ - @0@ or @1@
-* @byline="1"@ - @0@ or @1@
-* @color="00adef"@ - Hexadecimal color value (do not include the @#@)
-* @loop="0"@ - @0@ or @1@
-* @player_id=""@ - A unique id
-* @portrait="1"@ - @0@ or @1@
-* @info="1"@ - (@title@ Vimeo attribute) - @0@ or @1@
+* @autopause="1"@ - @0@ or @1@ - Enables or disables pausing this video when another video is played.
+* @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
+* @badge="1"@ - @0@ or @1@ - Enables or disables the badge on the video.
+* @byline="1"@ - @0@ or @1@ - Show the user’s byline on the video.
+* @color="00adef"@ - Specify the color of the video controls. Make sure that you don’t include the #.
+* @loop="0"@ - @0@ or @1@ - Play the video again when it reaches the end.
+* @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
+* @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
+* @info="1"@ - (@title@ Vimeo attribute) - @0@ or @1@ - Show the title on the video.
 
-h4. Youtube player parameters
+h4. Youtube additional player parameters
 
 More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters
 
@@ -78,22 +83,26 @@ More informations on "this Youtube webpage":https://developers.google.com/youtub
 * @info="1"@ (@show_info@) - @0@ or @1@
 * @theme="dark"@ - @dark@ or @light@
 
-h4. Dailymotion player parameters
+h4. Dailymotion additional player parameters
 
 More informations on "this Youtube webpage":https://developer.dailymotion.com/player#player-parameters
 
-* @api="false"@ - @postMessage@, @location@ or @1@
-* @autoplay="false"@ - @true@ or @false@
-* @controls="true"@ - @true@ or @false@
-* @related="true"@ (@endscreen-enable@) - @false@ or @true@
-* @player_id=""@ (@id@) - A unique id
-* @origin=""@ -
-* @quality="auto"@ - @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@
-* @start=""@ - An integer
-* @syndication=""@ - A valid key
-* @color="ffcc33"@ (@ui-highlight@) - Hexadecimal color value (do not include the @#@)
-* @logo="true"@ (@ui-logo@) - @true@ or @false@
-* @info="true"@ (@ui-start-screen-info@) - @true@ or @false@
+* @api="false"@ - @postMessage@, @location@ or @1@ - Enables the Player API. In native mobile apps, use @api="location"@, otherwise we recommend using api=1.
+* @autoplay="false"@ - @true@ or @false@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
+* @controls="true"@ - @true@ or @false@ - Whether to display the player controls or not.
+* @lang=""@ - - Specifies the default selected subtitles language.
+* @mute="false"@ - @true@ or @false@ - Whether to mute the video or not.
+* @related="true"@ (@endscreen-enable@) - @false@ or @true@ - Whether to enable the end screen or not.
+* @player_id=""@ (@id@) - ID of the player unique to the page to be passed back with all API messages.
+* @origin=""@ - The domain of the page hosting the Dailymotion player. When using @api="postMessage"@, you might want to specify origin for extra security.
+* @quality="auto"@ - @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@ - Specifies the suggested playback quality for the video.
+* @sharing="true"@ - @true@ or @false@ - Whether to display the sharing button or not.
+* @start=""@ - Specifies the time (in seconds) from which the video should start playing.
+* @syndication=""@ - Passes your syndication key to the player.
+* @theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
+* @color="ffcc33"@ (@ui-highlight@) - Change the default highlight colour used in the controls (hex value without the leading #).
+* @logo="true"@ (@ui-logo@) - @true@ or @false@ - Whether to display the Dailymotion logo or not.
+* @info="true"@ (@ui-start-screen-info@) - @true@ or @false@ - Whether to show video information (title and owner) on the start screen.
 
 h2. oui_if_video
 
