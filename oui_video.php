@@ -29,7 +29,7 @@ function oui_video($atts, $thing)
         'byline'       => '', // Vimeo (1).
         'controls'     => '', // Youtube (1), Dailymotion (true).
         'color'        => '', // Youtube (red), Dailymotion (ffcc33).
-        'end'        => '', // Youtube.
+        'end'          => '', // Youtube.
         'info'         => '', // Youtube (1), Dailymotion (true).
         'full_screen'  => '', // Youtube (1).
         'lang'         => '', // Youtube, Dailymotion.
@@ -119,21 +119,21 @@ function oui_video($atts, $thing)
                     $src = '//www.dailymotion.com/embed/video/' . $video_id;
                     $qAtts = array(
                         'api'                  => array($api => 'postMessage, location, 1'),
-                        'autoplay'             => array($autoplay => 'false, true'),
-                        'controls'             => array($controls => 'false, true'),
-                        'endscreen-enable'     => array($related => 'false, true'),
+                        'autoplay'             => array(boolval($autoplay) => 'false, true'),
+                        'controls'             => array(boolval($controls) => 'false, true'),
+                        'endscreen-enable'     => array(boolval($related) => 'false, true'),
                         'id'                   => $player_id,
-                        'mute'                 => array($mute => 'false, true'),
+                        'mute'                 => array(boolval($mute) => 'false, true'),
                         'origin'               => $origin,
                         'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
-                        'sharing-enable'       => array($mute => 'false, true'),
+                        'sharing-enable'       => array(boolval($mute) => 'false, true'),
                         'start'                => $start,
                         'subtitles-default'    => $lang,
                         'syndication'          => $syndication,
                         'ui-highlight'         => $color,
-                        'ui-logo'              => array($logo => 'false, true'),
+                        'ui-logo'              => array(boolval($logo) => 'false, true'),
                         'ui-theme'             => array($theme => 'dark, light')
-                        'ui-start-screen-info' => array($info => 'false, true'),
+                        'ui-start-screen-info' => array(boolval($info) => 'false, true'),
                     );
                     break;
             }
@@ -149,16 +149,14 @@ function oui_video($atts, $thing)
                         $qString[] = $att . '=' . $value;
                     } else {
                         foreach ($value as $val => $valid) {
-                            if ($val) {
-                                if (in_list($val, $valid)) {
-                                    $qString[] = $att . '=' . $val;
-                                } else {
-                                    trigger_error(
-                                        "unknown attribute value; the " . $att .
-                                        " attribute accepts the following values: " . $valid
-                                    );
-                                    return;
-                                }
+                            if (in_list($val, $valid)) {
+                                $qString[] = $att . '=' . $val;
+                            } else {
+                                trigger_error(
+                                    "unknown attribute value; the " . $att .
+                                    " attribute accepts the following values: " . $valid
+                                );
+                                return;
                             }
                         }
                     }
