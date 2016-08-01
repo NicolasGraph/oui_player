@@ -143,21 +143,21 @@ function oui_video($atts, $thing)
              */
             $qString = array();
 
-            foreach ($qAtts as $att => $value) {
-                if ($value) {
-                    if (!is_array($value)) {
-                        $qString[] = $att . '=' . $value;
+            foreach ($qAtts as $att => $val) {
+                if ($val) {
+                    if (!is_array($val)) {
+                        $qString[] = $att . '=' . $val;
                     } else {
-                        foreach ($value as $val => $valid) {
-                            if (in_list($val, $valid)) {
-                                $qString[] = $att . '=' . $val;
-                            } else {
-                                trigger_error(
-                                    "unknown attribute value; the " . $att .
-                                    " attribute accepts the following values: " . $valid
-                                );
-                                return;
-                            }
+                        $value = key($val);
+                        $valid = $val[$value];
+                        if in_list($value, $valid) {
+                            $qString[] = $att . '=' . $value;
+                        } else {
+                            trigger_error(
+                                "unknown attribute value; the " . $att .
+                                " attribute accepts the following values: " . $valid
+                            );
+                            return;
                         }
                     }
                 }
