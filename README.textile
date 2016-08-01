@@ -87,22 +87,22 @@ h4. Dailymotion additional player parameters
 
 More informations on "this Youtube webpage":https://developer.dailymotion.com/player#player-parameters
 
-* @api="false"@ - @postMessage@, @location@ or @1@ - Enables the Player API. In native mobile apps, use @api="location"@, otherwise we recommend using api=1.
-* @autoplay="false"@ - @true@ or @false@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
-* @controls="true"@ - @true@ or @false@ - Whether to display the player controls or not.
+* @api="0"@ - @postMessage@, @location@ or @1@ - Enables the Player API. In native mobile apps, use @api="location"@, otherwise we recommend using @api=1@.
+* @autoplay="0"@ - @0@ or @1@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
+* @controls="1"@ - @0@ or @1@ - Whether to display the player controls or not.
 * @lang=""@ - - Specifies the default selected subtitles language.
-* @mute="false"@ - @true@ or @false@ - Whether to mute the video or not.
-* @related="true"@ (@endscreen-enable@) - @false@ or @true@ - Whether to enable the end screen or not.
+* @mute="0"@ - @0@ or @1@ - Whether to mute the video or not.
+* @related="1"@ (@endscreen-enable@) - @0@ or @1@ - Whether to enable the end screen or not.
 * @player_id=""@ (@id@) - ID of the player unique to the page to be passed back with all API messages.
 * @origin=""@ - The domain of the page hosting the Dailymotion player. When using @api="postMessage"@, you might want to specify origin for extra security.
 * @quality="auto"@ - @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@ - Specifies the suggested playback quality for the video.
-* @sharing="true"@ - @true@ or @false@ - Whether to display the sharing button or not.
+* @sharing="1"@ - @0@ or @1@ - Whether to display the sharing button or not.
 * @start=""@ - Specifies the time (in seconds) from which the video should start playing.
 * @syndication=""@ - Passes your syndication key to the player.
 * @theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
 * @color="ffcc33"@ (@ui-highlight@) - Change the default highlight colour used in the controls (hex value without the leading #).
-* @logo="true"@ (@ui-logo@) - @true@ or @false@ - Whether to display the Dailymotion logo or not.
-* @info="true"@ (@ui-start-screen-info@) - @true@ or @false@ - Whether to show video information (title and owner) on the start screen.
+* @logo="1"@ (@ui-logo@) - @0@ or @1@ - Whether to display the Dailymotion logo or not.
+* @info="1"@ (@ui-start-screen-info@) - @0@ or @1@ - Whether to show video information (title and owner) on the start screen.
 
 h2. oui_if_video
 
@@ -110,15 +110,15 @@ In addition to oui_video this plugin also comes with oui_if_video, a conditional
 
 bc. <txp:oui_if_video video="…">
 […]
-</txp:oui_if_dailymotion>
+</txp:oui_if_video>
 
 h4. Attributes
 
 Use one or the other of the following:
 
-* @custom="…"@ - Name of the custom field containing video IDs/urls associated with article
-* @video="…"@ - A URL to check if it is a valid video URL
-* @provider="…"@ - Value : vimeo, youtube or dailymotion
+* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article.
+* @video=""@ - A URL to check if it is a valid video URL.
+* @provider=""@ - vimeo, youtube or dailymotion.
 
 h2(#help-section04). Examples
 
@@ -133,9 +133,9 @@ bc. <txp:oui_video video="http://dai.ly/x4l8awd" width="500" ratio="16:9" />
 h3. Example 3: Using the conditional tag
 
 bc.. <txp:oui_if_video video="https://Dailymotion.com/86295452">
-	Yes
+    Yes
 <txp:else />
-	No
+    No
 </txp:oui_if_video>
 
 h2(#help-section05). Author
