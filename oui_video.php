@@ -19,7 +19,7 @@ function oui_video($atts, $thing)
         'custom_field' => 'Video',
         'width'        => '0',
         'height'       => '0',
-        'ratio'        => '',
+        'ratio'        => '4:3',
         'annotations'  => '', // Youtube (1)
         'api'          => '', // Youtube (0), Dailymotion (false).
         'autohide'     => '', // Youtube (2).
@@ -70,7 +70,7 @@ function oui_video($atts, $thing)
         return;
     } else {
         $match_provider = key($match);
-        $video_id = $match[$match_provider];
+        $video_id = reset($match);
         if ($provider && strtolower($provider) !== $match_provider) {
             // Wrong provider, do nothing.
             return;
@@ -104,7 +104,7 @@ function oui_video($atts, $thing)
                         'fs'             => array($full_screen => '0, 1'),
                         'hl'             => $lang,
                         'iv_load_policy' => array($annotations => '1, 3'),
-                        'lang'           => array($loop => '0, 1'),
+                        'lang'           => $lang,
                         'loop'           => array($loop => '0, 1'),
                         'modestbranding' => array($modest_branding => '0, 1'),
                         'origin'         => $origin,
@@ -119,21 +119,21 @@ function oui_video($atts, $thing)
                     $src = '//www.dailymotion.com/embed/video/' . $video_id;
                     $qAtts = array(
                         'api'                  => array($api => 'postMessage, location, 1'),
-                        'autoplay'             => array(boolval($autoplay) => 'false, true'),
-                        'controls'             => array(boolval($controls) => 'false, true'),
-                        'endscreen-enable'     => array(boolval($related) => 'false, true'),
+                        'autoplay'             => array($autoplay => 'false, true'),
+                        'controls'             => array($controls => 'false, true'),
+                        'endscreen-enable'     => array($related => 'false, true'),
                         'id'                   => $player_id,
-                        'mute'                 => array(boolval($mute) => 'false, true'),
+                        'mute'                 => array($mute => 'false, true'),
                         'origin'               => $origin,
                         'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
-                        'sharing-enable'       => array(boolval($mute) => 'false, true'),
+                        'sharing-enable'       => array($sharing => 'false, true'),
                         'start'                => $start,
                         'subtitles-default'    => $lang,
                         'syndication'          => $syndication,
                         'ui-highlight'         => $color,
-                        'ui-logo'              => array(boolval($logo) => 'false, true'),
-                        'ui-theme'             => array($theme => 'dark, light')
-                        'ui-start-screen-info' => array(boolval($info) => 'false, true'),
+                        'ui-logo'              => array($logo => 'false, true'),
+                        'ui-theme'             => array($theme => 'dark, light'),
+                        'ui-start-screen-info' => array($info => 'false, true')
                     );
                     break;
             }
@@ -142,22 +142,33 @@ function oui_video($atts, $thing)
              * Check variable values and store player parameters
              */
             $qString = array();
-
             foreach ($qAtts as $att => $val) {
-                if ($val) {
-                    if (!is_array($val)) {
+                if (!is_array($val)) {
+                    // tag attribute accepts any value
+                    if ($value !== '') {
+                        // tag attribute value is defined
                         $qString[] = $att . '=' . $val;
-                    } else {
-                        $value = key($val);
-                        $valid = $val[$value];
-                        if in_list($value, $valid) {
+                    }
+                } else {
+                    // tag attribute accepts defined values
+                    $value = key($val);
+                    $valid = reset($val);
+                    if ($value !== '') {
+                        // tag attribute value is defined
+                        if ($match_provider === 'dailymotion') {
+                            // Bloody Dailymotion…
+                            $value === 0 ? $value = 'false' : '';
+                            $value === 1 ? $value = 'true' : '';
+                        }
+                        if (in_list($value, $valid)) {
+                            // tag attribute value is valid
                             $qString[] = $att . '=' . $value;
                         } else {
+                            // tag attribute value is not valid
                             trigger_error(
                                 "unknown attribute value; the " . $att .
                                 " attribute accepts the following values: " . $valid
                             );
-                            return;
                         }
                     }
                 }
