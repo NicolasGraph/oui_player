@@ -40,14 +40,9 @@ h4. Presentational attributes
 
 h4. Main tag attributes
 
-* @video=""@ - Video url for the video you want to embed
-* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article
-* @provider=""@ - The video provider to check against before to continue
-
-h4. Common player parameters
-
-* @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
-* @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
+* @video=""@ - Video url or the video id (if used with the @provider@ attribute) for the video you want to embed.
+* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article.
+* @provider=""@ - The video provider to use if the @video@ attribute value is an id.
 
 h4. Vimeo additional player parameters
 

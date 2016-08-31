@@ -53,7 +53,13 @@ function oui_video($atts, $thing)
         'class'        => __FUNCTION__
     ), $atts));
 
-    $modest_branding = !$logo ? '1' : '';
+    $modest_branding = $logo === '0' ? '1' : '';
+
+    if (!$info) {
+        $portrait = '0';
+        $title = '0';
+        $byline = '0';
+    }
 
     $custom_field = strtolower($custom_field);
     if (!$video && isset($thisarticle[$custom_field])) {
@@ -63,156 +69,155 @@ function oui_video($atts, $thing)
     /*
      * Check for video URL to extract provider and ID from
      */
-    $match = _oui_video($video);
-
-    if (!$match) {
-        trigger_error("oui_video was not able to recognize your video");
-        return;
+    if ($provider) {
+        $match_provider = $provider;
+        $video_id = $video;
     } else {
-        $match_provider = key($match);
-        $video_id = reset($match);
-        if ($provider && strtolower($provider) !== $match_provider) {
-            // Wrong provider, do nothing.
+        $match = _oui_video($video);
+        if (!$match) {
+            trigger_error("oui_video was not able to recognize your video");
             return;
         } else {
-            // Provider is ok, here are the related variable…
-            switch ($match_provider) {
-                case 'vimeo':
-                    $src = '//player.vimeo.com/video/' . $video_id;
-                    $qAtts = array(
-                        'autopause' => array($autopause => '0, 1'),
-                        'autoplay'  => array($autoplay => '0, 1'),
-                        'badge'     => array($badge => '0, 1'),
-                        'byline'    => array($byline => '0, 1'),
-                        'color'     => $color,
-                        'loop'      => array($loop => '0, 1'),
-                        'player_id' => $player_id,
-                        'portrait'  => array($portrait => '0, 1'),
-                        'title'     => array($info => '0, 1')
-                    );
-                    break;
-                case 'youtube':
-                    $src = '//www.youtube' . ($no_cookie ? '-nocookie' : '') . '.com/embed/' . $video_id;
-                    $qAtts = array(
-                        'autohide'       => array($autohide => '0, 1, 2'),
-                        'autoplay'       => array($autoplay => '0, 1'),
-                        'cc_load_policy' => array($user_prefs => '0, 1'),
-                        'color'          => array($color => 'red, white'),
-                        'controls'       => array($controls => '0, 1, 2'),
-                        'enablejsapi'    => array($api => '0, 1'),
-                        'end'            => $end,
-                        'fs'             => array($full_screen => '0, 1'),
-                        'hl'             => $lang,
-                        'iv_load_policy' => array($annotations => '1, 3'),
-                        'lang'           => $lang,
-                        'loop'           => array($loop => '0, 1'),
-                        'modestbranding' => array($modest_branding => '0, 1'),
-                        'origin'         => $origin,
-                        'playerapiid'    => array($player_id => '0, 1'),
-                        'rel'            => array($related => '0, 1'),
-                        'start'          => $start,
-                        'showinfo'       => array($info => '0, 1'),
-                        'theme'          => array($theme => 'dark, light')
-                    );
-                    break;
-                case 'dailymotion':
-                    $src = '//www.dailymotion.com/embed/video/' . $video_id;
-                    $qAtts = array(
-                        'api'                  => array($api => 'postMessage, location, 1'),
-                        'autoplay'             => array($autoplay => 'false, true'),
-                        'controls'             => array($controls => 'false, true'),
-                        'endscreen-enable'     => array($related => 'false, true'),
-                        'id'                   => $player_id,
-                        'mute'                 => array($mute => 'false, true'),
-                        'origin'               => $origin,
-                        'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
-                        'sharing-enable'       => array($sharing => 'false, true'),
-                        'start'                => $start,
-                        'subtitles-default'    => $lang,
-                        'syndication'          => $syndication,
-                        'ui-highlight'         => $color,
-                        'ui-logo'              => array($logo => 'false, true'),
-                        'ui-theme'             => array($theme => 'dark, light'),
-                        'ui-start-screen-info' => array($info => 'false, true')
-                    );
-                    break;
-            }
-
-            /*
-             * Check variable values and store player parameters
-             */
-            $qString = array();
-            foreach ($qAtts as $att => $val) {
-                if (!is_array($val)) {
-                    // tag attribute accepts any value
-                    if ($value !== '') {
-                        // tag attribute value is defined
-                        $qString[] = $att . '=' . $val;
-                    }
-                } else {
-                    // tag attribute accepts defined values
-                    $value = key($val);
-                    $valid = reset($val);
-                    if ($value !== '') {
-                        // tag attribute value is defined
-                        if ($match_provider === 'dailymotion') {
-                            // Bloody Dailymotion…
-                            $value === 0 ? $value = 'false' : '';
-                            $value === 1 ? $value = 'true' : '';
-                        }
-                        if (in_list($value, $valid)) {
-                            // tag attribute value is valid
-                            $qString[] = $att . '=' . $value;
-                        } else {
-                            // tag attribute value is not valid
-                            trigger_error(
-                                "unknown attribute value; the " . $att .
-                                " attribute accepts the following values: " . $valid
-                            );
-                        }
-                    }
-                }
-            }
-
-            /*
-             * Check if we need to append some parameters.
-             */
-            if (!empty($qString)) {
-                $src .= '?' . implode('&amp;', $qString);
-            }
-
-            /*
-             * If the width and/or height has not been set
-             * we want to calculate new ones using the aspect ratio.
-             */
-            if (!$width || !$height) {
-                $toolbarHeight = 25;
-
-                // Work out the aspect ratio.
-                preg_match("/(\d+):(\d+)/", $ratio, $matches);
-                if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
-                    $aspect = $matches[1]/$matches[2];
-                } else {
-                    $aspect = 1.333;
-                }
-
-                // Calcuate the new width/height.
-                if ($width) {
-                    $height = $width/$aspect + $toolbarHeight;
-                } elseif ($height) {
-                    $width = ($height-$toolbarHeight)*$aspect;
-                } else {
-                    $width = 425;
-                    $height = 344;
-                }
-            }
-
-            $out = '<iframe width="'.$width.'" height="'.$height
-              .'" src="'.$src.'" frameborder="0" allowfullscreen></iframe>';
-
-            return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
+            $match_provider = key($match);
+            $video_id = $match[$match_provider];
         }
     }
+
+    // Provider is ok, here are the related variable…
+    switch ($match_provider) {
+        case 'vimeo':
+            $src = '//player.vimeo.com/video/' . $video_id;
+            $qAtts = array(
+                'autopause' => array($autopause => '0, 1'),
+                'autoplay'  => array($autoplay => '0, 1'),
+                'badge'     => array($badge => '0, 1'),
+                'byline'    => array($byline => '0, 1'),
+                'color'     => $color,
+                'loop'      => array($loop => '0, 1'),
+                'player_id' => $player_id,
+                'portrait'  => array($portrait => '0, 1'),
+                'title'     => array($info => '0, 1')
+            );
+            break;
+        case 'youtube':
+            $src = '//www.youtube' . ($no_cookie ? '-nocookie' : '') . '.com/embed/' . $video_id;
+            $qAtts = array(
+                'autohide'       => array($autohide => '0, 1, 2'),
+                'autoplay'       => array($autoplay => '0, 1'),
+                'cc_load_policy' => array($user_prefs => '0, 1'),
+                'color'          => array($color => 'red, white'),
+                'controls'       => array($controls => '0, 1, 2'),
+                'enablejsapi'    => array($api => '0, 1'),
+                'end'            => $end,
+                'fs'             => array($full_screen => '0, 1'),
+                'hl'             => $lang,
+                'iv_load_policy' => array($annotations => '1, 3'),
+                'loop'           => array($loop => '0, 1'),
+                'modestbranding' => array($modest_branding => '0, 1'),
+                'origin'         => $origin,
+                'playerapiid'    => array($player_id => '0, 1'),
+                'rel'            => array($related => '0, 1'),
+                'start'          => $start,
+                'showinfo'       => array($info => '0, 1'),
+                'theme'          => array($theme => 'dark, light')
+            );
+            break;
+        case 'dailymotion':
+            $src = '//www.dailymotion.com/embed/video/' . $video_id;
+            $qAtts = array(
+                'api'                  => array($api => 'postMessage, location, 1'),
+                'autoplay'             => array($autoplay => 'false, true'),
+                'controls'             => array($controls => 'false, true'),
+                'endscreen-enable'     => array($related => 'false, true'),
+                'id'                   => $player_id,
+                'mute'                 => array($mute => 'false, true'),
+                'origin'               => $origin,
+                'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
+                'sharing-enable'       => array($sharing => 'false, true'),
+                'start'                => $start,
+                'subtitles-default'    => $lang,
+                'syndication'          => $syndication,
+                'ui-highlight'         => $color,
+                'ui-logo'              => array($logo => 'false, true'),
+                'ui-theme'             => array($theme => 'dark, light'),
+                'ui-start-screen-info' => array($info => 'false, true')
+            );
+            break;
+    }
+
+    /*
+     * Check variable values and store player parameters
+     */
+    $qString = array();
+    foreach ($qAtts as $att => $val) {
+        if (!is_array($val)) {
+            // tag attribute accepts any value
+            if ($val !== '') {
+                // tag attribute value is defined
+                $qString[] = $att . '=' . $val;
+            }
+        } else {
+            // tag attribute accepts defined values
+            $value = key($val);
+            $valid = $val[$value];
+            if ($value !== '') {
+                // tag attribute value is defined
+                if ($match_provider === 'dailymotion') {
+                    // Bloody Dailymotion…
+                    $value === 0 ? $value = 'false' : '';
+                    $value === 1 ? $value = 'true' : '';
+                }
+                if (in_list($value, $valid)) {
+                    // tag attribute value is valid
+                    $qString[] = $att . '=' . $value;
+                } else {
+                    // tag attribute value is not valid
+                    trigger_error(
+                        "unknown attribute value; the " . $att .
+                        " attribute accepts the following values: " . $valid
+                    );
+                }
+            }
+        }
+    }
+
+    /*
+     * Check if we need to append some parameters.
+     */
+    if (!empty($qString)) {
+        $src .= '?' . implode('&amp;', $qString);
+    }
+
+    /*
+     * If the width and/or height has not been set
+     * we want to calculate new ones using the aspect ratio.
+     */
+    if (!$width || !$height) {
+        $toolbarHeight = 25;
+
+        // Work out the aspect ratio.
+        preg_match("/(\d+):(\d+)/", $ratio, $matches);
+        if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
+            $aspect = $matches[1]/$matches[2];
+        } else {
+            $aspect = 1.333;
+        }
+
+        // Calcuate the new width/height.
+        if ($width) {
+            $height = $width/$aspect + $toolbarHeight;
+        } elseif ($height) {
+            $width = ($height-$toolbarHeight)*$aspect;
+        } else {
+            $width = 425;
+            $height = 344;
+        }
+    }
+
+    $out = '<iframe width="'.$width.'" height="'.$height
+      .'" src="'.$src.'" frameborder="0" allowfullscreen></iframe>';
+
+    return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
 }
 
 
