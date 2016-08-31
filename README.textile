@@ -1,6 +1,4 @@
-h1. oui_video
-
-*Work in process: this plugin is not officially released yet!*
+h1. oui_video (beta)
 
 Easily embed videos in articles and customise the appearance of the player.
 
@@ -125,7 +123,11 @@ h3. Example 2: Set the size of the player
 
 bc. <txp:oui_video video="http://dai.ly/x4l8awd" width="500" ratio="16:9" />
 
-h3. Example 3: Using the conditional tag
+h3. Example 3: Use the video id
+
+bc. <txp:oui_video provider="dailymotion" video="x4l8awd" />
+
+h3. Example 4: Using the conditional tag
 
 bc.. <txp:oui_if_video video="https://Dailymotion.com/86295452">
     Yes
