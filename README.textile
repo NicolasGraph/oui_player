@@ -4,12 +4,12 @@ Easily embed videos in articles and customise the appearance of the player.
 
 h2. Table of contents
 
-# "Plugin requirements":#help-section01
-# "Installation":#help-section02
-# "Tags":#help-section03
-# "Examples":#help-section04
-# "Author":#help-section05
-# "License":#help-section06
+* "Plugin requirements":#help-section01
+* "Installation":#help-section02
+* "Tags":#help-section03
+* "Examples":#help-section04
+* "Author":#help-section05
+* "License":#help-section06
 
 h2(#help-section01). Plugin requirements
 
