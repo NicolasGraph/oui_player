@@ -16,7 +16,7 @@ function oui_video($atts, $thing)
     extract(lAtts(array(
         'video'        => '',
         'provider'     => '',
-        'custom_field' => 'Video',
+        'custom'       => 'Video',
         'width'        => '0',
         'height'       => '0',
         'ratio'        => '4:3',
@@ -61,9 +61,9 @@ function oui_video($atts, $thing)
         $byline = '0';
     }
 
-    $custom_field = strtolower($custom_field);
-    if (!$video && isset($thisarticle[$custom_field])) {
-        $video = $thisarticle[$custom_field];
+    $custom = strtolower($custom);
+    if (!$video && isset($thisarticle[$custom])) {
+        $video = $thisarticle[$custom];
     }
 
     /*
@@ -231,7 +231,7 @@ function oui_if_video($atts, $thing)
         'provider' => ''
     ), $atts));
 
-    $result = $video ? _oui_video($video) : _oui_video($thisarticle[strtolower($custom_field)]);
+    $result = $video ? _oui_video($video) : _oui_video($thisarticle[strtolower($custom)]);
 
     if ($provider) {
         if (strtolower($provider) === key($result)) {
