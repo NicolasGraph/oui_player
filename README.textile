@@ -60,21 +60,21 @@ h4. Youtube additional player parameters
 
 More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters
 
-* @autohide="2"@ - @0@, @1@ or @2@
-* @autoplay="0"@ - @0@ or @1@
-* @user_prefs="1"@ (@cc_load_policy@) - @0@ or @1@
-* @color="red"@ - @red@ or @white@
-* @controls="1"@ - @0@, @1@ or @2@
-* @api="0"@ (@enablejsapi@) - @0@ or @1@
-* @full_screen="1"@ (@fs@) - @0@ or @1@
-* @annotations="1"@ (@iv_load_policy@) - @1@ or @3@
-* @loop="0"@ - @0@ or @1@
-* @logo="1"@ (alterate @modestbranding@) - @0@ or @1@
-* @player_id=""@ (@playerapiid@) - @0@ or @1@
-* @related="1"@ (@rel@) - @0@ or @1@
-* @start=""@ - Value: an integer
-* @info="1"@ (@show_info@) - @0@ or @1@
-* @theme="dark"@ - @dark@ or @light@
+* @autohide="2"@ - @0@, @1@ or @2@ - Indicates whether the video controls will automatically hide after a video begins playing. This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1).
+* @autoplay="0"@ - @0@ or @1@ - Specifies whether the initial video will automatically start to play when the player loads.
+* @user_prefs="1"@ (@cc_load_policy@) - @0@ or @1@ - Setting the parameter's value to 1 causes closed captions to be shown by default, even if the user has turned captions off.
+* @color="red"@ - @red@ or @white@ - Specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen.
+* @controls="1"@ - @0@, @1@ or @2@ - Indicates whether the video player controls are displayed.
+* @api="0"@ (@enablejsapi@) - @0@ or @1@ - Enables the player to be controlled via IFrame or JavaScript Player API calls.
+* @full_screen="1"@ (@fs@) - @0@ or @1@ - Setting this parameter to 0 prevents the fullscreen button from displaying in the player.
+* @annotations="1"@ (@iv_load_policy@) - @1@ or @3@ - Setting the parameter's value to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default.
+* @loop="0"@ - @0@ or @1@ - Causes the player to play the initial video again and again.
+* @logo="1"@ (alterate @modestbranding@) - @0@ or @1@ -
+* @player_id=""@ (@playerapiid@) - @0@ or @1@ - This setting is used in conjunction with the JavaScript API.
+* @related="1"@ (@rel@) - @0@ or @1@ - Indicates whether the player should show related videos when playback of the initial video ends.
+* @start=""@ - Value: an integer -
+* @info="1"@ (@show_info@) - @0@ or @1@ - Causes the player to begin playing the video at the given number of seconds from the start of the video.
+* @theme="dark"@ - @dark@ or @light@ - Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar. This parameter has been deprecated for HTML5 players
 
 h4. Dailymotion additional player parameters
 
@@ -129,8 +129,16 @@ bc. <txp:oui_video provider="dailymotion" video="x4l8awd" />
 
 h3. Example 4: Using the conditional tag
 
-bc.. <txp:oui_if_video video="https://Dailymotion.com/86295452">
-    Yes
+bc.. <txp:oui_if_video video="https://vimeo.com/155020267">
+    Yes, it is a valid url pattern for a Youtube, Dailymotion or Vimeo video.
+<txp:else />
+    No…
+</txp:oui_if_video>
+
+p. …or with the provider attribute…
+
+bc.. <txp:oui_if_video provider="vimeo" video="https://vimeo.com/155020267">
+    Yes, it is a valid url pattern for a Vimeo video.
 <txp:else />
     No
 </txp:oui_if_video>
