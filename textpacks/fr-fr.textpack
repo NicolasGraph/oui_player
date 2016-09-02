@@ -24,6 +24,7 @@ oui_video_vimeo_byline => Afficher l'auteur
 oui_video_vimeo_color => Couleur préférée pour les éléments d'interface du lecteur
 oui_video_vimeo_portrait => Afficher l'avatar de l'auteur
 oui_video_youtube => Intégration Youtube (oui_video)
+oui_video_youtube_no_cookie => Utiliser la version sans cookie
 oui_video_youtube_width => Largeur en pixels
 oui_video_youtube_height => Hauteur en pixels
 oui_video_youtube_ratio => Ratio par défaut

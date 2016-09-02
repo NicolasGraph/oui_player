@@ -29,6 +29,7 @@ if (txpinterface === 'admin') {
     }
 }
 
+
 /**
  * Get external popHelp contents
  */
@@ -36,6 +37,7 @@ function oui_video_pophelp($evt, $stp, $ui, $vars)
 {
     return str_replace(HELP_URL, 'http://help.ouisource.com/', $ui);
 }
+
 
 /**
  * Handler for plugin lifecycle events.
@@ -56,6 +58,7 @@ function oui_video_welcome($evt, $stp)
     }
 }
 
+
 /**
  * Jump to the prefs panel.
  */
@@ -66,6 +69,7 @@ function oui_video_options()
            : '?event=prefs&step=advanced_prefs';
     header('Location: ' . $url);
 }
+
 
 /**
  * Set prefs through:
@@ -224,7 +228,7 @@ function oui_video_preflist()
             'value'      => 2,
             'event'      => 'oui_video_youtube',
             'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
-            'widget'     => 'oui_video_youtube_autohide',
+            'widget'     => 'oui_video_youtube_012',
             'position'   => '40',
             'is_private' => false,
         ),
@@ -256,7 +260,7 @@ function oui_video_preflist()
             'value'      => 1,
             'event'      => 'oui_video_youtube',
             'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
-            'widget'     => 'text_input',
+            'widget'     => 'oui_video_youtube_012',
             'position'   => '80',
             'is_private' => false,
         ),
@@ -571,7 +575,7 @@ function oui_video_theme($name, $val)
 /**
  * Theme parameter values
  */
-function oui_video_youtube_autohide($name, $val)
+function oui_video_youtube_012($name, $val)
 {
     $vals = array(
         '0' => '0',
@@ -583,7 +587,7 @@ function oui_video_youtube_autohide($name, $val)
 
 
 /**
- * Theme parameter values
+ * Youtube color parameter values
  */
 function oui_video_youtube_color($name, $val)
 {
@@ -596,7 +600,7 @@ function oui_video_youtube_color($name, $val)
 
 
 /**
- * Theme parameter values
+ * Dailymotion quality parameter values
  */
 function oui_video_dailymotion_quality($name, $val)
 {
@@ -615,7 +619,7 @@ function oui_video_dailymotion_quality($name, $val)
 
 
 /**
- * Theme parameter values
+ * Dailymotion api parameter values
  */
 function oui_video_dailymotion_api($name, $val)
 {
@@ -629,9 +633,8 @@ function oui_video_dailymotion_api($name, $val)
 }
 
 
-
 /**
- * Custom field list
+ * Custom fields
  */
 function oui_video_custom_fields($name, $val)
 {
@@ -646,6 +649,7 @@ function oui_video_custom_fields($name, $val)
     }
     return gtxt('no_custom_fields_recorded');
 }
+
 
 /**
  * Main tag
@@ -848,6 +852,7 @@ function oui_video($atts, $thing)
     return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
 }
 
+
 /**
  * Conditional tag
  */
@@ -872,6 +877,7 @@ function oui_if_video($atts, $thing)
 
     return defined('PREF_PLUGIN') ? parse($thing, $result) : parse(EvalElse($thing, $result));
 }
+
 
 /**
  * Url analyze
