@@ -4,24 +4,32 @@ Easily embed videos in articles and customise the appearance of the player.
 
 h2. Table of contents
 
-* "Plugin requirements":#help-section01
-* "Installation":#help-section02
-* "Tags":#help-section03
-* "Examples":#help-section04
-* "Author":#help-section05
-* "License":#help-section06
+* "Plugin requirements":#requirements
+* "Installation":#install
+* "Preferences/options":#prefs
+* "Tags":#tags
+* "Examples":#examples
+* "Author":#author
+* "License":#Licence
 
-h2(#help-section01). Plugin requirements
+h2(#requirements). Plugin requirements
 
 oui_video's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.5+
 
-h2(#help-section02). Installation
+h2(#install). Installation
 
 To install go to the 'plugins' tab under 'admin' and paste the plugin code into the 'Install plugin' box, 'upload' and then 'install'. Please note that you will need to set-up a custom field to use for associating videos with articles, unless you choose to directly embed the new tag in the article text.
 
-h2(#help-section03). Tags
+h2(#tags). Preferences/options
+
+* *Provider by default* - Uses as the default value of the @provider@ attribute.
+* *Custom field by default* - Uses as the default value of the @video@ attribute.
+
+Each player parameter can also be set through plugin prefs to reduce the use of attributes.
+
+h2(#tags). Tags
 
 h3. oui_video
 
@@ -113,11 +121,11 @@ Use one or the other of the following:
 * @video=""@ - A URL to check if it is a valid video URL.
 * @provider=""@ - vimeo, youtube or dailymotion.
 
-h2(#help-section04). Examples
+h2(#examples). Examples
 
-h3. Example 1: Use custom field to associate video with an article
+h3. Example 1: Use the default custom field and provider prefs
 
-bc. <txp:oui_video custom="Video" />
+bc. <txp:oui_video />
 
 h3. Example 2: Set the size of the player
 
@@ -143,11 +151,11 @@ bc.. <txp:oui_if_video provider="vimeo" video="https://vimeo.com/155020267">
     No
 </txp:oui_if_video>
 
-h2(#help-section05). Author
+h2(#author). Author
 
 "Nicolas Morand":https://github.com/NicolasGraph, from "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com and "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion by "Nicolas Morand":https://github.com/NicolasGraph.
 
-h2(#help-section06). License
+h2(#licence). License
 
 This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
 Copyright (c) 2014 Andy Carter, (c) 2015-16 Nicolas Morand.

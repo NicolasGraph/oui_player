@@ -9,6 +9,639 @@ if (class_exists('\Textpattern\Tag\Registry')) {
 }
 
 
+/**
+ * Register callbacks.
+ */
+if (txpinterface === 'admin') {
+    add_privs('prefs.oui_video', '1');
+    add_privs('plugin_prefs.oui_video', '1');
+    add_privs('prefs.oui_video_youtube', '1');
+    add_privs('prefs.oui_video_vimeo', '1');
+    add_privs('prefs.oui_video_dailymotion', '1');
+
+    register_callback('oui_video_welcome', 'plugin_lifecycle.oui_video');
+    register_callback('oui_video_install', 'prefs', null, 1);
+    register_callback('oui_video_options', 'plugin_prefs.oui_video', null, 1);
+
+    $prefList = oui_video_preflist();
+    foreach ($prefList as $pref => $options) {
+        register_callback('oui_video_pophelp', 'admin_help', $pref);
+    }
+}
+
+/**
+ * Get external popHelp contents
+ */
+function oui_video_pophelp($evt, $stp, $ui, $vars)
+{
+    return str_replace(HELP_URL, 'http://help.ouisource.com/', $ui);
+}
+
+/**
+ * Handler for plugin lifecycle events.
+ *
+ * @param string $evt Textpattern action event
+ * @param string $stp Textpattern action step
+ */
+function oui_video_welcome($evt, $stp)
+{
+    switch ($stp) {
+        case 'enabled':
+            oui_video_install();
+            break;
+        case 'deleted':
+            safe_delete('txp_prefs', "event LIKE 'oui\_video%'");
+            safe_delete('txp_lang', "name LIKE 'oui\_video%'");
+            break;
+    }
+}
+
+/**
+ * Jump to the prefs panel.
+ */
+function oui_video_options()
+{
+    $url = defined('PREF_PLUGIN')
+           ? '?event=prefs#prefs_group_oui_video'
+           : '?event=prefs&step=advanced_prefs';
+    header('Location: ' . $url);
+}
+
+/**
+ * Set prefs through:
+ *
+ * PREF_PLUGIN for 4.5
+ * PREF_ADVANCED for 4.6+
+ */
+function oui_video_preflist()
+{
+    $prefList = array(
+        'oui_video_custom_field' => array(
+            'value'      => '',
+            'event'      => 'oui_video',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_custom_fields',
+            'position'   => '10',
+            'is_private' => false,
+        ),
+        'oui_video_provider' => array(
+            'value'      => '',
+            'event'      => 'oui_video',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_provider',
+            'position'   => '20',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_width' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '10',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_height' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '20',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_ratio' => array(
+            'value'      => '4:3',
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '30',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_autopause' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '40',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_autoplay' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '40',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_badge' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '50',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_byline' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '60',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_color' => array(
+            'value'      => '00adef',
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '70',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_loop' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '80',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_player_id' => array(
+            'value'      => '',
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '90',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_portrait' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '100',
+            'is_private' => false,
+        ),
+        'oui_video_vimeo_title' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_vimeo',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '110',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_width' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '10',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_height' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '20',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_ratio' => array(
+            'value'      => '4:3',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '30',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_autohide' => array(
+            'value'      => 2,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_youtube_autohide',
+            'position'   => '40',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_autoplay' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '50',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_user_prefs' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '60',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_color' => array(
+            'value'      => 'red',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_youtube_color',
+            'position'   => '70',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_controls' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '80',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_api' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '100',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_end' => array(
+            'value'      => '',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '110',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_full_screen' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '120',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_lang' => array(
+            'value'      => '',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '130',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_annotations' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '140',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_loop' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '170',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_modest_branding' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '180',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_origin' => array(
+            'value'      => '',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '190',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_player_id' => array(
+            'value'      => '',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '200',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_related' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '230',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_info' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '240',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_start' => array(
+            'value'      => '',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '250',
+            'is_private' => false,
+        ),
+        'oui_video_youtube_theme' => array(
+            'value'      => 'dark',
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_theme',
+            'position'   => '260',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_width' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '10',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_height' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '20',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_ratio' => array(
+            'value'      => '4:3',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '30',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_api' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_dailymotion_api',
+            'position'   => '40',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_autoplay' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '50',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_controls' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '60',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_related' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '70',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_player_id' => array(
+            'value'      => '',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '80',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_mute' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '90',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_origin' => array(
+            'value'      => '',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '100',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_quality' => array(
+            'value'      => 'auto',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_dailymotion_quality',
+            'position'   => '110',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_sharing' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '120',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_start' => array(
+            'value'      => 0,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '130',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_lang' => array(
+            'value'      => '',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '140',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_syndication' => array(
+            'value'      => '',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '150',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_color' => array(
+            'value'      => 'ffcc33',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'text_input',
+            'position'   => '160',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_logo' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '170',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_info' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '180',
+            'is_private' => false,
+        ),
+        'oui_video_dailymotion_theme' => array(
+            'value'      => 'dark',
+            'event'      => 'oui_video_dailymotion',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'oui_video_theme',
+            'position'   => '190',
+            'is_private' => false,
+        ),
+    );
+    return $prefList;
+}
+
+
+function oui_video_install()
+{
+    $prefList = oui_video_preflist();
+
+    foreach ($prefList as $pref => $options) {
+        if (get_pref($pref, null) === null) {
+            set_pref(
+                $pref,
+                $options['value'],
+                $options['event'],
+                $options['visibility'],
+                $options['widget'],
+                $options['position'],
+                $options['is_private']
+            );
+        }
+    }
+}
+
+
+/**
+ * Provider list
+ */
+function oui_video_provider($name, $val)
+{
+    $vals = array(
+        'dailymotion' => gTxt('oui_video_provider_dailymotion'),
+        'vimeo' => gTxt('oui_video_provider_vimeo'),
+        'youtube' => gTxt('oui_video_provider_youtube'),
+    );
+    return selectInput($name, $vals, $val, '1');
+}
+
+
+/**
+ * Theme parameter values
+ */
+function oui_video_theme($name, $val)
+{
+    $vals = array(
+        'dark' => gTxt('oui_video_dark'),
+        'light' => gTxt('oui_video_light'),
+    );
+    return selectInput($name, $vals, $val);
+}
+
+
+/**
+ * Theme parameter values
+ */
+function oui_video_youtube_autohide($name, $val)
+{
+    $vals = array(
+        '0' => '0',
+        '1' => '1',
+        '2' => '2',
+    );
+    return selectInput($name, $vals, $val);
+}
+
+
+/**
+ * Theme parameter values
+ */
+function oui_video_youtube_color($name, $val)
+{
+    $vals = array(
+        'red' => gTxt('oui_video_red'),
+        'white' => gTxt('oui_video_white'),
+    );
+    return selectInput($name, $vals, $val);
+}
+
+
+/**
+ * Theme parameter values
+ */
+function oui_video_dailymotion_quality($name, $val)
+{
+    $vals = array(
+        'auto' => 'auto',
+        '240' => '240',
+        '380' => '380',
+        '480' => '480',
+        '720' => '720',
+        '1080' => '1080',
+        '1440' => '1440',
+        '2160' => '2160',
+    );
+    return selectInput($name, $vals, $val);
+}
+
+
+/**
+ * Theme parameter values
+ */
+function oui_video_dailymotion_api($name, $val)
+{
+    $vals = array(
+        '0' => '0',
+        'postMessage' => 'postMessage',
+        'location' => 'location',
+        '1' => '1',
+    );
+    return selectInput($name, $vals, $val);
+}
+
+
+
+/**
+ * Custom field list
+ */
+function oui_video_custom_fields($name, $val)
+{
+    $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
+
+    if ($custom_fields) {
+        $vals = array();
+        foreach ($custom_fields as $row) {
+            $vals[$row['val']] = $row['val'];
+        }
+        return selectInput($name, $vals, $val, 'true');
+    }
+    return gtxt('no_custom_fields_recorded');
+}
+
+/**
+ * Main tag
+ */
 function oui_video($atts, $thing)
 {
     global $thisarticle;
@@ -16,7 +649,6 @@ function oui_video($atts, $thing)
     extract(lAtts(array(
         'video'        => '',
         'provider'     => '',
-        'custom'       => 'Video',
         'width'        => '0',
         'height'       => '0',
         'ratio'        => '4:3',
@@ -61,26 +693,18 @@ function oui_video($atts, $thing)
         $byline = '0';
     }
 
-    $custom = strtolower($custom);
-    if (!$video && isset($thisarticle[$custom])) {
-        $video = $thisarticle[$custom];
-    }
-
     /*
      * Check for video URL to extract provider and ID from
      */
-    if ($provider) {
-        $match_provider = $provider;
+    $match = _oui_video($video);
+    if (!$match) {
+        $match_provider = $provider ? strtolower($provider) : get_pref('oui_video_provider');
+        $custom = $video ? strtolower($video) : strtolower(get_pref('oui_video_custom_field'));
+        isset($thisarticle[$custom]) ? $video = $thisarticle[$custom] : '';
         $video_id = $video;
     } else {
-        $match = _oui_video($video);
-        if (!$match) {
-            trigger_error("oui_video was not able to recognize your video");
-            return;
-        } else {
-            $match_provider = key($match);
-            $video_id = $match[$match_provider];
-        }
+        $match_provider = key($match);
+        $video_id = $match[$match_provider];
     }
 
     // Provider is ok, here are the related variable…
@@ -88,98 +712,86 @@ function oui_video($atts, $thing)
         case 'vimeo':
             $src = '//player.vimeo.com/video/' . $video_id;
             $qAtts = array(
-                'autopause' => array($autopause => '0, 1'),
-                'autoplay'  => array($autoplay => '0, 1'),
-                'badge'     => array($badge => '0, 1'),
-                'byline'    => array($byline => '0, 1'),
-                'color'     => $color,
-                'loop'      => array($loop => '0, 1'),
-                'player_id' => $player_id,
-                'portrait'  => array($portrait => '0, 1'),
-                'title'     => array($info => '0, 1')
+                'autopause' => array('autopause' => '1'),
+                'autoplay'  => array('autoplay' => '0'),
+                'badge'     => array('badge' => '1'),
+                'byline'    => array('byline' => '1'),
+                'color'     => array('color' => '00adef'),
+                'loop'      => array('loop' => '0'),
+                'player_id' => array('color' => ''),
+                'portrait'  => array('portrait' => '1'),
+                'title'     => array('info' => '1')
             );
             break;
         case 'youtube':
             $src = '//www.youtube' . ($no_cookie ? '-nocookie' : '') . '.com/embed/' . $video_id;
             $qAtts = array(
-                'autohide'       => array($autohide => '0, 1, 2'),
-                'autoplay'       => array($autoplay => '0, 1'),
-                'cc_load_policy' => array($user_prefs => '0, 1'),
-                'color'          => array($color => 'red, white'),
-                'controls'       => array($controls => '0, 1, 2'),
-                'enablejsapi'    => array($api => '0, 1'),
-                'end'            => $end,
-                'fs'             => array($full_screen => '0, 1'),
-                'hl'             => $lang,
-                'iv_load_policy' => array($annotations => '1, 3'),
-                'loop'           => array($loop => '0, 1'),
-                'modestbranding' => array($modest_branding => '0, 1'),
-                'origin'         => $origin,
-                'playerapiid'    => array($player_id => '0, 1'),
-                'rel'            => array($related => '0, 1'),
-                'start'          => $start,
-                'showinfo'       => array($info => '0, 1'),
-                'theme'          => array($theme => 'dark, light')
+                'autohide'       => array('autohide' => '2'),
+                'autoplay'       => array('autoplay' => '0'),
+                'cc_load_policy' => array('user_prefs' => '1'),
+                'color'          => array('color' => 'red'),
+                'controls'       => array('controls' => '1'),
+                'enablejsapi'    => array('api' => '0'),
+                'end'            => array('end' => ''),
+                'fs'             => array('full_screen' => '1'),
+                'hl'             => array('lang' => ''),
+                'iv_load_policy' => array('annotations' => '1'),
+                'loop'           => array('loop' => '0'),
+                'modestbranding' => array('modest_branding' => '0'),
+                'origin'         => array('origin' => ''),
+                'playerapiid'    => array('player_id' => ''),
+                'rel'            => array('related' => '1'),
+                'start'          => array('start' => ''),
+                'showinfo'       => array('info' => '1'),
+                'theme'          => array('theme' => 'dark')
             );
             break;
         case 'dailymotion':
             $src = '//www.dailymotion.com/embed/video/' . $video_id;
             $qAtts = array(
-                'api'                  => array($api => 'postMessage, location, 1'),
-                'autoplay'             => array($autoplay => 'false, true'),
-                'controls'             => array($controls => 'false, true'),
-                'endscreen-enable'     => array($related => 'false, true'),
-                'id'                   => $player_id,
-                'mute'                 => array($mute => 'false, true'),
-                'origin'               => $origin,
-                'quality'              => array($quality => '240, 380, 480, 720, 1080, 1440, 2160'),
-                'sharing-enable'       => array($sharing => 'false, true'),
-                'start'                => $start,
-                'subtitles-default'    => $lang,
-                'syndication'          => $syndication,
-                'ui-highlight'         => $color,
-                'ui-logo'              => array($logo => 'false, true'),
-                'ui-theme'             => array($theme => 'dark, light'),
-                'ui-start-screen-info' => array($info => 'false, true')
+                'api'                  => array('api' => '0'),
+                'autoplay'             => array('autoplay' => '0'),
+                'controls'             => array('controls' => '1'),
+                'endscreen-enable'     => array('related' => '1'),
+                'id'                   => array('player_id' => ''),
+                'mute'                 => array('mute' => '0'),
+                'origin'               => array('origin' => ''),
+                'quality'              => array('quality' => 'auto'),
+                'sharing-enable'       => array('sharing' => '1'),
+                'start'                => array('start' => '0'),
+                'subtitles-default'    => array('lang' => ''),
+                'syndication'          => array('syndication' => ''),
+                'ui-highlight'         => array('color' => 'ffcc33'),
+                'ui-logo'              => array('logo' => '1'),
+                'ui-theme'             => array('theme' => 'dark'),
+                'ui-start-screen-info' => array('info' => '1')
             );
             break;
+        default:
+            trigger_error('Unknown video provider.');
+            return;
     }
 
     /*
      * Check variable values and store player parameters
      */
     $qString = array();
-    foreach ($qAtts as $att => $val) {
-        if (!is_array($val)) {
-            // tag attribute accepts any value
-            if ($val !== '') {
-                // tag attribute value is defined
-                $qString[] = $att . '=' . $val;
-            }
-        } else {
-            // tag attribute accepts defined values
-            $value = key($val);
-            $valid = $val[$value];
-            if ($value !== '') {
-                // tag attribute value is defined
-                if ($match_provider === 'dailymotion') {
-                    // Bloody Dailymotion…
-                    $value === 0 ? $value = 'false' : '';
-                    $value === 1 ? $value = 'true' : '';
-                }
-                if (in_list($value, $valid)) {
-                    // tag attribute value is valid
-                    $qString[] = $att . '=' . $value;
-                } else {
-                    // tag attribute value is not valid
-                    trigger_error(
-                        "unknown attribute value; the " . $att .
-                        " attribute accepts the following values: " . $valid
-                    );
-                }
-            }
+    foreach ($qAtts as $parameter => $infos) {
+        $attribute = key($infos);
+        $value = $$attribute;
+        $default = $infos[$attribute];
+        if ($match_provider === 'dailymotion') {
+            // Bloody Dailymotion…
+            $value === 0 ? $value = 'false' : '';
+            $value === 1 ? $value = 'true' : '';
+        }
+        if ($value === '' && get_pref('oui_video_' . $match_provider . '_' . $attribute) !== $default) {
+            $qString[] = $parameter . '=' . get_pref('oui_video_' . $match_provider . '_' . $attribute);
+        } elseif ($value !== '') {
+            $qString[] = $parameter . '=' . $value;
         }
     }
+
 
     /*
      * Check if we need to append some parameters.
@@ -220,18 +832,19 @@ function oui_video($atts, $thing)
     return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
 }
 
-
+/**
+ * Conditional tag
+ */
 function oui_if_video($atts, $thing)
 {
     global $thisarticle;
 
     extract(lAtts(array(
-        'custom_field' => null,
         'video' => null,
         'provider' => ''
     ), $atts));
 
-    $result = $video ? _oui_video($video) : _oui_video($thisarticle[strtolower($custom)]);
+    $result = _oui_video($video) ? _oui_video($video) : _oui_video($thisarticle[strtolower($video)]);
 
     if ($provider) {
         if (strtolower($provider) === key($result)) {
@@ -244,7 +857,9 @@ function oui_if_video($atts, $thing)
     return defined('PREF_PLUGIN') ? parse($thing, $result) : parse(EvalElse($thing, $result));
 }
 
-
+/**
+ * Url analyze
+ */
 function _oui_video($video)
 {
     if (preg_match('#^https?://((player|www)\.)?vimeo\.com(/video)?/(\d+)#i', $video, $matches)) {
