@@ -188,6 +188,14 @@ function oui_video_preflist()
             'position'   => '110',
             'is_private' => false,
         ),
+        'oui_video_youtube_no_cookie' => array(
+            'value'      => 1,
+            'event'      => 'oui_video_youtube',
+            'visibility' => defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
+            'widget'     => 'yesnoradio',
+            'position'   => '00',
+            'is_private' => false,
+        ),
         'oui_video_youtube_width' => array(
             'value'      => 0,
             'event'      => 'oui_video_youtube',
@@ -649,9 +657,9 @@ function oui_video($atts, $thing)
     extract(lAtts(array(
         'video'        => '',
         'provider'     => '',
-        'width'        => '0',
-        'height'       => '0',
-        'ratio'        => '4:3',
+        'width'        => '',
+        'height'       => '',
+        'ratio'        => '',
         'annotations'  => '', // Youtube (1)
         'api'          => '', // Youtube (0), Dailymotion (false).
         'autohide'     => '', // Youtube (2).
@@ -668,7 +676,7 @@ function oui_video($atts, $thing)
         'logo'         => '', // Youtube (1), Dailymotion (true).
         'loop'         => '', // Vimeo (0), Youtube (0).
         'mute'         => '', // Dailymotion (false).
-        'no_cookie'    => '1', // Youtube.
+        'no_cookie'    => '', // Youtube.
         'origin'       => '', // Youtube, Dailymotion.
         'player_id'    => '', // Vimeo, Youtube, Dailymotion.
         'portrait'     => '', // Vimeo (1).
@@ -724,7 +732,8 @@ function oui_video($atts, $thing)
             );
             break;
         case 'youtube':
-            $src = '//www.youtube' . ($no_cookie ? '-nocookie' : '') . '.com/embed/' . $video_id;
+            $cookie = ($no_cookie || (!$no_cookie && get_pref('oui_video_youtube_no_cookie') === '1')) ? '-nocookie' : '';
+            $src = '//www.youtube' . $cookie . '.com/embed/' . $video_id;
             $qAtts = array(
                 'autohide'       => array('autohide' => '2'),
                 'autoplay'       => array('autoplay' => '0'),
@@ -804,10 +813,17 @@ function oui_video($atts, $thing)
      * If the width and/or height has not been set
      * we want to calculate new ones using the aspect ratio.
      */
+    $pref_width = get_pref('oui_video_' . $match_provider . '_width');
+    $pref_height = get_pref('oui_video_' . $match_provider . '_height');
+    $width ?: !$pref_width ?: $width = $pref_width;
+    $height ?: !$pref_height ?: $height = $pref_height;
+
     if (!$width || !$height) {
         $toolbarHeight = 25;
 
         // Work out the aspect ratio.
+        $pref_ratio = get_pref('oui_video_' . $match_provider . '_ratio');
+        $ratio ?: !$pref_ratio ?: $ratio = $pref_ratio;
         preg_match("/(\d+):(\d+)/", $ratio, $matches);
         if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
             $aspect = $matches[1]/$matches[2];
