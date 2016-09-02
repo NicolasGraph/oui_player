@@ -427,7 +427,7 @@ function oui_video_install()
                 $options['event'],
                 defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
                 $options['widget'],
-                $options['position'],
+                $options['position']
             );
         }
     }
