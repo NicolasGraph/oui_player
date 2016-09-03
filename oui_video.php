@@ -93,23 +93,23 @@ function oui_video_preflist()
             'widget'     => 'oui_video_provider',
             'position'   => '20',
         ),
-        'oui_video_vimeo_width' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_vimeo',
-            'widget'     => 'text_input',
-            'position'   => '10',
-        ),
-        'oui_video_vimeo_height' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_vimeo',
-            'widget'     => 'text_input',
-            'position'   => '20',
-        ),
-        'oui_video_vimeo_ratio' => array(
-            'value'      => '4:3',
-            'event'      => 'oui_video_vimeo',
+        'oui_video_width' => array(
+            'value'      => '',
+            'event'      => 'oui_video',
             'widget'     => 'text_input',
             'position'   => '30',
+        ),
+        'oui_video_height' => array(
+            'value'      => '',
+            'event'      => 'oui_video',
+            'widget'     => 'text_input',
+            'position'   => '40',
+        ),
+        'oui_video_ratio' => array(
+            'value'      => '4:3',
+            'event'      => 'oui_video',
+            'widget'     => 'text_input',
+            'position'   => '50',
         ),
         'oui_video_vimeo_autopause' => array(
             'value'      => 1,
@@ -170,24 +170,6 @@ function oui_video_preflist()
             'event'      => 'oui_video_youtube',
             'widget'     => 'yesnoradio',
             'position'   => '00',
-        ),
-        'oui_video_youtube_width' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_youtube',
-            'widget'     => 'text_input',
-            'position'   => '10',
-        ),
-        'oui_video_youtube_height' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_youtube',
-            'widget'     => 'text_input',
-            'position'   => '20',
-        ),
-        'oui_video_youtube_ratio' => array(
-            'value'      => '4:3',
-            'event'      => 'oui_video_youtube',
-            'widget'     => 'text_input',
-            'position'   => '30',
         ),
         'oui_video_youtube_autohide' => array(
             'value'      => 2,
@@ -296,24 +278,6 @@ function oui_video_preflist()
             'event'      => 'oui_video_youtube',
             'widget'     => 'oui_video_theme',
             'position'   => '260',
-        ),
-        'oui_video_dailymotion_width' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_dailymotion',
-            'widget'     => 'text_input',
-            'position'   => '10',
-        ),
-        'oui_video_dailymotion_height' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_dailymotion',
-            'widget'     => 'text_input',
-            'position'   => '20',
-        ),
-        'oui_video_dailymotion_ratio' => array(
-            'value'      => '4:3',
-            'event'      => 'oui_video_dailymotion',
-            'widget'     => 'text_input',
-            'position'   => '30',
         ),
         'oui_video_dailymotion_api' => array(
             'value'      => 0,
@@ -722,8 +686,8 @@ function oui_video($atts, $thing)
      * If the width and/or height has not been set
      * we want to calculate new ones using the aspect ratio.
      */
-    $pref_width = get_pref('oui_video_' . $match_provider . '_width');
-    $pref_height = get_pref('oui_video_' . $match_provider . '_height');
+    $pref_width = get_pref('oui_video_width');
+    $pref_height = get_pref('oui_video_height');
     $width ?: !$pref_width ?: $width = $pref_width;
     $height ?: !$pref_height ?: $height = $pref_height;
 
@@ -731,7 +695,7 @@ function oui_video($atts, $thing)
         $toolbarHeight = 25;
 
         // Work out the aspect ratio.
-        $pref_ratio = get_pref('oui_video_' . $match_provider . '_ratio');
+        $pref_ratio = get_pref('oui_video_ratio');
         $ratio ?: !$pref_ratio ?: $ratio = $pref_ratio;
         preg_match("/(\d+):(\d+)/", $ratio, $matches);
         if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
