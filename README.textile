@@ -46,8 +46,7 @@ h4. Presentational attributes
 
 h4. Main tag attributes
 
-* @video=""@ - Video url or the video id (if used with the @provider@ attribute) for the video you want to embed.
-* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article.
+* @video=""@ - Video url, the video id or the custom_field containing it.
 * @provider=""@ - The video provider to use if the @video@ attribute value is an id.
 
 h4. Vimeo additional player parameters
