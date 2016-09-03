@@ -32,6 +32,10 @@ if (txpinterface === 'admin') {
 
 /**
  * Get external popHelp contents
+ *
+ * @param string $evt Textpattern action event
+ * @param string $stp Textpattern action step
+ * @param string $ui Textpattern user interface element
  */
 function oui_video_pophelp($evt, $stp, $ui, $vars)
 {
@@ -72,10 +76,7 @@ function oui_video_options()
 
 
 /**
- * Set prefs through:
- *
- * PREF_PLUGIN for 4.5
- * PREF_ADVANCED for 4.6+
+ * Plugin prefs
  */
 function oui_video_preflist()
 {
@@ -414,7 +415,9 @@ function oui_video_preflist()
     return $prefList;
 }
 
-
+/**
+ * Install plugin prefs
+ */
 function oui_video_install()
 {
     $prefList = oui_video_preflist();
@@ -435,26 +438,28 @@ function oui_video_install()
 
 
 /**
+ * Plugin prefs function
  * Provider list
  */
 function oui_video_provider($name, $val)
 {
     $vals = array(
         'dailymotion' => gTxt('oui_video_provider_dailymotion'),
-        'vimeo' => gTxt('oui_video_provider_vimeo'),
-        'youtube' => gTxt('oui_video_provider_youtube'),
+        'vimeo'       => gTxt('oui_video_provider_vimeo'),
+        'youtube'     => gTxt('oui_video_provider_youtube'),
     );
     return selectInput($name, $vals, $val, '1');
 }
 
 
 /**
+ * Plugin prefs function
  * Theme parameter values
  */
 function oui_video_theme($name, $val)
 {
     $vals = array(
-        'dark' => gTxt('oui_video_dark'),
+        'dark'  => gTxt('oui_video_dark'),
         'light' => gTxt('oui_video_light'),
     );
     return selectInput($name, $vals, $val);
@@ -462,6 +467,7 @@ function oui_video_theme($name, $val)
 
 
 /**
+ * Plugin prefs function
  * Theme parameter values
  */
 function oui_video_youtube_012($name, $val)
@@ -476,12 +482,13 @@ function oui_video_youtube_012($name, $val)
 
 
 /**
+ * Plugin prefs function
  * Youtube color parameter values
  */
 function oui_video_youtube_color($name, $val)
 {
     $vals = array(
-        'red' => gTxt('oui_video_red'),
+        'red'   => gTxt('oui_video_red'),
         'white' => gTxt('oui_video_white'),
     );
     return selectInput($name, $vals, $val);
@@ -489,16 +496,17 @@ function oui_video_youtube_color($name, $val)
 
 
 /**
+ * Plugin prefs function
  * Dailymotion quality parameter values
  */
 function oui_video_dailymotion_quality($name, $val)
 {
     $vals = array(
         'auto' => 'auto',
-        '240' => '240',
-        '380' => '380',
-        '480' => '480',
-        '720' => '720',
+        '240'  => '240',
+        '380'  => '380',
+        '480'  => '480',
+        '720'  => '720',
         '1080' => '1080',
         '1440' => '1440',
         '2160' => '2160',
@@ -508,21 +516,23 @@ function oui_video_dailymotion_quality($name, $val)
 
 
 /**
+ * Plugin prefs function
  * Dailymotion api parameter values
  */
 function oui_video_dailymotion_api($name, $val)
 {
     $vals = array(
-        '0' => '0',
+        '0'           => '0',
         'postMessage' => 'postMessage',
-        'location' => 'location',
-        '1' => '1',
+        'location'    => 'location',
+        '1'           => '1',
     );
     return selectInput($name, $vals, $val);
 }
 
 
 /**
+ * Plugin prefs function
  * Custom fields
  */
 function oui_video_custom_fields($name, $val)
@@ -541,7 +551,8 @@ function oui_video_custom_fields($name, $val)
 
 
 /**
- * Main tag
+ * Main plugin tag
+ * Display a video
  */
 function oui_video($atts, $thing)
 {
@@ -586,6 +597,7 @@ function oui_video($atts, $thing)
         'class'        => __FUNCTION__
     ), $atts));
 
+    // Use the logo attribute to alterate the modest_branding Youtube parameter.
     $modest_branding = $logo === '0' ? '1' : '';
 
     if (!$info) {
@@ -595,7 +607,7 @@ function oui_video($atts, $thing)
     }
 
     /*
-     * Check for video URL to extract provider and ID from
+     * Define the video provider and the video id.
      */
     $match = _oui_video($video);
     if (!$match) {
@@ -608,7 +620,9 @@ function oui_video($atts, $thing)
         $video_id = $match[$match_provider];
     }
 
-    // Provider is ok, here are the related variable…
+    /*
+     * Store provider related variables and associate attributes to player paramaters.
+     */
     switch ($match_provider) {
         case 'vimeo':
             $src = '//player.vimeo.com/video/' . $video_id;
@@ -675,7 +689,7 @@ function oui_video($atts, $thing)
     }
 
     /*
-     * Check variable values and store player parameters
+     * Create a list of needed parameters
      */
     $qString = array();
     foreach ($qAtts as $parameter => $infos) {
@@ -688,8 +702,10 @@ function oui_video($atts, $thing)
             $value === 1 ? $value = 'true' : '';
         }
         if ($value === '' && get_pref('oui_video_' . $match_provider . '_' . $attribute) !== $default) {
+            // Attribute is empty but the related plugin pref was changed, use it.
             $qString[] = $parameter . '=' . get_pref('oui_video_' . $match_provider . '_' . $attribute);
         } elseif ($value !== '') {
+            // Attribute is not empty, use it.
             $qString[] = $parameter . '=' . $value;
         }
     }
@@ -744,6 +760,7 @@ function oui_video($atts, $thing)
 
 /**
  * Conditional tag
+ * Check a video url and its provider if provided.
  */
 function oui_if_video($atts, $thing)
 {
@@ -769,7 +786,8 @@ function oui_if_video($atts, $thing)
 
 
 /**
- * Url analyze
+ * Video url checking
+ * Return the video provider and the video id.
  */
 function _oui_video($video)
 {
