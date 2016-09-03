@@ -7,5 +7,11 @@
     "author_uri"  : "http://github.com/NicolasGraph",
     "order"       : 5,
     "flags"       : 3,
-    "help"        : {"file" : ["./README.textile"]}
+    "help"        : {"file" : ["./README.textile"]},
+    "code": {"file" : [
+        "./src/admin.php",
+        "./src/public.php",
+        "./src/video_infos.php",
+        "./src/player_infos.php"
+    ]}
 }
