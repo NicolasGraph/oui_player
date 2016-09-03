@@ -8,7 +8,6 @@ if (class_exists('\Textpattern\Tag\Registry')) {
         ->register('oui_if_video');
 }
 
-
 /**
  * Main plugin tag
  * Display a video
@@ -108,7 +107,6 @@ function oui_video($atts, $thing)
         }
     }
 
-
     /*
      * Check if we need to append some parameters.
      */
@@ -154,7 +152,6 @@ function oui_video($atts, $thing)
 
     return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
 }
-
 
 /**
  * Conditional tag

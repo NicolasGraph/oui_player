@@ -1,8 +1,5 @@
 <?php
 
-# --- BEGIN PLUGIN CODE ---
-
-
 /**
  * Register callbacks.
  */
@@ -23,7 +20,6 @@ if (txpinterface === 'admin') {
     }
 }
 
-
 /**
  * Get external popHelp contents
  *
@@ -35,7 +31,6 @@ function oui_video_pophelp($evt, $stp, $ui, $vars)
 {
     return str_replace(HELP_URL, 'http://help.ouisource.com/', $ui);
 }
-
 
 /**
  * Handler for plugin lifecycle events.
@@ -56,7 +51,6 @@ function oui_video_welcome($evt, $stp)
     }
 }
 
-
 /**
  * Jump to the prefs panel.
  */
@@ -67,7 +61,6 @@ function oui_video_options()
            : '?event=prefs&step=advanced_prefs';
     header('Location: ' . $url);
 }
-
 
 /**
  * Plugin prefs
@@ -394,7 +387,6 @@ function oui_video_install()
     }
 }
 
-
 /**
  * Plugin prefs function
  * Provider list
@@ -409,7 +401,6 @@ function oui_video_provider($name, $val)
     return selectInput($name, $vals, $val, '1');
 }
 
-
 /**
  * Plugin prefs function
  * Theme parameter values
@@ -422,7 +413,6 @@ function oui_video_theme($name, $val)
     );
     return selectInput($name, $vals, $val);
 }
-
 
 /**
  * Plugin prefs function
@@ -438,7 +428,6 @@ function oui_video_youtube_012($name, $val)
     return selectInput($name, $vals, $val);
 }
 
-
 /**
  * Plugin prefs function
  * Youtube color parameter values
@@ -451,7 +440,6 @@ function oui_video_youtube_color($name, $val)
     );
     return selectInput($name, $vals, $val);
 }
-
 
 /**
  * Plugin prefs function
@@ -472,7 +460,6 @@ function oui_video_dailymotion_quality($name, $val)
     return selectInput($name, $vals, $val);
 }
 
-
 /**
  * Plugin prefs function
  * Dailymotion api parameter values
@@ -487,7 +474,6 @@ function oui_video_dailymotion_api($name, $val)
     );
     return selectInput($name, $vals, $val);
 }
-
 
 /**
  * Plugin prefs function
