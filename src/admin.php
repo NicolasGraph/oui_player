@@ -194,12 +194,6 @@ function oui_video_preflist()
             'widget'     => 'yesnoradio',
             'position'   => '100',
         ),
-        'oui_video_youtube_end' => array(
-            'value'      => '',
-            'event'      => 'oui_video_youtube',
-            'widget'     => 'text_input',
-            'position'   => '110',
-        ),
         'oui_video_youtube_full_screen' => array(
             'value'      => 1,
             'event'      => 'oui_video_youtube',
@@ -253,12 +247,6 @@ function oui_video_preflist()
             'event'      => 'oui_video_youtube',
             'widget'     => 'yesnoradio',
             'position'   => '240',
-        ),
-        'oui_video_youtube_start' => array(
-            'value'      => '',
-            'event'      => 'oui_video_youtube',
-            'widget'     => 'text_input',
-            'position'   => '250',
         ),
         'oui_video_youtube_theme' => array(
             'value'      => 'dark',
@@ -319,12 +307,6 @@ function oui_video_preflist()
             'event'      => 'oui_video_dailymotion',
             'widget'     => 'yesnoradio',
             'position'   => '120',
-        ),
-        'oui_video_dailymotion_start' => array(
-            'value'      => 0,
-            'event'      => 'oui_video_dailymotion',
-            'widget'     => 'text_input',
-            'position'   => '130',
         ),
         'oui_video_dailymotion_lang' => array(
             'value'      => '',
