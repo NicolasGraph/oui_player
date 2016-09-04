@@ -24,8 +24,11 @@ To install go to the 'plugins' tab under 'admin' and paste the plugin code into 
 
 h2(#tags). Preferences/options
 
-* *Provider by default* - Uses as the default value of the @provider@ attribute.
-* *Custom field by default* - Uses as the default value of the @video@ attribute.
+* *Provider* - Uses as the default value of the @provider@ attribute.
+* *Custom field* - Uses as the default value of the @video@ attribute.
+* *Width* - Uses as the default value of the @width@ attribute.
+* *Height* - Uses as the default value of the @height@ attribute.
+* *Ratio* - Uses as the default value of the @ratio@ attribute.
 
 Each player parameter can also be set through plugin prefs to reduce the use of attributes.
 
