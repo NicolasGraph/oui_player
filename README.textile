@@ -39,7 +39,7 @@ Golbal prefs:
 
 Players parameters:
 
-Most player parameters can also be set through plugin prefs; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_youtube prefs.
+Most player parameters can also be set through plugin prefs; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_youtube prefs.
 
 h2(#tags). Tags
 
