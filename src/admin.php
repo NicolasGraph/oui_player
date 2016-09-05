@@ -470,6 +470,8 @@ function oui_video_custom_fields($name, $val)
         foreach ($custom_fields as $row) {
             $vals[$row['val']] = $row['val'];
         }
+        $vals['article_image'] = gtxt('article_image');
+        $vals['excerpt'] = gtxt('excerpt');
         return selectInput($name, $vals, $val, 'true');
     }
     return gtxt('no_custom_fields_recorded');
