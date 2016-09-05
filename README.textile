@@ -1,27 +1,47 @@
 h1. oui_video (beta)
 
 Easily embed videos in articles and customise the appearance of the player.
+This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
+It also adds plugin preferences define most of the attribute default values, making things easier for site users.
 
 h2. Table of contents
 
-* "Plugin requirements":#help-section01
-* "Installation":#help-section02
-* "Tags":#help-section03
-* "Examples":#help-section04
-* "Author":#help-section05
-* "License":#help-section06
+* "Plugin requirements":#requirements
+* "Installation":#install
+* "Preferences/options":#prefs
+* "Tags":#tags
+* "Examples":#examples
+* "Author":#author
+* "License":#Licence
 
-h2(#help-section01). Plugin requirements
+h2(#requirements). Plugin requirements
 
 oui_video's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.5+
 
-h2(#help-section02). Installation
+h2(#install). Installation
 
 To install go to the 'plugins' tab under 'admin' and paste the plugin code into the 'Install plugin' box, 'upload' and then 'install'. Please note that you will need to set-up a custom field to use for associating videos with articles, unless you choose to directly embed the new tag in the article text.
 
-h2(#help-section03). Tags
+h2(#tags). Preferences/options
+
+Plugin prefs are used as default values for the oui_video @<txp:oui_video />@ attributes.
+They can be overriden by these attributes when needed.
+
+Golbal prefs:
+
+* *Provider* - Uses as the default value of the @provider@ attribute.
+* *Video field* - Uses as the default value of the @video@ attribute.
+* *Width* - Uses as the default value of the @width@ attribute.
+* *Height* - Uses as the default value of the @height@ attribute.
+* *Ratio* - Uses as the default value of the @ratio@ attribute.
+
+Players parameters:
+
+Most player parameters can also be set through plugin prefs; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_youtube prefs.
+
+h2(#tags). Tags
 
 h3. oui_video
 
@@ -38,8 +58,7 @@ h4. Presentational attributes
 
 h4. Main tag attributes
 
-* @video=""@ - Video url or the video id (if used with the @provider@ attribute) for the video you want to embed.
-* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article.
+* @video=""@ - Video url, the video id or the custom_field containing it.
 * @provider=""@ - The video provider to use if the @video@ attribute value is an id.
 
 h4. Vimeo additional player parameters
@@ -54,7 +73,7 @@ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/emb
 * @loop="0"@ - @0@ or @1@ - Play the video again when it reaches the end.
 * @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
 * @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
-* @info="1"@ - (@title@ Vimeo attribute) - @0@ or @1@ - Show the title on the video.
+* @title="1"@ - @0@ or @1@ - Show the title on the video.
 
 h4. Youtube additional player parameters
 
@@ -113,11 +132,11 @@ Use one or the other of the following:
 * @video=""@ - A URL to check if it is a valid video URL.
 * @provider=""@ - vimeo, youtube or dailymotion.
 
-h2(#help-section04). Examples
+h2(#examples). Examples
 
-h3. Example 1: Use custom field to associate video with an article
+h3. Example 1: Use the default custom field and provider prefs
 
-bc. <txp:oui_video custom="Video" />
+bc. <txp:oui_video />
 
 h3. Example 2: Set the size of the player
 
@@ -143,11 +162,11 @@ bc.. <txp:oui_if_video provider="vimeo" video="https://vimeo.com/155020267">
     No
 </txp:oui_if_video>
 
-h2(#help-section05). Author
+h2(#author). Author
 
 "Nicolas Morand":https://github.com/NicolasGraph, from "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com and "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion by "Nicolas Morand":https://github.com/NicolasGraph.
 
-h2(#help-section06). License
+h2(#licence). License
 
 This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
 Copyright (c) 2014 Andy Carter, (c) 2015-16 Nicolas Morand.
