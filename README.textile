@@ -134,19 +134,21 @@ Use one or the other of the following:
 
 h2(#examples). Examples
 
-h3. Example 1: Use the default custom field and provider prefs
+h3. Display a video
+
+Use the prefs values for the @provider@ and/or @video@ attributes.
 
 bc. <txp:oui_video />
 
-h3. Example 2: Set the size of the player
-
-bc. <txp:oui_video video="http://dai.ly/x4l8awd" width="500" ratio="16:9" />
-
-h3. Example 3: Use the video id
+Use a video id through the tag attribute.
 
 bc. <txp:oui_video provider="dailymotion" video="x4l8awd" />
 
-h3. Example 4: Using the conditional tag
+Let the plugin find the provider and the video id by providing the video url.
+
+bc. <txp:oui_video video="https://vimeo.com/155020267" />
+
+h3. Using the conditional tag
 
 bc.. <txp:oui_if_video video="https://vimeo.com/155020267">
     Yes, it is a valid url pattern for a Youtube, Dailymotion or Vimeo video.
