@@ -4,11 +4,16 @@
  * Register callbacks.
  */
 if (txpinterface === 'admin') {
-    add_privs('prefs.oui_video', '1');
     add_privs('plugin_prefs.oui_video', '1');
-    add_privs('prefs.oui_video_youtube', '1');
-    add_privs('prefs.oui_video_vimeo', '1');
-    add_privs('prefs.oui_video_dailymotion', '1');
+    add_privs('prefs.oui_video', '1, 2');
+
+    $providers = array('youtube', 'vimeo', 'dailymotion');
+    // Add privs to provider prefs only if they are enabled.
+    foreach ($providers as $provider) {
+        if (!empty($_POST['oui_video_' . $provider . '_prefs']) || (!isset($_POST['oui_video_' . $provider . '_prefs']) && get_pref('oui_video_' . $provider . '_prefs'))) {
+            add_privs('prefs.oui_video_' . $provider, '1, 2');
+        }
+    }
 
     register_callback('oui_video_welcome', 'plugin_lifecycle.oui_video');
     register_callback('oui_video_install', 'prefs', null, 1);
@@ -97,6 +102,24 @@ function oui_video_preflist()
             'event'      => 'oui_video',
             'widget'     => 'text_input',
             'position'   => '50',
+        ),
+        'oui_video_vimeo_prefs' => array(
+            'value'      => 1,
+            'event'      => 'oui_video',
+            'widget'     => 'yesnoradio',
+            'position'   => '60',
+        ),
+        'oui_video_dailymotion_prefs' => array(
+            'value'      => 1,
+            'event'      => 'oui_video',
+            'widget'     => 'yesnoradio',
+            'position'   => '70',
+        ),
+        'oui_video_youtube_prefs' => array(
+            'value'      => 1,
+            'event'      => 'oui_video',
+            'widget'     => 'yesnoradio',
+            'position'   => '80',
         ),
         'oui_video_vimeo_autopause' => array(
             'value'      => 1,
