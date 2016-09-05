@@ -1,6 +1,8 @@
 h1. oui_video (beta)
 
 Easily embed videos in articles and customise the appearance of the player.
+This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
+It also adds plugin preferences define most of the attribute default values, making things easier for site users.
 
 h2. Table of contents
 
@@ -24,13 +26,20 @@ To install go to the 'plugins' tab under 'admin' and paste the plugin code into 
 
 h2(#tags). Preferences/options
 
+Plugin prefs are used as default values for the oui_video @<txp:oui_video />@ attributes.
+They can be overriden by these attributes when needed.
+
+Golbal prefs:
+
 * *Provider* - Uses as the default value of the @provider@ attribute.
-* *Custom field* - Uses as the default value of the @video@ attribute.
+* *Video field* - Uses as the default value of the @video@ attribute.
 * *Width* - Uses as the default value of the @width@ attribute.
 * *Height* - Uses as the default value of the @height@ attribute.
 * *Ratio* - Uses as the default value of the @ratio@ attribute.
 
-Each player parameter can also be set through plugin prefs to reduce the use of attributes.
+Players parameters:
+
+Most player parameters can also be set through plugin prefs; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php#prefs_group_oui_video_youtube prefs.
 
 h2(#tags). Tags
 
