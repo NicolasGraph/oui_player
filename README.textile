@@ -64,7 +64,7 @@ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/emb
 * @loop="0"@ - @0@ or @1@ - Play the video again when it reaches the end.
 * @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
 * @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
-* @info="1"@ - (@title@ Vimeo attribute) - @0@ or @1@ - Show the title on the video.
+* @title="1"@ - @0@ or @1@ - Show the title on the video.
 
 h4. Youtube additional player parameters
 

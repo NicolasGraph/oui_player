@@ -49,6 +49,7 @@ function oui_video($atts, $thing)
         'user_prefs'   => '', // Youtube (1).
         'syndication'  => '', // Dailymotion.
         'theme'        => '', // Youtube.
+        'title'        => '', // Vimeo (1).
         'label'        => '',
         'labeltag'     => '',
         'wraptag'      => '',
@@ -57,12 +58,6 @@ function oui_video($atts, $thing)
 
     // Use the logo attribute to alterate the modest_branding Youtube parameter.
     $modest_branding = $logo === '0' ? '1' : '';
-
-    if (!$info) {
-        $portrait = '0';
-        $title = '0';
-        $byline = '0';
-    }
 
     /*
      * Define the video provider and the video id.

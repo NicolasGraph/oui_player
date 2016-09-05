@@ -19,9 +19,9 @@ function _oui_video_player_infos($provider, $video_id, $no_cookie)
                 'byline'    => array('byline' => '1'),
                 'color'     => array('color' => '00adef'),
                 'loop'      => array('loop' => '0'),
-                'player_id' => array('color' => ''),
+                'player_id' => array('player_id' => ''),
                 'portrait'  => array('portrait' => '1'),
-                'title'     => array('info' => '1')
+                'title'     => array('title' => '1')
             );
             $player_infos = array($src => $params);
             return $player_infos;
