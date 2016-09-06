@@ -36,6 +36,9 @@ Golbal prefs:
 * *Width* - Uses as the default value of the @width@ attribute.
 * *Height* - Uses as the default value of the @height@ attribute.
 * *Ratio* - Uses as the default value of the @ratio@ attribute.
+* *Display Vimeo player prefs* - Displays the Vimeo player parameters as prefs.
+* *Display Youtube player prefs* - Displays the Youtube player parameters as prefs.
+* *Display Dailymotion player prefs* - Displays the Dailymotion player parameters as prefs.
 
 Players parameters:
 
