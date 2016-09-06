@@ -62,7 +62,8 @@ function oui_video($atts, $thing)
     /*
      * Define the video provider and the video id.
      */
-    $match = _oui_video_infos($video);
+    $oui_video = new Oui_Video;
+    $match = $oui_video->videoInfos($video);
     if (!$match) {
         $provider = $provider ? strtolower($provider) : get_pref('oui_video_provider');
         $custom = $video ? strtolower($video) : strtolower(get_pref('oui_video_custom_field'));
@@ -76,9 +77,10 @@ function oui_video($atts, $thing)
     /*
      * Define the player src and parameters.
      */
-    $player_infos = _oui_video_player_infos($provider, $video_id, $no_cookie);
+    $player_infos = $oui_video->playerInfos($provider, $no_cookie);
     $src = key($player_infos);
     $params = $player_infos[$src];
+    $src .= $video_id;
 
     /*
      * Create a list of needed parameters
@@ -161,7 +163,9 @@ function oui_if_video($atts, $thing)
         'provider' => ''
     ), $atts));
 
-    $result = _oui_video($video) ? _oui_video($video) : _oui_video($thisarticle[strtolower($video)]);
+    $oui_video = new Oui_Video;
+    $video_infos = $oui_video->videoInfos($video);
+    $result = $video_infos ? $video_infos : videoInfos($thisarticle[strtolower($video)]);
 
     if ($provider) {
         if (strtolower($provider) === key($result)) {

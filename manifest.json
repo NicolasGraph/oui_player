@@ -1,7 +1,7 @@
 {
     "name"        : "oui_video",
     "description" : "Embed videos with customised player",
-    "version"     : "0.1.0-beta-2",
+    "version"     : "0.1.0-beta-3",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -9,9 +9,8 @@
     "flags"       : 3,
     "help"        : {"file" : ["./README.textile"]},
     "code": {"file" : [
-        "./src/admin.php",
-        "./src/public.php",
-        "./src/video_infos.php",
-        "./src/player_infos.php"
+        "./src/class.php",
+        "./src/tags.php",
+        "./src/pref_functions.php"
     ]}
 }
