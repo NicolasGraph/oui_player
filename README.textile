@@ -36,13 +36,11 @@ Golbal prefs:
 * *Width* - Uses as the default value of the @width@ attribute.
 * *Height* - Uses as the default value of the @height@ attribute.
 * *Ratio* - Uses as the default value of the @ratio@ attribute.
-* *Display Vimeo player prefs* - Displays the Vimeo player parameters as prefs.
-* *Display Youtube player prefs* - Displays the Youtube player parameters as prefs.
-* *Display Dailymotion player prefs* - Displays the Dailymotion player parameters as prefs.
+* *Display Vimeo player prefs* - Displays the Vimeo player parameters as a group of prefs.
+* *Display Youtube player prefs* - Displays the Youtube player parameters as a group of prefs.
+* *Display Dailymotion player prefs* - Displays the Dailymotion player parameters as a group of prefs.
 
-Players parameters:
-
-Most player parameters can also be set through plugin prefs; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_youtube prefs.
+Most player parameters can be set through plugin prefs if enabled; see "Dailymotion player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_dailymotion, "Vimeo player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_vimeo and "Youtube player":http://localhost:8888/test/textpattern-4.6/textpattern/index.php?event=prefs#prefs_group_oui_video_youtube prefs.
 
 h2(#tags). Tags
 
