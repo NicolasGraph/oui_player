@@ -129,8 +129,7 @@ h4. Attributes
 
 Use one or the other of the following:
 
-* @custom_field=""@ - Name of the custom field containing video IDs/urls associated with article.
-* @video=""@ - A URL to check if it is a valid video URL.
+* @video=""@ - A URL or a custom field containing an URL to check if it is a valid video URL.
 * @provider=""@ - vimeo, youtube or dailymotion.
 
 h2(#examples). Examples

@@ -49,7 +49,7 @@ class Oui_Video
         ),
         'vimeo' => array(
             'patterns' => array(
-                '#^https?://((player|www)\.)?vimeo\.com(/video)?/(\d+)#i' => '4',
+                '#((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)#i' => '4',
             ),
             'src' => '//player.vimeo.com/video/',
             'params' => array(
@@ -113,8 +113,7 @@ class Oui_Video
         ),
         'youtube' => array(
             'patterns' => array(
-                '#^(http|https)?:\/\/www\.youtube\.com(\/watch\?)?([^\&\?\/]+)#i' => '3',
-                '#^(http|https)?[:\/\/]+youtu\.be\/([^\&\?\/]+)#i' => '2',
+                '#(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)#i' => '6',
             ),
             'src' => '//www.youtube.com/embed/',
             'params' => array(
@@ -227,8 +226,7 @@ class Oui_Video
         ),
         'dailymotion' => array(
             'patterns' => array(
-                '#^(http|https)?://www\.dailymotion\.com(/video)?/([A-Za-z0-9]+)#i' => '3',
-                '#^(http|https)?://dai\.ly(/video)?/([A-Za-z0-9]+)#i' => '3',
+                '#(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '6'
             ),
             'src' => '//www.dailymotion.com/embed/video/',
             'params' => array(
