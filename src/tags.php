@@ -165,7 +165,7 @@ function oui_if_video($atts, $thing)
 
     $oui_video = new Oui_Video;
     $video_infos = $oui_video->videoInfos($video);
-    $result = $video_infos ? $video_infos : videoInfos($thisarticle[strtolower($video)]);
+    $result = $video_infos ? $video_infos : $oui_video->videoInfos($thisarticle[strtolower($video)]);
 
     if ($provider) {
         if (strtolower($provider) === key($result)) {
