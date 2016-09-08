@@ -78,18 +78,17 @@ function oui_video($atts, $thing)
      * Define the player src and parameters.
      */
     $player_infos = $oui_video->playerInfos($provider, $no_cookie);
-    $src = key($player_infos);
-    $params = $player_infos[$src];
-    $src .= $video_id;
+    $src = $player_infos['src'] . $video_id;
+    $params = $player_infos['params'];
 
     /*
      * Create a list of needed parameters
      */
     $qString = array();
     foreach ($params as $param => $infos) {
-        $att = key($infos);
+        $att = $infos['att'];
         $value = $$att;
-        $default = $infos[$att];
+        $default = $infos['default'];
         if ($provider === 'dailymotion') {
             // Bloody Dailymotion…
             $value === 0 ? $value = 'false' : '';
