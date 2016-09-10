@@ -103,14 +103,30 @@ function oui_video($atts, $thing)
         if ($att === '' && $pref !== $default) {
             $qString[] = $param . '=' . $pref;
         } elseif ($att !== '') {
-            if ($valid && in_array($att, $valid)) {
-                $qString[] = $param . '=' . $att;
+            if ($valid) {
+                if (is_array($valid)) {
+                    if (in_array($att, $valid)) {
+                        $qString[] = $param . '=' . $att;
+                    } else {
+                        $valid = implode(', ', $valid);
+                        trigger_error(
+                            'Unknown attribute value for ' . $attribute .
+                            '. Valid values are: ' . $valid . '.'
+                        );
+                        return;
+                    }
+                } else {
+                    if (preg_match($valid, $att)) {
+                    } else {
+                        trigger_error(
+                            'Unknown attribute value for ' . $attribute .
+                            '. A valid value must respect the following pattern ' . $valid . '.'
+                        );
+                        return;
+                    }
+                }
             } else {
-                trigger_error(
-                    'Unknown attribute value for ' . $attribute .
-                    '. Valid values are: ' . $valid . '.'
-                );
-                return;
+                $qString[] = $param . '=' . $att;
             }
         }
     }
