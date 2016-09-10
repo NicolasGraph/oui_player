@@ -10,7 +10,7 @@
     "help"        : {"file" : ["./README.textile"]},
     "code": {"file" : [
         "./src/class.php",
-        "./src/tags.php",
-        "./src/pref_functions.php"
+        "./src/pref_functions.php",
+        "./src/tags.php"
     ]}
 }

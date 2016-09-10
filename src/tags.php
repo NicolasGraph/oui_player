@@ -1,6 +1,8 @@
 <?php
 
-# --- BEGIN PLUGIN CODE ---
+/**
+ * Tag registration for Txp 4.6+
+ */
 if (class_exists('\Textpattern\Tag\Registry')) {
     // Register Textpattern tags for TXP 4.6+.
     Txp::get('\Textpattern\Tag\Registry')
@@ -64,6 +66,7 @@ function oui_video($atts, $thing)
      */
     $oui_video = new Oui_Video;
     $match = $oui_video->videoInfos($video);
+
     if (!$match) {
         $provider = $provider ? strtolower($provider) : get_pref('oui_video_provider');
         $custom = $video ? strtolower($video) : strtolower(get_pref('oui_video_custom_field'));
@@ -86,20 +89,29 @@ function oui_video($atts, $thing)
      */
     $qString = array();
     foreach ($params as $param => $infos) {
-        $att = $infos['att'];
-        $value = $$att;
+        $pref = get_pref('oui_video_' . $provider . '_' . $param);
         $default = $infos['default'];
+        $valid = isset($infos['valid']) ? $infos['valid'] : false;
+        $attribute = $infos['att'];
+        $att = $$attribute;
+
         if ($provider === 'dailymotion') {
             // Bloody Dailymotion…
-            $value === 0 ? $value = 'false' : '';
-            $value === 1 ? $value = 'true' : '';
+            $att === 0 ? $att = 'false' : '';
+            $att === 1 ? $att = 'true' : '';
         }
-        if ($value === '' && get_pref('oui_video_' . $provider . '_' . $att) !== $default) {
-            // Attribute is empty but the related plugin pref was changed, use it.
-            $qString[] = $param . '=' . get_pref('oui_video_' . $provider . '_' . $att);
-        } elseif ($value !== '') {
-            // Attribute is not empty, use it.
-            $qString[] = $param . '=' . $value;
+        if ($att === '' && $pref !== $default) {
+            $qString[] = $param . '=' . $pref;
+        } elseif ($att !== '') {
+            if ($valid && in_array($att, $valid)) {
+                $qString[] = $param . '=' . $att;
+            } else {
+                trigger_error(
+                    'Unknown attribute value for ' . $attribute .
+                    '. Valid values are: ' . $valid . '.'
+                );
+                return;
+            }
         }
     }
 

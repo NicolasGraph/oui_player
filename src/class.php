@@ -2,48 +2,36 @@
 
 class Oui_Video
 {
+    protected $plugin = 'oui_video';
+    protected $privs = '1, 2';
     protected $providers = array(
         'all'         => array(
-            'prefs' => array(
-                'oui_video_custom_field' => array(
-                    'value'  => 'article_image',
-                    'event'  => 'oui_video',
-                    'widget' => 'oui_video_custom_fields',
+            'params' => array(
+                'custom_field' => array(
+                    'widget'  => 'oui_video_custom_fields',
+                    'default' => 'article_image',
                 ),
-                'oui_video_provider' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video',
-                    'widget' => 'oui_video_provider',
+                'provider' => array(
+                    'default' => 'youtube',
+                    'valid'   => array('dailymotion', 'vimeo', 'Youtube'),
                 ),
-                'oui_video_width' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video',
-                    'widget' => 'text_input',
+                'width' => array(
+                    'default' => '',
                 ),
-                'oui_video_height' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video',
-                    'widget' => 'text_input',
+                'height' => array(
+                    'default' => '',
                 ),
-                'oui_video_ratio' => array(
-                    'value'  => '4:3',
-                    'event'  => 'oui_video',
-                    'widget' => 'text_input',
+                'ratio' => array(
+                    'default' => '4:3',
                 ),
-                'oui_video_vimeo_prefs' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video',
-                    'widget' => 'yesnoradio',
+                'vimeo_prefs' => array(
+                    'default' => 1,
                 ),
-                'oui_video_dailymotion_prefs' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video',
-                    'widget' => 'yesnoradio',
+                'dailymotion_prefs' => array(
+                    'default' => 1,
                 ),
-                'oui_video_youtube_prefs' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video',
-                    'widget' => 'yesnoradio',
+                'youtube_prefs' => array(
+                    'default' => 1,
                 ),
             ),
         ),
@@ -53,18 +41,22 @@ class Oui_Video
             'params'   => array(
                 'autopause' => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'autopause',
                 ),
                 'autoplay'  => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'autoplay',
                 ),
                 'badge'     => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'badge',
                 ),
                 'byline'    => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'byline',
                 ),
                 'color'     => array(
@@ -73,6 +65,7 @@ class Oui_Video
                 ),
                 'loop'      => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'loop',
                 ),
                 'player_id' => array(
@@ -81,58 +74,13 @@ class Oui_Video
                 ),
                 'portrait'  => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'portrait',
                 ),
                 'title'     => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'title',
-                ),
-            ),
-            'prefs'    => array(
-                'oui_video_vimeo_autopause' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_autoplay' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_badge' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_byline' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_color' => array(
-                    'value'  => '00adef',
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_vimeo_loop' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_player_id' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_vimeo_portrait' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_vimeo_title' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_vimeo',
-                    'widget' => 'yesnoradio',
                 ),
             ),
         ),
@@ -142,26 +90,32 @@ class Oui_Video
             'params'   => array(
                 'autohide'       => array(
                     'default' => '2',
+                    'valid'   => array('0', '1', '2'),
                     'att'     => 'autohide',
                 ),
                 'autoplay'       => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'autoplay',
                 ),
                 'cc_load_policy' => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'user_prefs',
                 ),
                 'color'          => array(
                     'default' => 'red',
+                    'valid'   => array('red', 'white'),
                     'att'     => 'color',
                 ),
                 'controls'       => array(
                     'default' => '1',
+                    'valid'   => array('0', '1', '2'),
                     'att'     => 'controls',
                 ),
                 'enablejsapi'    => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'api',
                 ),
                 'end'            => array(
@@ -170,6 +124,7 @@ class Oui_Video
                 ),
                 'fs'             => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'full_screen',
                 ),
                 'hl'             => array(
@@ -178,14 +133,17 @@ class Oui_Video
                 ),
                 'iv_load_policy' => array(
                     'default' => '1',
+                    'valid'   => array('1', '3'),
                     'att'     => 'annotations',
                 ),
                 'loop'           => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'loop',
                 ),
                 'modestbranding' => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'modest_branding',
                 ),
                 'origin'         => array(
@@ -198,6 +156,7 @@ class Oui_Video
                 ),
                 'rel'            => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'related',
                 ),
                 'start'          => array(
@@ -206,98 +165,13 @@ class Oui_Video
                 ),
                 'showinfo'       => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'info',
                 ),
                 'theme'          => array(
                     'default' => 'dark',
+                    'valid'   => array('dark', 'light'),
                     'att'     => 'theme',
-                ),
-            ),
-            'prefs'    => array(
-                'oui_video_youtube_no_cookie' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_autohide' => array(
-                    'value'  => 2,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'oui_video_youtube_012',
-                ),
-                'oui_video_youtube_autoplay' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_user_prefs' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_color' => array(
-                    'value'  => 'red',
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'oui_video_youtube_color',
-                ),
-                'oui_video_youtube_controls' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'oui_video_youtube_012',
-                ),
-                'oui_video_youtube_api' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_full_screen' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_lang' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_youtube_annotations' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_youtube_loop' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_modest_branding' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_origin' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_youtube_player_id' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_youtube_related' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_info' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_youtube_theme' => array(
-                    'value'  => 'dark',
-                    'event'  => 'oui_video_youtube',
-                    'widget' => 'oui_video_theme',
                 ),
             ),
         ),
@@ -306,19 +180,23 @@ class Oui_Video
             'src'      => '//www.dailymotion.com/embed/video/',
             'params'   => array(
                 'api'                  => array(
-                    'default' => '0',
+                    'default' => '',
+                    'valid'   => array('', 'postMessage', 'location', '1'),
                     'att'     => 'api',
                 ),
                 'autoplay'             => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'autoplay',
                 ),
                 'controls'             => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'controls',
                 ),
                 'endscreen-enable'     => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'related',
                 ),
                 'id'                   => array(
@@ -327,6 +205,7 @@ class Oui_Video
                 ),
                 'mute'                 => array(
                     'default' => '0',
+                    'valid'   => array('0', '1'),
                     'att'     => 'mute',
                 ),
                 'origin'               => array(
@@ -335,10 +214,12 @@ class Oui_Video
                 ),
                 'quality'              => array(
                     'default' => 'auto',
+                    'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
                     'att'     => 'quality',
                 ),
                 'sharing-enable'       => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'sharing',
                 ),
                 'start'                => array(
@@ -359,120 +240,47 @@ class Oui_Video
                 ),
                 'ui-logo'              => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'logo',
                 ),
                 'ui-theme'             => array(
                     'default' => 'dark',
+                    'valid'   => array('dark', 'light'),
                     'att'     => 'theme',
                 ),
                 'ui-start-screen-info' => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                     'att'     => 'info',
-                ),
-            ),
-            'prefs'    => array(
-                'oui_video_dailymotion_api' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'oui_video_dailymotion_api',
-                ),
-                'oui_video_dailymotion_autoplay' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_controls' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_related' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_player_id' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_dailymotion_mute' => array(
-                    'value'  => 0,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_origin' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_dailymotion_quality' => array(
-                    'value'  => 'auto',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'oui_video_dailymotion_quality',
-                ),
-                'oui_video_dailymotion_sharing' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_lang' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_dailymotion_syndication' => array(
-                    'value'  => '',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_dailymotion_color' => array(
-                    'value'  => 'ffcc33',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'text_input',
-                ),
-                'oui_video_dailymotion_logo' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_info' => array(
-                    'value'  => 1,
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'yesnoradio',
-                ),
-                'oui_video_dailymotion_theme' => array(
-                    'value'  => 'dark',
-                    'event'  => 'oui_video_dailymotion',
-                    'widget' => 'oui_video_theme',
                 ),
             ),
         ),
     );
+
     /**
      * Register callbacks.
      */
     public function __construct()
     {
         if (txpinterface === 'admin') {
-            add_privs('plugin_prefs.oui_video', '1');
-            add_privs('prefs.oui_video', '1, 2');
+            add_privs('plugin_prefs.' . $this->plugin, $this->privs);
+            add_privs('prefs.' . $this->plugin, $this->privs);
 
             // Add privs to provider prefs only if they are enabled.
-            foreach ($this->providers as $provider => $provider_infos) {
+            foreach ($this->providers as $provider => $infos) {
                 if ($provider !== 'all') {
-                    if (!empty($_POST['oui_video_' . $provider . '_prefs']) || (!isset($_POST['oui_video_' . $provider . '_prefs']) && get_pref('oui_video_' . $provider . '_prefs'))) {
-                        add_privs('prefs.oui_video_' . $provider, '1, 2');
+                    if (!empty($_POST[$this->plugin . '_' . $provider . '_prefs']) || (!isset($_POST[$this->plugin . '_' . $provider . '_prefs']) && get_pref($this->plugin . '_' . $provider . '_prefs'))) {
+                        add_privs('prefs.' . $this->plugin . '_' . $provider, $this->privs);
                     }
                 }
-                foreach ($provider_infos['prefs'] as $pref => $value) {
+                foreach ($infos['params'] as $pref => $options) {
                     register_callback(array($this, 'pophelp'), 'admin_help', $pref);
                 }
             }
 
-            register_callback(array($this, 'welcome'), 'plugin_lifecycle.oui_video');
+            register_callback(array($this, 'welcome'), 'plugin_lifecycle.' . $this->plugin);
             register_callback(array($this, 'install'), 'prefs', null, 1);
-            register_callback(array($this, 'options'), 'plugin_prefs.oui_video', null, 1);
+            register_callback(array($this, 'options'), 'plugin_prefs.' . $this->plugin, null, 1);
         }
     }
 
@@ -513,7 +321,7 @@ class Oui_Video
     public function options()
     {
         $url = defined('PREF_PLUGIN')
-               ? '?event=prefs#prefs_group_oui_video'
+               ? '?event=prefs#prefs_group_' . $this->plugin
                : '?event=prefs&step=advanced_prefs';
         header('Location: ' . $url);
     }
@@ -525,15 +333,23 @@ class Oui_Video
     {
         $position = 250;
 
-        foreach ($this->providers as $provider) {
-            foreach ($provider['prefs'] as $pref => $options) {
-                if (get_pref($pref, null) === null) {
+        foreach ($this->providers as $provider => $infos) {
+            $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
+            foreach ($infos['params'] as $pref => $options) {
+                // Check what is needed as the html value of the pref
+                $valid = isset($options['valid']) ? $options['valid'] : false;
+                if ($valid && is_array($valid)) {
+                    $widget = $valid === array('0', '1') ? 'yesnoradio' : 'oui_video_pref';
+                } else {
+                    $widget = 'text_input';
+                }
+                if (get_pref($group . '_' . $pref, null) === null) {
                     set_pref(
-                        $pref,
-                        $options['value'],
-                        $options['event'],
+                        $group . '_' . $pref,
+                        $options['default'],
+                        $group,
                         defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
-                        $options['widget'],
+                        isset($options['widget']) ? $options['widget'] : $widget,
                         $position
                     );
                 }
@@ -543,8 +359,32 @@ class Oui_Video
     }
 
     /**
-     * Video url checking
-     * Return the video provider and the video id.
+     * Build select inputs for plugin prefs
+     *
+     * @param string $name the name of the preference (Textpattern variable)
+     * @param string $val The value of the preference (Textpattern variable)
+     */
+    public function prefSelect($name, $val)
+    {
+        foreach ($this->providers as $provider => $infos) {
+            $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
+            foreach ($infos['params'] as $pref => $options) {
+                if ($name === $group . '_' . $pref) {
+                    $valid = $options['valid'];
+                    $vals = array();
+                    foreach ($valid as $value) {
+                        $value === '' ?: $vals[$value] = gtxt($group  . '_' . $pref . '_' . $value);
+                    }
+                    return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the video provider and the video id from its url
+     *
+     * @param string $video The video url
      */
     public function videoInfos($video)
     {
@@ -560,11 +400,11 @@ class Oui_Video
         }
         return false;
     }
+
     /**
-     * Get provider related variables and associate attributes to player paramaters
+     * Get the provider player url and its parameters/attributes
      *
      * @param string $provider The video provider
-     * @param string $video_id The video id
      * @param string $no_cookie The no_cookie attribute or pref value (Youtube)
      */
     public function playerInfos($provider, $no_cookie)
