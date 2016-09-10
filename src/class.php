@@ -3,6 +3,7 @@
 class Oui_Video
 {
     protected $plugin = 'oui_video';
+    protected $tags = array('oui_video', 'oui_if_video');
     protected $privs = '1, 2';
     protected $providers = array(
         'all'         => array(
@@ -117,6 +118,11 @@ class Oui_Video
                     'valid'   => array('0', '1', '2'),
                     'att'     => 'controls',
                 ),
+                'disablekb'    => array(
+                    'default' => '0',
+                    'valid'   => array('0', '1'),
+                    'att'     => 'disablekb',
+                ),
                 'enablejsapi'    => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
@@ -158,6 +164,15 @@ class Oui_Video
                 'playerapiid'    => array(
                     'default' => '',
                     'att'     => 'player_id',
+                ),
+                'playlist'    => array(
+                    'default' => '',
+                    'att'     => 'playlist',
+                ),
+                'playinline'    => array(
+                    'default' => '0',
+                    'valid'   => array('0', '1'),
+                    'att'     => 'playinline',
                 ),
                 'rel'            => array(
                     'default' => '1',
@@ -289,6 +304,14 @@ class Oui_Video
             register_callback(array($this, 'welcome'), 'plugin_lifecycle.' . $this->plugin);
             register_callback(array($this, 'install'), 'prefs', null, 1);
             register_callback(array($this, 'options'), 'plugin_prefs.' . $this->plugin, null, 1);
+        } else {
+            if (class_exists('\Textpattern\Tag\Registry')) {
+                // Register Textpattern tags for TXP 4.6+.
+                Txp::get('\Textpattern\Tag\Registry')
+                foreach ($this->tags as $tag) {
+                    ->register($tag);
+                }
+            }
         }
     }
 

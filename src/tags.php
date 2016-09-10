@@ -1,16 +1,6 @@
 <?php
 
 /**
- * Tag registration for Txp 4.6+
- */
-if (class_exists('\Textpattern\Tag\Registry')) {
-    // Register Textpattern tags for TXP 4.6+.
-    Txp::get('\Textpattern\Tag\Registry')
-        ->register('oui_video')
-        ->register('oui_if_video');
-}
-
-/**
  * Main plugin tag
  * Display a video
  */
@@ -33,6 +23,7 @@ function oui_video($atts, $thing)
         'byline'       => '', // Vimeo (1).
         'controls'     => '', // Youtube (1), Dailymotion (true).
         'color'        => '', // Youtube (red), Dailymotion (ffcc33).
+        'disablekb'    => '', // Youtube (0)
         'end'          => '', // Youtube.
         'info'         => '', // Youtube (1), Dailymotion (true).
         'full_screen'  => '', // Youtube (1).
@@ -43,6 +34,8 @@ function oui_video($atts, $thing)
         'no_cookie'    => '', // Youtube.
         'origin'       => '', // Youtube, Dailymotion.
         'player_id'    => '', // Vimeo, Youtube, Dailymotion.
+        'playlist'     => '', // Youtube.
+        'playsinline'  => '', // Youtube (0).
         'portrait'     => '', // Vimeo (1).
         'quality'      => '', // Dailymotion.
         'related'      => '', // Youtube (1), Dailymotion (true).
