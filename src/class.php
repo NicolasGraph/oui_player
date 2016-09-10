@@ -26,12 +26,15 @@ class Oui_Video
                 ),
                 'vimeo_prefs' => array(
                     'default' => 1,
+                    'valid'   => array('0', '1'),
                 ),
                 'dailymotion_prefs' => array(
                     'default' => 1,
+                    'valid'   => array('0', '1'),
                 ),
                 'youtube_prefs' => array(
                     'default' => 1,
+                    'valid'   => array('0', '1'),
                 ),
             ),
         ),
@@ -61,6 +64,7 @@ class Oui_Video
                 ),
                 'color'     => array(
                     'default' => '00adef',
+                    'valid'   => '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
                     'att'     => 'color',
                 ),
                 'loop'      => array(
@@ -120,6 +124,7 @@ class Oui_Video
                 ),
                 'end'            => array(
                     'default' => '',
+                    'valid'   => '/^\d+$/',
                     'att'     => 'end',
                 ),
                 'fs'             => array(
@@ -161,6 +166,7 @@ class Oui_Video
                 ),
                 'start'          => array(
                     'default' => '',
+                    'valid'   => '/^\d+$/',
                     'att'     => 'start',
                 ),
                 'showinfo'       => array(
@@ -224,6 +230,7 @@ class Oui_Video
                 ),
                 'start'                => array(
                     'default' => '0',
+                    'valid'   => '/^\d+$/',
                     'att'     => 'start',
                 ),
                 'subtitles-default'    => array(
@@ -236,6 +243,7 @@ class Oui_Video
                 ),
                 'ui-highlight'         => array(
                     'default' => 'ffcc33',
+                    'valid'   => '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
                     'att'     => 'color',
                 ),
                 'ui-logo'              => array(
