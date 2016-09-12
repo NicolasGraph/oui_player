@@ -3,7 +3,203 @@
 class Oui_Video
 {
     protected $plugin = 'oui_video';
-    protected $tags = array('oui_video', 'oui_if_video');
+    protected $pophelp = 'http://help.ouisource.com/';
+    protected $tags = array(
+        'oui_video' => array(
+            'api' => array(
+                'default' => '',
+            ),
+            'autohide' => array(
+                'default' => '',
+                'valid'   => array('0', '1', '2'),
+            ),
+            'autopause' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'autoplay' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'badge' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'byline' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'class' => array(
+                'default' => '',
+            ),
+            'controls' => array(
+                'default' => '',
+            ),
+            'cc_load_policy' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'color' => array(
+                'default' => '',
+            ),
+            'disablekb' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'enablejsapi' => array(
+                'default' => '',
+            ),
+            'end' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
+            'endscreen_enable' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'fs' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'height' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
+            'hl' => array(
+                'default' => '',
+            ),
+            'id' => array(
+                'default' => '',
+            ),
+            'iv_load_policy' => array(
+                'default' => '',
+                'valid'   => array('1', '3'),
+            ),
+            'label' => array(
+                'default' => '',
+            ),
+            'labeltag' => array(
+                'default' => '',
+            ),
+            'logo' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'loop' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'modestbranding' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'mute' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'no_cookie' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'origin' => array(
+                'default' => '',
+            ),
+            'player_id' => array(
+                'default' => '',
+            ),
+            'playerapiid' => array(
+                'default' => '',
+            ),
+            'playlist' => array(
+                'default' => '',
+            ),
+            'playsinline' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'portrait' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'provider' => array(
+                'default' => '',
+                'valid'   => array('vimeo', 'youtube', 'dailymotion'),
+            ),
+            'quality' => array(
+                'default' => '',
+                'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
+            ),
+            'ratio' => array(
+                'default' => '',
+                'valid'   => '/^(\d+):(\d+)$/'
+            ),
+            'rel' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'sharing_enable' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'showinfo' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'start' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
+            'subtitles_default' => array(
+                'default' => '',
+            ),
+            'syndication' => array(
+                'default' => '',
+            ),
+            'theme' => array(
+                'default' => '',
+                'valid'   => array('dark', 'light'),
+            ),
+            'title' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'ui_highlight' => array(
+                'default' => '',
+                'valid'   => '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+            ),
+            'ui_logo' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'ui_theme' => array(
+                'default' => '',
+                'valid'   => array('dark', 'light'),
+            ),
+            'ui_start_screen_info' => array(
+                'default' => '',
+                'valid'   => array('0', '1'),
+            ),
+            'video' => array(
+                'default' => '',
+            ),
+            'width' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
+            'wraptag' => array(
+                'default' => '',
+            ),
+        ),
+        'oui_if_video' => array(
+            'video' => array(
+                'default' => '',
+            ),
+            'provider' => array(
+                'default' => '',
+                'valid'   => array('vimeo', 'youtube', 'dailymotion'),
+            ),
+        ),
+    );
     protected $privs = '1, 2';
     protected $providers = array(
         'all'         => array(
@@ -17,7 +213,7 @@ class Oui_Video
                     'valid'   => array('dailymotion', 'vimeo', 'Youtube'),
                 ),
                 'width' => array(
-                    'default' => '',
+                    'default' => '640',
                 ),
                 'height' => array(
                     'default' => '',
@@ -41,240 +237,192 @@ class Oui_Video
         ),
         'vimeo'       => array(
             'patterns' => array('#((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)#i' => '4'),
-            'src'      => '//player.vimeo.com/video/',
+            'src'      => array('//player.vimeo.com/video/'),
             'params'   => array(
                 'autopause' => array(
                     'default' => '1',
-                    'valid'   => array('0', '1'),
-                    'att'     => 'autopause',
                 ),
                 'autoplay'  => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'autoplay',
                 ),
                 'badge'     => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'badge',
                 ),
                 'byline'    => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'byline',
                 ),
                 'color'     => array(
                     'default' => '00adef',
-                    'valid'   => '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-                    'att'     => 'color',
                 ),
                 'loop'      => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'loop',
                 ),
                 'player_id' => array(
                     'default' => '',
-                    'att'     => 'player_id',
                 ),
                 'portrait'  => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'portrait',
                 ),
                 'title'     => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'title',
                 ),
             ),
         ),
         'youtube'     => array(
             'patterns' => array('#(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)#i' => '6'),
-            'src'      => '//www.youtube.com/embed/',
+            'src'      => array('//www.youtube.com/embed/', '//www.youtube-nocookie.com/embed/'),
             'params'   => array(
+                'no_cookie'       => array(
+                    'default' => '1',
+                    'valid'   => array('0', '1'),
+                ),
                 'autohide'       => array(
                     'default' => '2',
                     'valid'   => array('0', '1', '2'),
-                    'att'     => 'autohide',
                 ),
                 'autoplay'       => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'autoplay',
                 ),
                 'cc_load_policy' => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'user_prefs',
                 ),
                 'color'          => array(
                     'default' => 'red',
                     'valid'   => array('red', 'white'),
-                    'att'     => 'color',
                 ),
                 'controls'       => array(
                     'default' => '1',
                     'valid'   => array('0', '1', '2'),
-                    'att'     => 'controls',
                 ),
                 'disablekb'    => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'disablekb',
                 ),
                 'enablejsapi'    => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'api',
                 ),
                 'end'            => array(
                     'default' => '',
-                    'valid'   => '/^\d+$/',
-                    'att'     => 'end',
                 ),
                 'fs'             => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'full_screen',
                 ),
                 'hl'             => array(
                     'default' => '',
-                    'att'     => 'lang',
                 ),
                 'iv_load_policy' => array(
                     'default' => '1',
                     'valid'   => array('1', '3'),
-                    'att'     => 'annotations',
                 ),
                 'loop'           => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'loop',
                 ),
                 'modestbranding' => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'modest_branding',
                 ),
                 'origin'         => array(
                     'default' => '',
-                    'att'     => 'origin',
                 ),
                 'playerapiid'    => array(
                     'default' => '',
-                    'att'     => 'player_id',
                 ),
                 'playlist'    => array(
                     'default' => '',
-                    'att'     => 'playlist',
                 ),
-                'playinline'    => array(
+                'playsinline'    => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'playinline',
                 ),
                 'rel'            => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'related',
                 ),
                 'start'          => array(
                     'default' => '',
-                    'valid'   => '/^\d+$/',
-                    'att'     => 'start',
                 ),
                 'showinfo'       => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'info',
                 ),
                 'theme'          => array(
                     'default' => 'dark',
                     'valid'   => array('dark', 'light'),
-                    'att'     => 'theme',
                 ),
             ),
         ),
         'dailymotion' => array(
             'patterns' => array('#(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '6'),
-            'src'      => '//www.dailymotion.com/embed/video/',
+            'src'      => array('//www.dailymotion.com/embed/video/'),
             'params'   => array(
                 'api'                  => array(
                     'default' => '',
                     'valid'   => array('', 'postMessage', 'location', '1'),
-                    'att'     => 'api',
                 ),
                 'autoplay'             => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'autoplay',
                 ),
                 'controls'             => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'controls',
                 ),
                 'endscreen-enable'     => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'related',
                 ),
                 'id'                   => array(
                     'default' => '',
-                    'att'     => 'player_id',
                 ),
                 'mute'                 => array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
-                    'att'     => 'mute',
                 ),
                 'origin'               => array(
                     'default' => '',
-                    'att'     => 'origin',
                 ),
                 'quality'              => array(
                     'default' => 'auto',
                     'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
-                    'att'     => 'quality',
                 ),
                 'sharing-enable'       => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'sharing',
                 ),
                 'start'                => array(
                     'default' => '0',
-                    'valid'   => '/^\d+$/',
-                    'att'     => 'start',
                 ),
                 'subtitles-default'    => array(
                     'default' => '',
-                    'att'     => 'lang',
                 ),
                 'syndication'          => array(
                     'default' => '',
-                    'att'     => 'syndication',
                 ),
                 'ui-highlight'         => array(
                     'default' => 'ffcc33',
-                    'valid'   => '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-                    'att'     => 'color',
                 ),
                 'ui-logo'              => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'logo',
                 ),
                 'ui-theme'             => array(
                     'default' => 'dark',
                     'valid'   => array('dark', 'light'),
-                    'att'     => 'theme',
                 ),
                 'ui-start-screen-info' => array(
                     'default' => '1',
                     'valid'   => array('0', '1'),
-                    'att'     => 'info',
                 ),
             ),
         ),
@@ -301,30 +449,17 @@ class Oui_Video
                 }
             }
 
-            register_callback(array($this, 'welcome'), 'plugin_lifecycle.' . $this->plugin);
-            register_callback(array($this, 'install'), 'prefs', null, 1);
+            register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
+            register_callback(array($this, 'setPrefs'), 'prefs', null, 1);
             register_callback(array($this, 'options'), 'plugin_prefs.' . $this->plugin, null, 1);
         } else {
             if (class_exists('\Textpattern\Tag\Registry')) {
                 // Register Textpattern tags for TXP 4.6+.
-                Txp::get('\Textpattern\Tag\Registry')
-                foreach ($this->tags as $tag) {
-                    ->register($tag);
+                foreach ($this->tags as $tag => $attributes) {
+                    Txp::get('\Textpattern\Tag\Registry')->register($tag);
                 }
             }
         }
-    }
-
-    /**
-     * Get external popHelp contents
-     *
-     * @param string $evt Textpattern action event
-     * @param string $stp Textpattern action step
-     * @param string $ui Textpattern user interface element
-     */
-    public function pophelp($evt, $stp, $ui, $vars)
-    {
-        return str_replace(HELP_URL, 'http://help.ouisource.com/', $ui);
     }
 
     /**
@@ -333,15 +468,15 @@ class Oui_Video
      * @param string $evt Textpattern action event
      * @param string $stp Textpattern action step
      */
-    public function welcome($evt, $stp)
+    public function lifeCycle($evt, $stp)
     {
         switch ($stp) {
             case 'enabled':
-                $this->install();
+                $this->setPrefs();
                 break;
             case 'deleted':
-                safe_delete('txp_prefs', "event LIKE 'oui\_video%'");
-                safe_delete('txp_lang', "name LIKE 'oui\_video%'");
+                safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
+                safe_delete('txp_lang', "name LIKE '" . $this->plugin . "%'");
                 break;
         }
     }
@@ -351,42 +486,25 @@ class Oui_Video
      */
     public function options()
     {
-        $url = defined('PREF_PLUGIN')
-               ? '?event=prefs#prefs_group_' . $this->plugin
-               : '?event=prefs&step=advanced_prefs';
+        $url = '?event=prefs#prefs_group_' . $this->plugin;
         header('Location: ' . $url);
     }
 
     /**
-     * Install plugin prefs
+     * Define the pref widget
+     *
+     * @param array $options Current pref options
      */
-    public function install()
+    public function prefWidget($options)
     {
-        $position = 250;
-
-        foreach ($this->providers as $provider => $infos) {
-            $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
-            foreach ($infos['params'] as $pref => $options) {
-                // Check what is needed as the html value of the pref
-                $valid = isset($options['valid']) ? $options['valid'] : false;
-                if ($valid && is_array($valid)) {
-                    $widget = $valid === array('0', '1') ? 'yesnoradio' : 'oui_video_pref';
-                } else {
-                    $widget = 'text_input';
-                }
-                if (get_pref($group . '_' . $pref, null) === null) {
-                    set_pref(
-                        $group . '_' . $pref,
-                        $options['default'],
-                        $group,
-                        defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
-                        isset($options['widget']) ? $options['widget'] : $widget,
-                        $position
-                    );
-                }
-                $position = $position + 10;
-            }
+        // Check what is needed as the html value of the pref
+        $valid = isset($options['valid']) ? $options['valid'] : false;
+        if ($valid && is_array($valid)) {
+            $widget = $valid === array('0', '1') ? 'yesnoradio' : $this->plugin . '_pref';
+        } else {
+            $widget = 'text_input';
         }
+        return $widget;
     }
 
     /**
@@ -413,6 +531,84 @@ class Oui_Video
     }
 
     /**
+     * Install plugin prefs
+     */
+    public function setPrefs()
+    {
+        $position = 250;
+
+        foreach ($this->providers as $provider => $infos) {
+            $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
+            foreach ($infos['params'] as $pref => $options) {
+                if (get_pref($group . '_' . $pref, null) === null) {
+                    set_pref(
+                        $group . '_' . $pref,
+                        $options['default'],
+                        $group,
+                        PREF_PLUGIN,
+                        isset($options['widget']) ? $options['widget'] : $this->prefWidget($options),
+                        $position
+                    );
+                }
+                $position = $position + 10;
+            }
+        }
+    }
+
+    /**
+     * Get external popHelp contents
+     *
+     * @param string $evt Textpattern action event
+     * @param string $stp Textpattern action step
+     * @param string $ui Textpattern user interface element
+     */
+    public function pophelp($evt, $stp, $ui, $vars)
+    {
+        return str_replace(HELP_URL, $this->pophelp, $ui);
+    }
+
+    /**
+     * Get the video provider and the video id from its url
+     *
+     * @param string $video The video url
+     */
+    public function getAtts($tag)
+    {
+        $init_atts = array();
+        foreach ($this->tags[$tag] as $att => $options) {
+            $init_atts[$att] = $options['default'];
+        }
+        return $init_atts;
+    }
+
+    /**
+     * Get the video provider and the video id from its url
+     *
+     * @param string $video The video url
+     */
+    public function checkAtts($tag, $atts)
+    {
+        foreach ($atts as $att => $val) {
+            $valid = isset($this->tags[$tag][$att]['valid']) ? $this->tags[$tag][$att]['valid'] : false;
+            if ($valid) {
+                if (is_array($valid) && !in_array($val, $valid)) {
+                    $valid = implode(', ', $valid);
+                    trigger_error(
+                        'Unknown attribute value for ' . $att .
+                        '. Exact valid values are: ' . $valid . '.'
+                    );
+                } elseif (!is_array($valid) && !preg_match($valid, $val)) {
+                    trigger_error(
+                        'Unknown attribute value for ' . $att .
+                        '. A valid value must respect the following pattern ' . $valid . '.'
+                    );
+                }
+            }
+        }
+        return;
+    }
+
+    /**
      * Get the video provider and the video id from its url
      *
      * @param string $video The video url
@@ -423,7 +619,10 @@ class Oui_Video
             if ($provider !== 'all') {
                 foreach ($provider_infos['patterns'] as $pattern => $id) {
                     if (preg_match($pattern, $video, $matches)) {
-                        $match = array($provider => $matches[$id]);
+                        $match = array(
+                            'provider' => $provider,
+                            'id'       => $matches[$id],
+                        );
                         return $match;
                     }
                 }
@@ -441,10 +640,43 @@ class Oui_Video
     public function playerInfos($provider, $no_cookie)
     {
         $player_infos = array(
-            'src'    => $this->providers[$provider]['src'],
+            'src'    => $no_cookie ? $this->providers[$provider]['src'][1] : $this->providers[$provider]['src'][0],
             'params' => $this->providers[$provider]['params'],
         );
         return $player_infos;
+    }
+
+    public function videoSize($dims)
+    {
+        $width = $dims['width'];
+        $height = $dims['height'];
+        $ratio = $dims['ratio'] ? $dims['ratio'] : $this->providers['all']['params']['ratio']['default'];
+
+        if (!$width || !$height) {
+            $toolbarHeight = 25;
+
+            // Work out the aspect ratio.
+            preg_match("/(\d+):(\d+)/", $ratio, $matches);
+            if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
+                $aspect = $matches[1]/$matches[2];
+            } else {
+                $aspect = 1.333;
+            }
+
+            // Calcuate the new width/height.
+            if ($width) {
+                $height = $width/$aspect + $toolbarHeight;
+            } elseif ($height) {
+                $width = ($height-$toolbarHeight)*$aspect;
+            } else {
+                $width = $this->providers['all']['params']['width']['default'];
+                $height = $width/$aspect + $toolbarHeight;
+            }
+        }
+        return array(
+            'width' => $width,
+            'height' => $height,
+        );
     }
 }
 
