@@ -1,6 +1,6 @@
 #@admin
 #Default language, en-us, en-gb
-oui_video => Video embeding (oui_video)
+oui_video => Video embedding (oui_video)
 oui_video_provider => Favourite provider
 oui_video_provider_dailymotion => Dailymotion
 oui_video_provider_vimeo => Vimeo
