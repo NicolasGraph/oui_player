@@ -222,15 +222,15 @@ class Oui_Video
                     'default' => '4:3',
                 ),
                 'vimeo_prefs' => array(
-                    'default' => 1,
+                    'default' => '0',
                     'valid'   => array('0', '1'),
                 ),
                 'dailymotion_prefs' => array(
-                    'default' => 1,
+                    'default' => '0',
                     'valid'   => array('0', '1'),
                 ),
                 'youtube_prefs' => array(
-                    'default' => 1,
+                    'default' => '0',
                     'valid'   => array('0', '1'),
                 ),
             ),
@@ -241,6 +241,7 @@ class Oui_Video
             'params'   => array(
                 'autopause' => array(
                     'default' => '1',
+                    'valid'   => array('0', '1'),
                 ),
                 'autoplay'  => array(
                     'default' => '0',
@@ -451,7 +452,7 @@ class Oui_Video
 
             register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
             register_callback(array($this, 'setPrefs'), 'prefs', null, 1);
-            register_callback(array($this, 'options'), 'plugin_prefs.' . $this->plugin, null, 1);
+            register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
         } else {
             if (class_exists('\Textpattern\Tag\Registry')) {
                 // Register Textpattern tags for TXP 4.6+.
@@ -484,9 +485,11 @@ class Oui_Video
     /**
      * Jump to the prefs panel.
      */
-    public function options()
+    public function optionsLink()
     {
-        $url = '?event=prefs#prefs_group_' . $this->plugin;
+        $url = defined('PREF_PLUGIN')
+               ? '?event=prefs#prefs_group_' . $this->plugin
+               : '?event=prefs&step=advanced_prefs';
         header('Location: ' . $url);
     }
 
@@ -499,11 +502,13 @@ class Oui_Video
     {
         // Check what is needed as the html value of the pref
         $valid = isset($options['valid']) ? $options['valid'] : false;
+
         if ($valid && is_array($valid)) {
             $widget = $valid === array('0', '1') ? 'yesnoradio' : $this->plugin . '_pref';
         } else {
             $widget = 'text_input';
         }
+
         return $widget;
     }
 
@@ -517,13 +522,16 @@ class Oui_Video
     {
         foreach ($this->providers as $provider => $infos) {
             $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
+
             foreach ($infos['params'] as $pref => $options) {
                 if ($name === $group . '_' . $pref) {
                     $valid = $options['valid'];
                     $vals = array();
+
                     foreach ($valid as $value) {
                         $value === '' ?: $vals[$value] = gtxt($group  . '_' . $pref . '_' . $value);
                     }
+
                     return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
                 }
             }
@@ -539,13 +547,14 @@ class Oui_Video
 
         foreach ($this->providers as $provider => $infos) {
             $group = $provider === 'all' ? $this->plugin : $this->plugin . '_' . $provider;
+
             foreach ($infos['params'] as $pref => $options) {
                 if (get_pref($group . '_' . $pref, null) === null) {
                     set_pref(
                         $group . '_' . $pref,
                         $options['default'],
                         $group,
-                        PREF_PLUGIN,
+                        defined('PREF_PLUGIN') ? PREF_PLUGIN : PREF_ADVANCED,
                         isset($options['widget']) ? $options['widget'] : $this->prefWidget($options),
                         $position
                     );
@@ -568,9 +577,9 @@ class Oui_Video
     }
 
     /**
-     * Get the video provider and the video id from its url
+     * Get a tag attribute list
      *
-     * @param string $video The video url
+     * @param string $tag The plugin tag
      */
     public function getAtts($tag)
     {
@@ -578,18 +587,21 @@ class Oui_Video
         foreach ($this->tags[$tag] as $att => $options) {
             $init_atts[$att] = $options['default'];
         }
+
         return $init_atts;
     }
 
     /**
-     * Get the video provider and the video id from its url
+     * Look for wrong attribute values
      *
-     * @param string $video The video url
+     * @param string $tag The plugin tag
+     * @param array $atts The Txp variable containing attribute values in use
      */
     public function checkAtts($tag, $atts)
     {
         foreach ($atts as $att => $val) {
             $valid = isset($this->tags[$tag][$att]['valid']) ? $this->tags[$tag][$att]['valid'] : false;
+
             if ($valid) {
                 if (is_array($valid) && !in_array($val, $valid)) {
                     $valid = implode(', ', $valid);
@@ -605,6 +617,7 @@ class Oui_Video
                 }
             }
         }
+
         return;
     }
 
@@ -628,6 +641,7 @@ class Oui_Video
                 }
             }
         }
+
         return false;
     }
 
@@ -639,38 +653,49 @@ class Oui_Video
      */
     public function playerInfos($provider, $no_cookie)
     {
+        if ($provider === 'youtube') {
+            $src = $no_cookie ? $this->providers[$provider]['src'][1] : $this->providers[$provider]['src'][0];
+        } else {
+            $src = $this->providers[$provider]['src'][0];
+        }
+
         $player_infos = array(
-            'src'    => $no_cookie ? $this->providers[$provider]['src'][1] : $this->providers[$provider]['src'][0],
+            'src'    => $src,
             'params' => $this->providers[$provider]['params'],
         );
+
         return $player_infos;
     }
 
-    public function videoSize($dims)
+    /**
+     * Calculate the player size
+     *
+     * @param array $dims An associative array containing provided attribute values for width, height and ratio
+     */
+    public function playerSize($dims)
     {
         $width = $dims['width'];
         $height = $dims['height'];
-        $ratio = $dims['ratio'] ? $dims['ratio'] : $this->providers['all']['params']['ratio']['default'];
 
         if (!$width || !$height) {
-            $toolbarHeight = 25;
+            $ratio = $dims['ratio'] ? $dims['ratio'] : $this->providers['all']['params']['ratio']['default'];
 
             // Work out the aspect ratio.
             preg_match("/(\d+):(\d+)/", $ratio, $matches);
             if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
-                $aspect = $matches[1]/$matches[2];
+                $aspect = $matches[1] / $matches[2];
             } else {
                 $aspect = 1.333;
             }
 
             // Calcuate the new width/height.
             if ($width) {
-                $height = $width/$aspect + $toolbarHeight;
+                $height = $width / $aspect;
             } elseif ($height) {
-                $width = ($height-$toolbarHeight)*$aspect;
+                $width = $height * $aspect;
             } else {
                 $width = $this->providers['all']['params']['width']['default'];
-                $height = $width/$aspect + $toolbarHeight;
+                $height = $width / $aspect;
             }
         }
         return array(

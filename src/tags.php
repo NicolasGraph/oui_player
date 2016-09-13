@@ -35,6 +35,7 @@ function oui_video($atts, $thing)
     /*
      * Define player src and parameters.
      */
+    $no_cookie ?: $no_cookie = get_pref('oui_video_youtube_no_cookie');
     $player_infos = $oui_video->playerInfos($provider, $no_cookie);
     $src = $player_infos['src'] . $video_id;
     $params = $player_infos['params'];
@@ -43,16 +44,18 @@ function oui_video($atts, $thing)
     $used_params = array();
 
     foreach ($params as $param => $infos) {
-        $pref = get_pref('oui_video_' . $provider . '_' . $param);
-        $default = $infos['default'];
-        $att_name = str_replace('-', '_', $param);
-        $att = $$att_name;
+        if ($param !== 'no_cookie') {
+            $pref = get_pref('oui_video_' . $provider . '_' . $param);
+            $default = $infos['default'];
+            $att_name = str_replace('-', '_', $param);
+            $att = $$att_name;
 
-        if ($att === '' && $pref !== $default) {
-            // if the attribute is empty, get the related pref value.
-            $used_params[] = $param . '=' . $pref;
-        } elseif ($att !== '') {
-            $used_params[] = $param . '=' . $att;
+            if ($att === '' && $pref !== $default) {
+                // if the attribute is empty, get the related pref value.
+                $used_params[] = $param . '=' . $pref;
+            } elseif ($att !== '') {
+                $used_params[] = $param . '=' . $att;
+            }
         }
     }
 
@@ -77,7 +80,7 @@ function oui_video($atts, $thing)
     }
 
     // Get the video size.
-    $video_size = $oui_video->videoSize($dims);
+    $video_size = $oui_video->playerSize($dims);
     $width = $video_size['width'];
     $height = $video_size['height'];
 
@@ -123,5 +126,5 @@ function oui_if_video($atts, $thing)
     }
 
     // Txp 4.6+ don't need EvalElse() anymore.
-    return parse($thing, $result);
+    return defined('PREF_PLUGIN') ? parse($thing, $result) : parse(EvalElse($thing, $result));
 }

@@ -1,4 +1,4 @@
-h1. oui_video (beta)
+h1. oui_video
 
 Easily embed videos in articles and customise the appearance of the player.
 This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
@@ -18,7 +18,7 @@ h2(#requirements). Plugin requirements
 
 oui_video's minimum requirements:
 
-* "Textpattern CMS":http://textpattern.com/ 4.5+
+* "Textpattern CMS":http://textpattern.com/ 4.5+ (4.6+ is recommended).
 
 h2(#install). Installation
 
@@ -28,6 +28,8 @@ h2(#tags). Preferences/options
 
 Plugin prefs are mainly used as default values for the oui_video @<txp:oui_video />@ attributes.
 They can be overriden by these attributes when needed.
+
++Always prefer plugin "global" prefs to tag related attributes!+
 
 h2(#tags). Tags
 

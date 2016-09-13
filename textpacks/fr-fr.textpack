@@ -1,15 +1,15 @@
 #@admin
 #@language fr-fr
 oui_video => Intégration vidéo (oui_video)
-oui_video_provider => <em>Provider</em>
+oui_video_provider => Service préféré
 oui_video_provider_dailymotion => Dailymotion
 oui_video_provider_vimeo => Vimeo
 oui_video_provider_youtube => Youtube
-oui_video_custom_field => Champ de la vidéo
+oui_video_custom_field => Champ de la vidéo par défaut
 oui_video_vimeo => Lecteur Vimeo (oui_video)
 oui_video_width => Largeur en pixels
 oui_video_height => Hauteur en pixels
-oui_video_ratio => Ratio par défaut
+oui_video_ratio => Ratio (calcule la dimension manquante)
 oui_video_youtube_prefs => Afficher les préférences du lecteur Youtube
 oui_video_vimeo_prefs => Afficher les préférences du lecteur Vimeo
 oui_video_dailymotion_prefs => Afficher les préférences du lecteur Dailymotion
@@ -49,7 +49,7 @@ oui_video_youtube_loop => Lire en boucle
 oui_video_youtube_modestbranding => Logo discret
 oui_video_youtube_origin => Domaine d'origine (api)
 oui_video_youtube_playerapiid => id du lecteur (api)
-oui_video_youtube_playsinline => playsinline
+oui_video_youtube_playsinline => Empêcher la lecture plein écran par défaut sur iOS
 oui_video_youtube_playlist => Liste de vidéos (id's) à lire ensuite
 oui_video_youtube_rel => Afficher les vidéos associées en fin de lecture
 oui_video_youtube_start => Commencer la lecture à la seconde:

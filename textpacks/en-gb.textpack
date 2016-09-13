@@ -1,15 +1,15 @@
 #@admin
 #Default language, en-us, en-gb
 oui_video => Video embeding (oui_video)
-oui_video_provider => <em>Provider</em>
+oui_video_provider => Favourite provider
 oui_video_provider_dailymotion => Dailymotion
 oui_video_provider_vimeo => Vimeo
 oui_video_provider_youtube => Youtube
-oui_video_custom_field => Video field
+oui_video_custom_field => Video field by default
 oui_video_vimeo => Vimeo player (oui_video)
 oui_video_width => Width in pixels
 oui_video_height => Height in pixels
-oui_video_ratio => Ratio by default
+oui_video_ratio => Ratio (calculate the missing size)
 oui_video_youtube_prefs => Display the Youtube player prefs
 oui_video_vimeo_prefs => Display the Vimeo player prefs
 oui_video_dailymotion_prefs => Display the Dailymotion player prefs
@@ -49,7 +49,7 @@ oui_video_youtube_loop => Replay the video once finished
 oui_video_youtube_modestbranding => Modest branding
 oui_video_youtube_origin => Origin domain (api)
 oui_video_youtube_playerapiid => Player id (api)
-oui_video_youtube_playsinline => playsinline
+oui_video_youtube_playsinline => Avoid fullscreen playback by default on iOS
 oui_video_youtube_playlist => Video list (id's) to play then
 oui_video_youtube_rel => Display related videos at the end
 oui_video_youtube_showinfo => Display video informations
