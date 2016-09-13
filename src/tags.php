@@ -12,7 +12,11 @@ function oui_video($atts, $thing)
     $oui_video = new Oui_Video;
 
     // Set tag attributes.
-    extract(lAtts($oui_video->getAtts(__FUNCTION__), $atts));
+    $get_atts = $oui_video->getAtts(__FUNCTION__);
+    foreach ($get_atts as $att => $options) {
+        $get_atts[$att] = $options['default'];
+    }
+    extract(lAtts($get_atts, $atts));
 
     // Look for wrong attribute values.
     $oui_video->checkAtts(__FUNCTION__, $atts);
@@ -36,7 +40,8 @@ function oui_video($atts, $thing)
      * Define player src and parameters.
      */
     $no_cookie ?: $no_cookie = get_pref('oui_video_youtube_no_cookie');
-    $player_infos = $oui_video->playerInfos($provider, $no_cookie);
+    $oui_video_provider = 'Oui_Video_' . $provider;
+    $player_infos = (new $oui_video_provider)->playerInfos($provider, $no_cookie);
     $src = $player_infos['src'] . $video_id;
     $params = $player_infos['params'];
 
@@ -105,9 +110,13 @@ function oui_if_video($atts, $thing)
 
     // Instanciate Oui_video.
     $oui_video = new Oui_Video;
+    $get_atts = $oui_video->getAtts(__FUNCTION__);
+    foreach ($get_atts as $att => $options) {
+        $get_atts[$att] = $options['default'];
+    }
 
     // Set tag attributes.
-    extract(lAtts($oui_video->getAtts(__FUNCTION__), $atts));
+    extract(lAtts($get_atts, $atts));
 
     // Look for wrong attribute values.
     $oui_video->checkAtts(__FUNCTION__, $atts);
