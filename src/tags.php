@@ -55,6 +55,9 @@ function oui_video($atts, $thing)
             $att_name = str_replace('-', '_', $param);
             $att = $$att_name;
 
+            // Because an input with color type is used in prefs
+            $param === 'color' ? $pref = str_replace('#', '', $pref) : '';
+
             if ($att === '' && $pref !== $default) {
                 // if the attribute is empty, get the related pref value.
                 $used_params[] = $param . '=' . $pref;

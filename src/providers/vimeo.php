@@ -65,7 +65,8 @@ class Oui_Video_Vimeo
             'valid'   => array('0', '1'),
         ),
         'color'     => array(
-            'default' => '00adef',
+            'widget' => 'oui_video_pref_color',
+            'default' => '#00adef',
         ),
         'loop'      => array(
             'default' => '0',

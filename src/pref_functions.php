@@ -24,3 +24,8 @@ function oui_video_custom_fields($name, $val)
     }
     return gtxt('no_custom_fields_recorded');
 }
+
+function oui_video_pref_color($name, $val)
+{
+    return fInput('color', $name, $val);
+}

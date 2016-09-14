@@ -113,7 +113,8 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
             'default' => '',
         ),
         'ui-highlight'         => array(
-            'default' => 'ffcc33',
+            'widget' => 'oui_video_pref_color',
+            'default' => '#ffcc33',
         ),
         'ui-logo'              => array(
             'default' => '1',
