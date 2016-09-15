@@ -4,6 +4,9 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
 {
     protected $plugin = 'oui_video';
     protected $provider = 'Youtube';
+    protected $api = 'https://www.youtube.com/oembed?url=';
+    protected $patterns = array('#(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)#i' => '6');
+    protected $base = 'https://www.youtube.com/watch?v=';
     protected $tags = array(
         'oui_video' => array(
             'autohide' => array(
@@ -89,8 +92,6 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
             ),
         ),
     );
-    protected $patterns = array('#(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)#i' => '6');
-    protected $src = array('//www.youtube.com/embed/', '//www.youtube-nocookie.com/embed/');
     protected $prefs = array(
         'no_cookie'       => array(
             'default' => '1',

@@ -32,18 +32,27 @@ function oui_video($atts, $thing)
      * Get video infos
      */
 
+    $video ?: $video = strtolower(get_pref('oui_video_custom_field'));
+
     // Check if the video is recognize as a video url.
     $match = $oui_video->videoInfos($video);
-
-    // Check if the video was recognize as a video url.
-    if (!$match) {
-        $provider = $provider ? $provider : get_pref('oui_video_provider');
-        $custom = $video ? $video : strtolower(get_pref('oui_video_custom_field'));
-        isset($thisarticle[$custom]) ? $video = $thisarticle[$custom] : '';
-        $video_id = $video;
-    } else {
+    if ($match) {
         $provider = $match['provider'];
-        $video_id = $match['id'];
+        $url = $match['url'];
+    } elseif (isset($thisarticle[$video])) {
+        $match = $oui_video->videoInfos($thisarticle[$video]);
+        if ($match) {
+            $provider = $match['provider'];
+            $url = $match['url'];
+        } else {
+            $provider = $provider ? $provider : get_pref('oui_video_provider');
+            $oui_video_provider = 'Oui_Video_' . $provider;
+            $url = (new $oui_video_provider)->prefixId($thisarticle[$video]);
+        }
+    } else {
+        $provider = $provider ? $provider : get_pref('oui_video_provider');
+        $oui_video_provider = 'Oui_Video_' . $provider;
+        $url = (new $oui_video_provider)->prefixId($video);
     }
 
     /*
@@ -55,14 +64,11 @@ function oui_video($atts, $thing)
 
     // Returns player infos
     $oui_video_provider = 'Oui_Video_' . $provider;
-    $player_infos = (new $oui_video_provider)->playerInfos($provider, $no_cookie);
+    $params = (new $oui_video_provider)->getParams($no_cookie);
 
     /*
      * Prepare player parameters for the output
      */
-
-    $src = $player_infos['src'] . $video_id;
-    $params = $player_infos['params'];
 
     // Create a list of needed parameters
     $used_params = array();
@@ -87,12 +93,6 @@ function oui_video($atts, $thing)
         }
     }
 
-    // Check if some player parameters has been used.
-    if (!empty($used_params)) {
-        // Append them to the src.
-        $src .= '?' . implode('&amp;', $used_params);
-    }
-
     /*
      * Get the player size for the output
      */
@@ -109,25 +109,10 @@ function oui_video($atts, $thing)
         empty($value) ? $dims[$dim] = get_pref('oui_video_' .$dim) : '';
     }
 
-    // Get the video size.
-    $video_size = $oui_video->playerSize($dims);
+    // Check if some player parameters has been used.
+    $output = (new $oui_video_provider)->getOutput($url, $used_params, $dims);
 
-    $width = $video_size['width'];
-    $height = $video_size['height'];
-
-    /*
-     * Set the output
-     */
-
-    $out = '<iframe
-        width="' . $width . '"
-        height="' . $height . '"
-        src="' . $src . '"
-        frameborder="0"
-        allowfullscreen>
-    </iframe>';
-
-    return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
+    return doLabel($label, $labeltag).(($wraptag) ? doTag($output, $wraptag, $class) : $output);
 }
 
 /*

@@ -4,6 +4,9 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
 {
     protected $plugin = 'oui_video';
     protected $provider = 'Dailymotion';
+    protected $patterns = array('#(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '6');
+    protected $api = 'http://www.dailymotion.com/services/oembed?url=';
+    protected $base = 'https://dailymotion.com/video/';
     protected $tags = array(
         'oui_video' => array(
             'api' => array(
@@ -66,8 +69,6 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
             ),
         ),
     );
-    protected $patterns = array('#(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '6');
-    protected $src = '//www.dailymotion.com/embed/video/';
     protected $prefs = array(
         'api'                  => array(
             'default' => '',

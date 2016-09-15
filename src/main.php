@@ -68,18 +68,6 @@ class Oui_Video
         'ratio' => array(
             'default' => '4:3',
         ),
-        'vimeo_prefs' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'dailymotion_prefs' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'youtube_prefs' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
     );
 
     /**
@@ -97,7 +85,8 @@ class Oui_Video
             // Add privs to provider prefs only if they are enabled.
             foreach ($this->providers as $provider) {
                 $group = $this->plugin . '_' . strtolower($provider);
-                if (!empty($_POST[$group . '_prefs']) || (!isset($_POST[$group . '_prefs']) && get_pref($group . '_prefs'))) {
+                $pref = $group . '_prefs';
+                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && get_pref($pref))) {
                     add_privs('prefs.' . $group, $this->privs);
                 }
             }
@@ -152,7 +141,6 @@ class Oui_Video
      */
     public function prefWidget($options)
     {
-        // Check what is needed as the html value of the pref
         $valid = isset($options['valid']) ? $options['valid'] : false;
 
         if ($valid && is_array($valid)) {
@@ -186,7 +174,6 @@ class Oui_Video
                 return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
             }
         }
-
     }
 
     /**
@@ -199,6 +186,16 @@ class Oui_Video
         foreach ($this->prefs as $pref => $options) {
             $options['group'] = $this->plugin;
             $pref = $options['group'] . '_' . $pref;
+            $prefs[$pref] = $options;
+        }
+
+        foreach ($this->providers as $provider) {
+            $options = array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            );
+            $options['group'] = $this->plugin;
+            $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
             $prefs[$pref] = $options;
         }
 
@@ -314,43 +311,6 @@ class Oui_Video
         }
 
         return false;
-    }
-
-    /**
-     * Calculate the player size
-     *
-     * @param array $dims An associative array containing provided attribute values for width, height and ratio
-     */
-    public function playerSize($dims)
-    {
-        $width = $dims['width'];
-        $height = $dims['height'];
-
-        if (!$width || !$height) {
-            $ratio = $dims['ratio'] ? $dims['ratio'] : $this->providers['all']['params']['ratio']['default'];
-
-            // Work out the aspect ratio.
-            preg_match("/(\d+):(\d+)/", $ratio, $matches);
-            if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
-                $aspect = $matches[1] / $matches[2];
-            } else {
-                $aspect = 1.333;
-            }
-
-            // Calcuate the new width/height.
-            if ($width) {
-                $height = $width / $aspect;
-            } elseif ($height) {
-                $width = $height * $aspect;
-            } else {
-                $width = $this->providers['all']['params']['width']['default'];
-                $height = $width / $aspect;
-            }
-        }
-        return array(
-            'width' => $width,
-            'height' => $height,
-        );
     }
 }
 
