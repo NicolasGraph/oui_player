@@ -4,9 +4,8 @@ class Oui_Video_Vimeo
 {
     protected $plugin = 'oui_video';
     protected $provider = 'Vimeo';
-    protected $api = 'https://vimeo.com/api/oembed.json?url=';
-    protected $patterns = array('#((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)#i' => '4');
-    protected $base = 'https://vimeo.com/';
+    protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
+    protected $src = '//player.vimeo.com/video/';
     protected $tags = array(
         'oui_video' => array(
             'api' => array(
@@ -118,14 +117,14 @@ class Oui_Video_Vimeo
      *
      * @param string $video The video url
      */
-    public function videoInfos($video)
+    public function getVidInfos($video)
     {
 
         foreach ($this->patterns as $pattern => $id) {
             if (preg_match($pattern, $video, $matches)) {
                 $match = array(
                     'provider' => strtolower($this->provider),
-                    'url'      => $this->prefixId($matches[$id]),
+                    'id'       => $matches[$id],
                 );
 
                 return $match;
@@ -135,56 +134,40 @@ class Oui_Video_Vimeo
         return false;
     }
 
-    public function prefixId($id)
-    {
-        return $this->base . $id;
-    }
-
     /**
      * Get the provider player url and its parameters/attributes
      *
      * @param string $provider The video provider
      * @param string $no_cookie The no_cookie attribute or pref value (Youtube)
      */
-    public function getParams($no_cookie)
+    public function getParams($provider, $no_cookie)
     {
-        return $this->prefs;
+        $player_infos = array(
+            'src'    => $this->src,
+            'params' => $this->prefs,
+        );
+
+        return $player_infos;
     }
 
-    public function getJson($url)
+    public function getOutput($src, $used_params, $dims)
     {
-        $json = json_decode(file_get_contents($this->api . $url), true);
-
-        return $json;
-    }
-
-    public function getOutput($url, $used_params, $dims)
-    {
-        $json = $this->getJson($url);
-        $code = $json['html'];
-
         if (!empty($used_params)) {
-            $src = preg_match('/src="[\S][^"]+/', $code, $match);
-            $glue = strpos($match[0], '?') ? '&amp;' : '?';
-            $src = $match[0] . $glue . implode('&amp;', $used_params);
-            $output = str_replace($match[0], $src, $code);
-        } else {
-            $output = $code;
+            $src .= '?' . implode('&amp;', $used_params);
         }
 
         $width = $dims['width'];
         $height = $dims['height'];
-        $ratio = $dims['ratio'];
 
         if ((!$width || !$height)) {
-            $ratio = $dims['ratio'] ? $dims['ratio'] : $this->prefs['ratio'];
+            $ratio = !empty($dims['ratio']) ? $dims['ratio'] : '16:9';
 
             // Work out the aspect ratio.
             preg_match("/(\d+):(\d+)/", $ratio, $matches);
             if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
                 $aspect = $matches[1] / $matches[2];
             } else {
-                $aspect = 1.333;
+                $aspect = 1.778;
             }
 
             // Calcuate the new width/height.
@@ -195,13 +178,7 @@ class Oui_Video_Vimeo
             }
         }
 
-        if ($width) {
-            $output = preg_replace('/width="[^"]+"/', 'width="' . $width . '"', $output);
-        }
-
-        if ($height) {
-            $output = preg_replace('/height="[^"]+"/', 'height="' . $height . '"', $output);
-        }
+        $output = '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
 
         return $output;
     }

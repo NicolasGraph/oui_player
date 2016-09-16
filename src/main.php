@@ -28,6 +28,9 @@ class Oui_Video
                 'default' => '',
                 'valid'   => array('vimeo', 'youtube', 'dailymotion'),
             ),
+            'ratio' => array(
+                'default' => '',
+            ),
             'video' => array(
                 'default' => '',
             ),
@@ -60,13 +63,13 @@ class Oui_Video
             'valid'   => array('dailymotion', 'vimeo', 'Youtube'),
         ),
         'width' => array(
-            'default' => '640',
+            'default' => '',
         ),
         'height' => array(
             'default' => '',
         ),
         'ratio' => array(
-            'default' => '4:3',
+            'default' => '',
         ),
     );
 
@@ -300,11 +303,11 @@ class Oui_Video
      *
      * @param string $video The video url
      */
-    public function videoInfos($video)
+    public function getVidInfos($video)
     {
         foreach ($this->providers as $provider) {
             $class = __CLASS__ . '_' . $provider;
-            $match = (new $class)->videoInfos($video);
+            $match = (new $class)->getVidInfos($video);
             if ($match) {
                 return $match;
             }
