@@ -1,22 +1,19 @@
 <?php
 
-class Oui_Video
+class Oui_Player
 {
-    protected $plugin = 'oui_video';
+    protected $plugin = 'oui_player';
     protected $providers = array(
         'Vimeo',
         'Youtube',
         'Dailymotion',
+        'Soundcloud',
     );
     protected $pophelp = 'http://help.ouisource.com/';
     protected $tags = array(
-        'oui_video' => array(
+        'oui_player' => array(
             'class' => array(
                 'default' => '',
-            ),
-            'height' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
             ),
             'label' => array(
                 'default' => '',
@@ -28,22 +25,15 @@ class Oui_Video
                 'default' => '',
                 'valid'   => array('vimeo', 'youtube', 'dailymotion'),
             ),
-            'ratio' => array(
+            'play' => array(
                 'default' => '',
-            ),
-            'video' => array(
-                'default' => '',
-            ),
-            'width' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
             ),
             'wraptag' => array(
                 'default' => '',
             ),
         ),
-        'oui_if_video' => array(
-            'video' => array(
+        'oui_if_player' => array(
+            'play' => array(
                 'default' => '',
             ),
             'provider' => array(
@@ -55,21 +45,12 @@ class Oui_Video
     protected $privs = '1, 2';
     protected $prefs = array(
         'custom_field' => array(
-            'widget'  => 'oui_video_custom_fields',
+            'widget'  => 'oui_player_custom_fields',
             'default' => 'article_image',
         ),
         'provider' => array(
             'default' => 'youtube',
             'valid'   => array('dailymotion', 'vimeo', 'Youtube'),
-        ),
-        'width' => array(
-            'default' => '',
-        ),
-        'height' => array(
-            'default' => '',
-        ),
-        'ratio' => array(
-            'default' => '',
         ),
     );
 
@@ -147,7 +128,13 @@ class Oui_Video
         $valid = isset($options['valid']) ? $options['valid'] : false;
 
         if ($valid && is_array($valid)) {
-            $widget = $valid === array('0', '1') ? 'yesnoradio' : $this->plugin . '_pref';
+            if ($valid === array('0', '1')) {
+                $widget = 'yesnoradio';
+            } elseif  ($valid === array('true', 'false')) {
+                $widget = $this->plugin . '_truefalseradio';
+            } else {
+                $widget = $this->plugin . '_pref';
+            }
         } else {
             $widget = 'text_input';
         }
@@ -301,13 +288,13 @@ class Oui_Video
     /**
      * Get the video provider and the video id from its url
      *
-     * @param string $video The video url
+     * @param string $play The item url
      */
-    public function getVidInfos($video)
+    public function getItemInfos($play)
     {
         foreach ($this->providers as $provider) {
             $class = __CLASS__ . '_' . $provider;
-            $match = (new $class)->getVidInfos($video);
+            $match = (new $class)->getItemInfos($play);
             if ($match) {
                 return $match;
             }
@@ -317,4 +304,4 @@ class Oui_Video
     }
 }
 
-new Oui_Video();
+new Oui_Player();

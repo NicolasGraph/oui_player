@@ -1,13 +1,13 @@
 <?php
 
-class Oui_Video_Youtube extends Oui_Video_Vimeo
+class Oui_Player_Youtube extends Oui_Player_Vimeo
 {
-    protected $plugin = 'oui_video';
+    protected $plugin = 'oui_player';
     protected $provider = 'Youtube';
     protected $patterns = array('#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i' => '8');
     protected $src = array('//www.youtube.com/embed/', '//www.youtube-nocookie.com/embed/');
     protected $tags = array(
-        'oui_video' => array(
+        'oui_player' => array(
             'autohide' => array(
                 'default' => '',
                 'valid'   => array('0', '1', '2'),
@@ -41,6 +41,10 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
                 'default' => '',
                 'valid'   => array('0', '1'),
             ),
+            'height' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
             'hl' => array(
                 'default' => '',
             ),
@@ -73,6 +77,9 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
                 'default' => '',
                 'valid'   => array('0', '1'),
             ),
+            'ratio' => array(
+                'default' => '',
+            ),
             'rel' => array(
                 'default' => '',
                 'valid'   => array('0', '1'),
@@ -88,6 +95,10 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
             'theme' => array(
                 'default' => '',
                 'valid'   => array('dark', 'light'),
+            ),
+            'width' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
             ),
         ),
     );
@@ -131,6 +142,9 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
             'default' => '1',
             'valid'   => array('0', '1'),
         ),
+        'height' => array(
+            'default' => '',
+        ),
         'hl'             => array(
             'default' => '',
         ),
@@ -159,6 +173,9 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
             'default' => '0',
             'valid'   => array('0', '1'),
         ),
+        'ratio' => array(
+            'default' => '16:9',
+        ),
         'rel'            => array(
             'default' => '1',
             'valid'   => array('0', '1'),
@@ -173,6 +190,9 @@ class Oui_Video_Youtube extends Oui_Video_Vimeo
         'theme'          => array(
             'default' => 'dark',
             'valid'   => array('dark', 'light'),
+        ),
+        'width' => array(
+            'default' => '640',
         ),
     );
 

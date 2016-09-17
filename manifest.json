@@ -1,6 +1,6 @@
 {
-    "name"        : "oui_video",
-    "description" : "Embed videos with customised player",
+    "name"        : "oui_player",
+    "description" : "Embed customised players",
     "version"     : "0.2.0-dev",
     "type"        : 1,
     "author"      : "Nicolas Morand",
@@ -13,6 +13,7 @@
         "./src/providers/vimeo.php",
         "./src/providers/youtube.php",
         "./src/providers/dailymotion.php",
+        "./src/providers/soundcloud.php",
         "./src/pref_functions.php",
         "./src/tags.php"
     ]}

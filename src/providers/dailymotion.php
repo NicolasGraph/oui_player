@@ -1,13 +1,13 @@
 <?php
 
-class Oui_Video_Dailymotion extends Oui_Video_Vimeo
+class Oui_Player_Dailymotion extends Oui_Player_Vimeo
 {
-    protected $plugin = 'oui_video';
+    protected $plugin = 'oui_player';
     protected $provider = 'Dailymotion';
     protected $patterns = array('#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '8');
     protected $src = '//www.dailymotion.com/embed/video/';
     protected $tags = array(
-        'oui_video' => array(
+        'oui_player' => array(
             'api' => array(
                 'default' => '',
             ),
@@ -25,6 +25,10 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
             'id' => array(
                 'default' => '',
             ),
+            'height' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
             'mute' => array(
                 'default' => '',
                 'valid'   => array('0', '1'),
@@ -35,6 +39,9 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
             'quality' => array(
                 'default' => '',
                 'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
+            ),
+            'ratio' => array(
+                'default' => '',
             ),
             'sharing_enable' => array(
                 'default' => '',
@@ -66,6 +73,10 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
                 'default' => '',
                 'valid'   => array('0', '1'),
             ),
+            'width' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
         ),
     );
     protected $prefs = array(
@@ -88,6 +99,9 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
         'id'                   => array(
             'default' => '',
         ),
+        'height' => array(
+            'default' => '',
+        ),
         'mute'                 => array(
             'default' => '0',
             'valid'   => array('0', '1'),
@@ -98,6 +112,9 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
         'quality'              => array(
             'default' => 'auto',
             'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
+        ),
+        'ratio' => array(
+            'default' => '16:9',
         ),
         'sharing-enable'       => array(
             'default' => '1',
@@ -113,7 +130,7 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
             'default' => '',
         ),
         'ui-highlight'         => array(
-            'widget' => 'oui_video_pref_color',
+            'widget' => 'oui_player_pref_color',
             'default' => '#ffcc33',
         ),
         'ui-logo'              => array(
@@ -127,6 +144,9 @@ class Oui_Video_Dailymotion extends Oui_Video_Vimeo
         'ui-start-screen-info' => array(
             'default' => '1',
             'valid'   => array('0', '1'),
+        ),
+        'width' => array(
+            'default' => '640',
         ),
     );
 }

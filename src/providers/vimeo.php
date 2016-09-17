@@ -1,13 +1,13 @@
 <?php
 
-class Oui_Video_Vimeo
+class Oui_Player_Vimeo
 {
-    protected $plugin = 'oui_video';
+    protected $plugin = 'oui_player';
     protected $provider = 'Vimeo';
     protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
     protected $src = '//player.vimeo.com/video/';
     protected $tags = array(
-        'oui_video' => array(
+        'oui_player' => array(
             'api' => array(
                 'default' => '',
             ),
@@ -34,6 +34,10 @@ class Oui_Video_Vimeo
             'color' => array(
                 'default' => '',
             ),
+            'height' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
+            ),
             'player_id' => array(
                 'default' => '',
             ),
@@ -41,9 +45,16 @@ class Oui_Video_Vimeo
                 'default' => '',
                 'valid'   => array('0', '1'),
             ),
+            'ratio' => array(
+                'default' => '',
+            ),
             'title' => array(
                 'default' => '',
                 'valid'   => array('0', '1'),
+            ),
+            'width' => array(
+                'default' => '',
+                'valid'   => '/^\d+$/',
             ),
         ),
     );
@@ -65,8 +76,11 @@ class Oui_Video_Vimeo
             'valid'   => array('0', '1'),
         ),
         'color'     => array(
-            'widget' => 'oui_video_pref_color',
+            'widget' => 'oui_player_pref_color',
             'default' => '#00adef',
+        ),
+        'height' => array(
+            'default' => '',
         ),
         'loop'      => array(
             'default' => '0',
@@ -79,9 +93,15 @@ class Oui_Video_Vimeo
             'default' => '1',
             'valid'   => array('0', '1'),
         ),
+        'ratio' => array(
+            'default' => '16:9',
+        ),
         'title'     => array(
             'default' => '1',
             'valid'   => array('0', '1'),
+        ),
+        'width' => array(
+            'default' => '640',
         ),
     );
 
@@ -117,7 +137,7 @@ class Oui_Video_Vimeo
      *
      * @param string $video The video url
      */
-    public function getVidInfos($video)
+    public function getItemInfos($video)
     {
 
         foreach ($this->patterns as $pattern => $id) {
