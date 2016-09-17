@@ -79,6 +79,10 @@ class Oui_Player_Soundcloud extends Oui_Player_Vimeo
                 'default' => '',
                 'valid' => array('true', 'false'),
             ),
+            'visual' => array(
+                'default' => '',
+                'valid' => array('true', 'false'),
+            ),
             'height' => array(
                 'default' => '',
                 'valid'   => '/^\d+$/',
@@ -111,23 +115,23 @@ class Oui_Player_Soundcloud extends Oui_Player_Vimeo
             'default' => '',
         ),
         'buying' => array(
-            'default' => 'true',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'sharing' => array(
-            'default' => 'true',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'download' => array(
-            'default' => 'true',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'show_bpm' => array(
-            'default' => 'true',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'show_playcount' => array(
-            'default' => 'true',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'start_track' => array(
@@ -143,7 +147,7 @@ class Oui_Player_Soundcloud extends Oui_Player_Vimeo
             'default' => '',
         ),
         'enable_api' => array(
-            'default' => 'false',
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'single_active' => array(
@@ -164,6 +168,10 @@ class Oui_Player_Soundcloud extends Oui_Player_Vimeo
         ),
         'show_comments' => array(
             'default' => 'false',
+            'valid' => array('true', 'false'),
+        ),
+        'visual' => array(
+            'default' => '',
             'valid' => array('true', 'false'),
         ),
         'width' => array(

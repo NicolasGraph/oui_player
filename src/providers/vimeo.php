@@ -173,7 +173,8 @@ class Oui_Player_Vimeo
     public function getOutput($src, $used_params, $dims)
     {
         if (!empty($used_params)) {
-            $src .= '?' . implode('&amp;', $used_params);
+            $glue = strpos($src, '?') ? '&amp;' : '?';
+            $src .= $glue . implode('&amp;', $used_params);
         }
 
         $width = $dims['width'];

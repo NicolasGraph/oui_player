@@ -90,11 +90,11 @@ function oui_player($atts, $thing)
             // Add modified attributes or prefs values as player parameters.
             if ($att === '' && $pref !== $default) {
                 // Remove # from the color pref as a color type is used for the pref input.
-                $param === 'color' ? $pref = str_replace('#', '', $pref) : '';
+                $param === 'color' || $param === 'theme_color' ? $pref = str_replace('#', '', $pref) : '';
                 $used_params[] = $param . '=' . $pref;
             } elseif ($att !== '') {
                 // Remove the # in the color attribute just in case…
-                $att_name === 'color' ? $att = str_replace('#', '', $att) : '';
+                $att_name === 'color' || $param === 'theme_color' ? $att = str_replace('#', '', $att) : '';
                 $used_params[] = $param . '=' . $att;
             }
         }
