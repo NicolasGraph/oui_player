@@ -5,99 +5,7 @@ class Oui_Player_Youtube extends Oui_Player_Provider
     protected $provider = 'Youtube';
     protected $patterns = array('#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i' => '8');
     protected $src = '//www.youtube-nocookie.com/embed/';
-    protected $tags = array(
-        'oui_player' => array(
-            'autohide' => array(
-                'default' => '',
-                'valid'   => array('0', '1', '2'),
-            ),
-            'autoplay' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'controls' => array(
-                'default' => '',
-            ),
-            'cc_load_policy' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'color' => array(
-                'default' => '',
-            ),
-            'disablekb' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'enablejsapi' => array(
-                'default' => '',
-            ),
-            'end' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
-            ),
-            'fs' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'height' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
-            ),
-            'hl' => array(
-                'default' => '',
-            ),
-            'iv_load_policy' => array(
-                'default' => '',
-                'valid'   => array('1', '3'),
-            ),
-            'loop' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'modestbranding' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'origin' => array(
-                'default' => '',
-            ),
-            'playerapiid' => array(
-                'default' => '',
-            ),
-            'playlist' => array(
-                'default' => '',
-            ),
-            'playsinline' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'ratio' => array(
-                'default' => '',
-            ),
-            'rel' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'showinfo' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
-            'start' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
-            ),
-            'theme' => array(
-                'default' => '',
-                'valid'   => array('dark', 'light'),
-            ),
-            'width' => array(
-                'default' => '',
-                'valid'   => '/^\d+$/',
-            ),
-        ),
-    );
-    protected $prefs = array(
+    protected $params = array(
         'width' => array(
             'default' => '640',
         ),
@@ -127,11 +35,7 @@ class Oui_Player_Youtube extends Oui_Player_Provider
             'default' => '1',
             'valid'   => array('0', '1', '2'),
         ),
-        'disablekb'    => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'enablejsapi'    => array(
+        'disablekb'      => array(
             'default' => '0',
             'valid'   => array('0', '1'),
         ),
@@ -156,12 +60,6 @@ class Oui_Player_Youtube extends Oui_Player_Provider
         'modestbranding' => array(
             'default' => '0',
             'valid'   => array('0', '1'),
-        ),
-        'origin'         => array(
-            'default' => '',
-        ),
-        'playerapiid'    => array(
-            'default' => '',
         ),
         'playlist'    => array(
             'default' => '',

@@ -3,11 +3,6 @@
 class Oui_Player_Provider
 {
     protected $plugin = 'oui_player';
-    protected $provider = 'Provider';
-    protected $patterns = array();
-    protected $src;
-    protected $tags = array();
-    protected $prefs = array();
 
     /**
      * Register callbacks.
@@ -25,7 +20,7 @@ class Oui_Player_Provider
 
     public function getPrefs($prefs)
     {
-        foreach ($this->prefs as $pref => $options) {
+        foreach ($this->params as $pref => $options) {
             $options['group'] = $this->plugin . '_' . strtolower($this->provider);
             $pref = $options['group'] . '_' . $pref;
             $prefs[$pref] = $options;
@@ -41,10 +36,9 @@ class Oui_Player_Provider
      */
     public function getAtts($tag, $get_atts)
     {
-        if (isset($this->tags[$tag])) {
-            foreach ($this->tags[$tag] as $att => $options) {
-                $get_atts[$att] = $options;
-            }
+        foreach ($this->params as $att => $options) {
+            $att = str_replace('-', '_', $att);
+            $get_atts[$att] = $options;
         }
 
         return $get_atts;
@@ -78,11 +72,11 @@ class Oui_Player_Provider
      * @param string $provider The video provider
      * @param string $no_cookie The no_cookie attribute or pref value (Youtube)
      */
-    public function getParams($provider)
+    public function getParams()
     {
         $player_infos = array(
             'src'    => $this->src,
-            'params' => $this->prefs,
+            'params' => $this->params,
         );
 
         return $player_infos;

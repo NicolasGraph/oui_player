@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
     "description" : "Embed customised players",
-    "version"     : "0.2.0-dev",
+    "version"     : "0.2.0-beta",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -10,8 +10,8 @@
     "help"        : {"file" : ["./README.textile"]},
     "code": {"file" : [
         "./src/Oui/Player/Provider.php",
-        "./src/Oui/Player/Youtube.php",
         "./src/Oui/Player/Vimeo.php",
+        "./src/Oui/Player/Youtube.php",
         "./src/Oui/Player/Dailymotion.php",
         "./src/Oui/Player/Soundcloud.php",
         "./src/Oui/Player.php",

@@ -19,14 +19,11 @@ function oui_player($atts, $thing)
 
     // Set the array to be used by latts()
     foreach ($get_atts as $att => $options) {
-        $get_atts[$att] = $options['default'];
+        $get_atts[$att] = '';
     }
 
     // Set tag attributes.
     extract(lAtts($get_atts, $atts));
-
-    // Look for wrong attribute values.
-    $main_class->checkAtts(__FUNCTION__, $atts);
 
     /*
      * Get video infos
@@ -35,19 +32,14 @@ function oui_player($atts, $thing)
     $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
 
     // Check class.
-    if ($provider) {
-        $provider_class = 'Oui_Player_' . $provider;
-        $match = (new $provider_class)->getItemInfos($play);
-    } else {
-        $match = $main_class->getItemInfos($play);
-    }
-
+    $provider ? $provider_class = 'Oui_Player_' . $provider : '';
+    $match = $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
     // Check if the video is recognize as a video url.
     if ($match) {
         $provider = $match['provider'];
         $id = $match['id'];
     } elseif (isset($thisarticle[$play])) {
-        $match = $main_class->getItemInfos($thisarticle[$play]);
+        $match =  $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
         if ($match) {
             $provider = $match['provider'];
             $id = $match['id'];
@@ -55,6 +47,8 @@ function oui_player($atts, $thing)
             $provider ?: $provider = get_pref('oui_player_provider');
             $id = $thisarticle[$play];
         }
+    } else {
+        $id = $play;
     }
 
 
@@ -65,7 +59,7 @@ function oui_player($atts, $thing)
     // Returns player infos
     $provider_class = 'Oui_Player_' . $provider;
     $provider_prefs = strtolower($provider_class);
-    $player_infos = (new $provider_class)->getParams($provider);
+    $player_infos = (new $provider_class)->getParams();
     $src = $player_infos['src'] . $id;
     $params = $player_infos['params'];
 
@@ -140,9 +134,6 @@ function oui_if_player($atts, $thing)
 
     // Set tag attributes.
     extract(lAtts($get_atts, $atts));
-
-    // Look for wrong attribute values.
-    $main_class->checkAtts(__FUNCTION__, $atts);
 
     /*
      * Get video infos

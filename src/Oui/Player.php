@@ -61,7 +61,6 @@ class Oui_Player
             add_privs('prefs.' . $this->plugin, $this->privs);
 
             register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
-            register_callback(array($this, 'setPrefs'), 'prefs', null, 1);
             register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
 
             // Add privs to provider prefs only if they are enabled.
@@ -71,10 +70,6 @@ class Oui_Player
                 if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && get_pref($pref))) {
                     add_privs('prefs.' . $group, $this->privs);
                 }
-            }
-
-            foreach ($this->getPrefs() as $pref => $options) {
-                register_callback(array($this, 'pophelp'), 'admin_help', $pref);
             }
         } else {
             if (class_exists('\Textpattern\Tag\Registry')) {
@@ -104,8 +99,8 @@ class Oui_Player
                 $this->setPrefs();
                 break;
             case 'deleted':
-                remove_pref(null, $this->plugin);
-                safe_delete('txp_lang', "owner LIKE '" . $this->plugin . "'");
+                safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
+                safe_delete('txp_lang', "owner = '" . $this->plugin . "'");
                 break;
         }
     }
@@ -222,18 +217,6 @@ class Oui_Player
     }
 
     /**
-     * Get external popHelp contents
-     *
-     * @param string $evt Textpattern action event
-     * @param string $stp Textpattern action step
-     * @param string $ui Textpattern user interface element
-     */
-    public function pophelp($evt, $stp, $ui, $vars)
-    {
-        return str_replace(HELP_URL, $this->pophelp, $ui);
-    }
-
-    /**
      * Get a tag attribute list
      *
      * @param string $tag The plugin tag
@@ -246,44 +229,14 @@ class Oui_Player
             $get_atts[$att] = $options;
         }
 
-        foreach ($this->providers as $provider) {
-            $class = __CLASS__ . '_' . $provider;
-            $get_atts = (new $class)->getAtts($tag, $get_atts);
-        }
-
-        return $get_atts;
-    }
-
-    /**
-     * Look for wrong attribute values
-     *
-     * @param string $tag The plugin tag
-     * @param array $atts The Txp variable containing attribute values in use
-     */
-    public function checkAtts($tag, $atts)
-    {
-        $get_atts = $this->getAtts($tag);
-
-        foreach ($atts as $att => $val) {
-            $valid = isset($get_atts[$tag][$att]['valid']) ? $get_atts[$tag][$att]['valid'] : false;
-
-            if ($valid) {
-                if (is_array($valid) && !in_array($val, $valid)) {
-                    $valid = implode(', ', $valid);
-                    trigger_error(
-                        'Unknown attribute value for ' . $att .
-                        '. Exact valid values are: ' . $valid . '.'
-                    );
-                } elseif (!is_array($valid) && !preg_match($valid, $val)) {
-                    trigger_error(
-                        'Unknown attribute value for ' . $att .
-                        '. A valid value must respect the following pattern ' . $valid . '.'
-                    );
-                }
+        if ($tag === $this->plugin) {
+            foreach ($this->providers as $provider) {
+                $class = __CLASS__ . '_' . $provider;
+                $get_atts = (new $class)->getAtts($tag, $get_atts);
             }
         }
 
-        return;
+        return $get_atts;
     }
 
     /**
