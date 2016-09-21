@@ -9,12 +9,13 @@
     "flags"       : 3,
     "help"        : {"file" : ["./README.textile"]},
     "code": {"file" : [
-        "./src/main.php",
-        "./src/providers/vimeo.php",
-        "./src/providers/youtube.php",
-        "./src/providers/dailymotion.php",
-        "./src/providers/soundcloud.php",
-        "./src/pref_functions.php",
+        "./src/Oui/Player/Provider.php",
+        "./src/Oui/Player/Youtube.php",
+        "./src/Oui/Player/Vimeo.php",
+        "./src/Oui/Player/Dailymotion.php",
+        "./src/Oui/Player/Soundcloud.php",
+        "./src/Oui/Player.php",
+        "./src/lib.php",
         "./src/tags.php"
     ]}
 }

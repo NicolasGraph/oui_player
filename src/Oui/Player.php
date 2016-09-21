@@ -3,12 +3,7 @@
 class Oui_Player
 {
     protected $plugin = 'oui_player';
-    protected $providers = array(
-        'Vimeo',
-        'Youtube',
-        'Dailymotion',
-        'Soundcloud',
-    );
+    protected $providers;
     protected $pophelp = 'http://help.ouisource.com/';
     protected $tags = array(
         'oui_player' => array(
@@ -23,7 +18,6 @@ class Oui_Player
             ),
             'provider' => array(
                 'default' => '',
-                'valid'   => array('vimeo', 'youtube', 'dailymotion'),
             ),
             'play' => array(
                 'default' => '',
@@ -38,7 +32,6 @@ class Oui_Player
             ),
             'provider' => array(
                 'default' => '',
-                'valid'   => array('vimeo', 'youtube', 'dailymotion'),
             ),
         ),
     );
@@ -49,8 +42,6 @@ class Oui_Player
             'default' => 'article_image',
         ),
         'provider' => array(
-            'default' => 'youtube',
-            'valid'   => array('dailymotion', 'vimeo', 'Youtube'),
         ),
     );
 
@@ -59,9 +50,16 @@ class Oui_Player
      */
     public function __construct()
     {
+        $this->providers = callback_event($this->plugin, 'plug_providers', 0, 'Provider');
+        $this->tags['oui_player']['provider']['valid'] = $this->providers;
+        $this->tags['oui_if_player']['provider']['valid'] = $this->providers;
+        $this->prefs['provider']['default'] = $this->providers[0];
+        $this->prefs['provider']['valid'] = $this->providers;
+
         if (txpinterface === 'admin') {
             add_privs('plugin_prefs.' . $this->plugin, $this->privs);
             add_privs('prefs.' . $this->plugin, $this->privs);
+
             register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
             register_callback(array($this, 'setPrefs'), 'prefs', null, 1);
             register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
@@ -88,6 +86,11 @@ class Oui_Player
         }
     }
 
+    public function appendComma()
+    {
+        return ', ';
+    }
+
     /**
      * Handler for plugin lifecycle events.
      *
@@ -101,8 +104,8 @@ class Oui_Player
                 $this->setPrefs();
                 break;
             case 'deleted':
-                safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
-                safe_delete('txp_lang', "name LIKE '" . $this->plugin . "%'");
+                remove_pref(null, $this->plugin);
+                safe_delete('txp_lang', "owner LIKE '" . $this->plugin . "'");
                 break;
         }
     }
@@ -130,7 +133,7 @@ class Oui_Player
         if ($valid && is_array($valid)) {
             if ($valid === array('0', '1')) {
                 $widget = 'yesnoradio';
-            } elseif  ($valid === array('true', 'false')) {
+            } elseif ($valid === array('true', 'false')) {
                 $widget = $this->plugin . '_truefalseradio';
             } else {
                 $widget = $this->plugin . '_pref';
@@ -187,9 +190,7 @@ class Oui_Player
             $options['group'] = $this->plugin;
             $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
             $prefs[$pref] = $options;
-        }
 
-        foreach ($this->providers as $provider) {
             $class = __CLASS__ . '_' . $provider;
             $prefs = (new $class)->getPrefs($prefs);
         }

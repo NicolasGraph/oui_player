@@ -1,11 +1,10 @@
 <?php
 
-class Oui_Player_Youtube extends Oui_Player_Vimeo
+class Oui_Player_Youtube extends Oui_Player_Provider
 {
-    protected $plugin = 'oui_player';
     protected $provider = 'Youtube';
     protected $patterns = array('#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i' => '8');
-    protected $src = array('//www.youtube.com/embed/', '//www.youtube-nocookie.com/embed/');
+    protected $src = '//www.youtube-nocookie.com/embed/';
     protected $tags = array(
         'oui_player' => array(
             'autohide' => array(
@@ -60,10 +59,6 @@ class Oui_Player_Youtube extends Oui_Player_Vimeo
                 'default' => '',
                 'valid'   => array('0', '1'),
             ),
-            'no_cookie' => array(
-                'default' => '',
-                'valid'   => array('0', '1'),
-            ),
             'origin' => array(
                 'default' => '',
             ),
@@ -103,9 +98,14 @@ class Oui_Player_Youtube extends Oui_Player_Vimeo
         ),
     );
     protected $prefs = array(
-        'no_cookie'       => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
+        'width' => array(
+            'default' => '640',
+        ),
+        'height' => array(
+            'default' => '',
+        ),
+        'ratio' => array(
+            'default' => '16:9',
         ),
         'autohide'       => array(
             'default' => '2',
@@ -142,9 +142,6 @@ class Oui_Player_Youtube extends Oui_Player_Vimeo
             'default' => '1',
             'valid'   => array('0', '1'),
         ),
-        'height' => array(
-            'default' => '',
-        ),
         'hl'             => array(
             'default' => '',
         ),
@@ -173,15 +170,12 @@ class Oui_Player_Youtube extends Oui_Player_Vimeo
             'default' => '0',
             'valid'   => array('0', '1'),
         ),
-        'ratio' => array(
-            'default' => '16:9',
-        ),
         'rel'            => array(
             'default' => '1',
             'valid'   => array('0', '1'),
         ),
         'start'          => array(
-            'default' => '',
+            'default' => '0',
         ),
         'showinfo'       => array(
             'default' => '1',
@@ -191,26 +185,7 @@ class Oui_Player_Youtube extends Oui_Player_Vimeo
             'default' => 'dark',
             'valid'   => array('dark', 'light'),
         ),
-        'width' => array(
-            'default' => '640',
-        ),
     );
-
-    /**
-     * Get the provider player url and its parameters/attributes
-     *
-     * @param string $provider The video provider
-     * @param string $no_cookie The no_cookie attribute or pref value (Youtube)
-     */
-    public function getParams($provider, $no_cookie)
-    {
-        $src = $no_cookie ? $this->src[1] : $this->src[0];
-
-        $player_infos = array(
-            'src'    => $src,
-            'params' => $this->prefs,
-        );
-
-        return $player_infos;
-    }
 }
+
+new Oui_Player_Youtube;
