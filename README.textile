@@ -1,6 +1,6 @@
 h1. oui_player (formerly oui_video)
 
-Easily embed videos in articles and customise the appearance of the player.
+Easily embed customised players.
 This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
 It also adds a support for Soundcloud and is coded to be easily extended.
 Plugin preferences define most of the attribute default values, making things easier for site users.
@@ -31,11 +31,12 @@ oui_player's minimum requirements:
 
 h2(#install). Installation
 
-To install go to the 'plugins' tab under 'admin' and paste the plugin code into the 'Install plugin' box, 'upload' and then 'install'. Please note that you will need to set-up a custom field to use for associating videos with articles, unless you choose to directly embed the new tag in the article text.
+# Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
+# Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
 h2(#tags). Preferences/options
 
-Plugin prefs are mainly used as default values for the oui_player @<txp:oui_player />@ attributes.
+Plugin prefs are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 They can be overriden by these attributes when needed.
 
 +Always prefer plugin "global" prefs to tag related attributes!+
@@ -59,7 +60,7 @@ h4(#main). Main tag attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
-* @play=""@ - An url, an id (Soundcloud accepts url's only) or the custom field name containing it.
+* @play=""@ - An URL, an id (Soundcloud accepts URL's only) or the custom field name containing it.
 * @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known.
 * @width=""@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
@@ -145,8 +146,6 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 * @theme_color="ff3300"@ - Changes the color of the player theme.
 * @visual="false"@ - @true@ or @false@ - Whether to display the artwork as a background or not.
 
-More informations on "this Soundcloud webpage":https://developers.soundcloud.com/docs/widget#parameters.
-
 h2(#oui_if_player). oui_if_player
 
 In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
@@ -172,14 +171,14 @@ Use a video id through the tag attribute.
 
 bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
 
-Let the plugin find the provider and the video id by providing the video url.
+Let the plugin find the provider and the video id by providing the video URL.
 
 bc. <txp:oui_player play="https://vimeo.com/155020267" />
 
 h3. Using the conditional tag
 
 bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
-    Yes, it is a valid url pattern for a Youtube, Dailymotion or Vimeo video.
+    Yes, it is a valid URL pattern for a Youtube, Dailymotion or Vimeo video.
 <txp:else />
     No…
 </txp:oui_if_player>
@@ -187,7 +186,7 @@ bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
 p. …or with the provider attribute…
 
 bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
-    Yes, it is a valid url pattern for a Vimeo video.
+    Yes, it is a valid URL pattern for a Vimeo video.
 <txp:else />
     No
 </txp:oui_if_player>
