@@ -3,6 +3,7 @@
 class Oui_Player_Provider
 {
     protected $plugin = 'oui_player';
+    protected $glue = array('?', '&amp;');
 
     /**
      * Register callbacks.
@@ -85,7 +86,7 @@ class Oui_Player_Provider
     public function getOutput($src, $used_params, $dims)
     {
         if (!empty($used_params)) {
-            $glue = strpos($src, '?') ? '&amp;' : '?';
+            $glue = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
             $src .= $glue . implode('&amp;', $used_params);
         }
 

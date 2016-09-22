@@ -15,6 +15,7 @@
         "./src/Oui/Player/Dailymotion.php",
         "./src/Oui/Player/Twitch.php",
         "./src/Oui/Player/Soundcloud.php",
+        "./src/Oui/Player/Mixcloud.php",
         "./src/Oui/Player.php",
         "./src/lib.php",
         "./src/tags.php"

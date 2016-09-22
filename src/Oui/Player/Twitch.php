@@ -6,25 +6,25 @@ class Oui_Player_Twitch extends Oui_Player_Provider
     protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
     protected $src = '//player.twitch.tv/?video=';
     protected $params = array(
-        'autoplay' => array(
-            'default' => 'true',
-            'valid' => array('true', 'false'),
+        'width'       => array(
+            'default' => '640',
         ),
         'height'       => array(
             'default' => '',
+        ),
+        'ratio'       => array(
+            'default' => '16:9',
+        ),
+        'autoplay' => array(
+            'default' => 'true',
+            'valid' => array('true', 'false'),
         ),
         'muted' => array(
             'default' => 'false',
             'valid' => array('true', 'false'),
         ),
-        'ratio'       => array(
-            'default' => '16:9',
-        ),
         'time'       => array(
             'default' => '',
-        ),
-        'width'       => array(
-            'default' => '640',
         ),
     );
 
