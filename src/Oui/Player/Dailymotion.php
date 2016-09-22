@@ -15,10 +15,6 @@ class Oui_Player_Dailymotion extends Oui_Player_Provider
         'ratio' => array(
             'default' => '16:9',
         ),
-        'api'                  => array(
-            'default' => '',
-            'valid'   => array('', 'postMessage', 'location', '1'),
-        ),
         'autoplay'             => array(
             'default' => 'false',
             'valid'   => array('true', 'false'),
@@ -38,9 +34,6 @@ class Oui_Player_Dailymotion extends Oui_Player_Provider
             'default' => 'false',
             'valid'   => array('true', 'false'),
         ),
-        'origin'               => array(
-            'default' => '',
-        ),
         'quality'              => array(
             'default' => 'auto',
             'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
@@ -53,9 +46,6 @@ class Oui_Player_Dailymotion extends Oui_Player_Provider
             'default' => '0',
         ),
         'subtitles-default'    => array(
-            'default' => '',
-        ),
-        'syndication'          => array(
             'default' => '',
         ),
         'ui-highlight'         => array(
