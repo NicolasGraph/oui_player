@@ -14,10 +14,10 @@ h2. Table of contents
 ** "oui_player":#oui_player
 *** "Presentational attributes":#presentational
 *** "Main tag attributes":#main
-*** "Vimeo parameters":#vimeo
-*** "Youtube parameters":#youtube
-*** "Dailymotion parameters":#dailymotion
-*** "Soundcloud parameters":#soundcloud
+*** "Vimeo additional attributes":#vimeo
+*** "Youtube additional attributes":#youtube
+*** "Dailymotion additional attributes":#dailymotion
+*** "Soundcloud additional attributes":#soundcloud
 ** "oui_if_player":#oui_if_player
 * "Examples":#examples
 * "Author":#author
@@ -62,14 +62,16 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 
 * @play=""@ - An URL, an id (Soundcloud accepts URL's only) or the custom field name containing it.
 * @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known.
-* @width=""@ - The width of the player in pixels.
+
+h4(#vimeo). Vimeo additional attributes
+
+Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+
+* @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
-* @ratio=""@ - The ratio used to calculate the missing value for the width or the height.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
 
-h4(#vimeo). Vimeo additional player parameters
-
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+h5. Player parameters (aplhabetical order)
 
 * @autopause="1"@ - @0@ or @1@ - Enables or disables pausing this video when another video is played.
 * @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
@@ -80,11 +82,16 @@ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/emb
 * @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
 * @title="1"@ - @0@ or @1@ - Show the title on the video.
 
-h4(#youtube). Youtube additional player parameters
+h4(#youtube). Youtube additional attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes can be depraceted for HTML5 players or overriden by the provider depending on several conditions.
-More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
+Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
 
 * @autohide="2"@ - @0@, @1@ or @2@ - Indicates whether the video controls will automatically hide after a video begins playing. This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1).
 * @autoplay="0"@ - @0@ or @1@ - Specifies whether the initial video will automatically start to play when the player loads.
@@ -105,11 +112,16 @@ More informations on "this Youtube webpage":https://developers.google.com/youtub
 * @start=""@ - an integer - Specifies the time (in seconds) when the video should start playing.
 * @theme="dark"@ - @dark@ or @light@ - Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar. This parameter has been deprecated for HTML5 players
 
-h4(#dailymotion). Dailymotion additional player parameters
+h4(#dailymotion). Dailymotion additional attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes can be depraceted for HTML5 players or overriden by the provider depending on several conditions.
-More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
 
 * @autoplay="false"@ - @true@ or @false@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
 * @controls="true"@ - @true@ or @false@ - Whether to display the player controls or not.
@@ -120,15 +132,21 @@ More informations on "this Dailymotion webpage":https://developer.dailymotion.co
 * @start=""@ - Specifies the time (in seconds) from which the video should start playing.
 * @subtitles_default=""@ - - Specifies the default selected subtitles language.
 * @syndication=""@ - Passes your syndication key to the player.
-* @ui_highlight="ffcc33"@ - Changes the default highlight colour used in the controls (hex value without the leading #).
+* @ui_highlight="ffcc33"@ - Changes the default colour used in the controls (hex value without the leading #).
 * @ui_logo="true"@ (@ui-logo@) - @true@ or @false@ - Whether to display the Dailymotion logo or not.
 * @ui_start_screen_info="true"@ - @true@ or @false@ - Whether to show video information on the start screen or not.
 * @ui_theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
 
-h4(#Soundcloud). Soundcloud additional player parameters
+h4(#Soundcloud). Soundcloud additional attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+
+* @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
+* @height="166"@ - The height of the player in pixels (if @visual="true"@ Soundcloud width is usually @450@).
+* @ratio=""@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
 
 * @auto_play="false"@ - @true@ or @false@ - Whether to play after loading or not.
 * @buying="true"@ - @true@ or @false@ - Whether to display the _Buy_ button or not.
