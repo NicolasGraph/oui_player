@@ -69,6 +69,7 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 h4(#vimeo). Vimeo additional player parameters
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
 
 * @autopause="1"@ - @0@ or @1@ - Enables or disables pausing this video when another video is played.
 * @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
@@ -79,11 +80,11 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 * @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
 * @title="1"@ - @0@ or @1@ - Show the title on the video.
 
-More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
-
 h4(#youtube). Youtube additional player parameters
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes can be depraceted for HTML5 players or overriden by the provider depending on several conditions.
+More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
 
 * @autohide="2"@ - @0@, @1@ or @2@ - Indicates whether the video controls will automatically hide after a video begins playing. This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1).
 * @autoplay="0"@ - @0@ or @1@ - Specifies whether the initial video will automatically start to play when the player loads.
@@ -104,11 +105,11 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 * @start=""@ - an integer - Specifies the time (in seconds) when the video should start playing.
 * @theme="dark"@ - @dark@ or @light@ - Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar. This parameter has been deprecated for HTML5 players
 
-More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
-
 h4(#dailymotion). Dailymotion additional player parameters
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes can be depraceted for HTML5 players or overriden by the provider depending on several conditions.
+More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
 
 * @autoplay="false"@ - @true@ or @false@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
 * @controls="true"@ - @true@ or @false@ - Whether to display the player controls or not.
@@ -124,11 +125,10 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 * @ui_start_screen_info="true"@ - @true@ or @false@ - Whether to show video information on the start screen or not.
 * @ui_theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
 
-More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
-
 h4(#Soundcloud). Soundcloud additional player parameters
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
 
 * @auto_play="false"@ - @true@ or @false@ - Whether to play after loading or not.
 * @buying="true"@ - @true@ or @false@ - Whether to display the _Buy_ button or not.
