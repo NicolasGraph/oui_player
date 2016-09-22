@@ -19,6 +19,7 @@ h2. Table of contents
 *** "Dailymotion additional attributes":#dailymotion
 *** "Twitch additional attributes":#twitch
 *** "Soundcloud additional attributes":#soundcloud
+*** "Mixcloud additional attributes":#mixcloud
 ** "oui_if_player":#oui_if_player
 * "Examples":#examples
 * "Author":#author
@@ -179,6 +180,23 @@ h5. Player parameters (aplhabetical order)
 * @start_track="0"@ - Specifies the time (in seconds) when the track should start playing.
 * @theme_color="ff3300"@ - Changes the color of the player theme.
 * @visual="false"@ - @true@ or @false@ - Whether to display the artwork as a background or not.
+
+h4(#mixcloud). Mixcloud additional attributes
+
+Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+
+* @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
+* @height="400"@ - The height of the player in pixels.
+* @ratio=""@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @autoplay="0"@ - @0@ or @1@ - Whether to play after loading or not.
+* @light="0"@ - @0@ or @1@ - Enables the light theme.
+* @hide_artwork="0"@ - @0@ or @1@ - Hides the background image.
+* @hide_cover="0"@ - @0@ or @1@ - Hides the cover.
+* @mini="0"@ - @0@ or @1@ - Uses the _mini_ player config.
 
 h2(#oui_if_player). oui_if_player
 
