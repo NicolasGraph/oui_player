@@ -17,6 +17,7 @@ h2. Table of contents
 *** "Vimeo additional attributes":#vimeo
 *** "Youtube additional attributes":#youtube
 *** "Dailymotion additional attributes":#dailymotion
+*** "Twitch additional attributes":#twitch
 *** "Soundcloud additional attributes":#soundcloud
 ** "oui_if_player":#oui_if_player
 * "Examples":#examples
@@ -60,7 +61,7 @@ h4(#main). Main tag attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
-* @play=""@ - An URL, an id (Soundcloud accepts URL's only) or the custom field name containing it.
+* @play=""@ - An URL, an id (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@) or the custom field name containing it.
 * @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known.
 
 h4(#vimeo). Vimeo additional attributes
@@ -137,7 +138,22 @@ h5. Player parameters (aplhabetical order)
 * @ui_start_screen_info="true"@ - @true@ or @false@ - Whether to show video information on the start screen or not.
 * @ui_theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
 
-h4(#Soundcloud). Soundcloud additional attributes
+h4(#twitch). Twitch additional attributes
+
+This plugin reads Twitch videos only for now, not channels.
+Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @autoplay="true"@ - @true@ or @false@ - Whether to play after loading or not.
+* @muted="false"@ - @true@ or @false@ - Whether to disable sound by default or not.
+* @time="true"@ - Format : @1h2m3s@ - Starts playback at the given timestamp.
+
+h4(#soundcloud). Soundcloud additional attributes
 
 Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
