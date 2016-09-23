@@ -35,6 +35,7 @@ oui_player's minimum requirements:
 
 h2(#install). Installation
 
+# Download the compiled plugin file, or, better, download the repo and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
 # Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
 # Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
@@ -65,7 +66,7 @@ h4(#main). Main tag attributes
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 * @play=""@ - An URL, an id (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@) or the custom field name containing it.
-* @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known.
+* @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known as it increases the plugin performances.
 
 h4(#vimeo). Vimeo additional attributes
 
@@ -98,9 +99,9 @@ Recognised values for the @play@ attribute:
 
 * *id* (requires @provider="youtube"@)
 * http(s)://(www.)youtu.be/[*id*]
-* http(s)://(www).youtube.com/v/[*id*]
-* http(s)://(www).youtube.com/watch?v=[*id*]
-* http(s)://(www).youtube.com/embed/[*id*]
+* http(s)://(www.)youtube.com/v/[*id*]
+* http(s)://(www.)youtube.com/watch?v=[*id*]
+* http(s)://(www.)youtube.com/embed/[*id*]
 
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
