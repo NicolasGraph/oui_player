@@ -1,64 +1,93 @@
-h1. oui_video
+h1. oui_player beta (formerly oui_video)
 
-Easily embed videos in articles and customise the appearance of the player.
+Easily embed customised players.
 This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
-It also adds plugin preferences define most of the attribute default values, making things easier for site users.
+It also adds a support for Soundcloud and is coded to be easily extended.
+Plugin preferences define most of the attribute default values, making things easier for site users.
 
 h2. Table of contents
 
 * "Plugin requirements":#requirements
 * "Installation":#install
+* "Extending":#extend
 * "Preferences/options":#prefs
 * "Tags":#tags
+** "oui_player":#oui_player
+*** "Presentational attributes":#presentational
+*** "Main tag attributes":#main
+*** "Vimeo additional attributes":#vimeo
+*** "Youtube additional attributes":#youtube
+*** "Dailymotion additional attributes":#dailymotion
+*** "Myspace videos additional attributes":#myspace
+*** "ABC News additional attributes":#abc
+*** "Twitch additional attributes":#twitch
+*** "Soundcloud additional attributes":#soundcloud
+*** "Mixcloud additional attributes":#mixcloud
+** "oui_if_player":#oui_if_player
 * "Examples":#examples
 * "Author":#author
 * "License":#Licence
 
 h2(#requirements). Plugin requirements
 
-oui_video's minimum requirements:
+oui_player's minimum requirements:
 
-* "Textpattern CMS":http://textpattern.com/ 4.5+ (4.6+ is recommended).
+* "Textpattern CMS":http://textpattern.com/ 4.6+.
 
 h2(#install). Installation
 
-To install go to the 'plugins' tab under 'admin' and paste the plugin code into the 'Install plugin' box, 'upload' and then 'install'. Please note that you will need to set-up a custom field to use for associating videos with articles, unless you choose to directly embed the new tag in the article text.
+# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
+# Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
+# Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
-h2(#tags). Preferences/options
+h2(#extend). Extending
 
-Plugin prefs are mainly used as default values for the oui_video @<txp:oui_video />@ attributes.
+Once another provider as been added, the plugin just need to be disable and re-enable to set the nex prefs, keeping existing prefs untouched.
+
+h2(#prefs). Preferences/options
+
+Plugin prefs are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 They can be overriden by these attributes when needed.
 
 +Always prefer plugin "global" prefs to tag related attributes!+
 
 h2(#tags). Tags
 
-h3. oui_video
+h3(#oui_player). oui_player
 
 Embeds a video in the page using an iframe.
 
-bc. <txp:oui_video />
+bc. <txp:oui_player />
 
-h4. Presentational attributes
+h4(#presentational). Presentational attributes
 
 * @label=""@ - Label for the video.
 * @labeltag=""@ - HTML wraptag for the label, without brackets.
 * @wraptag=""@ - HTML tag to be used as the content wraptag, without brackets.
 * @class=""@ - CSS class for HTML content wraptag.
 
-h4. Main tag attributes
+h4(#main). Main tag attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
-* @video=""@ - Video url, the video id or the custom_field containing it.
-* @provider=""@ - The video provider to use if the @video@ attribute value is an id.
-* @width=""@ - The width of the player in pixels.
+* @play=""@ - An URL, an id (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@) or the custom field name containing it.
+* @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known as it increases the plugin performances.
+
+h4(#vimeo). Vimeo additional attributes
+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="vimeo"@)
+* http(s)://vimeo.com/[*id*]
+* http(s)://player.vimeo.com/video/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+
+* @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
-* @ratio="4:3"@ - The ratio used to calculate the missing value for the width or the height.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
 
-h4. Vimeo additional player parameters
-
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+h5. Player parameters (aplhabetical order)
 
 * @autopause="1"@ - @0@ or @1@ - Enables or disables pausing this video when another video is played.
 * @autoplay="0"@ - @0@ or @1@ - Play the video automatically on load. Note that this won’t work on some devices.
@@ -66,109 +95,226 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 * @byline="1"@ - @0@ or @1@ - Show the user’s byline on the video.
 * @color="00adef"@ - Specify the color of the video controls. Make sure that you don’t include the #.
 * @loop="0"@ - @0@ or @1@ - Play the video again when it reaches the end.
-* @player_id=""@ - A unique id for the player that will be passed back with all Javascript API responses.
 * @portrait="1"@ - @0@ or @1@ - Show the user’s portrait on the video.
 * @title="1"@ - @0@ or @1@ - Show the title on the video.
 
-More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+h4(#youtube). Youtube additional attributes
 
-h4. Youtube additional player parameters
+Recognised values for the @play@ attribute:
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+* *id* (requires @provider="youtube"@)
+* http(s)://(www.)youtu.be/[*id*]
+* http(s)://(www.)youtube.com/v/[*id*]
+* http(s)://(www.)youtube.com/watch?v=[*id*]
+* http(s)://(www.)youtube.com/embed/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
 
 * @autohide="2"@ - @0@, @1@ or @2@ - Indicates whether the video controls will automatically hide after a video begins playing. This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1).
 * @autoplay="0"@ - @0@ or @1@ - Specifies whether the initial video will automatically start to play when the player loads.
-* @cc_load_policy@ - @1@ - Setting the parameter's value to 1 causes closed captions to be shown by default, even if the user has turned captions off.
-* @color="red"@ - @red@ or @white@ - Specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen.
+* @cc_load_policy@ - @1@ - 1 causes closed captions to be shown by default, even if the user has turned captions off.
+* @color="red"@ - @red@ or @white@ - Specifies the color used in the player's progress bar.
 * @controls="1"@ - @0@, @1@ or @2@ - Indicates whether the video player controls are displayed.
 * @disablekb="0"@ - @0@ or @1@ - Disables keyboard commands.
-* @enablejsapi="0"@ - @0@ or @1@ - Enables the player to be controlled via IFrame or JavaScript Player API calls.
-* @end=""@ - an integer - Specifies the time, measured in seconds from the start of the video, when the player should stop playing the video.
+* @end=""@ - an integer - Specifies the time, measured in seconds, when the player should stop playing the video.
 * @fs="1"@ - @0@ or @1@ - Setting this parameter to 0 prevents the fullscreen button from displaying in the player.
-* @hl=""@ - Sets the player's interface language. The parameter value is an ISO 639-1 two-letter language code or a fully specified locale.
-* @iv_load_policy="1"@ - @1@ or @3@ - Setting the parameter's value to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default.
+* @hl=""@ - Sets the player's interface language. (an ISO 639-1 two-letter language code or a fully specified locale.)
+* @iv_load_policy="1"@ - @1@ or @3@ - Setting the parameter's value to 1 causes video annotations to be shown by default.
 * @loop="0"@ - @0@ or @1@ - Causes the player to play the video again and again.
 * @modestbranding="0"@ - @0@ or @1@ - Lets you use a YouTube player that does not show a YouTube logo.
-* @origin=""@ - Provides an extra security measure for the IFrame API and is only supported for IFrame embeds.
-* @playerapiid=""@ - @0@ or @1@ - This setting is used in conjunction with the JavaScript API.
 * @playlist=""@ - a list of video id's to read after the one provided via the @video@ attribute.
 * @playsinline=""@ - Controls whether videos play inline or fullscreen in an HTML5 player on iOS.
 * @rel="1"@ - @0@ or @1@ - Indicates whether the player should show related videos when playback of the initial video ends.
-* @showinfo="1"@ - @0@ or @1@ - Causes the player to begin playing the video at the given number of seconds from the start of the video.
-* @start=""@ - an integer - Causes the player to begin playing the video at the given number of seconds from the start of the video.
+* @showinfo="1"@ - @0@ or @1@ - Whether to display the video informations or not.
+* @start=""@ - an integer - Specifies the time (in seconds) when the video should start playing.
 * @theme="dark"@ - @dark@ or @light@ - Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar. This parameter has been deprecated for HTML5 players
 
-More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
+h4(#dailymotion). Dailymotion additional attributes
 
-h4. Dailymotion additional player parameters
+Recognised values for the @play@ attribute:
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+* *id* (requires @provider="dailymotion"@)
+* http(s)://dai.ly/[*id*]
+* http(s)://www.dailymotion.com/video/[*id*]…
+* http(s)://www.dailymotion.com/embed/video/[*id*]
 
-* @api=""@ - @postMessage@, @location@ or @1@ - Enables the Player API. In native mobile apps, use @api="location"@, otherwise we recommend using @api=1@.
-* @autoplay="0"@ - @0@ or @1@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
-* @controls="1"@ - @0@ or @1@ - Whether to display the player controls or not.
-* @endscreen_enable="1"@ - @0@ or @1@ - Whether to enable the end screen or not.
-* @id=""@ - ID of the player unique to the page to be passed back with all API messages.
-* @mute="0"@ - @0@ or @1@ - Whether to mute the video or not.
-* @origin=""@ - The domain of the page hosting the Dailymotion player. When using @api="postMessage"@, you might want to specify origin for extra security.
-* @quality="auto"@ - @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@ - Specifies the suggested playback quality for the video.
-* @sharing_enable="1"@ - @0@ or @1@ - Whether to display the sharing button or not.
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @autoplay="false"@ - @true@ or @false@ - Starts the playback of the video automatically after the player load. Note: this parameter may not work on some mobile OS.
+* @controls="true"@ - @true@ or @false@ - Whether to display the player controls or not.
+* @endscreen_enable="true"@ - @true@ or @false@ - Whether to enable the end screen or not.
+* @mute="false"@ - @true@ or @false@ - Whether to mute the video or not.
+* @quality="auto"@ - @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@ - Set the suggested playback quality for the video.
+* @sharing_enable="true"@ - @true@ or @false@ - Whether to display the sharing button or not.
 * @start=""@ - Specifies the time (in seconds) from which the video should start playing.
 * @subtitles_default=""@ - - Specifies the default selected subtitles language.
 * @syndication=""@ - Passes your syndication key to the player.
-* @ui_highlight="ffcc33"@ - Change the default highlight colour used in the controls (hex value without the leading #).
-* @ui_logo="1"@ (@ui-logo@) - @0@ or @1@ - Whether to display the Dailymotion logo or not.
-* @ui_start_screen_info="1"@ (@ui-start-screen-info@) - @0@ or @1@ - Whether to show video information (title and owner) on the start screen.
+* @ui_highlight="ffcc33"@ - Changes the default colour used in the controls (hex value without the leading #).
+* @ui_logo="true"@ (@ui-logo@) - @true@ or @false@ - Whether to display the Dailymotion logo or not.
+* @ui_start_screen_info="true"@ - @true@ or @false@ - Whether to show video information on the start screen or not.
 * @ui_theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
 
-More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+h4(#myspace). Myspace videos additional attributes
 
-h2. oui_if_video
+Recognised values for the @play@ attribute:
 
-In addition to oui_video this plugin also comes with oui_if_video, a conditional tag for checking if the video URL is a valid one.
+* *id* (requires @provider="myspace"@)
+* http(s)://myspace.com/…/video/…/[*id*]
 
-bc. <txp:oui_if_video video="…">
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h4(#abc). Abc News additional attributes
+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="abcnews"@)
+* http(s)://abcnews.go.com/…/video/…[*id*]
+* http(s)://abcnews.go.com/video/embed?id=[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @ts="0"@ - @0@ or @1@ - Starts playing the video at the defined second.
+
+h4(#twitch). Twitch additional attributes
+
+This plugin reads Twitch videos only for now, not channels.
+
+Recognised values for the @play@ attribute:
+
+* v[*id*] (requires @provider="twitch"@)
+* http(s)://(www.)twitch.tv/…/v/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @autoplay="true"@ - @true@ or @false@ - Whether to play after loading or not.
+* @muted="false"@ - @true@ or @false@ - Whether to disable sound by default or not.
+* @time="true"@ - Format : @1h2m3s@ - Starts playback at the given timestamp.
+
+h4(#soundcloud). Soundcloud additional attributes
+
+Recognised values for the @play@ attribute:
+
+* http(s)://(api.)soundcloud.com/…
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+
+* @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
+* @height="166"@ - The height of the player in pixels (if @visual="true"@ Soundcloud width is usually @450@).
+* @ratio=""@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @auto_play="false"@ - @true@ or @false@ - Whether to play after loading or not.
+* @buying="true"@ - @true@ or @false@ - Whether to display the _Buy_ button or not.
+* @color="ff8800"@ - Changes the colour of the user interface elements (hex value without the leading #).
+* @download="true"@ - @true@ or @false@ - Whether to display the _Download_ button or not.
+* @hide_related="false"@ - @true@ or @false@ - Whether to display related tracks or not.
+* @sharing="true"@ - @true@ or @false@ - Whether to enable the sharing features or not.
+* @show_artwork="true"@ - @true@ or @false@ - Whether to display the artwork or not.
+* @show_comments="true"@ - @true@ or @false@ - Whether to display comments or not.
+* @show_reposts="true"@ - @true@ or @false@ - Whether to display reposts or not.
+* @show_playcount="true"@ - @true@ or @false@ - Whether to display the playcount or not.
+* @show_user="true"@ - @true@ or @false@ - Whether to display the uploader or not.
+* @single_active="true"@ - @true@ or @false@ - Whether to stop playing while another player is on or not.
+* @start_track="0"@ - Specifies the time (in seconds) when the track should start playing.
+* @theme_color="ff3300"@ - Changes the color of the player theme.
+* @visual="false"@ - @true@ or @false@ - Whether to display the artwork as a background or not.
+
+h4(#mixcloud). Mixcloud additional attributes
+
+Recognised values for the @play@ attribute:
+
+* http(s):(www.)//mixcloud.com/…
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+* @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
+* @height="400"@ - The height of the player in pixels.
+* @ratio=""@ - The ratio used to calculate the missing value for the width or the height.
+
+h5. Player parameters (aplhabetical order)
+
+* @autoplay="0"@ - @0@ or @1@ - Whether to play after loading or not.
+* @light="0"@ - @0@ or @1@ - Enables the light theme.
+* @hide_artwork="0"@ - @0@ or @1@ - Hides the background image.
+* @hide_cover="0"@ - @0@ or @1@ - Hides the cover.
+* @mini="0"@ - @0@ or @1@ - Uses the _mini_ player config.
+
+h2(#oui_if_player). oui_if_player
+
+In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
+
+bc. <txp:oui_if_player video="…">
 […]
-</txp:oui_if_video>
+</txp:oui_if_player>
 
 h4. Attributes
 
-Use one or the other of the following:
-
-* @video=""@ - A URL or a custom field containing an URL to check if it is a valid video URL.
-* @provider=""@ - vimeo, youtube or dailymotion.
+* @play=""@ - An URL or a custom field containing an URL to check against valid video URL schemes.
+* @provider=""@ - Check the URL against valid URL schemes of the provided provider.
 
 h2(#examples). Examples
 
 h3. Display a video
 
-Use the prefs values for the @provider@ and/or @video@ attributes.
+Use the prefs values for the @provider@ and/or @play@ attributes.
 
-bc. <txp:oui_video />
+bc. <txp:oui_player />
 
 Use a video id through the tag attribute.
 
-bc. <txp:oui_video provider="dailymotion" video="x4l8awd" />
+bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
 
-Let the plugin find the provider and the video id by providing the video url.
+Let the plugin find the provider and the video id by providing the video URL.
 
-bc. <txp:oui_video video="https://vimeo.com/155020267" />
+bc. <txp:oui_player play="https://vimeo.com/155020267" />
 
 h3. Using the conditional tag
 
-bc.. <txp:oui_if_video video="https://vimeo.com/155020267">
-    Yes, it is a valid url pattern for a Youtube, Dailymotion or Vimeo video.
+bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
+    Yes, it is a valid URL pattern for a Youtube, Dailymotion or Vimeo video.
 <txp:else />
     No…
-</txp:oui_if_video>
+</txp:oui_if_player>
 
 p. …or with the provider attribute…
 
-bc.. <txp:oui_if_video provider="vimeo" video="https://vimeo.com/155020267">
-    Yes, it is a valid url pattern for a Vimeo video.
+bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
+    Yes, it is a valid URL pattern for a Vimeo video.
 <txp:else />
     No
-</txp:oui_if_video>
+</txp:oui_if_player>
 
 h2(#author). Author
 
@@ -177,4 +323,3 @@ h2(#author). Author
 h2(#licence). License
 
 This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
-Copyright (c) 2014 Andy Carter, (c) 2015-16 Nicolas Morand.

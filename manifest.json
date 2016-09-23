@@ -1,7 +1,7 @@
 {
-    "name"        : "oui_video",
-    "description" : "Embed videos with customised player",
-    "version"     : "0.1.0",
+    "name"        : "oui_player",
+    "description" : "Embed customised players",
+    "version"     : "1.1.0-beta",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -9,8 +9,17 @@
     "flags"       : 3,
     "help"        : {"file" : ["./README.textile"]},
     "code": {"file" : [
-        "./src/class.php",
-        "./src/pref_functions.php",
+        "./src/Oui/Player/Provider.php",
+        "./src/Oui/Player/Vimeo.php",
+        "./src/Oui/Player/Youtube.php",
+        "./src/Oui/Player/Dailymotion.php",
+        "./src/Oui/Player/Myspace.php",
+        "./src/Oui/Player/Abcnews.php",
+        "./src/Oui/Player/Twitch.php",
+        "./src/Oui/Player/Soundcloud.php",
+        "./src/Oui/Player/Mixcloud.php",
+        "./src/Oui/Player.php",
+        "./src/lib.php",
         "./src/tags.php"
     ]}
 }

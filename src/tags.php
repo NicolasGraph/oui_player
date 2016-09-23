@@ -1,123 +1,150 @@
 <?php
 
-/**
- * Main plugin tag
+/*
  * Display a video
  */
-function oui_video($atts, $thing)
+function oui_player($atts, $thing)
 {
     global $thisarticle;
 
-    // Instanciate Oui_video.
-    $oui_video = new Oui_Video;
-
-    // Set tag attributes.
-    extract(lAtts($oui_video->getAtts(__FUNCTION__), $atts));
-
-    // Look for wrong attribute values.
-    $oui_video->checkAtts(__FUNCTION__, $atts);
+    // Instanciate Oui_Player.
+    $main_class = new Oui_Player;
 
     /*
-     * Define the video provider and the video id.
+     * Set and check Tag attributes
      */
-    $match = $oui_video->videoInfos($video);
 
-    if (!$match) {
-        $provider = $provider ? $provider : get_pref('oui_video_provider');
-        $custom = $video ? $video : strtolower(get_pref('oui_video_custom_field'));
-        isset($thisarticle[$custom]) ? $video = $thisarticle[$custom] : '';
-        $video_id = $video;
-    } else {
-        $provider = $match['provider'];
-        $video_id = $match['id'];
+    // Get tag attributes.
+    $get_atts = $main_class->getAtts(__FUNCTION__);
+
+    // Set the array to be used by latts()
+    foreach ($get_atts as $att => $options) {
+        $get_atts[$att] = '';
     }
 
+    // Set tag attributes.
+    extract(lAtts($get_atts, $atts));
+
     /*
-     * Define player src and parameters.
+     * Get video infos
      */
-    $no_cookie ?: $no_cookie = get_pref('oui_video_youtube_no_cookie');
-    $player_infos = $oui_video->playerInfos($provider, $no_cookie);
-    $src = $player_infos['src'] . $video_id;
+
+    $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
+
+    // Check class.
+    $provider ? $provider_class = 'Oui_Player_' . $provider : '';
+    $match = $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
+    // Check if the video is recognize as a video url.
+    if ($match) {
+        $provider = $match['provider'];
+        $id = $match['id'];
+    } elseif (isset($thisarticle[$play])) {
+        $match =  $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
+        if ($match) {
+            $provider = $match['provider'];
+            $id = $match['id'];
+        } else {
+            $provider ?: $provider = get_pref('oui_player_provider');
+            $id = $thisarticle[$play];
+        }
+    } else {
+        $id = $play;
+    }
+
+
+    /*
+     * Get player Infos
+     */
+
+    // Returns player infos
+    $provider_class = 'Oui_Player_' . $provider;
+    $provider_prefs = strtolower($provider_class);
+    $player_infos = (new $provider_class)->getParams();
+    $src = $player_infos['src'] . $id;
     $params = $player_infos['params'];
+
+    /*
+     * Prepare player parameters for the output
+     */
 
     // Create a list of needed parameters
     $used_params = array();
+    $ignore = array(
+        'height',
+        'ratio',
+        'width',
+    );
 
     foreach ($params as $param => $infos) {
-        if ($param !== 'no_cookie') {
-            $pref = get_pref('oui_video_' . $provider . '_' . $param);
+        if (!in_array($param, $ignore)) {
+            $pref = get_pref('oui_player_' . $provider . '_' . $param);
             $default = $infos['default'];
             $att_name = str_replace('-', '_', $param);
             $att = $$att_name;
 
+            // Add modified attributes or prefs values as player parameters.
             if ($att === '' && $pref !== $default) {
-                // if the attribute is empty, get the related pref value.
-                $used_params[] = $param . '=' . $pref;
+                // Remove # from the color pref as a color type is used for the pref input.
+                $used_params[] = $param . '=' . str_replace('#', '', $pref);
             } elseif ($att !== '') {
-                $used_params[] = $param . '=' . $att;
+                // Remove the # in the color attribute just in case…
+                $used_params[] = $param . '=' . str_replace('#', '', $att);
             }
         }
     }
 
     /*
-     * Check if we need to append some parameters.
+     * Get the player size for the output
      */
-    if (!empty($used_params)) {
-        $src .= '?' . implode('&amp;', $used_params);
-    }
 
-    /*
-     * If the width and/or height has not been set
-     * we want to calculate new ones using the aspect ratio.
-     */
+    // Set an array to be used to get the player size.
     $dims = array(
-        'width' => $width,
-        'height' => $width,
-        'ratio' => $width,
+        'width'  => $width ? $width : get_pref($provider_prefs . '_width'),
+        'height' => $height ? $height : get_pref($provider_prefs . '_height'),
+        'ratio'  => $ratio ? $ratio : get_pref($provider_prefs . '_ratio'),
     );
-    foreach ($dims as $dim => $value) {
-        empty($value) ? $dims[$dim] = get_pref('oui_video_' .$dim) : '';
-    }
 
-    // Get the video size.
-    $video_size = $oui_video->playerSize($dims);
-    $width = $video_size['width'];
-    $height = $video_size['height'];
+    // Check if some player parameters has been used.
+    $output = (new $provider_class)->getOutput($src, $used_params, $dims);
 
-    $out = '<iframe
-        width="' . $width . '"
-        height="' . $height . '"
-        src="' . $src . '"
-        frameborder="0"
-        allowfullscreen>
-    </iframe>';
-
-    return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
+    return doLabel($label, $labeltag).(($wraptag) ? doTag($output, $wraptag, $class) : $output);
 }
 
-/**
- * Conditional tag
+/*
  * Check a video url and its provider if provided.
  */
-function oui_if_video($atts, $thing)
+function oui_if_player($atts, $thing)
 {
     global $thisarticle;
 
-    // Instanciate Oui_video.
-    $oui_video = new Oui_Video;
+    // Instanciate Oui_Player.
+    $main_class = new Oui_Player;
+
+    /*
+     * Set and check Tag attributes
+     */
+
+    // Get tag attributes.
+    $get_atts = $main_class->getAtts(__FUNCTION__);
+
+    // Set the array to be used by latts()
+    foreach ($get_atts as $att => $options) {
+        $get_atts[$att] = $options['default'];
+    }
 
     // Set tag attributes.
-    extract(lAtts($oui_video->getAtts(__FUNCTION__), $atts));
+    extract(lAtts($get_atts, $atts));
 
-    // Look for wrong attribute values.
-    $oui_video->checkAtts(__FUNCTION__, $atts);
+    /*
+     * Get video infos
+     */
 
-    // Check if the plugin is able to catch any info from the provided video.
-    $video_infos = $oui_video->videoInfos($video);
-    $result = $video_infos ? $video_infos : $oui_video->videoInfos($thisarticle[strtolower($video)]);
+    // Check if the video is recognize as a video url.
+    $play_infos = $main_class->getItemInfos($play);
+    $result = $play_infos ? $play_infos : $main_class->getItemInfos($thisarticle[strtolower($play)]);
 
+    // If the provider is provided check it too.
     if ($provider) {
-        // Is it the right provider?
         if ($provider === $result['provider']) {
             $result = $result ? true : false;
         } else {
@@ -125,6 +152,5 @@ function oui_if_video($atts, $thing)
         }
     }
 
-    // Txp 4.6+ don't need EvalElse() anymore.
-    return defined('PREF_PLUGIN') ? parse($thing, $result) : parse(EvalElse($thing, $result));
+    return parse($thing, $result);
 }
