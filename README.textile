@@ -17,6 +17,7 @@ h2. Table of contents
 *** "Vimeo additional attributes":#vimeo
 *** "Youtube additional attributes":#youtube
 *** "Dailymotion additional attributes":#dailymotion
+*** "Myspace videos additional attributes":#myspace
 *** "ABC News additional attributes":#abc
 *** "Twitch additional attributes":#twitch
 *** "Soundcloud additional attributes":#soundcloud
@@ -139,6 +140,14 @@ h5. Player parameters (aplhabetical order)
 * @ui_logo="true"@ (@ui-logo@) - @true@ or @false@ - Whether to display the Dailymotion logo or not.
 * @ui_start_screen_info="true"@ - @true@ or @false@ - Whether to show video information on the start screen or not.
 * @ui_theme="dark"@ - @dark@ or @light@ - Choose the default base colour theme.
+
+h4(#myspace). Myspace videos additional attributes
+
+Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+* @width="640"@ - The width of the player in pixels.
+* @height=""@ - The height of the player in pixels.
+* @ratio="16:9"@ - The ratio used to calculate the missing value for the width or the height.
 
 h4(#abc). Abc News additional attributes
 

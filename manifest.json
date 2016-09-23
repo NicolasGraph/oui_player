@@ -13,6 +13,7 @@
         "./src/Oui/Player/Vimeo.php",
         "./src/Oui/Player/Youtube.php",
         "./src/Oui/Player/Dailymotion.php",
+        "./src/Oui/Player/Myspace.php",
         "./src/Oui/Player/Abcnews.php",
         "./src/Oui/Player/Twitch.php",
         "./src/Oui/Player/Soundcloud.php",
