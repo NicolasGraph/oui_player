@@ -1,4 +1,4 @@
-h1. oui_player (formerly oui_video)
+h1. oui_player beta (formerly oui_video)
 
 Easily embed customised players.
 This plugin does, by its own, what "arc_youtube":http://andy-carter.com/txp/arc_youtube, "arc_vimeo":http://andy-carter.com/txp/arc_vimeo and oui_dailymotion used to do together.
@@ -9,6 +9,7 @@ h2. Table of contents
 
 * "Plugin requirements":#requirements
 * "Installation":#install
+* "Extending":#extend
 * "Preferences/options":#prefs
 * "Tags":#tags
 ** "oui_player":#oui_player
@@ -35,11 +36,15 @@ oui_player's minimum requirements:
 
 h2(#install). Installation
 
-# Download the compiled plugin file, or, better, download the repo and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
+# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
 # Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
 # Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
-h2(#tags). Preferences/options
+h2(#extend). Extending
+
+Once another provider as been added, the plugin just need to be disable and re-enable to set the nex prefs, keeping existing prefs untouched.
+
+h2(#prefs). Preferences/options
 
 Plugin prefs are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 They can be overriden by these attributes when needed.
