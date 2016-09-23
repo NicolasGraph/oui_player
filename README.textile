@@ -62,14 +62,20 @@ h4(#presentational). Presentational attributes
 
 h4(#main). Main tag attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 * @play=""@ - An URL, an id (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@) or the custom field name containing it.
 * @provider=""@ - The provider to use; required if the @play@ attribute is an id, recommended anyway if known.
 
 h4(#vimeo). Vimeo additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="vimeo"@)
+* http(s)://vimeo.com/[*id*]
+* http(s)://player.vimeo.com/video/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
 
 * @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
@@ -88,7 +94,15 @@ h5. Player parameters (aplhabetical order)
 
 h4(#youtube). Youtube additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="youtube"@)
+* http(s)://(www.)youtu.be/[*id*]
+* http(s)://(www).youtube.com/v/[*id*]
+* http(s)://(www).youtube.com/watch?v=[*id*]
+* http(s)://(www).youtube.com/embed/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
 
 * @width="640"@ - The width of the player in pixels.
@@ -118,7 +132,14 @@ h5. Player parameters (aplhabetical order)
 
 h4(#dailymotion). Dailymotion additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="dailymotion"@)
+* http(s)://dai.ly/[*id*]
+* http(s)://www.dailymotion.com/video/[*id*]…
+* http(s)://www.dailymotion.com/embed/video/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
 
 * @width="640"@ - The width of the player in pixels.
@@ -143,7 +164,12 @@ h5. Player parameters (aplhabetical order)
 
 h4(#myspace). Myspace videos additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="myspace"@)
+* http(s)://myspace.com/…/video/…/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 * @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
@@ -151,7 +177,13 @@ Most of this attributes can be set via the _Preferences_ tab; +always prefer plu
 
 h4(#abc). Abc News additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="abcnews"@)
+* http(s)://abcnews.go.com/…/video/…[*id*]
+* http(s)://abcnews.go.com/video/embed?id=[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 * @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
@@ -164,7 +196,13 @@ h5. Player parameters (aplhabetical order)
 h4(#twitch). Twitch additional attributes
 
 This plugin reads Twitch videos only for now, not channels.
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
+
+Recognised values for the @play@ attribute:
+
+* v[*id*] (requires @provider="twitch"@)
+* http(s)://(www.)twitch.tv/…/v/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+ More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
 
 * @width="640"@ - The width of the player in pixels.
 * @height=""@ - The height of the player in pixels.
@@ -178,7 +216,11 @@ h5. Player parameters (aplhabetical order)
 
 h4(#soundcloud). Soundcloud additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* http(s)://(api.)soundcloud.com/…
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
 
 * @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
@@ -205,7 +247,11 @@ h5. Player parameters (aplhabetical order)
 
 h4(#mixcloud). Mixcloud additional attributes
 
-Most of this attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Recognised values for the @play@ attribute:
+
+* http(s):(www.)//mixcloud.com/…
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 * @width="100%"@ - The width of the player in pixels (OK, pourcentage works also…).
 * @height="400"@ - The height of the player in pixels.
@@ -229,8 +275,8 @@ bc. <txp:oui_if_player video="…">
 
 h4. Attributes
 
-* @play=""@ - A URL or a custom field containing an URL to check if it is a valid video URL.
-* @provider=""@ - vimeo, youtube or dailymotion.
+* @play=""@ - An URL or a custom field containing an URL to check against valid video URL schemes.
+* @provider=""@ - Check the URL against valid URL schemes of the provided provider.
 
 h2(#examples). Examples
 
