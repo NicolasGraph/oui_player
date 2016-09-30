@@ -51,4 +51,5 @@ class Oui_Player_Twitch extends Oui_Player_Provider
     }
 }
 
-new Oui_Player_Twitch;
+$instance = Oui_Player_Twitch::getInstance();
+$instance->plugProvider();

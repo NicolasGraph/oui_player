@@ -2,6 +2,7 @@
 
 class Oui_Player
 {
+    protected static $instance = null;
     protected $plugin = 'oui_player';
     protected $providers;
     protected $pophelp = 'http://help.ouisource.com/';
@@ -45,9 +46,16 @@ class Oui_Player
         ),
     );
 
-    /**
-     * Register callbacks.
-     */
+    public static function getInstance()
+    {
+        $class = get_called_class();
+        if (is_null(self::$instance)) {
+            self::$instance = new $class;
+        }
+
+        return self::$instance;
+    }
+
     public function __construct()
     {
         $this->providers = callback_event($this->plugin, 'plug_providers', 0, 'Provider');
@@ -55,7 +63,14 @@ class Oui_Player
         $this->tags['oui_if_player']['provider']['valid'] = $this->providers;
         $this->prefs['provider']['default'] = $this->providers[0];
         $this->prefs['provider']['valid'] = $this->providers;
+    }
 
+    final private function __clone()
+    {
+    }
+
+    public function setPlugin()
+    {
         if (txpinterface === 'admin') {
             add_privs('plugin_prefs.' . $this->plugin, $this->privs);
             add_privs('prefs.' . $this->plugin, $this->privs);
@@ -79,11 +94,6 @@ class Oui_Player
                 }
             }
         }
-    }
-
-    public function appendComma()
-    {
-        return ', ';
     }
 
     /**
@@ -110,9 +120,7 @@ class Oui_Player
      */
     public function optionsLink()
     {
-        $url = defined('PREF_PLUGIN')
-               ? '?event=prefs#prefs_group_' . $this->plugin
-               : '?event=prefs&step=advanced_prefs';
+        $url = '?event=prefs#prefs_group_' . $this->plugin;
         header('Location: ' . $url);
     }
 
@@ -186,8 +194,9 @@ class Oui_Player
             $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
             $prefs[$pref] = $options;
 
-            $class = __CLASS__ . '_' . $provider;
-            $prefs = (new $class)->getPrefs($prefs);
+            $class = $this->plugin . '_' . $provider;
+            $instance = $class::getInstance();
+            $prefs = $instance->getPrefs($prefs);
         }
 
         return $prefs;
@@ -231,8 +240,9 @@ class Oui_Player
 
         if ($tag === $this->plugin) {
             foreach ($this->providers as $provider) {
-                $class = __CLASS__ . '_' . $provider;
-                $get_atts = (new $class)->getAtts($tag, $get_atts);
+                $class = $this->plugin . '_' . $provider;
+                $instance = $class::getInstance();
+                $get_atts = $instance->getAtts($tag, $get_atts);
             }
         }
 
@@ -247,8 +257,9 @@ class Oui_Player
     public function getItemInfos($play)
     {
         foreach ($this->providers as $provider) {
-            $class = __CLASS__ . '_' . $provider;
-            $match = (new $class)->getItemInfos($play);
+            $class = $this->plugin . '_' . $provider;
+            $instance = $class::getInstance();
+            $match = $instance->getItemInfos($play);
             if ($match) {
                 return $match;
             }
@@ -258,4 +269,5 @@ class Oui_Player
     }
 }
 
-new Oui_Player();
+$player = Oui_Player::getInstance();
+$player->setPlugin();

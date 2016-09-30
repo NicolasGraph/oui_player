@@ -1,14 +1,33 @@
 <?php
 
-class Oui_Player_Provider
+abstract class Oui_Player_Provider
 {
+    protected static $instances = array();
     protected $plugin = 'oui_player';
     protected $glue = array('?', '&amp;');
+
+    public static function getInstance()
+    {
+        $class = get_called_class();
+        if (!isset(self::$instances[$class])) {
+            self::$instances[$class] = new $class;
+        }
+
+        return self::$instances[$class];
+    }
+
+    public function __construct()
+    {
+    }
+
+    final private function __clone()
+    {
+    }
 
     /**
      * Register callbacks.
      */
-    public function __construct()
+    public function plugProvider()
     {
         // Plug in oui_player
         register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);

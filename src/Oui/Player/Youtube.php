@@ -86,4 +86,5 @@ class Oui_Player_Youtube extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Youtube;
+$instance = Oui_Player_Youtube::getInstance();
+$instance->plugProvider();

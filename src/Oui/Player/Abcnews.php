@@ -21,4 +21,5 @@ class Oui_Player_Abcnews extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Abcnews;
+$instance = Oui_Player_Abcnews::getInstance();
+$instance->plugProvider();

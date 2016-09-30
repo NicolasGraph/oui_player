@@ -50,4 +50,5 @@ class Oui_Player_Vimeo extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Vimeo;
+$instance = Oui_Player_Vimeo::getInstance();
+$instance->plugProvider();

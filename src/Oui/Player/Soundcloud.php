@@ -77,4 +77,5 @@ class Oui_Player_Soundcloud extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Soundcloud;
+$instance = Oui_Player_Soundcloud::getInstance();
+$instance->plugProvider();

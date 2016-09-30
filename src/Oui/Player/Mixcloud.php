@@ -38,4 +38,5 @@ class Oui_Player_Mixcloud extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Mixcloud;
+$instance = Oui_Player_Mixcloud::getInstance();
+$instance->plugProvider();

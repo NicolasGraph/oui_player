@@ -67,4 +67,5 @@ class Oui_Player_Dailymotion extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Dailymotion;
+$instance = Oui_Player_Dailymotion::getInstance();
+$instance->plugProvider();

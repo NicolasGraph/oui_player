@@ -8,7 +8,7 @@ function oui_player($atts, $thing)
     global $thisarticle;
 
     // Instanciate Oui_Player.
-    $main_class = new Oui_Player;
+    $main_class = Oui_Player::getInstance();
 
     /*
      * Set and check Tag attributes
@@ -30,23 +30,21 @@ function oui_player($atts, $thing)
      */
 
     $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
+    $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
 
     // Check class.
-    $provider ? $provider_class = 'Oui_Player_' . $provider : '';
-    $match = $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
+    if ($provider) {
+        $provider_class = 'Oui_Player_' . $provider;
+        $provider_instance = $provider_class::getInstance();
+        $match = $provider_instance->getItemInfos($play);
+    } else {
+        $match = $main_class->getItemInfos($play);
+    }
+
     // Check if the video is recognize as a video url.
     if ($match) {
         $provider = $match['provider'];
         $id = $match['id'];
-    } elseif (isset($thisarticle[$play])) {
-        $match =  $provider ? (new $provider_class)->getItemInfos($play) : $main_class->getItemInfos($play);
-        if ($match) {
-            $provider = $match['provider'];
-            $id = $match['id'];
-        } else {
-            $provider ?: $provider = get_pref('oui_player_provider');
-            $id = $thisarticle[$play];
-        }
     } else {
         $id = $play;
     }
@@ -57,9 +55,13 @@ function oui_player($atts, $thing)
      */
 
     // Returns player infos
-    $provider_class = 'Oui_Player_' . $provider;
+    if (!$provider) {
+        $provider_class = 'Oui_Player_' . $provider;
+        $provider_instance = $provider_class::getInstance();
+    }
+
     $provider_prefs = strtolower($provider_class);
-    $player_infos = (new $provider_class)->getParams();
+    $player_infos = $provider_instance->getParams();
     $src = $player_infos['src'] . $id;
     $params = $player_infos['params'];
 
@@ -105,7 +107,7 @@ function oui_player($atts, $thing)
     );
 
     // Check if some player parameters has been used.
-    $output = (new $provider_class)->getOutput($src, $used_params, $dims);
+    $output = $provider_instance->getOutput($src, $used_params, $dims);
 
     return doLabel($label, $labeltag).(($wraptag) ? doTag($output, $wraptag, $class) : $output);
 }
@@ -118,7 +120,7 @@ function oui_if_player($atts, $thing)
     global $thisarticle;
 
     // Instanciate Oui_Player.
-    $main_class = new Oui_Player;
+    $main_class = Oui_Player::getInstance();
 
     /*
      * Set and check Tag attributes

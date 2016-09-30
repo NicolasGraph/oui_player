@@ -18,4 +18,5 @@ class Oui_Player_Myspace extends Oui_Player_Provider
     );
 }
 
-new Oui_Player_Myspace;
+$instance = Oui_Player_Myspace::getInstance();
+$instance->plugProvider();
