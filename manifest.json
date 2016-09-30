@@ -7,7 +7,7 @@
     "author_uri"  : "http://github.com/NicolasGraph",
     "order"       : 5,
     "flags"       : 3,
-    "help"        : {"file" : ["./README.textile"]},
+    "help"        : {"file" : ["./docs/README.textile"]},
     "code": {"file" : [
         "./src/Oui/Player/Provider.php",
         "./src/Oui/Player/Vimeo.php",

@@ -1,39 +1,37 @@
-notextile. <div class="txp-layout">
+notextile. <script>
+  $( function() {
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $('.switcher-list').removeClass('ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all');
+    $('.switcher-list li').removeClass('ui-state-default ui-corner-top');
+    $('.options_group').removeClass('ui-widget-content ui-corner-bottom');
+  } );
+</script>
+<div id="tabs" class="txp-layout">
 <div class="txp-layout-1col">
 
 h1(txp-heading). oui_player beta (formerly oui_video)
 
 notextile. </div>
-<div class="txp-layout-4col-alt">
-<section class="txp-details">
+<div class="txp-layout-4col-alt" id="oui_player_switcher" role="region">
+<section class="txp-details" id="all_options" aria-labelledby="all_options-label">
 
-h3. Table of contents
+h3(#all_options-label). Table of contents
 
 notextile. <div role="group">
 
-*(switcher-list) "Plugin requirements":#requirements
-* "Basics":#basics
-* "Installation":#install
-* "Extending":#extend
+*(switcher-list) "Basics(basics)":#basics
 * "Preferences/options":#prefs
 * "Tags":#tags
-**{list-style:none; padding-left:0;}.
-**{padding-left:2em;} "oui_player":#oui_player
-***{list-style:none; padding-left:0; margin-left:-2em;}.
-***{padding-left:4em;} "Presentational attributes":#presentational
-***{padding-left:4em;} "Main tag attributes":#main
-***{padding-left:4em;} "Vimeo player attributes":#vimeo
-***{padding-left:4em;} "Youtube player attributes":#youtube
-***{padding-left:4em;} "Dailymotion player attributes":#dailymotion
-***{padding-left:4em;} "Myspace videos player attributes":#myspace
-***{padding-left:4em;} "ABC News player attributes":#abc
-***{padding-left:4em;} "Twitch player attributes":#twitch
-***{padding-left:4em;} "Soundcloud player attributes":#soundcloud
-***{padding-left:4em;} "Mixcloud player attributes":#mixcloud
-**{padding-left:2em;} "oui_if_player":#oui_if_player
+* "Vimeo player attributes":#vimeo
+* "Youtube player attributes":#youtube
+* "Dailymotion player attributes":#dailymotion
+* "Myspace videos player attributes":#myspace
+* "ABC News player attributes":#abc
+* "Twitch player attributes":#twitch
+* "Soundcloud player attributes":#soundcloud
+* "Mixcloud player attributes":#mixcloud
 * "Examples":#examples
 * "Author":#author
-* "License":#Licence
 
 notextile. </div>
 </section>
@@ -42,14 +40,11 @@ notextile. </div>
 
 notextile. </div>
 <div class="txp-layout-4col-3span">
+<section id="basics" class="options_group">
 
-notextile. <hr id="basics" />
-
-h2. Basics
+h2(#options_group_basics-label). Basics
 
 Easily embed customised players.
-
-notextile. <hr id="requirements" />
 
 h2. Plugin requirements
 
@@ -57,30 +52,28 @@ oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+.
 
-notextile. <hr id="install" />
-
 h2. Installation
 
 # "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
 # Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
 # Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
-notextile. <hr id="extend" />
-
 h2. Extending
 
 Once another provider as been added, the plugin just need to be disable and re-enable to set the nex prefs, keeping existing prefs untouched.
 
-notextile. <hr id="prefs" />
+notextile. </section>
+<section id="prefs" class="options_group">
 
-h2. Preferences/options
+h2(#options_group_prefs-label). Preferences/options
 
 Plugin prefs are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 They can be overriden by these attributes when needed.
 
 +Always prefer plugin "global" prefs to tag related attributes!+
 
-notextile. <hr id="tags" />
+notextile. </section>
+<section id="tags" class="options_group">
 
 h2. Tags
 
@@ -122,7 +115,27 @@ The provider to use; required if the @play@ attribute is an id, recommended anyw
 *default:* plugin pref
 *valid:* a defined provider
 
-h4(#vimeo). Vimeo additional attributes
+h3(#oui_if_player). oui_if_player
+
+In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
+
+bc. <txp:oui_if_player video="…">
+[…]
+</txp:oui_if_player>
+
+h4. Attributes
+
+- @play@ :=
+An URL or a custom field containing an URL to check against valid video URL schemes.
+*Default:* none =:
+- @provider@ :=
+Check the URL against valid URL schemes of the provided provider.
+*Default:* none =:
+
+notextile. </section>
+<section id="vimeo" class="options_group">
+
+h4. Vimeo additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -181,7 +194,10 @@ Show the title on the video.
 *default:* @1@
 *valid:* @0@ or @1@ =:
 
-h4(#youtube). Youtube additional attributes
+notextile. </section>
+<section id="youtube" class="options_group">
+
+h4. Youtube additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -285,7 +301,10 @@ This parameter has been deprecated for HTML5 players.
 *default:* @dark@
 *valid:* @dark@ or @light@ =:
 
-h4(#dailymotion). Dailymotion additional attributes
+notextile. </section>
+<section id="dailymotion" class="options_group">
+
+h4. Dailymotion additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -365,7 +384,10 @@ Choose the default base colour theme.
 *default:* @dark@
 *valid:* @dark@ or @light@ =:
 
-h4(#myspace). Myspace videos additional attributes
+notextile. </section>
+<section id="myspace" class="options_group">
+
+h4. Myspace videos additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -387,7 +409,10 @@ The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
 *valid:* integer@:@integer =:
 
-h4(#abc). Abc News additional attributes
+notextile. </section>
+<section id="abc" class="options_group">
+
+h4. Abc News additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -417,7 +442,10 @@ Starts playing the video at the defined second.
 *Default:* @0@
 *Valid:* @0@ or @1@
 
-h4(#twitch). Twitch additional attributes
+notextile. </section>
+<section id="twitch" class="options_group">
+
+h4. Twitch additional attributes
 
 This plugin reads Twitch videos only for now, not channels.
 
@@ -457,7 +485,10 @@ Starts playback at the given timestamp.
 *default:* @true@
 *Format:* @1h2m3s@ =:
 
-h4(#soundcloud). Soundcloud additional attributes
+notextile. </section>
+<section id="soundcloud" class="options_group">
+
+h4. Soundcloud additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -542,7 +573,10 @@ Whether to display the artwork as a background or not.
 *default:* @false@
 *valid:* @true@ or @false@ =:
 
-h4(#mixcloud). Mixcloud additional attributes
+notextile. </section>
+<section id="mixcloud" class="options_group">
+
+h4. Mixcloud additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -565,8 +599,6 @@ The ratio used to calculate the missing value for the width or the height.
 
 h5. Player parameters (aplhabetical order)
 
-notextile. <div class="txp-listtables">
-
 - @autoplay@ :=
 Whether to play after loading or not.
 *Default:* @0@
@@ -588,24 +620,8 @@ Uses the _mini_ player config.
 *Default:* @0@
 *Valid:* @0@ or @1@ =:
 
-h3(#oui_if_player). oui_if_player
-
-In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
-
-bc. <txp:oui_if_player video="…">
-[…]
-</txp:oui_if_player>
-
-h4. Attributes
-
-- @play@ :=
-An URL or a custom field containing an URL to check against valid video URL schemes.
-*Default:* none =:
-- @provider@ :=
-Check the URL against valid URL schemes of the provided provider.
-*Default:* none =:
-
-<hr id="examples" />
+notextile. </section>
+<section id="examples" class="options_group">
 
 h2. Examples
 
@@ -639,17 +655,16 @@ bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
     No
 </txp:oui_if_player>
 
-notextile. <hr id="author" />
+notextile. </section>
+<section id="author" class="options_group">
 
 h2. Author
 
 "Nicolas Morand":https://twitter.com/NicolasGraph, inspired by "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com.
 _Thank you to the Textpattern community and the core team._
 
-notextile. <hr id="licence" />
-
 h2. License
 
 This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
 
-notextile. </div>
+notextile. </section></div>
