@@ -10,9 +10,9 @@ oui_player's minimum requirements:
 
 ## Installation
 
-# [Download](https://github.com/NicolasGraph/oui_player/releases) the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the [MassPlugCompiler](https://github.com/gocom/MassPlugCompiler). Most frequently used providers should be included first to increase the plugin perfomances.
-# Paste the content of the plugin file under the **Admin > Plugins**, upload it and install;
-# Click *Options* or visit your **Admin>Preferences** tab to fill the plugin prefs.
+1. [Download](https://github.com/NicolasGraph/oui_player/releases) the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the [MassPlugCompiler](https://github.com/gocom/MassPlugCompiler). Most frequently used providers should be included first to increase the plugin perfomances.
+1. Paste the content of the plugin file under the **Admin > Plugins**, upload it and install;
+1. Click *Options* or visit your **Admin>Preferences** tab to fill the plugin prefs.
 
 ## Supported players
 
