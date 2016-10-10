@@ -24,56 +24,50 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-class Oui_Player_Twitch extends Oui_Player_Provider
+class Oui_Player_Bandcamp extends Oui_Player_Provider
 {
-    protected $provider = 'Twitch';
-    protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
-    protected $src = '//player.twitch.tv/?video=';
+    protected $provider = 'Bandcamp';
+    protected $patterns = array('url' => '#^((http|https):\/\/[\S]+\/album\/([\S]+))#i' => '1');
+    protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
+    protected $glue = array('/', '/');
     protected $params = array(
-        'width'       => array(
-            'default' => '640',
-        ),
-        'height'       => array(
+        'artwork' => array(
             'default' => '',
         ),
-        'ratio'       => array(
-            'default' => '16:9',
+        'bgcol'       => array(
+            'widget' => 'oui_player_pref_color',
+            'default' => '#ffffff',
         ),
-        'autoplay' => array(
-            'default' => 'true',
-            'valid' => array('true', 'false'),
+        'height' => array(
+            'default' => '470',
         ),
-        'muted' => array(
+        'linkcol'       => array(
+            'widget' => 'oui_player_pref_color',
+            'default' => '#0687f5',
+        ),
+        'minimal' => array(
             'default' => 'false',
             'valid' => array('true', 'false'),
         ),
-        'time'       => array(
+        'track' => array(
             'default' => '',
         ),
+        'tracklist' => array(
+            'default' => 'false',
+            'valid' => array('true', 'false'),
+        ),
+        'ratio' => array(
+            'default' => '',
+        ),
+        'size' => array(
+            'default' => 'large',
+            'valid' => array('small', 'medium', 'large'),
+        ),
+        'width' => array(
+            'default' => '350',
+        ),
     );
-
-    /**
-     * Get the video provider and the video id from its url
-     *
-     * @param string $video The video url
-     */
-    public function getItemInfos($video)
-    {
-
-        foreach ($this->patterns as $pattern => $id) {
-            if (preg_match($pattern, $video, $matches)) {
-                $match = array(
-                    'provider' => strtolower($this->provider),
-                    'id'       => str_replace('/', '', $matches[$id]),
-                );
-
-                return $match;
-            }
-        }
-
-        return false;
-    }
 }
 
-$instance = Oui_Player_Twitch::getInstance();
+$instance = Oui_Player_Bandcamp::getInstance();
 $instance->plugProvider();
