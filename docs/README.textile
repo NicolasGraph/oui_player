@@ -1,12 +1,17 @@
+notextile. <style type="text/css">
+.txp-layout-textbox { max-width: 100%; }
+</style>
+
 notextile. <script>
   $( function() {
-    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs" ).tabs().removeClass('ui-widget ui-widget-content ui-corner-all').addClass( "ui-tabs-vertical" );
     $('.switcher-list').removeClass('ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all');
     $('.switcher-list li').removeClass('ui-state-default ui-corner-top');
     $('.options_group').removeClass('ui-widget-content ui-corner-bottom');
   } );
 </script>
-<div id="tabs" class="txp-layout">
+
+notextile. <div id="tabs" class="txp-layout">
 <div class="txp-layout-1col">
 
 h1(txp-heading). oui_player beta (formerly oui_video)
@@ -31,7 +36,7 @@ notextile. <div role="group">
 * "Soundcloud player attributes":#soundcloud
 * "Mixcloud player attributes":#mixcloud
 * "Examples":#examples
-* "Author":#author
+* "Credits":#credits
 
 notextile. </div>
 </section>
@@ -54,13 +59,20 @@ oui_player's minimum requirements:
 
 h2. Installation
 
-# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
-# Paste the content of the plugin file under the *Admin > Plugins*, upload it and install;
-# Click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
+# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
+# Paste the content of the plugin file under the *Admin > Plugins* and click the _Upload_ button.
+# Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
+# Enable the plugin and click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
 h2. Extending
 
-Once another provider as been added, the plugin just need to be disable and re-enable to set the nex prefs, keeping existing prefs untouched.
+By using the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler it is possible to manage providers. After a first install, if a new provider list is provided via the compiler, the new generated file needs to be installed and the plugin needs to be disable in the admin before to be re-enable to set new prefs, keeping existing provider prefs untouched.
+
+h2. Uninstall
+
+# Check the box on the left of the plugin row under the *Admin > Plugins*.
+# open the select list at the bottom of the plugins tables and choose _Delete_.
+# confirm the plugin deletion.
 
 notextile. </section>
 <section id="prefs" class="options_group">
@@ -114,6 +126,10 @@ The item to play (Soundcloud accepts URL's only and Twitch id's must be prefixed
 The provider to use; required if the @play@ attribute is an id, recommended anyway if known as it increases the plugin performances.
 *default:* plugin pref
 *valid:* a defined provider
+
+h4(#main). Providers related tag attributes
+
+See the related link in the table of contents.
 
 h3(#oui_if_player). oui_if_player
 
@@ -656,7 +672,7 @@ bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
 </txp:oui_if_player>
 
 notextile. </section>
-<section id="author" class="options_group">
+<section id="credits" class="options_group">
 
 h2. Author
 
@@ -666,5 +682,7 @@ _Thank you to the Textpattern community and the core team._
 h2. License
 
 This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 notextile. </section></div>
