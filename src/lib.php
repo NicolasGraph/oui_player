@@ -30,7 +30,8 @@
 
 function oui_player_pref($name, $val)
 {
-    $widget = (new Oui_Player)->prefSelect($name, $val);
+    $class = Oui_Player::getInstance();
+    $widget = $class->prefSelect($name, $val);
     return $widget;
 }
 
