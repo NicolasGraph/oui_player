@@ -24,26 +24,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-class Oui_Player_Abcnews extends Oui_Player_Provider
-{
-    protected $provider = 'Abcnews';
-    protected $patterns = array('#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i' => '4');
-    protected $src = '//abcnews.go.com/video/embed?id=';
-    protected $params = array(
-        'width' => array(
-            'default' => '640',
-        ),
-        'height' => array(
-            'default' => '',
-        ),
-        'ratio' => array(
-            'default' => '16:9',
-        ),
-        'ts'     => array(
-            'default' => '0',
-        ),
-    );
-}
+namespace Oui\Player {
 
-$instance = Oui_Player_Abcnews::getInstance();
-$instance->plugProvider();
+    class Abcnews extends Provider
+    {
+        protected $provider = 'Abcnews';
+        protected $patterns = array('#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i' => '4');
+        protected $src = '//abcnews.go.com/video/embed?id=';
+        protected $params = array(
+            'width' => array(
+                'default' => '640',
+            ),
+            'height' => array(
+                'default' => '',
+            ),
+            'ratio' => array(
+                'default' => '16:9',
+            ),
+            'ts'     => array(
+                'default' => '0',
+            ),
+        );
+    }
+
+    $instance = Abcnews::getInstance();
+    $instance->plugProvider();
+}
