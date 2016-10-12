@@ -66,8 +66,6 @@ namespace {
             $match = $provider_instance->getItemInfos($play);
         } else {
             $match = $main_instance->getItemInfos($play);
-            $provider_class = $main_class . '\\' . $match['provider'];
-            $provider_instance = $provider_class::getInstance();
         }
 
         // Check if the video is recognize as a video url.
@@ -75,8 +73,12 @@ namespace {
             $provider = $match['provider'];
             $id = $match['id'];
         } else {
+            $provider = $provider ? $provider : get_pref('oui_player_provider');
             $id = $play;
         }
+
+        $provider_class = $main_class . '\\' . $provider;
+        $provider_instance = $provider_class::getInstance();
 
         /*
          * Get player Infos
