@@ -34,7 +34,7 @@ oui_player's minimum requirements:
 
 ### oui_player
 
-Embeds a video in the page using an iframe.
+Embeds a player in the page.
 *More informations and attributes in the plugin help file.*
 
 ```
@@ -43,11 +43,11 @@ Embeds a video in the page using an iframe.
 
 ### oui_if_player
 
-Checks a video URL against the accepted URL schemes for one or all supported providers.
+Checks an URL against the accepted URL schemes for one or all supported providers.
 *More informations and attributes in the plugin help file.*
 
 ```
-<txp:oui_if_player video="…">
+<txp:oui_if_player play="…">
 […]
 </txp:oui_if_player>
 ```
