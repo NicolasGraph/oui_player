@@ -136,6 +136,7 @@ namespace Oui {
             switch ($stp) {
                 case 'enabled':
                     $this->setPrefs();
+                    $this->deleteOldPrefs();
                     break;
                 case 'deleted':
                     safe_delete('txp_prefs', "event LIKE '" . self::$plugin . "%'");
@@ -252,6 +253,19 @@ namespace Oui {
                 }
                 $position = $position + 10;
             }
+        }
+
+        /**
+         * Install plugin prefs
+         */
+        public function deleteOldPrefs()
+        {
+            $prefs = $this->getPrefs();
+
+            safe_delete(
+                'txp_prefs',
+                "event LIKE '" . self::$plugin . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
+            );
         }
 
         /**
