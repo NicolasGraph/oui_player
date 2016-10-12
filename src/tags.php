@@ -55,7 +55,6 @@ namespace {
         /*
          * Get video infos
          */
-
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
         $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
 
@@ -73,7 +72,7 @@ namespace {
             $provider = $match['provider'];
             $id = $match['id'];
         } else {
-            $provider = $provider ? $provider : get_pref('oui_player_provider');
+            $provider ?: $provider = get_pref('oui_player_provider');
             $id = $play;
         }
 
@@ -102,7 +101,7 @@ namespace {
 
         foreach ($params as $param => $infos) {
             if (!in_array($param, $ignore)) {
-                $pref = get_pref('oui_player_' . $provider . '_' . $param);
+                $pref = get_pref('oui_player_' . strtolower($provider) . '_' . $param);
                 $default = $infos['default'];
                 $att_name = str_replace('-', '_', $param);
                 $att = $$att_name;
