@@ -16,7 +16,6 @@ oui_player_archive_width => Largeur du lecteur
 oui_player_archive_height => Hauteur du lecteur
 oui_player_archive_ratio => Ratio utilisé en l'absence de l'une des dimensions
 oui_player_archive_autoplay => Lecture automatique
-oui_player_archive_list_height => Hauteur de la liste de titres pour une playlist
 oui_player_archive_playlist => Afficher la liste des titres pour une playlist
 oui_player_archive_poster => URL d'une image à affichée comme image de début
 oui_player_provider_dailymotion => Dailymotion

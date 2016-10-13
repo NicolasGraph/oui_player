@@ -30,22 +30,20 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i' => '4');
         protected $src = '//archive.org/embed/';
+        protected $glue = array('&amp;', '&amp;');
         protected $params = array(
             'width'       => array(
                 'default' => '640',
             ),
             'height'      => array(
-                'default' => '',
+                'default' => '480',
             ),
             'ratio'       => array(
-                'default' => '16:9',
+                'default' => '',
             ),
             'autoplay'    => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
-            ),
-            'list_height' => array(
-                'default' => '',
             ),
             'playlist'    => array(
                 'default' => '0',

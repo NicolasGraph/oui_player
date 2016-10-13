@@ -16,7 +16,6 @@ oui_player_archive_width => Player width
 oui_player_archive_height => Player height
 oui_player_archive_ratio => Player ratio by default
 oui_player_archive_autoplay => Automatic playing
-oui_player_archive_list_height => Titles list height for a playlist
 oui_player_archive_playlist => Display the next titles for a playlist
 oui_player_archive_poster => Image url of a custom starting shot
 oui_player_provider_dailymotion => Dailymotion
