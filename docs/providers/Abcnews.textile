@@ -4,7 +4,7 @@ h4. Abc News additional attributes
 
 Recognised values for the @play@ attribute:
 
-* *id* (requires @provider="abcnews"@)
+* *id*
 * http(s)://abcnews.go.com/…/video/…[*id*]
 * http(s)://abcnews.go.com/video/embed?id=[*id*]
 

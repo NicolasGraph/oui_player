@@ -52,9 +52,6 @@ namespace Oui\Player {
                 'default' => 'true',
                 'valid'   => array('true', 'false'),
             ),
-            'id'                   => array(
-                'default' => '',
-            ),
             'mute'                 => array(
                 'default' => 'false',
                 'valid'   => array('true', 'false'),

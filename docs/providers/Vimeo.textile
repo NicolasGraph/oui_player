@@ -4,7 +4,7 @@ h4. Vimeo additional attributes
 
 Recognised values for the @play@ attribute:
 
-* *id* (requires @provider="vimeo"@)
+* *id*
 * http(s)://vimeo.com/[*id*]
 * http(s)://player.vimeo.com/video/[*id*]
 

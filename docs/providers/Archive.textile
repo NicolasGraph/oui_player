@@ -1,0 +1,46 @@
+notextile. <section id="archive" class="options_group">
+
+h4. Archive additional attributes
+
+Recognised values for the @play@ attribute:
+
+* *id*
+* http(s):(www.)//archive.org/details/[*id*]
+* http(s):(www.)//archive.org/embed/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+More informations on "this Archive webpage":https://archive.org/help/video.php.
+
+- @width@ :=
+The width of the player in pixels.
+*default:* @640@
+*valid:* integer =:
+- @height@ :=
+*default:* none
+*valid:* integer
+The height of the player in pixels. =:
+- @ratio@ :=
+The ratio used to calculate the missing value for the width or the height.
+*default:* @16:9@
+*valid:* integer@:@integer =:
+
+h5. Player parameters (aplhabetical order)
+
+- @autoplay@ :=
+Specifies whether the initial video will automatically start to play when the player loads.
+*default:* @0@
+*valid:* @0@ or @1@ =:
+- @list_height@ :=
+Specifies the height of the titles list of a playlist (requires @playlist="1"@).
+*default:* none
+*valid:* integer =:
+- @playlist@ :=
+Specifies whether to display the next titles if the item to play is a playlist.
+*default:* @0@
+*valid:* @0@ or @1@ =:
+- @poster@ :=
+Specifies the URL of an image to display as the starting shot.
+*default:* none
+*valid:* image URL =:
+
+notextile. </section>

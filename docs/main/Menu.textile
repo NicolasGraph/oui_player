@@ -8,15 +8,16 @@ notextile. <div role="group">
 *(switcher-list) "Basics(basics)":#basics
 * "Preferences/options":#prefs
 * "Tags":#tags
-* "Vimeo player attributes":#vimeo
-* "Youtube player attributes":#youtube
-* "Dailymotion player attributes":#dailymotion
-* "Myspace videos player attributes":#myspace
 * "ABC News player attributes":#abc
+* "Archive player attributes":#archive
+* "Dailymotion player attributes":#dailymotion
+* "Mixcloud player attributes":#mixcloud
+* "Myspace videos player attributes":#myspace
+* "Soundcloud player attributes":#soundcloud
 * "Twitch player attributes":#twitch
 * "Viddsee player attributes":#viddsee
-* "Soundcloud player attributes":#soundcloud
-* "Mixcloud player attributes":#mixcloud
+* "Vimeo player attributes":#vimeo
+* "Youtube player attributes":#youtube
 * "Examples":#examples
 * "Credits":#credits
 

@@ -4,7 +4,7 @@ h4. Youtube additional attributes
 
 Recognised values for the @play@ attribute:
 
-* *id* (requires @provider="youtube"@)
+* *id*
 * http(s)://(www.)youtu.be/[*id*]
 * http(s)://(www.)youtube.com/v/[*id*]
 * http(s)://(www.)youtube.com/watch?v=[*id*]

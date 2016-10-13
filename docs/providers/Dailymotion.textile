@@ -4,7 +4,7 @@ h4. Dailymotion additional attributes
 
 Recognised values for the @play@ attribute:
 
-* *id* (requires @provider="dailymotion"@)
+* *id*
 * http(s)://dai.ly/[*id*]
 * http(s)://www.dailymotion.com/video/[*id*]…
 * http(s)://www.dailymotion.com/embed/video/[*id*]

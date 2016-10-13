@@ -26,7 +26,6 @@
 
 class Oui_Player_Bandcamp extends Oui_Player_Provider
 {
-    protected $provider = 'Bandcamp';
     protected $patterns = array('url' => '#^((http|https):\/\/[\S]+\/album\/([\S]+))#i' => '1');
     protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
     protected $glue = array('/', '/');

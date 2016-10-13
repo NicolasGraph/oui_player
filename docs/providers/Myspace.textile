@@ -1,12 +1,11 @@
-notextile. <section id="viddsee" class="options_group">
+notextile. <section id="myspace" class="options_group">
 
-h4. Viddsee additional attributes
+h4. Myspace videos additional attributes
 
 Recognised values for the @play@ attribute:
 
-* *id* (requires @provider="abcnews"@)
-* http(s):(www.)//viddsee.com/video/…/[*id*]
-* http(s):(www.)//viddsee.com/player/[*id*]
+* *id*
+* http(s)://myspace.com/…/video/…/[*id*]
 
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 

@@ -17,9 +17,12 @@ h2. Installation
 # Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
 # Enable the plugin and click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
 
-h2. Extending
+h2. Update
 
-By using the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler it is possible to manage providers. After a first install, if a new provider list is provided via the compiler, the new generated file needs to be installed and the plugin needs to be disable in the admin before to be re-enable to set new prefs, keeping existing provider prefs untouched.
+Unless contrary instructions, proceed as follow:
+
+# Follow the installation instruction above.
+# Disable and re-enable the plugin to update its preferences while keeping existing values untouched.
 
 h2. Uninstall
 

@@ -6,7 +6,7 @@ This plugin reads Twitch videos only for now, not channels.
 
 Recognised values for the @play@ attribute:
 
-* v[*id*] (requires @provider="twitch"@)
+* v[*id*]
 * http(s)://(www.)twitch.tv/…/v/[*id*]
 
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
