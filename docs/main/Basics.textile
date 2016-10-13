@@ -2,7 +2,7 @@ notextile. <section id="basics" class="options_group">
 
 h2(#options_group_basics-label). Basics
 
-Easily embed customised players.
+An extendable plugin to easily embed customized iframe players.
 
 h2. Plugin requirements
 
