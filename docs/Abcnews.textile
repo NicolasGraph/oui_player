@@ -23,11 +23,4 @@ The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
 *valid:* integer@:@integer =:
 
-h5. Player parameters (aplhabetical order)
-
-- @ts@ :=
-Starts playing the video at the defined second.
-*Default:* @0@
-*Valid:* @0@ or @1@
-
 notextile. </section>
