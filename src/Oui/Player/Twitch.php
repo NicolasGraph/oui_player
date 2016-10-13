@@ -64,7 +64,7 @@ namespace Oui\Player {
             foreach ($this->patterns as $pattern => $id) {
                 if (preg_match($pattern, $video, $matches)) {
                     $match = array(
-                        'provider' => strtolower($this->provider),
+                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => str_replace('/', '', $matches[$id]),
                     );
 
