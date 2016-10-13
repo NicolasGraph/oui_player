@@ -33,7 +33,7 @@ namespace {
     {
         global $thisarticle;
 
-        // Instanciate Oui_Player.
+        // Instanciate the main plugin class.
         $main_class = 'Oui\Player';
         $main_instance = $main_class::getInstance();
 
@@ -41,7 +41,7 @@ namespace {
          * Set and check Tag attributes
          */
 
-        // Get tag attributes.
+        // Get tag attributes from providers params.
         $get_atts = $main_instance->getAtts(__FUNCTION__);
 
         // Set the array to be used by latts()
@@ -52,15 +52,22 @@ namespace {
         // Set tag attributes.
         extract(lAtts($get_atts, $atts));
 
-        /*
-         * Get video infos
-         */
+        // Use the related pref as a default attribute value.
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
+
+        // If the attribute value a custom field name call this field
         $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
 
+        /*
+         * Get item infos
+         */
+
+        // Temporaly store the provider attribute value.
+        $provider_att = $provider;
+
         // Check class.
-        if ($provider) {
-            $provider_class = $main_class . '\\' . $provider;
+        if ($provider_att) {
+            $provider_class = $main_class . '\\' . $provider_att;
             $provider_instance = $provider_class::getInstance();
             $match = $provider_instance->getItemInfos($play);
         } else {
@@ -72,12 +79,15 @@ namespace {
             $provider = $match['provider'];
             $id = $match['id'];
         } else {
+            // Use the related pref as a default attribute value.
             $provider ?: $provider = get_pref('oui_player_provider');
             $id = $play;
         }
 
-        $provider_class = $main_class . '\\' . $provider;
-        $provider_instance = $provider_class::getInstance();
+        if (!$provider_att) {
+            $provider_class = $main_class . '\\' . $provider;
+            $provider_instance = $provider_class::getInstance();
+        }
 
         /*
          * Get player Infos
@@ -87,38 +97,14 @@ namespace {
         $src = $player_infos['src'] . $id;
         $params = $player_infos['params'];
 
-        /*
-         * Prepare player parameters for the output
-         */
-
-        // Create a list of needed parameters
-        $used_params = array();
-        $ignore = array(
-            'height',
-            'ratio',
-            'width',
+        unset(
+            $params['width'],
+            $params['height'],
+            $params['ratio']
         );
 
-        foreach ($params as $param => $infos) {
-            if (!in_array($param, $ignore)) {
-                $pref = get_pref('oui_player_' . strtolower($provider) . '_' . $param);
-                $default = $infos['default'];
-                $att_name = str_replace('-', '_', $param);
-                $att = $$att_name;
-
-                // Add modified attributes or prefs values as player parameters.
-                if ($att === '' && $pref !== $default) {
-                    // Remove # from the color pref as a color type is used for the pref input.
-                    $used_params[] = $param . '=' . str_replace('#', '', $pref);
-                } elseif ($att !== '') {
-                    // Remove the # in the color attribute just in case…
-                    $used_params[] = $param . '=' . str_replace('#', '', $att);
-                }
-            }
-        }
-
         /*
-         * Get the player size for the output
+         * Prepare player parameters for the output
          */
 
         // Set an array to be used to get the player size.
@@ -128,7 +114,28 @@ namespace {
             'ratio'  => $ratio ? $ratio : get_pref($provider_prefs . '_ratio'),
         );
 
-        // Check if some player parameters has been used.
+        // Create a list of needed parameters
+        $used_params = array();
+
+        foreach ($params as $param => $infos) {
+            $pref = get_pref('oui_player_' . strtolower($provider) . '_' . $param);
+            $default = $infos['default'];
+            $att_name = str_replace('-', '_', $param);
+            $att = $$att_name;
+
+            // Add attributes values in use or modified prefs values as player parameters.
+            if ($att === '' && $pref !== $default) {
+                // Remove # from the color pref as a color type is used for the pref input.
+                $used_params[] = $param . '=' . str_replace('#', '', $pref);
+            } elseif ($att !== '') {
+                // Remove the # in the color attribute just in case…
+                $used_params[] = $param . '=' . str_replace('#', '', $att);
+            }
+        }
+
+        /*
+         * Get the customized player code and return it via the tag stuff.
+         */
         $output = $provider_instance->getOutput($src, $used_params, $dims);
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($output, $wraptag, $class) : $output);
@@ -141,7 +148,7 @@ namespace {
     {
         global $thisarticle;
 
-        // Instanciate Oui_Player.
+        // Instanciate the main plugin class.
         $main_class = 'Oui\Player';
         $main_instance = $main_class::getInstance();
 
@@ -164,7 +171,10 @@ namespace {
          * Get video infos
          */
 
+        // Use the related pref as a default attribute value.
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
+
+        // Is the attribute value a custom field name?
         $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
 
         // Check if the video is recognize as a video url.
