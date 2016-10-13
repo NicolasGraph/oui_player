@@ -28,7 +28,6 @@ namespace Oui\Player {
 
     class Abcnews extends Provider
     {
-        protected $provider = 'Abcnews';
         protected $patterns = array('#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i' => '4');
         protected $src = '//abcnews.go.com/video/embed?id=';
         protected $params = array(
@@ -40,9 +39,6 @@ namespace Oui\Player {
             ),
             'ratio' => array(
                 'default' => '16:9',
-            ),
-            'ts'     => array(
-                'default' => '0',
             ),
         );
     }
