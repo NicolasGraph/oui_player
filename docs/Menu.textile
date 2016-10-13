@@ -14,6 +14,7 @@ notextile. <div role="group">
 * "Myspace videos player attributes":#myspace
 * "ABC News player attributes":#abc
 * "Twitch player attributes":#twitch
+* "Viddsee player attributes":#viddsee
 * "Soundcloud player attributes":#soundcloud
 * "Mixcloud player attributes":#mixcloud
 * "Examples":#examples
