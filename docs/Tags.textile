@@ -1,0 +1,64 @@
+notextile. <section id="tags" class="options_group">
+
+h2. Tags
+
+h3(#oui_player). oui_player
+
+Embeds a video in the page using an iframe.
+
+bc. <txp:oui_player />
+
+h4(#presentational). Presentational attributes
+
+- @label@ :=
+Label for the video.
+*default:* none
+*valid:* string =:
+- @labeltag@ :=
+HTML wraptag for the label, without brackets.
+*default:* none
+*valid:* HTML container tag =:
+- @wraptag@ :=
+HTML tag to be used as the content wraptag, without brackets.
+*default:* none
+*valid:* HTML container tag =:
+- @class@ :=
+CSS class for HTML content wraptag.
+*default:* none
+*valid:* string =:
+
+h4(#main). Main tag attributes
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+- @play@ :=
+The item to play (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@).
+*default:* none
+*valid:* URL, id or custom field name =:
+- @provider@ :=
+The provider to use; required if the @play@ attribute is an id, recommended anyway if known as it increases the plugin performances.
+*default:* plugin pref
+*valid:* a defined provider
+
+h4(#main). Providers related tag attributes
+
+See the related link in the table of contents.
+
+h3(#oui_if_player). oui_if_player
+
+In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
+
+bc. <txp:oui_if_player video="…">
+[…]
+</txp:oui_if_player>
+
+h4. Attributes
+
+- @play@ :=
+An URL or a custom field containing an URL to check against valid video URL schemes.
+*Default:* none =:
+- @provider@ :=
+Check the URL against valid URL schemes of the provided provider.
+*Default:* none =:
+
+notextile. </section>

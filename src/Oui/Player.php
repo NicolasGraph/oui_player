@@ -30,7 +30,6 @@ namespace Oui {
     {
         protected static $plugin;
         protected static $instance = null;
-
         protected $pophelp = 'http://help.ouisource.com/';
         protected $tags = array(
             'oui_player' => array(
@@ -97,7 +96,7 @@ namespace Oui {
         }
 
         /**
-         * Admin: Set privs, callbacks, prefs.
+         * Admin:  Set privs, callbacks, prefs.
          * Public: Register tags.
          */
         public function setPlugin()
@@ -181,8 +180,8 @@ namespace Oui {
         /**
          * Build select inputs for plugin prefs
          *
-         * @param string $name the name of the preference (Textpattern variable)
-         * @param string $val The value of the preference (Textpattern variable)
+         * @param string $name The name of the preference (Textpattern variable)
+         * @param string $val  The value of the preference (Textpattern variable)
          */
         public function prefSelect($name, $val)
         {
@@ -203,7 +202,7 @@ namespace Oui {
         }
 
         /**
-         * Install plugin prefs
+         * Collect plugin prefs
          */
         public function getPrefs()
         {
@@ -256,7 +255,7 @@ namespace Oui {
         }
 
         /**
-         * Install plugin prefs
+         * Delete potential old unused plugin prefs
          */
         public function deleteOldPrefs()
         {

@@ -1,0 +1,62 @@
+notextile. <section id="vimeo" class="options_group">
+
+h4. Vimeo additional attributes
+
+Recognised values for the @play@ attribute:
+
+* *id* (requires @provider="vimeo"@)
+* http(s)://vimeo.com/[*id*]
+* http(s)://player.vimeo.com/video/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+More informations on "this Vimeo webpage":https://developer.vimeo.com/player/embedding.
+
+- @width@ :=
+The width of the player in pixels.
+*default:* @640@
+*valid:* integer =:
+- @height@ :=
+*default:* @640@
+*valid:* integer
+The height of the player in pixels. =:
+- @ratio@ :=
+The ratio used to calculate the missing value for the width or the height.
+*default:* @16:9@
+*valid:* integer@:@integer =:
+
+h5. Player parameters (aplhabetical order)
+
+- @autopause@ :=
+Enables or disables pausing this video when another video is played.
+*default:* @1@
+*valid:* @0@ or @1@ =:
+- @autoplay@ :=
+Play the video automatically on load. Note that this won’t work on some devices.
+*default:* @0@
+*valid:* @0@ or @1@ =:
+- @badge@ :=
+Enables or disables the badge on the video.
+*default:* @1@
+*valid:* @0@ or @1@ =:
+- @byline@ :=
+Show the user’s byline on the video.
+*default:* @1@
+*valid:* @0@ or @1@ =:
+- @color@ :=
+Specify the color of the video controls. Make sure that you don’t include the #.
+*default:* @00adef@
+*valid:* a hexa color value =:
+- @loop@ :=
+Play the video again when it reaches the end.
+*default:* @0@
+*valid:* @0@ or @1@ =:
+- @portrait@ :=
+Show the user’s portrait on the video.
+*default:* @1@
+*valid:* @0@ or @1@ =:
+- @title@ :=
+Show the title on the video.
+*default:* @1@
+*valid:* @0@ or @1@ =:
+
+notextile. </section>

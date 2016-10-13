@@ -1,0 +1,30 @@
+notextile. <section id="basics" class="options_group">
+
+h2(#options_group_basics-label). Basics
+
+Easily embed customised players.
+
+h2. Plugin requirements
+
+oui_player's minimum requirements:
+
+* "Textpattern CMS":http://textpattern.com/ 4.6+.
+
+h2. Installation
+
+# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
+# Paste the content of the plugin file under the *Admin > Plugins* and click the _Upload_ button.
+# Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
+# Enable the plugin and click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
+
+h2. Extending
+
+By using the "MassPlugCompiler":https://github.com/gocom/MassPlugCompiler it is possible to manage providers. After a first install, if a new provider list is provided via the compiler, the new generated file needs to be installed and the plugin needs to be disable in the admin before to be re-enable to set new prefs, keeping existing provider prefs untouched.
+
+h2. Uninstall
+
+# Check the box on the left of the plugin row under the *Admin > Plugins*.
+# open the select list at the bottom of the plugins tables and choose _Delete_.
+# confirm the plugin deletion.
+
+notextile. </section>
