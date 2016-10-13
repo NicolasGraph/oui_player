@@ -1,23 +1,4 @@
-notextile. <style type="text/css">
-.txp-layout-textbox { max-width: 100%; }
-</style>
-
-notextile. <script>
-  $( function() {
-    $( "#tabs" ).tabs().removeClass('ui-widget ui-widget-content ui-corner-all').addClass( "ui-tabs-vertical" );
-    $('.switcher-list').removeClass('ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all');
-    $('.switcher-list li').removeClass('ui-state-default ui-corner-top');
-    $('.options_group').removeClass('ui-widget-content ui-corner-bottom');
-  } );
-</script>
-
-notextile. <div id="tabs" class="txp-layout">
-<div class="txp-layout-1col">
-
-h1(txp-heading). oui_player beta (formerly oui_video)
-
-notextile. </div>
-<div class="txp-layout-4col-alt" id="oui_player_switcher" role="region">
+notextile. <div class="txp-layout-4col-alt" id="oui_player_switcher" role="region">
 <section class="txp-details" id="all_options" aria-labelledby="all_options-label">
 
 h3(#all_options-label). Table of contents
@@ -44,4 +25,3 @@ notextile. </div>
 "(navlink)See on GitHub":https://github.com/NicolasGraph/oui_instagram "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN
 
 notextile. </div>
-<div class="txp-layout-4col-3span">

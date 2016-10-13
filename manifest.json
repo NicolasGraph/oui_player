@@ -8,7 +8,12 @@
     "order"       : 5,
     "flags"       : 3,
     "help"        : {"file" : [
-        "./docs/Top.textile",
+        "./docs/_styles.textile",
+        "./docs/_scripts.textile",
+        "./docs/_top.textile",
+        "./docs/Header.textile",
+        "./docs/Menu.textile",
+        "./docs/_text_top.textile",
         "./docs/Basics.textile",
         "./docs/Prefs.textile",
         "./docs/Tags.textile",
@@ -22,8 +27,9 @@
         "./docs/Mixcloud.textile",
         "./docs/Examples.textile",
         "./docs/Credits.textile",
-        "./docs/Bottom.textile"
-        ]},
+        "./docs/_text_bottom.textile",
+        "./docs/_bottom.textile"
+    ]},
     "code": {"file" : [
         "./src/Oui/Player/Provider.php",
         "./src/Oui/Player/Vimeo.php",
