@@ -1,6 +1,6 @@
 # oui_player beta (formerly oui_video)
 
-Easily embed customized players.
+An extendable plugin to easily embed customized iframe players.
 
 ## Plugin requirements
 
@@ -18,12 +18,14 @@ oui_player's minimum requirements:
 
 ### Video
 
-* Vimeo;
-* Youtube;
+* Abc News;
+* Archive;
 * Dailymotion;
 * Myspace videos;
 * Twitch;
-* Abc News.
+* Viddsee;
+* Vimeo;
+* Youtube.
 
 ### Music
 

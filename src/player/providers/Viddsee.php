@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,33 +21,28 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
 
-    class Abcnews extends Provider
+    class Viddsee extends Provider
     {
-        protected $provider = 'Abcnews';
-        protected $patterns = array('#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i' => '4');
-        protected $src = '//abcnews.go.com/video/embed?id=';
+        protected $patterns = array('#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i' => '6');
+        protected $src = '//www.viddsee.com/player/';
         protected $params = array(
-            'width' => array(
+            'width'  => array(
                 'default' => '640',
             ),
             'height' => array(
                 'default' => '',
             ),
-            'ratio' => array(
+            'ratio'  => array(
                 'default' => '16:9',
-            ),
-            'ts'     => array(
-                'default' => '0',
             ),
         );
     }
 
-    $instance = Abcnews::getInstance();
+    $instance = Viddsee::getInstance();
     $instance->plugProvider();
 }

@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -29,7 +29,6 @@ namespace Oui\Player {
     abstract class Provider
     {
         protected static $instances = array();
-
         protected $provider = '';
         protected $glue = array('?', '&amp;');
 
@@ -56,11 +55,14 @@ namespace Oui\Player {
          */
         public function plugProvider()
         {
-            // Plug in oui_player
+            // Plug in Oui\Player class
             $plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
             register_callback(array($this, 'getProvider'), $plugin, 'plug_providers', 0);
         }
 
+        /**
+         * Return the class name as the provider name.
+         */
         public function getProvider($event, $step, $rs)
         {
             return array(substr(strrchr(get_class($this), '\\'), 1));
@@ -80,7 +82,8 @@ namespace Oui\Player {
         /**
          * Get a tag attribute list
          *
-         * @param string $tag The plugin tag
+         * @param string $tag      The plugin tag
+         * @param array  $get_atts The array where attributes are stored provider after provider.
          */
         public function getAtts($tag, $get_atts)
         {
@@ -95,13 +98,13 @@ namespace Oui\Player {
         /**
          * Get the video provider and the video id from its url
          *
-         * @param string $video The video url
+         * @param string $play The item url to play
          */
-        public function getItemInfos($video)
+        public function getItemInfos($play)
         {
 
             foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $video, $matches)) {
+                if (preg_match($pattern, $play, $matches)) {
                     $match = array(
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => $matches[$id],
@@ -116,9 +119,6 @@ namespace Oui\Player {
 
         /**
          * Get the provider player url and its parameters/attributes
-         *
-         * @param string $provider The video provider
-         * @param string $no_cookie The no_cookie attribute or pref value (Youtube)
          */
         public function getParams()
         {
@@ -130,6 +130,13 @@ namespace Oui\Player {
             return $player_infos;
         }
 
+        /**
+         * Build the code to embed.
+         *
+         * @param string $src         The iframe source.
+         * @param array  $used_params The player parameters in use.
+         * @param array  $dims        The player dimensions
+         */
         public function getOutput($src, $used_params, $dims)
         {
             if (!empty($used_params)) {

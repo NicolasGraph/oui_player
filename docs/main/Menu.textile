@@ -1,0 +1,30 @@
+notextile. <div class="txp-layout-4col-alt" id="oui_player_switcher" role="region">
+<section class="txp-details" id="all_options" aria-labelledby="all_options-label">
+
+h3(#all_options-label). Table of contents
+
+notextile. <div role="group">
+
+*(switcher-list) "Basics(basics)":#basics
+* "Preferences/options":#prefs
+* "Tags":#tags
+* "ABC News player attributes":#abc
+* "Archive player attributes":#archive
+* "Dailymotion player attributes":#dailymotion
+* "Mixcloud player attributes":#mixcloud
+* "Myspace videos player attributes":#myspace
+* "Soundcloud player attributes":#soundcloud
+* "Twitch player attributes":#twitch
+* "Viddsee player attributes":#viddsee
+* "Vimeo player attributes":#vimeo
+* "Youtube player attributes":#youtube
+* "Examples":#examples
+* "Extend":#extend
+* "Credits":#credits
+
+notextile. </div>
+</section>
+
+"(navlink)See on GitHub":https://github.com/NicolasGraph/oui_instagram "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN
+
+notextile. </div>

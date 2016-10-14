@@ -1,0 +1,47 @@
+notextile. <section id="mixcloud" class="options_group">
+
+h2. Mixcloud additional attributes
+
+Recognised values for the @play@ attribute:
+
+* http(s)://(www.)mixcloud.com/…
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+- @width@ :=
+The width of the player in pixels (OK, pourcentage works also…).
+*Default:* @100%@
+*Valid:* integer =:
+- @height@ :=
+The height of the player in pixels.
+*Default:* @400@
+*Valid:* integer =:
+- @ratio@ :=
+The ratio used to calculate the missing value for the width or the height.
+*Default:* none
+*Valid:* integer[@:@]integer =:
+
+h3. Player parameters (aplhabetical order)
+
+- @autoplay@ :=
+Whether to play after loading or not.
+*Default:* @0@
+*Valid:* @0@ or @1@ =:
+- @light@ :=
+Enables the light theme.
+*Default:* @0@
+*Valid:* @0@ or @1@ =:
+- @hide_artwork@ :=
+Hides the background image.
+*Default:* @0@
+*Valid:* @0@ or @1@ =:
+- @hide_cover@ :=
+Hides the cover.
+*Default:* @0@
+*Valid:* @0@ or @1@ =:
+- @mini@ :=
+Uses the _mini_ player config.
+*Default:* @0@
+*Valid:* @0@ or @1@ =:
+
+notextile. </section>

@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -31,13 +31,13 @@ namespace Oui\Player {
         protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
         protected $src = '//player.vimeo.com/video/';
         protected $params = array(
-            'width' => array(
+            'width'     => array(
                 'default' => '640',
             ),
-            'height' => array(
+            'height'    => array(
                 'default' => '',
             ),
-            'ratio' => array(
+            'ratio'     => array(
                 'default' => '16:9',
             ),
             'autopause' => array(
@@ -57,8 +57,8 @@ namespace Oui\Player {
                 'valid'   => array('0', '1'),
             ),
             'color'     => array(
-                'widget' => 'oui_player_pref_color',
                 'default' => '#00adef',
+                'valid'   => 'color',
             ),
             'loop'      => array(
                 'default' => '0',

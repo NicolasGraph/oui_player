@@ -1,0 +1,83 @@
+notextile. <section id="dailymotion" class="options_group">
+
+h2. Dailymotion additional attributes
+
+Recognised values for the @play@ attribute:
+
+* *id*
+* http(s)://dai.ly/[*id*]
+* http(s)://www.dailymotion.com/video/[*id*]…
+* http(s)://www.dailymotion.com/embed/video/[*id*]
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions.
+More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+
+- @width@ :=
+The width of the player in pixels.
+*default:* @640@
+*valid:* integer =:
+- @height@ :=
+*default:* @640@
+*valid:* integer
+The height of the player in pixels. =:
+- @ratio@ :=
+The ratio used to calculate the missing value for the width or the height.
+*default:* @16:9@
+*valid:* integer[@:@]integer =:
+
+h3. Player parameters (aplhabetical order)
+
+- @autoplay@ :=
+Starts the playback of the video automatically after the player load.
+This parameter may not work on some mobile OS.
+*default:* @false@
+*valid:* @true@ or @false@ =:
+- @controls@ :=
+Whether to display the player controls or not.
+*default:* @true@
+*valid:* @true@ or @false@ =:
+- @endscreen_enable@ :=
+Whether to enable the end screen or not.
+*default:* @true@
+*valid:* @true@ or @false@ =:
+- @mute@ :=
+Whether to mute the video or not.
+*default:* @false@
+*valid:* @true@ or @false@ =:
+- @quality@ :=
+Set the suggested playback quality for the video.
+*default:* @auto@
+*valid:* @240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@ =:
+- @sharing_enable@ :=
+Whether to display the sharing button or not.
+*default:* @true@
+*valid:* @true@ or @false@ =:
+- @start@ :=
+Specifies the time (in seconds) from which the video should start playing.
+*default:* none
+*valid:* an integer =:
+- @subtitles_default@ :=
+Specifies the default selected subtitles language.
+*default:* none =:
+- @syndication@ :=
+Passes your syndication key to the player.
+*default:* none =:
+- @ui_highlight@ :=
+Changes the default colour used in the controls.
+*Default:* @ffcc33@
+*valid:* a hexa color value =:
+- @ui_logo@ :=
+Whether to display the Dailymotion logo or not.
+*default:* @true@
+*valid:* @true@ or @false@ =:
+- @ui_start_screen_info@ :=
+Whether to show video information on the start screen or not.
+*default:* @true@
+*valid:* @true@ or @false@ =:
+- @ui_theme@ :=
+Choose the default base colour theme.
+*default:* @dark@
+*valid:* @dark@ or @light@ =:
+
+notextile. </section>

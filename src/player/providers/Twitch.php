@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -31,25 +31,26 @@ namespace Oui\Player {
         protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
         protected $src = '//player.twitch.tv/?video=';
         protected $params = array(
-            'width'       => array(
+            'width'    => array(
                 'default' => '640',
             ),
-            'height'       => array(
+            'height'   => array(
                 'default' => '',
             ),
-            'ratio'       => array(
+            'ratio'    => array(
                 'default' => '16:9',
             ),
             'autoplay' => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'muted' => array(
+            'muted'    => array(
                 'default' => 'false',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'time'       => array(
+            'time'     => array(
                 'default' => '',
+                'valid'   => 'number',
             ),
         );
 
@@ -64,7 +65,7 @@ namespace Oui\Player {
             foreach ($this->patterns as $pattern => $id) {
                 if (preg_match($pattern, $video, $matches)) {
                     $match = array(
-                        'provider' => strtolower($this->provider),
+                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => str_replace('/', '', $matches[$id]),
                     );
 

@@ -1,0 +1,35 @@
+notextile. <section id="examples" class="options_group">
+
+h2. Examples
+
+h3. Display a video
+
+Use the prefs values for the @provider@ and/or @play@ attributes.
+
+bc. <txp:oui_player />
+
+Use a video id through the tag attribute.
+
+bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
+
+Let the plugin find the provider and the video id by providing the video URL.
+
+bc. <txp:oui_player play="https://vimeo.com/155020267" />
+
+h3. Using the conditional tag
+
+bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
+    Yes, it is a valid URL pattern for a Youtube, Dailymotion or Vimeo video.
+<txp:else />
+    No…
+</txp:oui_if_player>
+
+p. …or with the provider attribute…
+
+bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
+    Yes, it is a valid URL pattern for a Vimeo video.
+<txp:else />
+    No
+</txp:oui_if_player>
+
+notextile. </section>
