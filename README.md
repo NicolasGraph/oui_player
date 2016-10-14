@@ -1,4 +1,4 @@
-# oui_player beta (formerly oui_video)
+# oui_player (formerly oui_video)
 
 An extendable plugin to easily embed customized iframe players.
 
