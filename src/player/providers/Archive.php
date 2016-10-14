@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -32,25 +32,26 @@ namespace Oui\Player {
         protected $src = '//archive.org/embed/';
         protected $glue = array('&amp;', '&amp;');
         protected $params = array(
-            'width'       => array(
+            'width'    => array(
                 'default' => '640',
             ),
-            'height'      => array(
+            'height'   => array(
                 'default' => '480',
             ),
-            'ratio'       => array(
+            'ratio'    => array(
                 'default' => '',
             ),
-            'autoplay'    => array(
+            'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'playlist'    => array(
+            'playlist' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'poster'      => array(
+            'poster'   => array(
                 'default' => '',
+                'valid'   => 'url',
             ),
         );
     }

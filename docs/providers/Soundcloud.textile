@@ -1,6 +1,6 @@
 notextile. <section id="soundcloud" class="options_group">
 
-h4. Soundcloud additional attributes
+h2. Soundcloud additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -20,9 +20,9 @@ The height of the player in pixels (if @visual="true"@ Soundcloud width is usual
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* none
-*valid:* integer:integer =:
+*valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @auto_play@ :=
 Whether to play after loading or not.

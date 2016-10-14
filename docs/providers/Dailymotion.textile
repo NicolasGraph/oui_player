@@ -1,6 +1,6 @@
 notextile. <section id="dailymotion" class="options_group">
 
-h4. Dailymotion additional attributes
+h2. Dailymotion additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -24,9 +24,9 @@ The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
-*valid:* integer@:@integer =:
+*valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @autoplay@ :=
 Starts the playback of the video automatically after the player load.

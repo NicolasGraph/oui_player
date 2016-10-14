@@ -1,6 +1,6 @@
 notextile. <section id="youtube" class="options_group">
 
-h4. Youtube additional attributes
+h2. Youtube additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -25,9 +25,9 @@ The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
-*valid:* integer@:@integer =:
+*valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @autohide@ :=
 Indicates whether the video controls will automatically hide after a video begins playing.

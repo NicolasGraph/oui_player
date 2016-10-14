@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -31,34 +31,34 @@ namespace Oui\Player {
         protected $patterns = array('#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i' => '1');
         protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
         protected $params = array(
-            'width' => array(
+            'width'        => array(
                 'default' => '100%',
             ),
-            'height' => array(
+            'height'       => array(
                 'default' => '400',
             ),
-            'ratio' => array(
+            'ratio'        => array(
                 'default' => '',
             ),
-            'autoplay' => array(
+            'autoplay'     => array(
                 'default' => '0',
-                'valid' => array('0', '1'),
+                'valid'   => array('0', '1'),
             ),
-            'light' => array(
+            'light'        => array(
                 'default' => '0',
-                'valid' => array('0', '1'),
+                'valid'   => array('0', '1'),
             ),
             'hide_artwork' => array(
                 'default' => '0',
-                'valid' => array('0', '1'),
+                'valid'   => array('0', '1'),
             ),
-            'hide_cover' => array(
+            'hide_cover'   => array(
                 'default' => '0',
-                'valid' => array('0', '1'),
+                'valid'   => array('0', '1'),
             ),
-            'mini' => array(
+            'mini'         => array(
                 'default' => '0',
-                'valid' => array('0', '1'),
+                'valid'   => array('0', '1'),
             ),
         );
     }

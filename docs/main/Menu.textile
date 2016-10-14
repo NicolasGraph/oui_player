@@ -19,6 +19,7 @@ notextile. <div role="group">
 * "Vimeo player attributes":#vimeo
 * "Youtube player attributes":#youtube
 * "Examples":#examples
+* "Extend":#extend
 * "Credits":#credits
 
 notextile. </div>

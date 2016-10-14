@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 class Oui_Player_Bandcamp extends Oui_Player_Provider
@@ -30,40 +30,40 @@ class Oui_Player_Bandcamp extends Oui_Player_Provider
     protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
     protected $glue = array('/', '/');
     protected $params = array(
-        'artwork' => array(
-            'default' => '',
+        'width'     => array(
+            'default' => '350',
         ),
-        'bgcol'       => array(
-            'widget' => 'oui_player_pref_color',
-            'default' => '#ffffff',
-        ),
-        'height' => array(
+        'height'    => array(
             'default' => '470',
         ),
-        'linkcol'       => array(
-            'widget' => 'oui_player_pref_color',
+        'ratio'     => array(
+            'default' => '',
+        ),
+        'artwork'   => array(
+            'default' => '',
+        ),
+        'bgcol'     => array(
+            'default' => '#ffffff',
+            'valid'   => 'color',
+        ),
+        'linkcol'   => array(
             'default' => '#0687f5',
+            'valid'   => 'color',
         ),
-        'minimal' => array(
+        'minimal'   => array(
             'default' => 'false',
-            'valid' => array('true', 'false'),
+            'valid'   => array('true', 'false'),
         ),
-        'track' => array(
+        'track'     => array(
             'default' => '',
         ),
         'tracklist' => array(
             'default' => 'false',
-            'valid' => array('true', 'false'),
+            'valid'   => array('true', 'false'),
         ),
-        'ratio' => array(
-            'default' => '',
-        ),
-        'size' => array(
+        'size'      => array(
             'default' => 'large',
-            'valid' => array('small', 'medium', 'large'),
-        ),
-        'width' => array(
-            'default' => '350',
+            'valid'   => array('small', 'medium', 'large'),
         ),
     );
 }

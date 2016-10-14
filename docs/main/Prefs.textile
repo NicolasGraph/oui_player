@@ -1,6 +1,6 @@
 notextile. <section id="prefs" class="options_group">
 
-h2(#options_group_prefs-label). Preferences/options
+h2. Preferences/options
 
 Plugin prefs are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 They can be overriden by these attributes when needed.

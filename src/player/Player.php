@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui {
@@ -163,13 +163,18 @@ namespace Oui {
             $valid = isset($options['valid']) ? $options['valid'] : false;
 
             if ($valid && is_array($valid)) {
-                if ($valid === array('0', '1')) {
+                $yesno_diff = array_diff($valid, array('0', '1'));
+                $truefalse_diff = array_diff($valid, array('true', 'false'));
+
+                if (empty($yesno_diff)) {
                     $widget = 'yesnoradio';
-                } elseif ($valid === array('true', 'false')) {
+                } elseif (empty($truefalse_diff)) {
                     $widget = self::$plugin . '_truefalseradio';
                 } else {
-                    $widget = self::$plugin . '_pref';
+                    $widget = self::$plugin . '_pref_widget';
                 }
+            } elseif ($valid) {
+                $widget = self::$plugin . '_pref_widget';
             } else {
                 $widget = 'text_input';
             }
@@ -178,26 +183,26 @@ namespace Oui {
         }
 
         /**
-         * Build select inputs for plugin prefs
+         * Build plugin pref inputs
          *
          * @param string $name The name of the preference (Textpattern variable)
          * @param string $val  The value of the preference (Textpattern variable)
          */
-        public function prefSelect($name, $val)
+        public function prefFunction($name, $val)
         {
             $prefs = $this->getPrefs();
+            $valid = $prefs[$name]['valid'];
 
-            foreach ($prefs as $pref => $options) {
-                if ($pref === $name) {
-                    $valid = $options['valid'];
-                    $vals = array();
+            if (is_array($valid)) {
+                $vals = array();
 
-                    foreach ($valid as $value) {
-                        $value === '' ?: $vals[$value] = gtxt($pref . '_' . $value);
-                    }
-
-                    return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+                foreach ($valid as $value) {
+                    $value === '' ?: $vals[$value] = gtxt($name . '_' . $value);
                 }
+
+                return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+            } else {
+                return fInput($valid, $name, $val);
             }
         }
 

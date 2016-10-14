@@ -1,0 +1,184 @@
+notextile. <section id="extend" class="options_group">
+
+h2. Extend
+
+This plugin was designed to make it easily extendable by new providers; here are some instructions to extend oui_player.
+
+h3. Requirements
+
+* "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler to compile everything together.
+
+h3. The provider class
+
+First, a new class needs to be added; create a new _.php_ file in the src/player/providers folder or duplicate an existing one.
+Any provider class needs to be created in the plugin namespace and should be named with the related provider name.
+This class also need to extend the abstract Provider class and as the plugin use different namespaces but will be compiled into a single file, the namespace needs brackets.
+
+bc.. <?php
+
+namespace Oui\Player {
+
+    class Vimeo extends Provider
+    {
+    }
+}
+
+h4. Class properties
+
+At least three providers properties need to be set: @$patterns@, @$src@ and @$params@.
+The plugin will use @$patterns@ to find the right provider and return its name and the item ID from an URL; @$src@ will be used to build the embed code and @$params@ will allow to automatically add a plugin pref and a oui_player tag attribute for each provided parameter.
+
+p(alert-block information). %(ui-icon ui-icon-info).% Note that dashes in parameters name are replaced by underscores in pref/attribute names.
+
+Here is how they expect to be set:
+
+- @$patterns@ :=
+*Type:* protected
+*Value type:* associative array
+*Key(s):* regular expression to check against a provided url
+*Values(s):* the place where to find the item ID in the regular expression =:
+
+- @$src@ :=
+*Type:* protected
+*Value type:* URL
+*Values:* provder's iframe player URAL base =:
+
+- @$params@ :=
+*Type:* protected
+*Value type:* multidimensional associative array
+*Key(s):* player parameter
+*values(s):* associative array
+*Subkey(s):* * default (required), valid (optional), widget (optional)
+*Default value:* parameter related pref/attribute default value
+*Valid value:* array of expected values (see the *Valid* _magic system_)
+*Widget value:* function name to use for the parameter related preference (if not support by the *Valid* _magic system_) =:
+
+The *Valid* _magic system_ is designed to set the right preference widget according to the valid values set.
+
+* displays a text input if the *Valid* key is not set.
+* @valid => 'value'@ displays an input with the value type (like @<input type="color" …>@ where _color_ is the value).
+* @valid => array('0', '1')@ displays radio buttons using values @0@ and @1@.
+* @valid => array('true', 'false')@ displays radio buttons using values @true@ and @false@.
+* @valid => array('a value', 'another value')@ displays a select list of the defined values.
+* @valid => array('', 'a value', 'another value')@ displays a select list of the defined values leaving a blank option at the begining.
+
+See the following example to easily understand how these properties works, mainly the last one.
+
+bc.. <?php
+
+namespace Oui\Player {
+
+    class Vimeo extends Provider
+    {
+        protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
+        protected $src = '//player.vimeo.com/video/';
+        protected $params = array(
+            'width'    => array(
+                'default' => '640',
+            ),
+            'height'   => array(
+                'default' => '',
+            ),
+            'ratio'    => array(
+                'default' => '16:9',
+            ),
+            'autoplay' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'color'    => array(
+                'default' => '#00adef',
+                'valid'   => 'color',
+            ),
+        );
+    }
+}
+
+h4. Plug the provider
+
+It is time to instanciate the class; do it by calling the singleton static method @getInstance()@ after the class but inside the namepsace. Then, plug the provider to automatically add it to the plugin main preferences.
+
+bc.. <?php
+
+namespace Oui\Player {
+
+    class Vimeo extends Provider
+    {
+        …
+    }
+
+    $instance = Vimeo::getInstance();
+    $instance->plugProvider();
+}
+
+p. Here we are; the new class should look like the following and will properly add the new provider when included into the plugin.
+
+bc.. <?php
+
+namespace Oui\Player {
+
+    class Vimeo extends Provider
+    {
+        protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
+        protected $src = '//player.vimeo.com/video/';
+        protected $params = array(
+            'width' => array(
+                'default' => '640',
+            ),
+            'height' => array(
+                'default' => '',
+            ),
+            'ratio' => array(
+                'default' => '16:9',
+            ),
+
+            'autoplay'  => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'color'     => array(
+                'default' => '#00adef',
+                'valid' => 'color',
+            ),
+        );
+    }
+
+    $instance = Vimeo::getInstance();
+    $instance->plugProvider();
+}
+
+h3. Textpack strings
+
+Once plug into the plugin, the new provider will automatically adds its prefs on the admin side; to make them readable, some textpack strings are required.
+
+h4. Main strings
+
+These strings are required for each provider; just change the provider related strings.
+
+bc.. oui_player_provider_vimeo => Vimeo
+oui_player_vimeo => Vimeo player (oui_player)
+oui_player_vimeo_prefs => Display the Vimeo player prefs
+
+h4. Parameters related string
+
+For each provider parameter added in the new class a textpack string is required.
+Provider preferences names are built like so: oui_player_[*provider name*]_[*parameter name*].
+
+p(alert-block information). %(ui-icon ui-icon-info).% Note that dashes in parameters name are replaced by underscores.
+
+Here are few examples:
+
+bc.. oui_player_vimeo_width => Player width
+oui_player_vimeo_height => Player height
+oui_player_vimeo_ratio => Player ratio by default
+oui_player_vimeo_autopause => Automatic pausing when another video is playing
+
+h3. Help file section
+
+To complete the extend process, a new help file section is required. Create a new _.textile_ file or duplicate an existing one to alterate it in the docs/providers folder. Then include the new provider in the docs/main/Menu.textile file.
+
+h3. Compilation
+
+The plugin manifest can now be edited to add the created files before a new compilation via "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler.
+
+notextile. </section>

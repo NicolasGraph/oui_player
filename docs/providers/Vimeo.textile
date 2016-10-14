@@ -1,6 +1,6 @@
 notextile. <section id="vimeo" class="options_group">
 
-h4. Vimeo additional attributes
+h2. Vimeo additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -22,9 +22,9 @@ The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
-*valid:* integer@:@integer =:
+*valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @autopause@ :=
 Enables or disables pausing this video when another video is played.

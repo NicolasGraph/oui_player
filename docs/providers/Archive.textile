@@ -1,6 +1,6 @@
 notextile. <section id="archive" class="options_group">
 
-h4. Archive additional attributes
+h2. Archive additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -22,9 +22,9 @@ The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* none
-*valid:* integer@:@integer =:
+*valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @autoplay@ :=
 Specifies whether the initial video will automatically start to play when the player loads.

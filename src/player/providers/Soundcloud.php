@@ -1,7 +1,8 @@
 <?php
 
 /*
- * oui_player - Easily embed customized players..
+ * oui_player - An extendable plugin to easily embed iframe
+ * customizable players in Textpattern CMS.
  *
  * https://github.com/NicolasGraph/oui_player
  *
@@ -20,8 +21,7 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
 namespace Oui\Player {
@@ -31,73 +31,74 @@ namespace Oui\Player {
         protected $patterns = array('#((http|https):\/\/(api.)?soundcloud\.com\/[\S]+)#i' => '1');
         protected $src = '//w.soundcloud.com/player/?url=';
         protected $params = array(
-            'width' => array(
+            'width'          => array(
                 'default' => '100%',
             ),
-            'height' => array(
+            'height'         => array(
                 'default' => '166',
             ),
-            'ratio' => array(
+            'ratio'          => array(
                 'default' => '',
             ),
-            'auto_play' => array(
+            'auto_play'      => array(
                 'default' => 'false',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'buying' => array(
+            'buying'         => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'color'       => array(
-                'widget' => 'oui_player_pref_color',
+            'color'          => array(
                 'default' => '#ff8800',
+                'valid'   => 'color',
             ),
-            'download' => array(
+            'download'       => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'hide_related' => array(
+            'hide_related'   => array(
                 'default' => 'false',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'sharing' => array(
+            'sharing'        => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'show_artwork' => array(
+            'show_artwork'   => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'show_comments' => array(
+            'show_comments'  => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
             'show_playcount' => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'show_reposts' => array(
+            'show_reposts'   => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'show_user' => array(
+            'show_user'      => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'single_active' => array(
+            'single_active'  => array(
                 'default' => 'true',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
-            'start_track' => array(
+            'start_track'    => array(
                 'default' => '0',
+                'valid'   => 'number',
             ),
-            'theme_color' => array(
-                'widget' => 'oui_player_pref_color',
+            'theme_color'    => array(
                 'default' => '#ff3300',
+                'valid'   => 'color',
             ),
-            'visual' => array(
+            'visual'         => array(
                 'default' => 'false',
-                'valid' => array('true', 'false'),
+                'valid'   => array('true', 'false'),
             ),
         );
     }

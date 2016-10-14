@@ -1,6 +1,6 @@
 notextile. <section id="mixcloud" class="options_group">
 
-h4. Mixcloud additional attributes
+h2. Mixcloud additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -19,9 +19,9 @@ The height of the player in pixels.
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *Default:* none
-*Valid:* integer:integer =:
+*Valid:* integer[@:@]integer =:
 
-h5. Player parameters (aplhabetical order)
+h3. Player parameters (aplhabetical order)
 
 - @autoplay@ :=
 Whether to play after loading or not.

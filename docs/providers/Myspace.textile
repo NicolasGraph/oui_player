@@ -1,6 +1,6 @@
 notextile. <section id="myspace" class="options_group">
 
-h4. Myspace videos additional attributes
+h2. Myspace videos additional attributes
 
 Recognised values for the @play@ attribute:
 
@@ -20,6 +20,6 @@ The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *default:* @16:9@
-*valid:* integer@:@integer =:
+*valid:* integer[@:@]integer =:
 
 notextile. </section>
