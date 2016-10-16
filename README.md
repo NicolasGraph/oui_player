@@ -1,6 +1,6 @@
 # oui_player (formerly oui_video)
 
-An extendable plugin to easily embed customized iframe players.
+An extendable plugin to easily embed iframe customizable players in Textpattern CMS.
 
 ## Plugin requirements
 
