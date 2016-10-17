@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
         protected $src = '//player.twitch.tv/?video=';
-        protected $size = array(
+        protected $dims = array(
             'width'    => array(
                 'default' => '640',
             ),

@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
         protected $src = '//player.vimeo.com/video/';
-        protected $size = array(
+        protected $dims = array(
             'width'     => array(
                 'default' => '640',
             ),

@@ -57,7 +57,7 @@ namespace Oui\Player {
 
         public function getPrefs($prefs)
         {
-            $merge_prefs = array_merge($this->size, $this->params);
+            $merge_prefs = array_merge($this->dims, $this->params);
 
             foreach ($merge_prefs as $pref => $options) {
                 $options['group'] = strtolower(str_replace('\\', '_', get_class($this)));
@@ -76,7 +76,7 @@ namespace Oui\Player {
          */
         public function getAtts($tag, $get_atts)
         {
-            $atts = array_merge($this->size, $this->params);
+            $atts = array_merge($this->dims, $this->params);
 
             foreach ($atts as $att => $options) {
                 $att = str_replace('-', '_', $att);
@@ -118,7 +118,7 @@ namespace Oui\Player {
         /**
          * Get the provider player url and its parameters/attributes
          */
-        public function getParams($atts)
+        public function getParams($latts)
         {
             $params = array();
 
@@ -126,7 +126,7 @@ namespace Oui\Player {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $att = str_replace('-', '_', $param);
-                $value = $atts[$att];
+                $value = $latts[$att];
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -142,19 +142,45 @@ namespace Oui\Player {
         }
 
         /**
+         * Get the provider player url and its parameters/attributes
+         */
+        public function getSize($latts)
+        {
+            $dims = array();
+
+            foreach ($this->dims as $dim => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
+                $default = $infos['default'];
+                $value = $latts[$dim];
+
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($value === '' && $pref !== $default) {
+                    $dims[$dim] = $pref;
+                } elseif ($value !== '') {
+                    $dims[$dim] = $value;
+                } else {
+                    $dims[$dim] = $default;
+                }
+            }
+
+            return $dims;
+        }
+
+        /**
          * Build the code to embed.
          *
          * @param string $src         The iframe source.
          * @param array  $used_params The player parameters in use.
          * @param array  $dims        The player dimensions
          */
-        public function getOutput($dims, $params)
+        public function getCode($latts)
         {
             $item = $this->getItemInfos();
 
             if ($item) {
                 $src = $this->src . $item['id'];
-                $params = $this->getParams($params);
+                $dims = $this->getSize($latts);
+                $params = $this->getParams($latts);
 
                 if (!empty($params)) {
                     $glue = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];

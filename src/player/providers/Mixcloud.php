@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i' => '1');
         protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
-        protected $size = array(
+        protected $dims = array(
             'width'        => array(
                 'default' => '100%',
             ),

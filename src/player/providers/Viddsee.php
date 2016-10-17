@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i' => '6');
         protected $src = '//www.viddsee.com/player/';
-        protected $size = array(
+        protected $dims = array(
             'width'  => array(
                 'default' => '640',
             ),

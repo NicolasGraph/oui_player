@@ -47,13 +47,9 @@ namespace {
         // Prepare the output.
         $provider ? $obj->provider = $provider : '';
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-        $dims = array('width', 'height', 'ratio');
-        foreach ($dims as $dim) {
-            $dims[$dim] = $$dim ? $$dim : get_pref('oui_player_' . $provider . '_' . $dim);
-        }
 
         // Get the embedding code.
-        $out = $obj->getOutput($dims, $latts);
+        $out = $obj->getCode($latts);
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
     }

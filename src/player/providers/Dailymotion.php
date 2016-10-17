@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '8');
         protected $src = '//www.dailymotion.com/embed/video/';
-        protected $size = array(
+        protected $dims = array(
             'width'                => array(
                 'default' => '640',
             ),

@@ -93,21 +93,21 @@ namespace Oui\Player {
          *
          * @param string $play The item url
          */
-        public function getOutput($dims, $latts)
+        public function getCode($latts)
         {
             if (isset($this->provider)) {
                 $class = __NAMESPACE__ . '\\' . $this->provider;
                 $obj = new $class;
                 $obj->provider = $this->provider;
                 $obj->play = $this->play;
-                $out = $obj->getOutput($dims, $latts);
+                $out = $obj->getCode($latts);
                 return $out;
             } else {
                 foreach ($this->providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
                     $obj = new $class;
                     $obj->play = $this->play;
-                    $out = $obj->getOutput($dims, $latts);
+                    $out = $obj->getCode($latts);
                     if ($out) {
                         return $out;
                     }

@@ -31,7 +31,7 @@ namespace Oui\Player {
         protected $patterns = array('#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i' => '4');
         protected $src = '//archive.org/embed/';
         protected $glue = array('&amp;', '&amp;');
-        protected $size = array(
+        protected $dims = array(
             'width'    => array(
                 'default' => '640',
             ),

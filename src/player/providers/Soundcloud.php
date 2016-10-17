@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#((http|https):\/\/(api.)?soundcloud\.com\/[\S]+)#i' => '1');
         protected $src = '//w.soundcloud.com/player/?url=';
-        protected $size = array(
+        protected $dims = array(
             'width'          => array(
                 'default' => '100%',
             ),

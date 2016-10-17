@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i' => '8');
         protected $src = '//www.youtube-nocookie.com/embed/';
-        protected $size = array(
+        protected $dims = array(
             'width'          => array(
                 'default' => '640',
             ),
