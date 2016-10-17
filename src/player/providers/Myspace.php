@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/myspace\.com\/[\S]+\/video\/[\S]+\/(\d+)$#i' => '2');
         protected $src = '//media.myspace.com/play/video/';
-        protected $params = array(
+        protected $size = array(
             'width'  => array(
                 'default' => '640',
             ),
@@ -43,6 +43,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Myspace::getInstance();
-    $instance->plugProvider();
+    new Myspace;
 }

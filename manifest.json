@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
     "description" : "Embed customised players",
-    "version"     : "1.1.0",
+    "version"     : "1.2.0-dev",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -46,6 +46,8 @@
         "./src/player/providers/Vimeo.php",
         "./src/player/providers/Youtube.php",
         "./src/player/Player.php",
+        "./src/player/Admin.php",
+        "./src/player/Public.php",
         "./src/lib.php",
         "./src/tags.php"
     ]}

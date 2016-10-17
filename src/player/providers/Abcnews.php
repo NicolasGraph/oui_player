@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i' => '4');
         protected $src = '//abcnews.go.com/video/embed?id=';
-        protected $params = array(
+        protected $size = array(
             'width'  => array(
                 'default' => '640',
             ),
@@ -43,6 +43,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Abcnews::getInstance();
-    $instance->plugProvider();
+    new Abcnews;
 }

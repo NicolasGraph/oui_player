@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
         protected $src = '//player.vimeo.com/video/';
-        protected $params = array(
+        protected $size = array(
             'width'     => array(
                 'default' => '640',
             ),
@@ -40,6 +40,8 @@ namespace Oui\Player {
             'ratio'     => array(
                 'default' => '16:9',
             ),
+        );
+        protected $params = array(
             'autopause' => array(
                 'default' => '1',
                 'valid'   => array('0', '1'),
@@ -75,6 +77,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Vimeo::getInstance();
-    $instance->plugProvider();
+    new Vimeo;
 }

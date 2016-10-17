@@ -33,112 +33,29 @@ namespace {
     {
         global $thisarticle;
 
-        // Instanciate the main plugin class.
-        $main_class = 'Oui\Player';
-        $main_instance = $main_class::getInstance();
+        $class = 'Oui\Player\Tags';
+        $obj = new $class;
 
-        /*
-         * Set and check Tag attributes
-         */
+        // Set tag attributes
+        $get_atts = $obj->getAtts(__FUNCTION__);
+        $latts = lAtts($get_atts, $atts);
+        extract($latts);
 
-        // Get tag attributes from providers params.
-        $get_atts = $main_instance->getAtts(__FUNCTION__);
-
-        // Set the array to be used by latts()
-        foreach ($get_atts as $att => $options) {
-            $get_atts[$att] = '';
-        }
-
-        // Set tag attributes.
-        extract(lAtts($get_atts, $atts));
-
-        // Use the related pref as a default attribute value.
+        // Get the play attribute related pref value as the default value.
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
 
-        // If the attribute value a custom field name call this field
-        $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-
-        /*
-         * Get item infos
-         */
-
-        // Temporaly store the provider attribute value.
-        $provider_att = $provider;
-
-        // Check class.
-        if ($provider_att) {
-            $provider_class = $main_class . '\\' . $provider_att;
-            $provider_instance = $provider_class::getInstance();
-            $match = $provider_instance->getItemInfos($play);
-        } else {
-            $match = $main_instance->getItemInfos($play);
+        // Prepare the output.
+        $provider ? $obj->provider = $provider : '';
+        $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
+        $dims = array('width', 'height', 'ratio');
+        foreach ($dims as $dim) {
+            $dims[$dim] = $$dim ? $$dim : get_pref('oui_player_' . $provider . '_' . $dim);
         }
 
-        // Check if the video is recognize as a video url.
-        if ($match) {
-            $provider = $match['provider'];
-            $id = $match['id'];
-        } else {
-            // Use the related pref as a default attribute value.
-            $provider ?: $provider = get_pref('oui_player_provider');
-            $id = $play;
-        }
+        // Get the embedding code.
+        $out = $obj->getOutput($dims, $latts);
 
-        if (!$provider_att) {
-            $provider_class = $main_class . '\\' . $provider;
-            $provider_instance = $provider_class::getInstance();
-        }
-
-        /*
-         * Get player Infos
-         */
-        $provider_prefs = strtolower(str_replace('\\', '_', $provider_class));
-        $player_infos = $provider_instance->getParams();
-        $src = $player_infos['src'] . $id;
-        $params = $player_infos['params'];
-
-        unset(
-            $params['width'],
-            $params['height'],
-            $params['ratio']
-        );
-
-        /*
-         * Prepare player parameters for the output
-         */
-
-        // Set an array to be used to get the player size.
-        $dims = array(
-            'width'  => $width ? $width : get_pref($provider_prefs . '_width'),
-            'height' => $height ? $height : get_pref($provider_prefs . '_height'),
-            'ratio'  => $ratio ? $ratio : get_pref($provider_prefs . '_ratio'),
-        );
-
-        // Create a list of needed parameters
-        $used_params = array();
-
-        foreach ($params as $param => $infos) {
-            $pref = get_pref('oui_player_' . strtolower($provider) . '_' . $param);
-            $default = $infos['default'];
-            $att_name = str_replace('-', '_', $param);
-            $att = $$att_name;
-
-            // Add attributes values in use or modified prefs values as player parameters.
-            if ($att === '' && $pref !== $default) {
-                // Remove # from the color pref as a color type is used for the pref input.
-                $used_params[] = $param . '=' . str_replace('#', '', $pref);
-            } elseif ($att !== '') {
-                // Remove the # in the color attribute just in case…
-                $used_params[] = $param . '=' . str_replace('#', '', $att);
-            }
-        }
-
-        /*
-         * Get the customized player code and return it via the tag stuff.
-         */
-        $output = $provider_instance->getOutput($src, $used_params, $dims);
-
-        return doLabel($label, $labeltag).(($wraptag) ? doTag($output, $wraptag, $class) : $output);
+        return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
     }
 
     /*
@@ -148,44 +65,19 @@ namespace {
     {
         global $thisarticle;
 
-        // Instanciate the main plugin class.
-        $main_class = 'Oui\Player';
-        $main_instance = $main_class::getInstance();
+        $class = 'Oui\Player\Tags';
+        $obj = new $class;
 
-        /*
-         * Set and check Tag attributes
-         */
+        // Set tag attributes
+        $get_atts = $obj->getAtts(__FUNCTION__);
+        $latts = lAtts($get_atts, $atts);
+        extract($latts);
 
-        // Get tag attributes.
-        $get_atts = $main_instance->getAtts(__FUNCTION__);
+        // Check if the play attribute value is recognised.
+        $provider ? $obj->provider = $provider : '';
+        $obj->play = $play;
+        $out = $obj->getItemInfos();
 
-        // Set the array to be used by latts()
-        foreach ($get_atts as $att => $options) {
-            $get_atts[$att] = $options['default'];
-        }
-
-        // Set tag attributes.
-        extract(lAtts($get_atts, $atts));
-
-        /*
-         * Get video infos
-         */
-
-        // Use the related pref as a default attribute value.
-        $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
-
-        // Is the attribute value a custom field name?
-        $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-
-        // Check if the video is recognize as a video url.
-        if ($provider) {
-            $provider_class = $main_class . '\\' . $provider;
-            $provider_instance = $provider_class::getInstance();
-            $match = $provider_instance->getItemInfos($play);
-        } else {
-            $match = $main_instance->getItemInfos($play);
-        }
-
-        return parse($thing, $match);
+        return parse($thing, $out);
     }
 }
