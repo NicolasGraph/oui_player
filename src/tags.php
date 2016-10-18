@@ -45,7 +45,12 @@ namespace {
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
 
         // Prepare the output.
-        $provider ? $obj->provider = $provider : '';
+        if ($provider) {
+            $class = 'Oui\Player\\' . $provider;
+            $obj = new $class;
+            $obj->provider = $provider;
+        }
+
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
         $obj->latts = $latts;
         // Get the embedding code.

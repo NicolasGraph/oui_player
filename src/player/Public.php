@@ -28,7 +28,6 @@ namespace Oui\Player {
 
     class Tags extends Player
     {
-        public $provider;
         public $play;
         public $latts;
 
@@ -67,22 +66,13 @@ namespace Oui\Player {
          */
         public function getItemInfos()
         {
-            if (isset($this->provider)) {
-                $class = __NAMESPACE__ . '\\' . $this->provider;
+            foreach ($this->providers as $provider) {
+                $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = new $class;
-                $obj->provider = $this->provider;
                 $obj->play = $this->play;
                 $match = $obj->getItemInfos();
-                return $match;
-            } else {
-                foreach ($this->providers as $provider) {
-                    $class = __NAMESPACE__ . '\\' . $provider;
-                    $obj = new $class;
-                    $obj->play = $this->play;
-                    $match = $obj->getItemInfos();
-                    if ($match) {
-                        return $match;
-                    }
+                if ($match) {
+                    return $match;
                 }
             }
 
@@ -96,24 +86,14 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (isset($this->provider)) {
-                $class = __NAMESPACE__ . '\\' . $this->provider;
+            foreach ($this->providers as $provider) {
+                $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = new $class;
-                $obj->provider = $this->provider;
                 $obj->play = $this->play;
                 $obj->latts = $this->latts;
                 $out = $obj->getPlayer();
-                return $out;
-            } else {
-                foreach ($this->providers as $provider) {
-                    $class = __NAMESPACE__ . '\\' . $provider;
-                    $obj = new $class;
-                    $obj->play = $this->play;
-                    $obj->latts = $this->latts;
-                    $out = $obj->getPlayer();
-                    if ($out) {
-                        return $out;
-                    }
+                if ($out) {
+                    return $out;
                 }
             }
 
