@@ -47,9 +47,9 @@ namespace {
         // Prepare the output.
         $provider ? $obj->provider = $provider : '';
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-
+        $obj->latts = $latts;
         // Get the embedding code.
-        $out = $obj->getCode($latts);
+        $out = $obj->getPlayer();
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
     }

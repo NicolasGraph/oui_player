@@ -30,6 +30,7 @@ namespace Oui\Player {
     {
         public $provider;
         public $play;
+        public $latts;
 
         public function __construct()
         {
@@ -93,21 +94,23 @@ namespace Oui\Player {
          *
          * @param string $play The item url
          */
-        public function getCode($latts)
+        public function getPlayer()
         {
             if (isset($this->provider)) {
                 $class = __NAMESPACE__ . '\\' . $this->provider;
                 $obj = new $class;
                 $obj->provider = $this->provider;
                 $obj->play = $this->play;
-                $out = $obj->getCode($latts);
+                $obj->latts = $this->latts;
+                $out = $obj->getPlayer();
                 return $out;
             } else {
                 foreach ($this->providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
                     $obj = new $class;
                     $obj->play = $this->play;
-                    $out = $obj->getCode($latts);
+                    $obj->latts = $this->latts;
+                    $out = $obj->getPlayer();
                     if ($out) {
                         return $out;
                     }

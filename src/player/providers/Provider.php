@@ -30,6 +30,7 @@ namespace Oui\Player {
     {
         public $provider;
         public $play;
+        public $latts;
 
         protected $patterns = array();
         protected $src;
@@ -118,7 +119,7 @@ namespace Oui\Player {
         /**
          * Get the provider player url and its parameters/attributes
          */
-        public function getParams($latts)
+        public function getParams()
         {
             $params = array();
 
@@ -126,7 +127,7 @@ namespace Oui\Player {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $att = str_replace('-', '_', $param);
-                $value = $latts[$att];
+                $value = isset($this->latts[$att]) ? $this->latts[$att] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -144,14 +145,14 @@ namespace Oui\Player {
         /**
          * Get the provider player url and its parameters/attributes
          */
-        public function getSize($latts)
+        public function getSize()
         {
             $dims = array();
 
             foreach ($this->dims as $dim => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
                 $default = $infos['default'];
-                $value = $latts[$dim];
+                $value = isset($this->latts[$dim]) ? $this->latts[$dim] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -173,14 +174,14 @@ namespace Oui\Player {
          * @param array  $used_params The player parameters in use.
          * @param array  $dims        The player dimensions
          */
-        public function getCode($latts)
+        public function getPlayer()
         {
             $item = $this->getItemInfos();
 
             if ($item) {
                 $src = $this->src . $item['id'];
-                $dims = $this->getSize($latts);
-                $params = $this->getParams($latts);
+                $dims = $this->getSize();
+                $params = $this->getParams();
 
                 if (!empty($params)) {
                     $glue = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
