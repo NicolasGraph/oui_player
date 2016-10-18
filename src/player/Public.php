@@ -26,7 +26,7 @@
 
 namespace Oui\Player {
 
-    class Tags extends Player
+    class Main extends Player
     {
         public $play;
         public $latts;
@@ -57,6 +57,24 @@ namespace Oui\Player {
             }
 
             return $get_atts;
+        }
+
+        /**
+         * Get the video provider and the video id from its url
+         *
+         * @param string $play The item url
+         */
+        public function checkItemInfos()
+        {
+            foreach ($this->providers as $provider) {
+                $class = __NAMESPACE__ . '\\' . $provider;
+                $obj = new $class;
+                $obj->play = $this->play;
+                $match = $obj->checkItemInfos();
+                if ($match) {
+                    return $match;
+                }
+            }
         }
 
         /**

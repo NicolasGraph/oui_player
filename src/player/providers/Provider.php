@@ -92,6 +92,30 @@ namespace Oui\Player {
          *
          * @param string $play The item url to play
          */
+        public function checkItemInfos()
+        {
+            foreach ($this->patterns as $pattern => $id) {
+                if (preg_match($pattern, $this->play, $matches)) {
+                    $match = array(
+                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
+                        'id'       => $matches[$id],
+                    );
+                } else {
+                    $match = false;
+                }
+
+                return $match;
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Get the video provider and the video id from its url
+         *
+         * @param string $play The item url to play
+         */
         public function getItemInfos()
         {
             foreach ($this->patterns as $pattern => $id) {

@@ -33,7 +33,7 @@ namespace {
     {
         global $thisarticle;
 
-        $class = 'Oui\Player\Tags';
+        $class = 'Oui\Player\Main';
         $obj = new $class;
 
         // Set tag attributes
@@ -66,7 +66,7 @@ namespace {
     {
         global $thisarticle;
 
-        $class = 'Oui\Player\Tags';
+        $class = 'Oui\Player\Main';
         $obj = new $class;
 
         // Set tag attributes
@@ -75,9 +75,14 @@ namespace {
         extract($latts);
 
         // Check if the play attribute value is recognised.
-        $provider ? $obj->provider = $provider : '';
+        if ($provider) {
+            $class = 'Oui\Player\\' . $provider;
+            $obj = new $class;
+            $obj->provider = $provider;
+        }
+
         $obj->play = $play;
-        $out = $obj->getItemInfos();
+        $out = $obj->checkItemInfos();
 
         return parse($thing, $out);
     }
