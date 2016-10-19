@@ -55,7 +55,7 @@ namespace {
             if (class_exists($class)) {
                 $obj = new $class;
             } else {
-                trigger_error('Unknown or unset provider: ' . $provider . '_');
+                trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;
             }
         }
@@ -89,7 +89,7 @@ namespace {
             if (class_exists($class)) {
                 $obj = new $class;
             } else {
-                trigger_error('Unknown or unset provider: ' . $provider . '_');
+                trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;
             }
         }
