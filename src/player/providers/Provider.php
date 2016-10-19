@@ -28,13 +28,22 @@ namespace Oui\Player {
 
     abstract class Provider
     {
-        public $provider;
         public $play;
         public $latts;
 
         protected $patterns = array();
         protected $src;
-        protected $size = array();
+        protected $dims = array(
+            'width'    => array(
+                'default' => '640',
+            ),
+            'height'   => array(
+                'default' => '',
+            ),
+            'ratio'    => array(
+                'default' => '16:9',
+            ),
+        );
         protected $params = array();
         protected $glue = array('?', '&amp;');
 
@@ -49,13 +58,16 @@ namespace Oui\Player {
         }
 
         /**
-         * Return the class name as the provider name.
+         * Get the class name as the provider name.
          */
         public function getProvider()
         {
             return array(substr(strrchr(get_class($this), '\\'), 1));
         }
 
+        /**
+         * Get provider prefs.
+         */
         public function getPrefs($prefs)
         {
             $merge_prefs = array_merge($this->dims, $this->params);
@@ -70,9 +82,9 @@ namespace Oui\Player {
         }
 
         /**
-         * Get a tag attribute list
+         * Get tag attributes.
          *
-         * @param string $tag      The plugin tag
+         * @param string $tag      The plugin tag.
          * @param array  $get_atts The array where attributes are stored provider after provider.
          */
         public function getAtts($tag, $get_atts)
@@ -88,60 +100,26 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url to play
+         * Get the item URL, provider and ID from the play property.
          */
-        public function checkItemInfos()
+        public function getInfos()
         {
             foreach ($this->patterns as $pattern => $id) {
                 if (preg_match($pattern, $this->play, $matches)) {
-                    $match = array(
+                    $infos = array(
+                        'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => $matches[$id],
                     );
-                } else {
-                    $match = false;
+                    return $infos;
                 }
-
-                return $match;
-            }
-
-            return false;
-        }
-
-
-        /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url to play
-         */
-        public function getItemInfos()
-        {
-            foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $this->play, $matches)) {
-                    $match = array(
-                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'id'       => $matches[$id],
-                    );
-                } elseif (isset($this->provider)) {
-                    // Use the related pref as a default attribute value.
-                    $match = array(
-                        'provider' => $this->provider,
-                        'id'       => $this->play,
-                    );
-                } else {
-                    $match = false;
-                }
-
-                return $match;
             }
 
             return false;
         }
 
         /**
-         * Get the provider player url and its parameters/attributes
+         * Get player parameters in in use.
          */
         public function getParams()
         {
@@ -167,7 +145,7 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the provider player url and its parameters/attributes
+         * Get the player size.
          */
         public function getSize()
         {
@@ -192,15 +170,14 @@ namespace Oui\Player {
         }
 
         /**
-         * Build the code to embed.
-         *
-         * @param string $src         The iframe source.
-         * @param array  $used_params The player parameters in use.
-         * @param array  $dims        The player dimensions
+         * Get the player code
          */
         public function getPlayer()
         {
-            $item = $this->getItemInfos();
+            if (!empty($this->play)) {
+                $item = $this->getInfos();
+                $item ?: $item = array('id' => $this->play);
+            }
 
             if ($item) {
                 $src = $this->src . $item['id'];

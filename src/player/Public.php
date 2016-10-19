@@ -35,10 +35,11 @@ namespace Oui\Player {
         {
             parent::__construct();
         }
+
         /**
-         * Get a tag attribute list
+         * Get tag attributes.
          *
-         * @param string $tag The plugin tag
+         * @param string $tag The plugin tag.
          */
         public function getAtts($tag)
         {
@@ -60,37 +61,17 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url
+         * Check if the play property is a recognised URL scheme.
          */
-        public function checkItemInfos()
+        public function checkUrl()
         {
             foreach ($this->providers as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = new $class;
                 $obj->play = $this->play;
-                $match = $obj->checkItemInfos();
-                if ($match) {
-                    return $match;
-                }
-            }
-        }
-
-        /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url
-         */
-        public function getItemInfos()
-        {
-            foreach ($this->providers as $provider) {
-                $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = new $class;
-                $obj->play = $this->play;
-                $match = $obj->getItemInfos();
-                if ($match) {
-                    return $match;
+                $infos = $obj->getInfos();
+                if ($infos) {
+                    return $infos;
                 }
             }
 
@@ -98,21 +79,36 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url
+         * Get the item URL, provider and ID from the play property.
+         */
+        public function getInfos()
+        {
+            $infos = $this->checkUrl();
+
+            if (!$infos) {
+                $infos = array(
+                    'url'      => '',
+                    'provider' => \get_pref($this->plugin . '_provider'),
+                    'id'       => $this->play,
+                );
+            }
+
+            return $infos;
+        }
+
+        /**
+         * Get the player code
          */
         public function getPlayer()
         {
-            foreach ($this->providers as $provider) {
-                $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = new $class;
-                $obj->play = $this->play;
-                $obj->latts = $this->latts;
-                $out = $obj->getPlayer();
-                if ($out) {
-                    return $out;
-                }
+            $item = $this->getInfos();
+            $class = __NAMESPACE__ . '\\' . $item['provider'];
+            $obj = new $class;
+            $obj->play = $item['id'];
+            $obj->latts = $this->latts;
+            $out = $obj->getPlayer();
+            if ($out) {
+                return $out;
             }
 
             return false;

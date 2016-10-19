@@ -31,7 +31,7 @@ namespace {
      */
     function oui_player($atts, $thing)
     {
-        global $thisarticle;
+        global $thisarticle, $oui_player_item;
 
         $class = 'Oui\Player\Main';
         $obj = new $class;
@@ -41,14 +41,18 @@ namespace {
         $latts = lAtts($get_atts, $atts);
         extract($latts);
 
-        // Get the play attribute related pref value as the default value.
-        $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
+        if (!$play) {
+            if ($oui_player_item) {
+                $provider = $oui_player_item['provider'];
+                $play = $oui_player_item['url'];
+            } else {
+                $play = strtolower(get_pref('oui_player_custom_field'));
+            }
+        }
 
-        // Prepare the output.
         if ($provider) {
             $class = 'Oui\Player\\' . $provider;
             $obj = new $class;
-            $obj->provider = $provider;
         }
 
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
@@ -64,7 +68,7 @@ namespace {
      */
     function oui_if_player($atts, $thing)
     {
-        global $thisarticle;
+        global $thisarticle, $oui_player_item;
 
         $class = 'Oui\Player\Main';
         $obj = new $class;
@@ -78,12 +82,14 @@ namespace {
         if ($provider) {
             $class = 'Oui\Player\\' . $provider;
             $obj = new $class;
-            $obj->provider = $provider;
         }
 
         $obj->play = $play;
-        $out = $obj->checkItemInfos();
+        $oui_player_item = $obj->getInfos();
 
-        return parse($thing, $out);
+        $out = parse($thing, $oui_player_item);
+        unset($GLOBALS['oui_player_item']);
+
+        return $out;
     }
 }

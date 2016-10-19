@@ -30,17 +30,6 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
         protected $src = '//player.twitch.tv/?video=';
-        protected $dims = array(
-            'width'    => array(
-                'default' => '640',
-            ),
-            'height'   => array(
-                'default' => '',
-            ),
-            'ratio'    => array(
-                'default' => '16:9',
-            ),
-        );
         protected $params = array(
             'autoplay' => array(
                 'default' => 'true',

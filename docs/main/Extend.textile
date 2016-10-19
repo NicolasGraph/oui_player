@@ -72,7 +72,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
         protected $src = '//player.vimeo.com/video/';
-        protected $params = array(
+        protected $size = array(
             'width'    => array(
                 'default' => '640',
             ),
@@ -82,6 +82,8 @@ namespace Oui\Player {
             'ratio'    => array(
                 'default' => '16:9',
             ),
+        );
+        protected $params = array(
             'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -96,7 +98,7 @@ namespace Oui\Player {
 
 h4. Plug the provider
 
-It is time to instanciate the class; do it by calling the singleton static method @getInstance()@ after the class but inside the namepsace. Then, plug the provider to automatically add it to the plugin main preferences.
+It is time to instanciate the class; to plug the provider and automatically add it to the plugin main preferences.
 
 bc.. <?php
 
@@ -107,8 +109,7 @@ namespace Oui\Player {
         …
     }
 
-    $instance = Vimeo::getInstance();
-    $instance->plugProvider();
+    new Vimeo;
 }
 
 p. Here we are; the new class should look like the following and will properly add the new provider when included into the plugin.
@@ -143,8 +144,7 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Vimeo::getInstance();
-    $instance->plugProvider();
+    new Vimeo;
 }
 
 h3. Textpack strings
