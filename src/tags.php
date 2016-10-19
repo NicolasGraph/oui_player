@@ -52,7 +52,12 @@ namespace {
 
         if ($provider) {
             $class = 'Oui\Player\\' . $provider;
-            $obj = new $class;
+            if (class_exists($class)) {
+                $obj = new $class;
+            } else {
+                trigger_error('Unknown or unset provider: ' . $provider . '_');
+                return;
+            }
         }
 
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
@@ -81,7 +86,12 @@ namespace {
         // Check if the play attribute value is recognised.
         if ($provider) {
             $class = 'Oui\Player\\' . $provider;
-            $obj = new $class;
+            if (class_exists($class)) {
+                $obj = new $class;
+            } else {
+                trigger_error('Unknown or unset provider: ' . $provider . '_');
+                return;
+            }
         }
 
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
