@@ -6,6 +6,19 @@ An extendable plugin to easily embed customized iframe players.
 
 p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes by its own without any external request for better peformances.
 
+h3. Supported providers
+
+* "Abc News":http://abcnews.go.com/video,
+* "Archive":https://archive.org/details/movies,
+* "Dailymotion":http://www.dailymotion.com/
+* "Mixcloud":https://www.mixcloud.com/,
+* "Myspace videos":https://myspace.com/myspace/videos,
+* "Soundcloud":https://soundcloud.com/,
+* "Twitch":https://www.twitch.tv/,
+* "Viddsee":https://www.viddsee.com/,
+* "Vimeo":http://www.vimeo.com/,
+* "Youtube":https://www.youtube.com/;
+
 h2. Plugin requirements
 
 oui_player's minimum requirements:

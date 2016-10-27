@@ -1,6 +1,6 @@
 notextile. <section id="youtube" class="options_group">
 
-h2. Youtube additional attributes
+h2. Youtube player config
 
 h3. Recognised values for the @play@ attribute
 
@@ -14,15 +14,18 @@ h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
-*default:* @640@
+*Default:* related plugin pref
+*Initial:* @640@
 *valid:* integer =:
 - @height@ :=
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
-*default:* @16:9@
+*Default:* related plugin pref
+*Initial:* @16:9@
 *valid:* integer[@:@]integer =:
 
 h3. Player parameters (aplhabetical order)
@@ -30,76 +33,94 @@ h3. Player parameters (aplhabetical order)
 - @autohide@ :=
 Indicates whether the video controls will automatically hide after a video begins playing.
 This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1).
-*default:* @2@
+*Default:* related plugin pref
+*Initial:* @2@
 *valid:* @0@, @1@ or @2@ =:
 - @autoplay@ :=
 Specifies whether the initial video will automatically start to play when the player loads.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* @0@ or @1@ =:
 - @cc_load_policy@ :=
 1 causes closed captions to be shown by default, even if the user has turned captions off.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* @1@ =:
 - @color@ :=
 Specifies the color used in the player's progress bar.
-*default:* @red@
+*Default:* related plugin pref
+*Initial:* @red@
 *valid:* @red@ or @white@ =:
 - @controls@ :=
 Indicates whether the video player controls are displayed.
-*default:* @1@
+*Default:* related plugin pref
+*Initial:* @1@
 *valid:* @0@, @1@ or @2@ =:
 - @disablekb@ :=
 Disables keyboard commands.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* @0@ or @1@ =:
 - @end@ :=
 Specifies the time, measured in seconds, when the player should stop playing the video.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* an integer =:
 - @fs@ :=
 Setting this parameter to 0 prevents the fullscreen button from displaying in the player.
-*default:* @1@
+*Default:* related plugin pref
+*Initial:* @1@
 *valid:* @0@ or @1@ =:
 - @hl@ :=
 Sets the player's interface language.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* an ISO 639-1 two-letter language code or a fully specified locale.
 - @iv_load_policy@ :=
 Setting the parameter's value to 1 causes video annotations to be shown by default.
-*default:* @1@
+*Default:* related plugin pref
+*Initial:* @1@
 *valid:* @1@ or @3@ =:
 - @loop@ :=
 Causes the player to play the video again and again.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* @0@ or @1@ =:
 - @modestbranding@ :=
 Lets you use a YouTube player that does not show a YouTube logo.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* @0@ or @1@ =:
 - @playlist@ :=
 A list of video id's to read after the one provided via the @video@ attribute.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* a comma separeted list of video id's =:
 - @playsinline@ :=
 Controls whether videos play inline or fullscreen in an HTML5 player on iOS.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* =:
 - @rel@ :=
 Indicates whether the player should show related videos when playback of the initial video ends.
-*default:* @1@
+*Default:* related plugin pref
+*Initial:* @1@
 *valid:* @0@ or @1@ =:
 - @showinfo@ :=
 Whether to display the video informations or not.
-*default:* @1@
+*Default:* related plugin pref
+*Initial:* @1@
 *valid:* @0@ or @1@ =:
 - @start@ :=
 Specifies the time (in seconds) when the video should start playing.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* an integer =:
 - @theme@ :=
 Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar.
 This parameter has been deprecated for HTML5 players.
-*default:* @dark@
+*Default:* related plugin pref
+*Initial:* @dark@
 *valid:* @dark@ or @light@ =:
 
 p(alert-block information). %(ui-icon ui-icon-info).% Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.

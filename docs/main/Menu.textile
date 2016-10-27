@@ -5,7 +5,7 @@ h3(#all_options-label). Table of contents
 
 notextile. <div role="group">
 
-*(switcher-list) "Plugin management":#basics
+*(switcher-list) "Presentation/management":#basics
 * "Preferences/options":#prefs
 * "Tags basics":#tags
 * "ABC News player config":#abc
@@ -17,10 +17,11 @@ notextile. <div role="group">
 * "Twitch player config":#twitch
 * "Viddsee player config":#viddsee
 * "Vimeo player config":#vimeo
+* "Vine player config":#vine
 * "Youtube player config":#youtube
 * "Examples":#examples
 * "For developpers":#for-developers
-* "Credits":#credits
+* "Credits/changelog":#credits
 
 notextile. </div>
 </section>

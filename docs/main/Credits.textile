@@ -13,11 +13,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *oui_player v1.2.0:*
+* *oui_player v1.2.0-beta* (2016-10-27)
 ** sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
 ** introduces a @play@ attribute value inheritance in a conditional/container tag context;
-** improves code.
-* *oui_player v1.1.0:*
+** adds support for "Vine":https://vine.co/;
+** improves PHP classes and methods use (see _For developers_).
+* *oui_player v1.1.0* (2016-10-14)
 ** changes Plugin/tag names;
 ** drops Txp 4.5 support;
 ** Sets closer attribute names to player parameters for consistency;
@@ -30,7 +31,7 @@ h2. Changelog
 *** "Soundcloud":https://soundcloud.com/,
 *** "Twitch":https://www.twitch.tv/,
 *** "Viddsee":https://www.viddsee.com/;
-** help file improved and styled.
-* *oui_video v0.1.0*
+** improves and styles help file.
+* *oui_video v0.1.0* (2016-09-13)
 
 notextile. </section>
