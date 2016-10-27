@@ -5,34 +5,34 @@ This plugin does not use oembed, it builds iframe embedding codes by its own wit
 
 ## Supported providers
 
-* "Abc News":http://abcnews.go.com/video,
-* "Archive":https://archive.org/,
-* "Dailymotion":http://www.dailymotion.com/
-* "Mixcloud":https://www.mixcloud.com/,
-* "Myspace videos":https://myspace.com/myspace/videos,
-* "Soundcloud":https://soundcloud.com/,
-* "Twitch":https://www.twitch.tv/,
-* "Viddsee":https://www.viddsee.com/,
-* "Vimeo":http://www.vimeo.com/,
-* "Vine":http://vine.co/,
-* "Youtube":https://www.youtube.com/;
+* [Abc News](http://abcnews.go.com/video);
+* [Archive](https://archive.org/);
+* [Dailymotion](http://www.dailymotion.com/);
+* [Mixcloud](https://www.mixcloud.com/);
+* [Myspace videos](https://myspace.com/myspace/videos);
+* [Soundcloud](https://soundcloud.com/);
+* [Twitch](https://www.twitch.tv/);
+* [Viddsee](https://www.viddsee.com/);
+* [Vimeo](http://www.vimeo.com/);
+* [Vine](http://vine.co/);
+* [Youtube](https://www.youtube.com/).
 
 ## Plugin requirements
 
 oui_player's minimum requirements:
 
-* "Textpattern CMS":http://textpattern.com/ 4.6+.
+* [Textpattern CMS](http://textpattern.com/) 4.6+.
 
 ## Customization
 
-This plugin can be customized via "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler to exclude unused providers. Most frequently used providers should be included first to increase plugin perfomances.
+This plugin can be customized via [MassPlugCompiler](https://github.com/NicolasGraph/MassPlugCompiler) to exclude unused providers. Most frequently used providers should be included first to increase plugin perfomances.
 
 ## Installation
 
-1. "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file or the source to compile a customized file.
-1. Paste the content of the compiled plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
+1. [Download](https://github.com/NicolasGraph/oui_player/releases) the compiled plugin file or the source to compile a customized file.
+1. Paste the content of the compiled plugin file under the *Admin > Plugins* tab and click the _Upload_ button.
 1. Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
-1. Enable the plugin and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
+1. Enable the plugin and click _Options_ or visit your *Admin > Preferences* tab to fill the plugin prefs.
 
 ## Update
 
@@ -43,7 +43,7 @@ Unless contrary instructions, proceed as follow:
 
 ## Uninstall
 
-1. Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
+1. Check the box on the left of the plugin row under the *Admin > Plugins*.
 1. open the select list at the bottom of the plugins tables and choose _Delete_.
 1. confirm the plugin deletion.
 
