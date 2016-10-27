@@ -25,7 +25,7 @@ h2. Changelog
 ** reworks source code to be easily extendable;
 ** adds support for:
 *** "Abc News":http://abcnews.go.com/video,
-*** "Archive":https://archive.org/details/movies,
+*** "Archive":https://archive.org/,
 *** "Mixcloud":https://www.mixcloud.com/,
 *** "Myspace videos":https://myspace.com/myspace/videos,
 *** "Soundcloud":https://soundcloud.com/,
