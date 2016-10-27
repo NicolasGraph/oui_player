@@ -20,7 +20,7 @@ bc(language-markup). <txp:oui_player play="x4l8awd" />
 
 …or, in conjonction with the @provider@ attribute…
 
-bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
+bc(language-markup). <txp:oui_player provider="dailymotion" play="x4l8awd" />
 
 h3. Display a player only if its URL is recognized as a provider URL scheme
 

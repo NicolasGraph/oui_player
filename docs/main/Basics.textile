@@ -12,10 +12,14 @@ oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+.
 
+h2. Customization
+
+This plugin can be customized via "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler to exclude unused providers. Most frequently used providers should be included first to increase plugin perfomances.
+
 h2. Installation
 
-# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
-# Paste the content of the plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
+# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file or the source to compile a customized file.
+# Paste the content of the compiled plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
 # Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
 # Enable the plugin and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
 

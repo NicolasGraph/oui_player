@@ -89,21 +89,21 @@ Here is how they expect to be set:
 - @$src@ :=
 *Type:* protected
 *Value type:* URL
-*Values:* provder's iframe player URAL base =:
+*Values:* provder's iframe player URL base =:
 
 - @$params@ :=
 *Type:* protected
 *Value type:* multidimensional associative array
 *Key(s):* player parameter
 *values(s):* associative array
-*Subkey(s):* * default (required), valid (optional), widget (optional)
-*Default value:* parameter related pref/attribute default value
-*Valid value:* array of expected values (see the *Valid* _magic system_)
-*Widget value:* function name to use for the parameter related preference (if not support by the *Valid* _magic system_) =:
+*Subkey(s):* * @default@ (required), @valid@ (optional), @widget@ (optional)
+@Default@ *value:* parameter related pref/attribute default value
+@Valid@ *value:* array of expected values (see the @Valid@ _magic system_)
+@Widget@ *value:* function name to use for the parameter related preference (if not support by the *Valid* _magic system_) =:
 
-The *Valid* _magic system_ is designed to set the right preference widget according to the valid values set.
+The @Valid@ _magic system_ is designed to set the right preference widget according to the valid values set.
 
-* displays a text input if the *Valid* key is not set.
+* displays a text input if the @Valid@ key is not set.
 * @valid => 'value'@ displays an input with the value type (like @<input type="color" …>@ where _color_ is the value).
 * @valid => array('0', '1')@ displays radio buttons using values @0@ and @1@.
 * @valid => array('true', 'false')@ displays radio buttons using values @true@ and @false@.

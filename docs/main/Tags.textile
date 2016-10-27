@@ -33,7 +33,7 @@ Most of the following attributes can be set via the _Preferences_ tab; +always p
 
 - @play@ :=
 The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@).
-*default:* the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs.
+*default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs.
 *valid:* URL, id or custom field name =:
 - @provider@ :=
 The provider to use; *required if* the @play@ attribute is an id, *recommended anyways* if known as it increases the plugin performances by skipping the provider guess.
