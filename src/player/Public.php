@@ -29,7 +29,7 @@ namespace Oui\Player {
     class Main extends Player
     {
         public $play;
-        public $latts;
+        public $config;
 
         public function __construct()
         {

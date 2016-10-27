@@ -29,7 +29,7 @@ namespace Oui\Player {
     abstract class Provider
     {
         public $play;
-        public $latts;
+        public $config;
 
         protected $patterns = array();
         protected $src;
@@ -210,9 +210,7 @@ namespace Oui\Player {
                     }
                 }
 
-                $out = '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
-
-                return $out;
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
             }
         }
     }
