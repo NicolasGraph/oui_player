@@ -33,6 +33,7 @@ namespace Oui\Player {
 
         protected $patterns = array();
         protected $src;
+        protected $append;
         protected $dims = array(
             'width'    => array(
                 'default' => '640',
@@ -129,7 +130,7 @@ namespace Oui\Player {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $att = str_replace('-', '_', $param);
-                $value = isset($this->latts[$att]) ? $this->latts[$att] : '';
+                $value = isset($this->config[$att]) ? $this->config[$att] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -154,7 +155,7 @@ namespace Oui\Player {
             foreach ($this->dims as $dim => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
                 $default = $infos['default'];
-                $value = isset($this->latts[$dim]) ? $this->latts[$dim] : '';
+                $value = isset($this->config[$dim]) ? $this->config[$dim] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -185,8 +186,8 @@ namespace Oui\Player {
                 $params = $this->getParams();
 
                 if (!empty($params)) {
-                    $glue = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                    $src .= $glue . implode('&amp;', $params);
+                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
+                    $src .= $glue[0] . implode($this->glue[1], $params);
                 }
 
                 $width = $dims['width'];
@@ -210,7 +211,7 @@ namespace Oui\Player {
                     }
                 }
 
-                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
             }
         }
     }

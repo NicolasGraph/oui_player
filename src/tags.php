@@ -61,7 +61,7 @@ namespace {
         }
 
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-        $obj->latts = $latts;
+        $obj->config = $latts;
         $out = $obj->getPlayer($labeltag, $label, $wraptag, $class);
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);

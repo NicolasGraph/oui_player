@@ -105,7 +105,7 @@ namespace Oui\Player {
             $class = __NAMESPACE__ . '\\' . $item['provider'];
             $obj = new $class;
             $obj->play = $item['id'];
-            $obj->latts = $this->latts;
+            $obj->config = $this->config;
             $out = $obj->getPlayer();
             if ($out) {
                 return $out;
