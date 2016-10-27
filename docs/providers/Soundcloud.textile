@@ -2,12 +2,11 @@ notextile. <section id="soundcloud" class="options_group">
 
 h2. Soundcloud additional attributes
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * http(s)://(api.)soundcloud.com/…
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels (OK, pourcentage works also…).
@@ -23,6 +22,8 @@ The ratio used to calculate the missing value for the width or the height.
 *valid:* integer[@:@]integer =:
 
 h3. Player parameters (aplhabetical order)
+
+Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
 
 - @auto_play@ :=
 Whether to play after loading or not.

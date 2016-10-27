@@ -2,23 +2,21 @@ notextile. <section id="dailymotion" class="options_group">
 
 h2. Dailymotion additional attributes
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * *id*
 * http(s)://dai.ly/[*id*]
 * http(s)://www.dailymotion.com/video/[*id*]…
 * http(s)://www.dailymotion.com/embed/video/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions.
-More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
 *default:* @640@
 *valid:* integer =:
 - @height@ :=
-*default:* @640@
+*default:* none
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
@@ -79,5 +77,7 @@ Whether to show video information on the start screen or not.
 Choose the default base colour theme.
 *default:* @dark@
 *valid:* @dark@ or @light@ =:
+
+p(alert-block information). %(ui-icon ui-icon-info).% Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Dailymotion webpage":https://developer.dailymotion.com/player#player-parameters.
 
 notextile. </section>

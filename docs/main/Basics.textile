@@ -4,6 +4,8 @@ h2. Basics
 
 An extendable plugin to easily embed customized iframe players.
 
+p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes by its own without any external request for better peformances.
+
 h2. Plugin requirements
 
 oui_player's minimum requirements:
@@ -13,9 +15,9 @@ oui_player's minimum requirements:
 h2. Installation
 
 # "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler. Most frequently used providers should be included first to increase the plugin perfomances.
-# Paste the content of the plugin file under the *Admin > Plugins* and click the _Upload_ button.
+# Paste the content of the plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
 # Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
-# Enable the plugin and click _Options_ or visit your *Admin>Preferences* tab to fill the plugin prefs.
+# Enable the plugin and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
 
 h2. Update
 
@@ -26,7 +28,7 @@ Unless contrary instructions, proceed as follow:
 
 h2. Uninstall
 
-# Check the box on the left of the plugin row under the *Admin > Plugins*.
+# Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
 # open the select list at the bottom of the plugins tables and choose _Delete_.
 # confirm the plugin deletion.
 

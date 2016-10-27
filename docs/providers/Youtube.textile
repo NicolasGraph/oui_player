@@ -2,7 +2,7 @@ notextile. <section id="youtube" class="options_group">
 
 h2. Youtube additional attributes
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * *id*
 * http(s)://(www.)youtu.be/[*id*]
@@ -10,16 +10,14 @@ Recognised values for the @play@ attribute:
 * http(s)://(www.)youtube.com/watch?v=[*id*]
 * http(s)://(www.)youtube.com/embed/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions.
-More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
 *default:* @640@
 *valid:* integer =:
 - @height@ :=
-*default:* @640@
+*default:* none
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
@@ -103,5 +101,7 @@ Indicates whether the embedded player will display player controls (like a play 
 This parameter has been deprecated for HTML5 players.
 *default:* @dark@
 *valid:* @dark@ or @light@ =:
+
+p(alert-block information). %(ui-icon ui-icon-info).% Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.
 
 notextile. </section>

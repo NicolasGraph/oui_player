@@ -2,13 +2,13 @@ notextile. <section id="abc" class="options_group">
 
 h2. Abc News additional attributes
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * *id*
 * http(s)://abcnews.go.com/…/video/…[*id*]
 * http(s)://abcnews.go.com/video/embed?id=[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.

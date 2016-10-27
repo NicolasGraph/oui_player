@@ -4,19 +4,19 @@ h2. Examples
 
 h3. Display a player from the default values collected via plugin prefs
 
-bc. <txp:oui_player />
+bc(language-markup). <txp:oui_player />
 
 h3. Display a player from a video URL
 
-bc. <txp:oui_player play="https://vimeo.com/155020267" />
+bc(language-markup). <txp:oui_player play="https://vimeo.com/155020267" />
 
 …or, maybe a bit faster…
 
-bc. <txp:oui_player provider="vimeo" play="https://vimeo.com/155020267" />
+bc(language-markup). <txp:oui_player provider="vimeo" play="https://vimeo.com/155020267" />
 
 h3. Display a player from a video ID
 
-bc. <txp:oui_player play="x4l8awd" />
+bc(language-markup). <txp:oui_player play="x4l8awd" />
 
 …or, in conjonction with the @provider@ attribute…
 
@@ -24,13 +24,13 @@ bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
 
 h3. Display a player only if its URL is recognized as a provider URL scheme
 
-bc.. <txp:oui_if_player>
+bc(language-markup).. <txp:oui_if_player>
     <txp:oui_player />
 </txp:oui_if_player>
 
 p. …or, with a manually filled URL…
 
-bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
+bc(language-markup).. <txp:oui_if_player play="https://vimeo.com/155020267">
     <txp:oui_player />
 </txp:oui_if_player>
 

@@ -4,13 +4,12 @@ h2. Twitch additional attributes
 
 This plugin reads Twitch videos only for now, not channels.
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * v[*id*]
 * http(s)://(www.)twitch.tv/…/v/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
@@ -39,5 +38,7 @@ Whether to disable sound by default or not.
 Starts playback at the given timestamp.
 *default:* @true@
 *Format:* @1h2m3s@ =:
+
+p(alert-block information). %(ui-icon ui-icon-info).% More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md
 
 notextile. </section>

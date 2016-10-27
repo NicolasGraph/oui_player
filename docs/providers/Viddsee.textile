@@ -2,13 +2,13 @@ notextile. <section id="viddsee" class="options_group">
 
 h2. Viddsee additional attributes
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * *id*
 * http(s):(www.)//viddsee.com/video/…/[*id*]
 * http(s):(www.)//viddsee.com/player/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
