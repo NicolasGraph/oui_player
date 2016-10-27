@@ -6,7 +6,7 @@ h3. Display a player from the default values collected via plugin prefs
 
 bc(language-markup). <txp:oui_player />
 
-h3. Display a player from a video URL
+h3. Display a player from a manually filled URL
 
 bc(language-markup). <txp:oui_player play="https://vimeo.com/155020267" />
 
@@ -14,7 +14,7 @@ bc(language-markup). <txp:oui_player play="https://vimeo.com/155020267" />
 
 bc(language-markup). <txp:oui_player provider="vimeo" play="https://vimeo.com/155020267" />
 
-h3. Display a player from a video ID
+h3. Display a player from manually filled ID
 
 bc(language-markup). <txp:oui_player play="x4l8awd" />
 
@@ -23,6 +23,8 @@ bc(language-markup). <txp:oui_player play="x4l8awd" />
 bc(language-markup). <txp:oui_player provider="dailymotion" play="x4l8awd" />
 
 h3. Display a player only if its URL is recognized as a provider URL scheme
+
+With the default values collected via plugin prefs…
 
 bc(language-markup).. <txp:oui_if_player>
     <txp:oui_player />
