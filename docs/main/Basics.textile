@@ -4,12 +4,12 @@ h2. Basics
 
 An extendable plugin to easily embed customized iframe players.
 
-p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes by its own without any external request for better peformances.
+p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes by its own without any external request for better performances.
 
 h3. Supported providers
 
 * "Abc News":http://abcnews.go.com/video,
-* "Archive":https://archive.org/details/movies,
+* "Archive":https://archive.org/,
 * "Dailymotion":http://www.dailymotion.com/
 * "Mixcloud":https://www.mixcloud.com/,
 * "Myspace videos":https://myspace.com/myspace/videos,
@@ -17,6 +17,7 @@ h3. Supported providers
 * "Twitch":https://www.twitch.tv/,
 * "Viddsee":https://www.viddsee.com/,
 * "Vimeo":http://www.vimeo.com/,
+* "Vine":http://vine.co/,
 * "Youtube":https://www.youtube.com/;
 
 h2. Plugin requirements
