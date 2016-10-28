@@ -25,7 +25,7 @@ oui_player's minimum requirements:
 
 ## Documentation
 
-Check the [wiki](/NicolasGraph/oui_player/wiki) for more informations.
+Check the [wiki](/wiki) for more informations.
 
 ## Author
 
