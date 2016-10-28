@@ -1,0 +1,113 @@
+notextile. <section id="for-developers" class="options_group">
+
+h2. For Developpers
+
+h3. Using plugin classes and methods
+
+This plugin allow developers to easily embed configurable players directly via PHP.
+For more informations, these two main plugin classes should be considered: Oui\Player\Main and Oui\Player\Provider.
+
+h3. Txp tags use vs PHP examples
+
+h4. Display a player if the provided URL is recognised as a provider URL scheme
+
+bc(language-markup).. <txp:oui_if_player play="https://vimeo.com/186406583">
+    <txp:oui_player />
+</txp:oui_if_player>
+
+p. This can be achieve with the following PHP code.
+
+bc(language-php).. $class = 'Oui\Player\Main';
+$obj = new $class;
+$obj->play = "https://vimeo.com/186406583";
+
+if ($obj->checkUrl()) {
+    echo $obj->getPlayer();
+}
+
+h4. Display a Vimeo customized player
+
+bc(language-markup).. <txp:oui_player provider="Vimeo" play="186406583" width="480" autoplay="1" />
+
+p. The tag above can be replaced by the few following lines of PHP.
+
+bc(language-php).. $class = 'Oui\Player\Vimeo';
+$obj = new $class;
+$obj->play = "186406583";
+$obj->config = array(
+    'width'     => '480',
+    'autoplay' => '1',
+);
+
+echo $obj->getPlayer();
+
+h3. Extending
+
+This plugin was designed to make it easily extendable.
+For more informations, take a look at the Oui\Player\Provider class which is the parent class of each provider.
+
+h4. Example of a provider class
+
+bc(language-php).. <?php
+
+namespace Oui\Player {
+
+    class Vimeo extends Provider
+    {
+        protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
+        protected $src = '//player.vimeo.com/video/';
+        protected $params = array(
+            'autoplay'  => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'color'     => array(
+                'default' => '#00adef',
+                'valid' => 'color',
+            ),
+        );
+    }
+
+    new Vimeo;
+}
+
+h4. Class properties
+
+At least three providers properties need to be set: @$patterns@, @$src@ and @$params@.
+The plugin will use @$patterns@ to find the right provider and return its name and the item ID from an URL; @$src@ will be used to build the embed code and @$params@ will allow to automatically add a plugin pref and a oui_player tag attribute for each provided parameter.
+
+p(alert-block information). %(ui-icon ui-icon-info).% Note that dashes in parameters name are replaced by underscores in pref/attribute names.
+
+Here is how they expect to be set:
+
+- @$patterns@ :=
+*Type:* protected
+*Value type:* associative array
+*Key(s):* regular expression to check against a provided url
+*Values(s):* the place where to find the item ID in the regular expression =:
+
+- @$src@ :=
+*Type:* protected
+*Value type:* URL
+*Values:* provder's iframe player URL base =:
+
+- @$params@ :=
+*Type:* protected
+*Value type:* multidimensional associative array
+*Key(s):* player parameter
+*values(s):* associative array
+*Subkey(s):* * @default@ (required), @valid@ (optional), @widget@ (optional)
+@Default@ *value:* parameter related pref/attribute default value
+@Valid@ *value:* array of expected values (see the @Valid@ _magic system_)
+@Widget@ *value:* function name to use for the parameter related preference (if not support by the *Valid* _magic system_) =:
+
+The @Valid@ _magic system_ is designed to set the right preference widget according to the valid values set.
+
+* displays a text input if the @Valid@ key is not set.
+* @valid => 'value'@ displays an input with the value type (like @<input type="color" …>@ where _color_ is the value).
+* @valid => array('0', '1')@ displays radio buttons using values @0@ and @1@.
+* @valid => array('true', 'false')@ displays radio buttons using values @true@ and @false@.
+* @valid => array('a value', 'another value')@ displays a select list of the defined values.
+* @valid => array('', 'a value', 'another value')@ displays a select list of the defined values leaving a blank option at the begining.
+
+notextile. </section>

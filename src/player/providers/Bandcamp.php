@@ -29,7 +29,7 @@ class Oui_Player_Bandcamp extends Oui_Player_Provider
     protected $patterns = array('url' => '#^((http|https):\/\/[\S]+\/album\/([\S]+))#i' => '1');
     protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
     protected $glue = array('/', '/');
-    protected $params = array(
+    protected $dims = array(
         'width'     => array(
             'default' => '350',
         ),
@@ -39,6 +39,8 @@ class Oui_Player_Bandcamp extends Oui_Player_Provider
         'ratio'     => array(
             'default' => '',
         ),
+    );
+    protected $params = array(
         'artwork'   => array(
             'default' => '',
         ),
@@ -61,7 +63,7 @@ class Oui_Player_Bandcamp extends Oui_Player_Provider
             'default' => 'false',
             'valid'   => array('true', 'false'),
         ),
-        'size'      => array(
+        'dims'      => array(
             'default' => 'large',
             'valid'   => array('small', 'medium', 'large'),
         ),

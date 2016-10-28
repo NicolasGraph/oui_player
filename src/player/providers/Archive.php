@@ -31,7 +31,7 @@ namespace Oui\Player {
         protected $patterns = array('#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i' => '4');
         protected $src = '//archive.org/embed/';
         protected $glue = array('&amp;', '&amp;');
-        protected $params = array(
+        protected $dims = array(
             'width'    => array(
                 'default' => '640',
             ),
@@ -41,6 +41,8 @@ namespace Oui\Player {
             'ratio'    => array(
                 'default' => '',
             ),
+        );
+        protected $params = array(
             'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -56,6 +58,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Archive::getInstance();
-    $instance->plugProvider();
+    new Archive;
 }

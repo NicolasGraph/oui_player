@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
     "description" : "Embed customised players",
-    "version"     : "1.1.0",
+    "version"     : "1.2.0-beta",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -26,9 +26,10 @@
         "./docs/providers/Twitch.textile",
         "./docs/providers/Viddsee.textile",
         "./docs/providers/Vimeo.textile",
+        "./docs/providers/Vine.textile",
         "./docs/providers/Youtube.textile",
         "./docs/main/Examples.textile",
-        "./docs/main/Extend.textile",
+        "./docs/main/Dev.textile",
         "./docs/main/Credits.textile",
         "./docs/misc/_text_bottom.textile",
         "./docs/misc/_bottom.textile"
@@ -44,8 +45,11 @@
         "./src/player/providers/Twitch.php",
         "./src/player/providers/Viddsee.php",
         "./src/player/providers/Vimeo.php",
+        "./src/player/providers/Vine.php",
         "./src/player/providers/Youtube.php",
         "./src/player/Player.php",
+        "./src/player/Admin.php",
+        "./src/player/Public.php",
         "./src/lib.php",
         "./src/tags.php"
     ]}

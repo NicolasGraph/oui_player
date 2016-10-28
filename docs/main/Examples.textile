@@ -2,34 +2,40 @@ notextile. <section id="examples" class="options_group">
 
 h2. Examples
 
-h3. Display a video
+h3. Display a player from the default values collected via plugin prefs
 
-Use the prefs values for the @provider@ and/or @play@ attributes.
+bc(language-markup). <txp:oui_player />
 
-bc. <txp:oui_player />
+h3. Display a player from a manually filled URL
 
-Use a video id through the tag attribute.
+bc(language-markup). <txp:oui_player play="https://vimeo.com/155020267" />
 
-bc. <txp:oui_player provider="dailymotion" play="x4l8awd" />
+…or, maybe a bit faster…
 
-Let the plugin find the provider and the video id by providing the video URL.
+bc(language-markup). <txp:oui_player provider="vimeo" play="https://vimeo.com/155020267" />
 
-bc. <txp:oui_player play="https://vimeo.com/155020267" />
+h3. Display a player from manually filled ID
 
-h3. Using the conditional tag
+bc(language-markup). <txp:oui_player play="x4l8awd" />
 
-bc.. <txp:oui_if_player play="https://vimeo.com/155020267">
-    Yes, it is a valid URL pattern for a Youtube, Dailymotion or Vimeo video.
-<txp:else />
-    No…
+…or, in conjonction with the @provider@ attribute…
+
+bc(language-markup). <txp:oui_player provider="dailymotion" play="x4l8awd" />
+
+h3. Display a player only if its URL is recognized as a provider URL scheme
+
+With the default values collected via plugin prefs…
+
+bc(language-markup).. <txp:oui_if_player>
+    <txp:oui_player />
 </txp:oui_if_player>
 
-p. …or with the provider attribute…
+p. …or, with a manually filled URL…
 
-bc.. <txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
-    Yes, it is a valid URL pattern for a Vimeo video.
-<txp:else />
-    No
+bc(language-markup).. <txp:oui_if_player play="https://vimeo.com/155020267">
+    <txp:oui_player />
 </txp:oui_if_player>
+
+p. You can also add the provider attribute to check the URL against URL schemes of a defined provider.
 
 notextile. </section>

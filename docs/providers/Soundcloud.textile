@@ -1,88 +1,107 @@
 notextile. <section id="soundcloud" class="options_group">
 
-h2. Soundcloud additional attributes
+h2. Soundcloud player config
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * http(s)://(api.)soundcloud.com/…
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels (OK, pourcentage works also…).
-*default:* @100%@
+*Default:* related plugin pref
+*Initial:* @100%@
 *valid:* Integer =:
 - @height@ :=
 The height of the player in pixels (if @visual="true"@ Soundcloud width is usually @450@).
-*default:* @166@
+*Default:* related plugin pref
+*Initial:* @166@ (alt provided height is @450@)
 *valid:* Integer =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* integer[@:@]integer =:
 
 h3. Player parameters (aplhabetical order)
 
+Some prefs/attributes can conditionate the behavior of others (e.g. @visual="true"@ desactivates @color@).
+
 - @auto_play@ :=
 Whether to play after loading or not.
-*default:* @false@
+*Default:* related plugin pref
+*Initial:* @false@
 *valid:* @true@ or @false@ =:
 - @buying@ :=
 Whether to display the _Buy_ button or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @color@ :=
 Changes the colour of the user interface elements.
-*default:* @ff8800@
+*Default:* related plugin pref
+*Initial:* @ff8800@
 *valid:* a hexa color value =:
 - @download@ :=
 Whether to display the _Download_ button or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @hide_related@ :=
 Whether to display related tracks or not.
-*default:* @false@
+*Default:* related plugin pref
+*Initial:* @false@
 *valid:* @true@ or @false@ =:
 - @sharing@ :=
 Whether to enable the sharing features or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @show_artwork@ :=
 Whether to display the artwork or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @show_comments@ :=
 Whether to display comments or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @show_reposts@ :=
 Whether to display reposts or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @show_playcount@ :=
 Whether to display the playcount or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @show_user@ :=
 Whether to display the uploader or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @single_active@ :=
 Whether to stop playing while another player is on or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @start_track@ :=
 Specifies the time (in seconds) when the track should start playing.
-*default:* @0@
+*Default:* related plugin pref
+*Initial:* @0@
 *valid:* an integer =:
 - @theme_color@ :=
 Changes the color of the player theme.
-*default:* @ff3300@
+*Default:* related plugin pref
+*Initial:* @ff3300@
 *valid* a hexa color value =:
 - @visual@ :=
 Whether to display the artwork as a background or not.
-*default:* @false@
+*Default:* related plugin pref
+*Initial:* @false@
 *valid:* @true@ or @false@ =:
 
 notextile. </section>

@@ -1,25 +1,28 @@
 notextile. <section id="myspace" class="options_group">
 
-h2. Myspace videos additional attributes
+h2. Myspace videos player config
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * *id*
 * http(s)://myspace.com/…/video/…/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
-*default:* @640@
+*Default:* related plugin pref
+*Initial:* @640@
 *valid:* integer =:
 - @height@ :=
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
-*default:* @16:9@
+*Default:* related plugin pref
+*Initial:* @16:9@
 *valid:* integer[@:@]integer =:
 
 notextile. </section>

@@ -5,26 +5,27 @@ h3(#all_options-label). Table of contents
 
 notextile. <div role="group">
 
-*(switcher-list) "Basics(basics)":#basics
+*(switcher-list) "Presentation/management":#basics
 * "Preferences/options":#prefs
-* "Tags":#tags
-* "ABC News player attributes":#abc
-* "Archive player attributes":#archive
-* "Dailymotion player attributes":#dailymotion
-* "Mixcloud player attributes":#mixcloud
-* "Myspace videos player attributes":#myspace
-* "Soundcloud player attributes":#soundcloud
-* "Twitch player attributes":#twitch
-* "Viddsee player attributes":#viddsee
-* "Vimeo player attributes":#vimeo
-* "Youtube player attributes":#youtube
+* "Tags basics":#tags
+* "ABC News player config":#abc
+* "Archive player config":#archive
+* "Dailymotion player config":#dailymotion
+* "Mixcloud player config":#mixcloud
+* "Myspace videos player config":#myspace
+* "Soundcloud player config":#soundcloud
+* "Twitch player config":#twitch
+* "Viddsee player config":#viddsee
+* "Vimeo player config":#vimeo
+* "Vine player config":#vine
+* "Youtube player config":#youtube
 * "Examples":#examples
-* "Extend":#extend
-* "Credits":#credits
+* "For developpers":#for-developers
+* "Credits/changelog":#credits
 
 notextile. </div>
 </section>
 
-"(navlink)See on GitHub":https://github.com/NicolasGraph/oui_instagram "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN
+"(navlink)See on GitHub":https://github.com/NicolasGraph/oui_player "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN
 
 notextile. </div>

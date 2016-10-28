@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i' => '1');
         protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
-        protected $params = array(
+        protected $dims = array(
             'width'        => array(
                 'default' => '100%',
             ),
@@ -40,6 +40,8 @@ namespace Oui\Player {
             'ratio'        => array(
                 'default' => '',
             ),
+        );
+        protected $params = array(
             'autoplay'     => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -63,6 +65,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Mixcloud::getInstance();
-    $instance->plugProvider();
+    new Mixcloud;
 }

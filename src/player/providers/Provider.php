@@ -28,49 +28,52 @@ namespace Oui\Player {
 
     abstract class Provider
     {
-        protected static $instances = array();
-        protected $provider = '';
+        public $play;
+        public $config;
+
+        protected $patterns = array();
+        protected $src;
+        protected $append;
+        protected $dims = array(
+            'width'    => array(
+                'default' => '640',
+            ),
+            'height'   => array(
+                'default' => '',
+            ),
+            'ratio'    => array(
+                'default' => '16:9',
+            ),
+        );
+        protected $params = array();
         protected $glue = array('?', '&amp;');
-
-        public static function getInstance()
-        {
-            $class = get_called_class();
-            if (!isset(self::$instances[$class])) {
-                self::$instances[$class] = new $class;
-            }
-
-            return self::$instances[$class];
-        }
-
-        final private function __construct()
-        {
-        }
-
-        final private function __clone()
-        {
-        }
 
         /**
          * Register callbacks.
          */
-        public function plugProvider()
+        public function __construct()
         {
             // Plug in Oui\Player class
-            $plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            register_callback(array($this, 'getProvider'), $plugin, 'plug_providers', 0);
+            $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);
         }
 
         /**
-         * Return the class name as the provider name.
+         * Get the class name as the provider name.
          */
-        public function getProvider($event, $step, $rs)
+        public function getProvider()
         {
             return array(substr(strrchr(get_class($this), '\\'), 1));
         }
 
+        /**
+         * Get provider prefs.
+         */
         public function getPrefs($prefs)
         {
-            foreach ($this->params as $pref => $options) {
+            $merge_prefs = array_merge($this->dims, $this->params);
+
+            foreach ($merge_prefs as $pref => $options) {
                 $options['group'] = strtolower(str_replace('\\', '_', get_class($this)));
                 $pref = $options['group'] . '_' . $pref;
                 $prefs[$pref] = $options;
@@ -80,37 +83,36 @@ namespace Oui\Player {
         }
 
         /**
-         * Get a tag attribute list
+         * Get tag attributes.
          *
-         * @param string $tag      The plugin tag
+         * @param string $tag      The plugin tag.
          * @param array  $get_atts The array where attributes are stored provider after provider.
          */
         public function getAtts($tag, $get_atts)
         {
-            foreach ($this->params as $att => $options) {
+            $atts = array_merge($this->dims, $this->params);
+
+            foreach ($atts as $att => $options) {
                 $att = str_replace('-', '_', $att);
-                $get_atts[$att] = $options;
+                $get_atts[$att] = '';
             }
 
             return $get_atts;
         }
 
         /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $play The item url to play
+         * Get the item URL, provider and ID from the play property.
          */
-        public function getItemInfos($play)
+        public function getInfos()
         {
-
             foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $play, $matches)) {
-                    $match = array(
+                if (preg_match($pattern, $this->play, $matches)) {
+                    $infos = array(
+                        'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => $matches[$id],
                     );
-
-                    return $match;
+                    return $infos;
                 }
             }
 
@@ -118,57 +120,99 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the provider player url and its parameters/attributes
+         * Get player parameters in in use.
          */
         public function getParams()
         {
-            $player_infos = array(
-                'src'    => $this->src,
-                'params' => $this->params,
-            );
+            $params = array();
 
-            return $player_infos;
+            foreach ($this->params as $param => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+                $default = $infos['default'];
+                $att = str_replace('-', '_', $param);
+                $value = isset($this->config[$att]) ? $this->config[$att] : '';
+
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($value === '' && $pref !== $default) {
+                    // Remove # from the color pref as a color type is used for the pref input.
+                    $params[] = $param . '=' . str_replace('#', '', $pref);
+                } elseif ($value !== '') {
+                    // Remove the # in the color attribute just in case…
+                    $params[] = $param . '=' . str_replace('#', '', $value);
+                }
+            }
+
+            return $params;
         }
 
         /**
-         * Build the code to embed.
-         *
-         * @param string $src         The iframe source.
-         * @param array  $used_params The player parameters in use.
-         * @param array  $dims        The player dimensions
+         * Get the player size.
          */
-        public function getOutput($src, $used_params, $dims)
+        public function getSize()
         {
-            if (!empty($used_params)) {
-                $glue = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                $src .= $glue . implode('&amp;', $used_params);
-            }
+            $dims = array();
 
-            $width = $dims['width'];
-            $height = $dims['height'];
+            foreach ($this->dims as $dim => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
+                $default = $infos['default'];
+                $value = isset($this->config[$dim]) ? $this->config[$dim] : '';
 
-            if ((!$width || !$height)) {
-                $ratio = !empty($dims['ratio']) ? $dims['ratio'] : '16:9';
-
-                // Work out the aspect ratio.
-                preg_match("/(\d+):(\d+)/", $ratio, $matches);
-                if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
-                    $aspect = $matches[1] / $matches[2];
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($value === '' && $pref !== $default) {
+                    $dims[$dim] = $pref;
+                } elseif ($value !== '') {
+                    $dims[$dim] = $value;
                 } else {
-                    $aspect = 1.778;
-                }
-
-                // Calcuate the new width/height.
-                if ($width) {
-                    $height = $width / $aspect;
-                } elseif ($height) {
-                    $width = $height * $aspect;
+                    $dims[$dim] = $default;
                 }
             }
 
-            $output = '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+            return $dims;
+        }
 
-            return $output;
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            if (!empty($this->play)) {
+                $item = $this->getInfos();
+                $item ?: $item = array('id' => $this->play);
+            }
+
+            if ($item) {
+                $src = $this->src . $item['id'];
+                $dims = $this->getSize();
+                $params = $this->getParams();
+
+                if (!empty($params)) {
+                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
+                    $src .= $glue[0] . implode($this->glue[1], $params);
+                }
+
+                $width = $dims['width'];
+                $height = $dims['height'];
+                $ratio = $dims['ratio'];
+
+                if ((!$dims || !$height)) {
+                    // Work out the aspect ratio.
+                    preg_match("/(\d+):(\d+)/", $ratio, $matches);
+                    if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
+                        $aspect = $matches[1] / $matches[2];
+                    } else {
+                        $aspect = 1.778;
+                    }
+
+                    // Calcuate the new width/height.
+                    if ($width) {
+                        $height = $width / $aspect;
+                    } elseif ($height) {
+                        $width = $height * $aspect;
+                    }
+                }
+
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            }
         }
     }
 

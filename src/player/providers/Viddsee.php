@@ -30,19 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i' => '6');
         protected $src = '//www.viddsee.com/player/';
-        protected $params = array(
-            'width'  => array(
-                'default' => '640',
-            ),
-            'height' => array(
-                'default' => '',
-            ),
-            'ratio'  => array(
-                'default' => '16:9',
-            ),
-        );
     }
 
-    $instance = Viddsee::getInstance();
-    $instance->plugProvider();
+    new Viddsee;
 }

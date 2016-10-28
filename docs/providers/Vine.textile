@@ -1,29 +1,39 @@
-notextile. <section id="abc" class="options_group">
+notextile. <section id="vine" class="options_group">
 
-h2. Abc News player config
+h2. Vine player config
 
 h3. Recognised values for the @play@ attribute
 
 * *id*
-* http(s)://abcnews.go.com/…/video/…[*id*]
-* http(s)://abcnews.go.com/video/embed?id=[*id*]
+* http(s)://(www.)vine.co/v/[*id*]
 
 h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
 *Default:* related plugin pref
-*Initial:* @640@
+*Initial:* @600@
 *valid:* integer =:
 - @height@ :=
 *Default:* related plugin pref
-*Initial:* none
+*Initial:* @600@
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
 *Default:* related plugin pref
-*Initial:* @16:9@
+*Initial:* none
 *valid:* integer[@:@]integer =:
+
+h3. Player parameters
+
+- @type@ :=
+*Default:* related plugin pref
+*Initial:* @simple@
+*valid:* @simple@ or @postcard@ =:
+- @audio@ :=
+*Default:* related plugin pref
+*Initial:* @0@
+*valid:* @0@ or @1@ =:
 
 notextile. </section>

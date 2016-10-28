@@ -1,6 +1,21 @@
 # oui_player (formerly oui_video)
 
-An extendable plugin to easily embed iframe customizable players in Textpattern CMS.
+An extendable plugin to easily embed customized iframe players.
+This plugin does not use oembed, it builds iframe embedding codes by its own without any external request.
+
+## Supported providers
+
+* [Abc News](http://abcnews.go.com/video);
+* [Archive](https://archive.org/);
+* [Dailymotion](http://www.dailymotion.com/);
+* [Mixcloud](https://www.mixcloud.com/);
+* [Myspace videos](https://myspace.com/myspace/videos);
+* [Soundcloud](https://soundcloud.com/);
+* [Twitch](https://www.twitch.tv/);
+* [Viddsee](https://www.viddsee.com/);
+* [Vimeo](http://www.vimeo.com/);
+* [Vine](http://vine.co/);
+* [Youtube](https://www.youtube.com/).
 
 ## Plugin requirements
 
@@ -8,61 +23,9 @@ oui_player's minimum requirements:
 
 * [Textpattern CMS](http://textpattern.com/) 4.6+.
 
-## Installation
+## Documentation
 
-1. [Download](https://github.com/NicolasGraph/oui_player/releases) the compiled plugin file, or, better, download the source and edit the manifest.json file to only include needed providers before to compile the plugin with the [MassPlugCompiler](https://github.com/gocom/MassPlugCompiler). Most frequently used providers should be included first to increase the plugin perfomances.
-1. Paste the content of the plugin file under the **Admin > Plugins**, upload it and install;
-1. Click *Options* or visit your **Admin>Preferences** tab to fill the plugin prefs.
-
-## Supported players
-
-### Video
-
-* Abc News;
-* Archive;
-* Dailymotion;
-* Myspace videos;
-* Twitch;
-* Viddsee;
-* Vimeo;
-* Youtube.
-
-### Music
-
-* Soundcloud;
-* Mixcloud.
-
-## Tags
-
-### oui_player
-
-Embeds a player in the page.
-*More informations and attributes in the plugin help file.*
-
-```
-<txp:oui_player play="…" />
-```
-
-### oui_if_player
-
-Checks an URL against the accepted URL schemes for one or all supported providers.
-*More informations and attributes in the plugin help file.*
-
-```
-<txp:oui_if_player play="…">
-[…]
-</txp:oui_if_player>
-```
-
-## Examples
-
-*More informations and attributes in the plugin help file.*
-
-```
-<txp:oui_if_player provider="vimeo" play="https://vimeo.com/155020267">
-    <txp:oui_player provider="vimeo" play="155020267" autoplay="1" color="0099FF" />
-</txp:oui_if_player>
-```
+Check the [wiki](/wiki) for more informations.
 
 ## Author
 

@@ -31,15 +31,6 @@ namespace Oui\Player {
         protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
         protected $src = '//player.twitch.tv/?video=';
         protected $params = array(
-            'width'    => array(
-                'default' => '640',
-            ),
-            'height'   => array(
-                'default' => '',
-            ),
-            'ratio'    => array(
-                'default' => '16:9',
-            ),
             'autoplay' => array(
                 'default' => 'true',
                 'valid'   => array('true', 'false'),
@@ -59,11 +50,11 @@ namespace Oui\Player {
          *
          * @param string $video The video url
          */
-        public function getItemInfos($video)
+        public function getItemInfos()
         {
 
             foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $video, $matches)) {
+                if (preg_match($pattern, $this->play, $matches)) {
                     $match = array(
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'id'       => str_replace('/', '', $matches[$id]),
@@ -77,6 +68,5 @@ namespace Oui\Player {
         }
     }
 
-    $instance = Twitch::getInstance();
-    $instance->plugProvider();
+    new Twitch;
 }

@@ -31,15 +31,6 @@ namespace Oui\Player {
         protected $patterns = array('#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '8');
         protected $src = '//www.dailymotion.com/embed/video/';
         protected $params = array(
-            'width'                => array(
-                'default' => '640',
-            ),
-            'height'               => array(
-                'default' => '',
-            ),
-            'ratio' => array(
-                'default' => '16:9',
-            ),
             'autoplay'             => array(
                 'default' => 'false',
                 'valid'   => array('true', 'false'),
@@ -90,6 +81,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Dailymotion::getInstance();
-    $instance->plugProvider();
+    new Dailymotion;
 }

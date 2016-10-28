@@ -1,43 +1,50 @@
 notextile. <section id="twitch" class="options_group">
 
-h2. Twitch additional attributes
+h2. Twitch player config
 
 This plugin reads Twitch videos only for now, not channels.
 
-Recognised values for the @play@ attribute:
+h3. Recognised values for the @play@ attribute
 
 * v[*id*]
 * http(s)://(www.)twitch.tv/…/v/[*id*]
 
-Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
-More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md.
+h3. Player size
 
 - @width@ :=
 The width of the player in pixels.
-*default:* @640@
+*Default:* related plugin pref
+*Initial:* @640@
 *valid:* integer =:
 - @height@ :=
-*default:* none
+*Default:* related plugin pref
+*Initial:* none
 *valid:* integer
 The height of the player in pixels. =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
-*default:* @16:9@
+*Default:* related plugin pref
+*Initial:* @16:9@
 *valid:* integer[@:@]integer =:
 
 h3. Player parameters (aplhabetical order)
 
 - @autoplay@ :=
 Whether to play after loading or not.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *valid:* @true@ or @false@ =:
 - @muted@ :=
 Whether to disable sound by default or not.
-*default:* @false@
+*Default:* related plugin pref
+*Initial:* @false@
 *valid:* @true@ or @false@ =:
 - @time@ :=
 Starts playback at the given timestamp.
-*default:* @true@
+*Default:* related plugin pref
+*Initial:* @true@
 *Format:* @1h2m3s@ =:
+
+p(alert-block information). %(ui-icon ui-icon-info).% More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md
 
 notextile. </section>

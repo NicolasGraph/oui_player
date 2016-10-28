@@ -30,7 +30,7 @@ namespace Oui\Player {
     {
         protected $patterns = array('#((http|https):\/\/(api.)?soundcloud\.com\/[\S]+)#i' => '1');
         protected $src = '//w.soundcloud.com/player/?url=';
-        protected $params = array(
+        protected $dims = array(
             'width'          => array(
                 'default' => '100%',
             ),
@@ -40,6 +40,8 @@ namespace Oui\Player {
             'ratio'          => array(
                 'default' => '',
             ),
+        );
+        protected $params = array(
             'auto_play'      => array(
                 'default' => 'false',
                 'valid'   => array('true', 'false'),
@@ -103,6 +105,5 @@ namespace Oui\Player {
         );
     }
 
-    $instance = Soundcloud::getInstance();
-    $instance->plugProvider();
+    new Soundcloud;
 }

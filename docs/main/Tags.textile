@@ -33,7 +33,7 @@ Most of the following attributes can be set via the _Preferences_ tab; +always p
 
 - @play@ :=
 The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@).
-*default:* none
+*default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs.
 *valid:* URL, id or custom field name =:
 - @provider@ :=
 The provider to use; *required if* the @play@ attribute is an id, *recommended anyways* if known as it increases the plugin performances by skipping the provider guess.
@@ -48,7 +48,7 @@ h3. oui_if_player
 
 In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
 
-bc. <txp:oui_if_player video="…">
+bc. <txp:oui_if_player play="…">
 […]
 </txp:oui_if_player>
 
@@ -56,7 +56,7 @@ h4. Attributes
 
 - @play@ :=
 An URL or a custom field containing an URL to check against valid video URL schemes.
-*Default:* none =:
+*Default:* The custom field value of the one selected in the plugin prefs. =:
 - @provider@ :=
 Check the URL against valid URL schemes of the provided provider.
 *Default:* none =:

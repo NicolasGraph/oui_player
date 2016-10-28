@@ -11,4 +11,27 @@ This plugin is distributed under the "MIT licence":https://opensource.org/licens
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+h2. Changelog
+
+* *oui_player v1.2.0-beta* (2016-10-28)
+** sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
+** introduces a @play@ attribute value inheritance in a conditional/container tag context;
+** adds support for "Vine":https://vine.co/;
+** improves PHP classes and methods use (see _For developers_).
+* *oui_player v1.1.0* (2016-10-14)
+** changes Plugin/tag names;
+** drops Txp 4.5 support;
+** Sets closer attribute names to player parameters for consistency;
+** reworks source code to be easily extendable;
+** adds support for:
+*** "Abc News":http://abcnews.go.com/video,
+*** "Archive":https://archive.org/,
+*** "Mixcloud":https://www.mixcloud.com/,
+*** "Myspace videos":https://myspace.com/myspace/videos,
+*** "Soundcloud":https://soundcloud.com/,
+*** "Twitch":https://www.twitch.tv/,
+*** "Viddsee":https://www.viddsee.com/;
+** improves and styles help file.
+* *oui_video v0.1.0* (2016-09-13)
+
 notextile. </section>
