@@ -13,7 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *oui_player v1.2.0-beta* (2016-10-27)
+* *oui_player v1.2.0-beta* (2016-10-28)
 ** sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
 ** introduces a @play@ attribute value inheritance in a conditional/container tag context;
 ** adds support for "Vine":https://vine.co/;
