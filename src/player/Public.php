@@ -33,7 +33,8 @@ namespace Oui\Player {
 
         public function __construct()
         {
-            parent::__construct();
+            $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            $this->providers = explode(', ', \get_pref($this->plugin . '_providers'));
         }
 
         /**
