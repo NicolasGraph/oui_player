@@ -185,7 +185,7 @@ namespace Oui\Player {
                         $pref,
                         $options['default'],
                         $options['group'],
-                        PREF_PLUGIN,
+                        $pref === 'oui_player_providers' ? PREF_HIDDEN : PREF_PLUGIN,
                         isset($options['widget']) ? $options['widget'] : $this->prefWidget($options),
                         $position
                     );
