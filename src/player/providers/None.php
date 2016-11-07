@@ -38,7 +38,7 @@ namespace Oui\Player {
                 'id'     => '1',
             ),
         );
-        protected $src = '//player.vimeo.com/video/';
+        protected $src = '';
         protected $params = array(
             'autoplay'  => array(
                 'default' => '0',
@@ -48,27 +48,27 @@ namespace Oui\Player {
                 'default' => '',
             ),
             'controls'    => array(
-                'default' => '1',
+                'default' => '0',
                 'valid'   => array('0', '1'),
             ),
             'crossorigns'     => array(
-                'default' => '#00adef',
+                'default' => '',
                 'valid'   => array('', 'anonymous', 'use-credentials'),
             ),
             'loop'      => array(
-                'default' => 'false',
-                'valid'   => array('true', 'flase'),
+                'default' => '0',
+                'valid'   => array('0', '1'),
             ),
             'muted'  => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
+                'default' => '0',
+                'valid'   => array('0', '1'),
             ),
             'played'     => array(
-                'default' => '1',
+                'default' => '0',
                 'valid'   => array('0', '1'),
             ),
             'preload'     => array(
-                'default' => '1',
+                'default' => '',
                 'valid'   => array('', 'none', 'metadata', 'auto'),
             ),
             'poster'     => array(
@@ -78,6 +78,40 @@ namespace Oui\Player {
         );
 
         /**
+         * Get player parameters in in use.
+         */
+        public function getParams()
+        {
+            $params = array();
+
+            foreach ($this->params as $param => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+                $default = $infos['default'];
+                $att = str_replace('-', '_', $param);
+                $value = isset($this->config[$att]) ? $this->config[$att] : '';
+
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($value === '' && $pref !== $default) {
+                    // Remove # from the color pref as a color type is used for the pref input.
+                    if ($infos['valid'] === array('0', '1')) {
+                        $params[] = $param;
+                    } else {
+                        $params[] = $param . '=' . str_replace('#', '', $pref);
+                    }
+                } elseif ($value !== '') {
+                    // Remove the # in the color attribute just in case…
+                    if ($infos['valid'] === array('0', '1')) {
+                        $params[] = $param;
+                    } else {
+                        $params[] = $param . '=' . str_replace('#', '', $value);
+                    }
+                }
+            }
+
+            return $params;
+        }
+
+        /**
          * Get the player code
          */
         public function getPlayer()
@@ -85,24 +119,17 @@ namespace Oui\Player {
             if (!empty($this->play)) {
                 $item = $this->getInfos();
                 $item ?: $item = array(
-                    'id' => $this->play,
+                    'id'   => $this->play,
                     'type' => $this->type,
                 );
             }
 
             if ($item) {
                 $src = $this->src . $item['id'];
-                $dims = $this->getSize();
                 $params = $this->getParams();
 
-                if (!empty($params)) {
-                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                    $src .= $glue[0] . implode($this->glue[1], $params);
-                }
-
-                $width = $dims['width'];
-                $height = $dims['height'];
-                $ratio = $dims['ratio'];
+                $dims = $this->getSize();
+                extract($dims);
 
                 if (!$dims || !$height) {
                     // Work out the aspect ratio.
@@ -121,7 +148,7 @@ namespace Oui\Player {
                     }
                 }
 
-                return '<' . $item['type'] . ' width="' . $width . '" height="' . $height . '" src="' . $src . '"></' . $item['type'] . '>' . $this->append;
+                return '<' . $item['type'] . ' width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ?: ' ' . implode(' ', $params)) . '></' . $item['type'] . '>' . $this->append;
             }
         }
     }

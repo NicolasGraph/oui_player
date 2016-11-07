@@ -41,6 +41,7 @@
         "./src/player/providers/Dailymotion.php",
         "./src/player/providers/Mixcloud.php",
         "./src/player/providers/Myspace.php",
+        "./src/player/providers/None.php",
         "./src/player/providers/Soundcloud.php",
         "./src/player/providers/Twitch.php",
         "./src/player/providers/Viddsee.php",
