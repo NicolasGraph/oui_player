@@ -62,7 +62,7 @@ namespace Oui\Player {
             if (!empty($this->play)) {
                 $item = $this->getInfos();
                 $item ?: $item = array(
-                    'id' => $this->play,
+                    'id'   => $this->play,
                     'type' => preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel',
                 );
             }
@@ -70,7 +70,6 @@ namespace Oui\Player {
             if ($item) {
                 $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
                 $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
-                $dims = $this->getSize();
                 $params = $this->getParams();
 
                 if (!empty($params)) {
@@ -78,9 +77,8 @@ namespace Oui\Player {
                     $src .= $glue[0] . implode($this->glue[1], $params);
                 }
 
-                $width = $dims['width'];
-                $height = $dims['height'];
-                $ratio = $dims['ratio'];
+                $dims = $this->getSize();
+                extract($dims);
 
                 if (!$dims || !$height) {
                     // Work out the aspect ratio.

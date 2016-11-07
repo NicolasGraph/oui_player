@@ -180,14 +180,13 @@ namespace Oui\Player {
             if (!empty($this->play)) {
                 $item = $this->getInfos();
                 $item ?: $item = array(
-                    'id' => $this->play,
+                    'id'   => $this->play,
                     'type' => $this->type,
                 );
             }
 
             if ($item) {
                 $src = $this->src . $item['id'];
-                $dims = $this->getSize();
                 $params = $this->getParams();
 
                 if (!empty($params)) {
@@ -195,9 +194,8 @@ namespace Oui\Player {
                     $src .= $glue[0] . implode($this->glue[1], $params);
                 }
 
-                $width = $dims['width'];
-                $height = $dims['height'];
-                $ratio = $dims['ratio'];
+                $dims = $this->getSize();
+                extract($dims);
 
                 if (!$dims || !$height) {
                     // Work out the aspect ratio.
