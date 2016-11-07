@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Archive extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i' => '4');
+        protected $patterns = array(
+            'unknown' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i',
+                'id'     => '4',
+            ),
+        );
         protected $src = '//archive.org/embed/';
         protected $glue = array('&amp;', '&amp;');
         protected $dims = array(

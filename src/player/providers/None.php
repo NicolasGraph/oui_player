@@ -26,31 +26,54 @@
 
 namespace Oui\Player {
 
-    class Twitch extends Provider
+    class None extends Provider
     {
         protected $patterns = array(
-            'video' => array(
-                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/v\/([0-9]+))$#i',
-                'id'     => '4',
+            'audio' => array(
+                'scheme' => '#^(\S+(.mp3)$)$#i',
+                'id'     => '1',
             ),
-            'channel' => array(
-                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/([^\&\?\/]+))$#i',
-                'id'     => '4',
+            'video' => array(
+                'scheme' => '#^(\S+(.mp4)$)$#i',
+                'id'     => '1',
             ),
         );
-        protected $src = '//player.twitch.tv/';
+        protected $src = '//player.vimeo.com/video/';
         protected $params = array(
-            'autoplay' => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
+            'autoplay'  => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
             ),
-            'muted'    => array(
+            'buffered'     => array(
+                'default' => '',
+            ),
+            'controls'    => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'crossorigns'     => array(
+                'default' => '#00adef',
+                'valid'   => array('', 'anonymous', 'use-credentials'),
+            ),
+            'loop'      => array(
+                'default' => 'false',
+                'valid'   => array('true', 'flase'),
+            ),
+            'muted'  => array(
                 'default' => 'false',
                 'valid'   => array('true', 'false'),
             ),
-            'time'     => array(
+            'played'     => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'preload'     => array(
+                'default' => '1',
+                'valid'   => array('', 'none', 'metadata', 'auto'),
+            ),
+            'poster'     => array(
                 'default' => '',
-                'valid'   => 'number',
+                'valid'   => 'url',
             ),
         );
 
@@ -63,13 +86,12 @@ namespace Oui\Player {
                 $item = $this->getInfos();
                 $item ?: $item = array(
                     'id' => $this->play,
-                    'type' => preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel',
+                    'type' => $this->type,
                 );
             }
 
             if ($item) {
-                $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
-                $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
+                $src = $this->src . $item['id'];
                 $dims = $this->getSize();
                 $params = $this->getParams();
 
@@ -99,10 +121,10 @@ namespace Oui\Player {
                     }
                 }
 
-                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+                return '<' . $item['type'] . ' width="' . $width . '" height="' . $height . '" src="' . $src . '"></' . $item['type'] . '>' . $this->append;
             }
         }
     }
 
-    new Twitch;
+    new None;
 }

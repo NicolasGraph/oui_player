@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Viddsee extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i' => '6');
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i',
+                'id'     => '6',
+            ),
+        );
         protected $src = '//www.viddsee.com/player/';
     }
 

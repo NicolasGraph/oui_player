@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Youtube extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i' => '8');
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i',
+                'id'     => '8'
+            ),
+        );
         protected $src = '//www.youtube-nocookie.com/embed/';
         protected $params = array(
             'autohide'       => array(

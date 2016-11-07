@@ -13,13 +13,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *oui_player v1.2.0-beta* (2016-10-28)
+* *oui_player v1.2.0-beta-2* (2016-11-07)
 ** sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
 ** introduces a @play@ attribute value inheritance in a conditional/container tag context;
-** adds support for "Vine":https://vine.co/;
+** adds support for:
+*** "Twitch channels":https://www.twitch.tv/,
+*** "Vine":https://vine.co/;
 ** improves PHP classes and methods use (see _For developers_).
 * *oui_player v1.1.0* (2016-10-14)
-** changes Plugin/tag names;
+** changes plugin/tag names;
 ** drops Txp 4.5 support;
 ** Sets closer attribute names to player parameters for consistency;
 ** reworks source code to be easily extendable;

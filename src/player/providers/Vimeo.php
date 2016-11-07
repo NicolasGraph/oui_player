@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Vimeo extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i' => '5');
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
+                'id'     => '5',
+            ),
+        );
         protected $src = '//player.vimeo.com/video/';
         protected $params = array(
             'autopause' => array(
