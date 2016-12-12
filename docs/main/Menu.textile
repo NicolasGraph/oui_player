@@ -26,6 +26,6 @@ notextile. <div role="group">
 notextile. </div>
 </section>
 
-"(navlink)See on GitHub":https://github.com/NicolasGraph/oui_player "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN
+"(navlink)Contribute":https://github.com/NicolasGraph/oui_player "(navlink)Donate":https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PREHX3MZMXEUN "(navlink)Tweet":https://twitter.com/intent/tweet?text=I%27m%20enjoying%20video%20embedding%20in%20%23Textpattern%20%23CMS%20via%20%23oui_player!%20%40NicolasGraph%20https://github.com/NicolasGraph/oui_player
 
 notextile. </div>

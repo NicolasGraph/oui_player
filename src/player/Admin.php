@@ -31,12 +31,12 @@ namespace Oui\Player {
         public function __construct()
         {
             if (txpinterface === 'admin') {
-                parent::__construct();
+                $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+                $this->providers = callback_event($this->plugin, 'plug_providers', 0, 'Provider');
 
-                $this->tags['oui_player']['provider']['valid'] = $this->providers;
-                $this->tags['oui_if_player']['provider']['valid'] = $this->providers;
-                $this->prefs['provider']['default'] = $this->providers[0];
                 $this->prefs['provider']['valid'] = $this->providers;
+                $this->prefs['provider']['default'] = $this->prefs['provider']['valid'][0];
+                $this->prefs['providers']['default'] = implode(', ', $this->prefs['provider']['valid']);
 
                 add_privs('plugin_prefs.' . $this->plugin, $this->privs);
                 add_privs('prefs.' . $this->plugin, $this->privs);
@@ -185,7 +185,7 @@ namespace Oui\Player {
                         $pref,
                         $options['default'],
                         $options['group'],
-                        PREF_PLUGIN,
+                        $pref === 'oui_player_providers' ? PREF_HIDDEN : PREF_PLUGIN,
                         isset($options['widget']) ? $options['widget'] : $this->prefWidget($options),
                         $position
                     );

@@ -2,12 +2,11 @@ notextile. <section id="twitch" class="options_group">
 
 h2. Twitch player config
 
-This plugin reads Twitch videos only for now, not channels.
-
 h3. Recognised values for the @play@ attribute
 
 * v[*id*]
-* http(s)://(www.)twitch.tv/…/v/[*id*]
+* http(s)://(www.)twitch.tv/…/v/[*id*] (video)
+* http(s)://(www.)twitch.tv/[*id*] (channel)
 
 h3. Player size
 

@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Dailymotion extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i' => '8');
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i',
+                'id'     => '8',
+            ),
+        );
         protected $src = '//www.dailymotion.com/embed/video/';
         protected $params = array(
             'autoplay'             => array(

@@ -28,8 +28,17 @@ namespace Oui\Player {
 
     class Twitch extends Provider
     {
-        protected $patterns = array('#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/(v\/[0-9]+))$#i' => '4');
-        protected $src = '//player.twitch.tv/?video=';
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/v\/([0-9]+))$#i',
+                'id'     => '4',
+            ),
+            'channel' => array(
+                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/([^\&\?\/]+))$#i',
+                'id'     => '4',
+            ),
+        );
+        protected $src = '//player.twitch.tv/';
         protected $params = array(
             'autoplay' => array(
                 'default' => 'true',
@@ -46,25 +55,50 @@ namespace Oui\Player {
         );
 
         /**
-         * Get the video provider and the video id from its url
-         *
-         * @param string $video The video url
+         * Get the player code
          */
-        public function getItemInfos()
+        public function getPlayer()
         {
-
-            foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $this->play, $matches)) {
-                    $match = array(
-                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'id'       => str_replace('/', '', $matches[$id]),
-                    );
-
-                    return $match;
-                }
+            if (!empty($this->play)) {
+                $item = $this->getInfos();
+                $item ?: $item = array(
+                    'id'   => $this->play,
+                    'type' => preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel',
+                );
             }
 
-            return false;
+            if ($item) {
+                $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
+                $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
+                $params = $this->getParams();
+
+                if (!empty($params)) {
+                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
+                    $src .= $glue[0] . implode($this->glue[1], $params);
+                }
+
+                $dims = $this->getSize();
+                extract($dims);
+
+                if (!$dims || !$height) {
+                    // Work out the aspect ratio.
+                    preg_match("/(\d+):(\d+)/", $ratio, $matches);
+                    if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
+                        $aspect = $matches[1] / $matches[2];
+                    } else {
+                        $aspect = 1.778;
+                    }
+
+                    // Calcuate the new width/height.
+                    if ($width) {
+                        $height = $width / $aspect;
+                    } elseif ($height) {
+                        $width = $height * $aspect;
+                    }
+                }
+
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            }
         }
     }
 

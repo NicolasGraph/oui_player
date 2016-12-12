@@ -28,7 +28,12 @@ namespace Oui\Player {
 
     class Vine extends Provider
     {
-        protected $patterns = array('#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i' => '3');
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i',
+                'id'     => '3'
+            ),
+        );
         protected $src = '//vine.co/v/';
         protected $append = '<script src="https://platform.vine.co/static/scripts/embed.js"></script>';
         protected $glue = array('/embed/', '?');

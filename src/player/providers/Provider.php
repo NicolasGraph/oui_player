@@ -30,6 +30,7 @@ namespace Oui\Player {
     {
         public $play;
         public $config;
+        public $type = 'video';
 
         protected $patterns = array();
         protected $src;
@@ -105,12 +106,13 @@ namespace Oui\Player {
          */
         public function getInfos()
         {
-            foreach ($this->patterns as $pattern => $id) {
-                if (preg_match($pattern, $this->play, $matches)) {
+            foreach ($this->patterns as $pattern => $options) {
+                if (preg_match($options['scheme'], $this->play, $matches)) {
                     $infos = array(
                         'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'id'       => $matches[$id],
+                        'id'       => $matches[$options['id']],
+                        'type'     => $pattern,
                     );
                     return $infos;
                 }
@@ -177,12 +179,14 @@ namespace Oui\Player {
         {
             if (!empty($this->play)) {
                 $item = $this->getInfos();
-                $item ?: $item = array('id' => $this->play);
+                $item ?: $item = array(
+                    'id'   => $this->play,
+                    'type' => $this->type,
+                );
             }
 
             if ($item) {
                 $src = $this->src . $item['id'];
-                $dims = $this->getSize();
                 $params = $this->getParams();
 
                 if (!empty($params)) {
@@ -190,11 +194,10 @@ namespace Oui\Player {
                     $src .= $glue[0] . implode($this->glue[1], $params);
                 }
 
-                $width = $dims['width'];
-                $height = $dims['height'];
-                $ratio = $dims['ratio'];
+                $dims = $this->getSize();
+                extract($dims);
 
-                if ((!$dims || !$height)) {
+                if (!$dims || !$height) {
                     // Work out the aspect ratio.
                     preg_match("/(\d+):(\d+)/", $ratio, $matches);
                     if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {

@@ -68,12 +68,8 @@ namespace Oui\Player {
             ),
             'provider' => array(
             ),
+            'providers' => array(
+            ),
         );
-
-        public function __construct()
-        {
-            $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            $this->providers = callback_event($this->plugin, 'plug_providers', 0, 'Provider');
-        }
     }
 }
