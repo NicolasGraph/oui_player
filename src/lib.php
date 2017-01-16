@@ -40,13 +40,13 @@ namespace {
 
     function oui_player_custom_fields($name, $val)
     {
+        $vals = array();
         $vals['article_image'] = gtxt('article_image');
         $vals['excerpt'] = gtxt('excerpt');
 
         $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
 
         if ($custom_fields) {
-            $vals = array();
             foreach ($custom_fields as $row) {
                 $vals[$row['val']] = $row['val'];
             }
