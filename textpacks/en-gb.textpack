@@ -2,7 +2,7 @@
 #Default language, en-us, en-gb
 oui_player => Embedded players (oui_player)
 oui_player_provider => Favourite provider
-oui_player_custom_field => field used by default
+oui_player_custom_field => Field used by default
 oui_player_provider_abcnews => ABC News
 oui_player_abcnews => ABC News player (oui_player)
 oui_player_abcnews_prefs => Display the ABC News player prefs
