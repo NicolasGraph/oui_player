@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
     "description" : "Embed customised players",
-    "version"     : "1.2.1",
+    "version"     : "1.3.0-dev",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -36,6 +36,8 @@
     ]},
     "code": {"file" : [
         "./src/player/providers/Provider.php",
+        "./src/player/providers/Audio.php",
+        "./src/player/providers/Video.php",
         "./src/player/providers/Abcnews.php",
         "./src/player/providers/Archive.php",
         "./src/player/providers/Dailymotion.php",

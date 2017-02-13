@@ -26,54 +26,43 @@
 
 namespace Oui\Player {
 
-    class None extends Provider
+    class Video extends Provider
     {
         protected $patterns = array(
-            'audio' => array(
-                'scheme' => '#^(\S+(.mp3)$)$#i',
+            'file' => array(
+                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
                 'id'     => '1',
             ),
-            'video' => array(
-                'scheme' => '#^(\S+(.mp4)$)$#i',
+            'url' => array(
+                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
                 'id'     => '1',
             ),
         );
         protected $src = '';
         protected $params = array(
-            'autoplay'  => array(
+            'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'buffered'     => array(
-                'default' => '',
-            ),
-            'controls'    => array(
+            'controls' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'crossorigns'     => array(
-                'default' => '',
-                'valid'   => array('', 'anonymous', 'use-credentials'),
-            ),
-            'loop'      => array(
+            'loop'     => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'muted'  => array(
+            'muted'     => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
             ),
-            'played'     => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'preload'     => array(
-                'default' => '',
-                'valid'   => array('', 'none', 'metadata', 'auto'),
-            ),
-            'poster'     => array(
+            'poster'  => array(
                 'default' => '',
                 'valid'   => 'url',
+            ),
+            'preload'  => array(
+                'default' => 'auto',
+                'valid'   => array('none', 'metadata', 'auto'),
             ),
         );
 
@@ -96,14 +85,14 @@ namespace Oui\Player {
                     if ($infos['valid'] === array('0', '1')) {
                         $params[] = $param;
                     } else {
-                        $params[] = $param . '=' . str_replace('#', '', $pref);
+                        $params[] = $param . '="' . str_replace('#', '', $pref) . '"';
                     }
                 } elseif ($value !== '') {
                     // Remove the # in the color attribute just in case…
                     if ($infos['valid'] === array('0', '1')) {
                         $params[] = $param;
                     } else {
-                        $params[] = $param . '=' . str_replace('#', '', $value);
+                        $params[] = $param . '="' . str_replace('#', '', $value) . '"';
                     }
                 }
             }
@@ -125,7 +114,12 @@ namespace Oui\Player {
             }
 
             if ($item) {
-                $src = $this->src . $item['id'];
+                if ($item['type'] === 'file') {
+                    $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $item['id'];
+                } else {
+                    $src = $item['id'];
+                }
+
                 $params = $this->getParams();
 
                 $dims = $this->getSize();
@@ -148,10 +142,10 @@ namespace Oui\Player {
                     }
                 }
 
-                return '<' . $item['type'] . ' width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ?: ' ' . implode(' ', $params)) . '></' . $item['type'] . '>' . $this->append;
+                return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ?: ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_video_unavailable') . '</video>' . $this->append;
             }
         }
     }
 
-    new None;
+    new Video;
 }
