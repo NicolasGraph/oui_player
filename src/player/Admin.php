@@ -28,6 +28,17 @@ namespace Oui\Player {
 
     class Admin extends Player
     {
+        private static $instance = null;
+
+        public static function getInstance()
+        {
+            if (is_null(self::$instance)) {
+                self::$instance = new Admin();
+            }
+
+            return self::$instance;
+        }
+
         public function __construct()
         {
             if (txpinterface === 'admin') {
@@ -208,5 +219,5 @@ namespace Oui\Player {
         }
     }
 
-    new Admin;
+    Admin::getInstance();
 }

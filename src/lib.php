@@ -33,7 +33,7 @@ namespace {
     function oui_player_pref_widget($name, $val)
     {
         $class = 'Oui\Player\Admin';
-        $obj = new $class;
+        $obj = $class::getInstance();
         $widget = $obj->prefFunction($name, $val);
         return $widget;
     }
