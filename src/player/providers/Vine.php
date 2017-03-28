@@ -88,5 +88,7 @@ namespace Oui\Player {
         }
     }
 
-    Vine::getInstance();
+    if (txpinterface === 'admin') {
+        Vine::getInstance();
+    }
 }

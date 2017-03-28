@@ -37,5 +37,7 @@ namespace Oui\Player {
         protected $src = '//media.myspace.com/play/video/';
     }
 
-    Myspace::getInstance();
+    if (txpinterface === 'admin') {
+        Myspace::getInstance();
+    }
 }

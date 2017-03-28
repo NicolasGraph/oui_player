@@ -93,5 +93,7 @@ namespace Oui\Player {
         }
     }
 
-    Audio::getInstance();
+    if (txpinterface === 'admin') {
+        Audio::getInstance();
+    }
 }

@@ -71,5 +71,7 @@ namespace Oui\Player {
         );
     }
 
-    Vimeo::getInstance();
+    if (txpinterface === 'admin') {
+        Vimeo::getInstance();
+    }
 }

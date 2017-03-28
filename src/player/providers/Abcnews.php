@@ -37,5 +37,5 @@ namespace Oui\Player {
         protected $src = '//abcnews.go.com/video/embed?id=';
     }
 
-    new Abcnews;
+    Abcnews::getInstance();
 }

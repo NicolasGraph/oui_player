@@ -102,5 +102,7 @@ namespace Oui\Player {
         }
     }
 
-    Twitch::getInstance();
+    if (txpinterface === 'admin') {
+        Twitch::getInstance();
+    }
 }

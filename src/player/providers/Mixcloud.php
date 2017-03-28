@@ -70,5 +70,7 @@ namespace Oui\Player {
         );
     }
 
-    Mixcloud::getInstance();
+    if (txpinterface === 'admin') {
+        Mixcloud::getInstance();
+    }
 }

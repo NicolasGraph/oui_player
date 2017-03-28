@@ -86,5 +86,7 @@ namespace Oui\Player {
         );
     }
 
-    Dailymotion::getInstance();
+    if (txpinterface === 'admin') {
+        Dailymotion::getInstance();
+    }
 }

@@ -109,5 +109,7 @@ namespace Oui\Player {
         );
     }
 
-    Youtube::getInstance();
+    if (txpinterface === 'admin') {
+        Youtube::getInstance();
+    }
 }

@@ -37,5 +37,7 @@ namespace Oui\Player {
         protected $src = '//www.viddsee.com/player/';
     }
 
-    Viddsee::getInstance();
+    if (txpinterface === 'admin') {
+        Viddsee::getInstance();
+    }
 }

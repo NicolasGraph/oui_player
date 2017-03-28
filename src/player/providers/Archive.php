@@ -63,5 +63,7 @@ namespace Oui\Player {
         );
     }
 
-    Archive::getInstance();
+    if (txpinterface === 'admin') {
+        Archive::getInstance();
+    }
 }

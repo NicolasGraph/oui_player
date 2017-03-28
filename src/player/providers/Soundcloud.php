@@ -110,5 +110,7 @@ namespace Oui\Player {
         );
     }
 
-    Soundcloud::getInstance();
+    if (txpinterface === 'admin') {
+        Soundcloud::getInstance();
+    }
 }

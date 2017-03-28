@@ -81,5 +81,7 @@ namespace Oui\Player {
         );
     }
 
-    Bandcamp::getInstance();
+    if (txpinterface === 'admin') {
+        Bandcamp::getInstance();
+    }
 }

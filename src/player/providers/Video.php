@@ -147,5 +147,7 @@ namespace Oui\Player {
         }
     }
 
-    Video::getInstance();
+    if (txpinterface === 'admin') {
+        Video::getInstance();
+    }
 }
