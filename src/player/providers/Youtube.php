@@ -109,5 +109,5 @@ namespace Oui\Player {
         );
     }
 
-    new Youtube;
+    Youtube::getInstance();
 }

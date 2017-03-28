@@ -88,5 +88,5 @@ namespace Oui\Player {
         }
     }
 
-    new Vine;
+    Vine::getInstance();
 }

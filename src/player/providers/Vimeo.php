@@ -71,5 +71,5 @@ namespace Oui\Player {
         );
     }
 
-    new Vimeo;
+    Vimeo::getInstance();
 }

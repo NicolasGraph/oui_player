@@ -53,7 +53,7 @@ namespace Oui\Player {
             if ($tag === $this->plugin) {
                 foreach ($this->providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
-                    $obj = new $class;
+                    $obj = $class::getInstance();
                     $get_atts = $obj->getAtts($tag, $get_atts);
                 }
             }
@@ -68,7 +68,7 @@ namespace Oui\Player {
         {
             foreach ($this->providers as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = new $class;
+                $obj = $class::getInstance();
                 $obj->play = $this->play;
                 $infos = $obj->getInfos();
                 if ($infos) {
@@ -105,7 +105,7 @@ namespace Oui\Player {
         {
             $item = $this->getInfos();
             $class = __NAMESPACE__ . '\\' . $item['provider'];
-            $obj = new $class;
+            $obj = $class::getInstance();
             $obj->play = $item['id'];
             $obj->type = $item['type'];
             $obj->config = $this->config;

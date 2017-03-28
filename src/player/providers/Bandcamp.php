@@ -24,51 +24,62 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-class Oui_Player_Bandcamp extends Oui_Player_Provider
-{
-    protected $patterns = array('url' => '#^((http|https):\/\/[\S]+\/album\/([\S]+))#i' => '1');
-    protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
-    protected $glue = array('/', '/');
-    protected $dims = array(
-        'width'     => array(
-            'default' => '350',
-        ),
-        'height'    => array(
-            'default' => '470',
-        ),
-        'ratio'     => array(
-            'default' => '',
-        ),
-    );
-    protected $params = array(
-        'artwork'   => array(
-            'default' => '',
-        ),
-        'bgcol'     => array(
-            'default' => '#ffffff',
-            'valid'   => 'color',
-        ),
-        'linkcol'   => array(
-            'default' => '#0687f5',
-            'valid'   => 'color',
-        ),
-        'minimal'   => array(
-            'default' => 'false',
-            'valid'   => array('true', 'false'),
-        ),
-        'track'     => array(
-            'default' => '',
-        ),
-        'tracklist' => array(
-            'default' => 'false',
-            'valid'   => array('true', 'false'),
-        ),
-        'dims'      => array(
-            'default' => 'large',
-            'valid'   => array('small', 'medium', 'large'),
-        ),
-    );
-}
+namespace Oui\Player {
 
-$instance = Oui_Player_Bandcamp::getInstance();
-$instance->plugProvider();
+    class Bandcamp extends Provider
+    {
+        protected $patterns = array(
+            'album' => array(
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)$#i',
+                'id'     => 4,
+            ),
+            'track' => array(
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?[\S]+track=(\d+)\/?)#i',
+                'id'     => array(4, 5),
+            ),
+        );
+        protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
+        protected $glue = array('/', '/');
+        protected $dims = array(
+            'width'     => array(
+                'default' => '350',
+            ),
+            'height'    => array(
+                'default' => '470',
+            ),
+            'ratio'     => array(
+                'default' => '',
+            ),
+        );
+        protected $params = array(
+            'artwork'   => array(
+                'default' => '',
+            ),
+            'bgcol'     => array(
+                'default' => '#ffffff',
+                'valid'   => 'color',
+            ),
+            'linkcol'   => array(
+                'default' => '#0687f5',
+                'valid'   => 'color',
+            ),
+            'minimal'   => array(
+                'default' => 'false',
+                'valid'   => array('true', 'false'),
+            ),
+            'track'     => array(
+                'default' => '',
+            ),
+            'tracklist' => array(
+                'default' => 'false',
+                'valid'   => array('true', 'false'),
+            ),
+            'dims'      => array(
+                'default' => 'large',
+                'valid'   => array('small', 'medium', 'large'),
+            ),
+        );
+    }
+
+    Bandcamp::getInstance();
+}

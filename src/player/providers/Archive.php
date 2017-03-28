@@ -63,5 +63,5 @@ namespace Oui\Player {
         );
     }
 
-    new Archive;
+    Archive::getInstance();
 }

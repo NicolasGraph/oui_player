@@ -37,5 +37,5 @@ namespace Oui\Player {
         protected $src = '//media.myspace.com/play/video/';
     }
 
-    new Myspace;
+    Myspace::getInstance();
 }

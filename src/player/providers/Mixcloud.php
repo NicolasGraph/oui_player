@@ -70,5 +70,5 @@ namespace Oui\Player {
         );
     }
 
-    new Mixcloud;
+    Mixcloud::getInstance();
 }

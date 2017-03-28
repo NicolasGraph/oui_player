@@ -93,5 +93,5 @@ namespace Oui\Player {
         }
     }
 
-    new Audio;
+    Audio::getInstance();
 }

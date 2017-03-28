@@ -110,5 +110,5 @@ namespace Oui\Player {
         );
     }
 
-    new Soundcloud;
+    Soundcloud::getInstance();
 }

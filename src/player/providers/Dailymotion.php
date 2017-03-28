@@ -86,5 +86,5 @@ namespace Oui\Player {
         );
     }
 
-    new Dailymotion;
+    Dailymotion::getInstance();
 }

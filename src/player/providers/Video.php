@@ -147,5 +147,5 @@ namespace Oui\Player {
         }
     }
 
-    new Video;
+    Video::getInstance();
 }

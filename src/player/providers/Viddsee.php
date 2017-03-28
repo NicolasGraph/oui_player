@@ -37,5 +37,5 @@ namespace Oui\Player {
         protected $src = '//www.viddsee.com/player/';
     }
 
-    new Viddsee;
+    Viddsee::getInstance();
 }

@@ -102,5 +102,5 @@ namespace Oui\Player {
         }
     }
 
-    new Twitch;
+    Twitch::getInstance();
 }
