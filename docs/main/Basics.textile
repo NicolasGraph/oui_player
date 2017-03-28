@@ -2,11 +2,13 @@ notextile. <section id="basics" class="options_group">
 
 h2. Basics
 
-An extendable plugin to easily embed customized iframe players.
+An extendable plugin to easily embed customized audio and video players.
 
-p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes by its own without any external request for better performances.
+p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes and HTML5 players by its own without any external request for better performances.
 
 h3. Supported providers
+
+In addition to the HTML5 audio and video players allowing media reading, embed players are supported for the providers list below.
 
 * "Abc News":http://abcnews.go.com/video;
 * "Archive":https://archive.org/;

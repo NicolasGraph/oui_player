@@ -20,6 +20,8 @@
         "./docs/providers/Abcnews.textile",
         "./docs/providers/Archive.textile",
         "./docs/providers/Dailymotion.textile",
+        "./docs/providers/Audio.textile",
+        "./docs/providers/Video.textile",
         "./docs/providers/Mixcloud.textile",
         "./docs/providers/Myspace.textile",
         "./docs/providers/Soundcloud.textile",

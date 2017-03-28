@@ -11,6 +11,8 @@ notextile. <div role="group">
 * "ABC News player config":#abc
 * "Archive player config":#archive
 * "Dailymotion player config":#dailymotion
+* "HTML audio player config":#audio
+* "HTML video player config":#video
 * "Mixcloud player config":#mixcloud
 * "Myspace videos player config":#myspace
 * "Soundcloud player config":#soundcloud
