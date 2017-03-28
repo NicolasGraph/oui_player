@@ -76,8 +76,7 @@ namespace Oui\Player {
             foreach ($this->params as $param => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
-                $att = str_replace('-', '_', $param);
-                $value = isset($this->config[$att]) ? $this->config[$att] : '';
+                $value = isset($this->config[$param]) ? $this->config[$param] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && $pref !== $default) {
@@ -85,14 +84,14 @@ namespace Oui\Player {
                     if ($infos['valid'] === array('0', '1')) {
                         $params[] = $param;
                     } else {
-                        $params[] = $param . '="' . str_replace('#', '', $pref) . '"';
+                        $params[] = $param . '="' . $pref . '"';
                     }
                 } elseif ($value !== '') {
                     // Remove the # in the color attribute just in case…
                     if ($infos['valid'] === array('0', '1')) {
                         $params[] = $param;
                     } else {
-                        $params[] = $param . '="' . str_replace('#', '', $value) . '"';
+                        $params[] = $param . '="' . $value . '"';
                     }
                 }
             }
