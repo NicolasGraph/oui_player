@@ -42,6 +42,7 @@
         "./src/player/providers/Video.php",
         "./src/player/providers/Abcnews.php",
         "./src/player/providers/Archive.php",
+        "./src/player/providers/Bandcamp.php",
         "./src/player/providers/Dailymotion.php",
         "./src/player/providers/Mixcloud.php",
         "./src/player/providers/Myspace.php",

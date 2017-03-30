@@ -88,7 +88,7 @@ namespace Oui\Player {
 
                 $params = $this->getParams();
 
-                return '<audio src="' . $src . '"' . (empty($params) ?: ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_audio_unavailable') . '</audio>' . $this->append;
+                return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_audio_unavailable') . '</audio>' . $this->append;
             }
         }
     }
