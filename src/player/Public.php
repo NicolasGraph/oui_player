@@ -107,7 +107,6 @@ namespace Oui\Player {
             $class = __NAMESPACE__ . '\\' . $item['provider'];
             $obj = $class::getInstance();
             $obj->play = $item['id'];
-            $obj->type = $item['type'];
             $obj->config = $this->config;
             $out = $obj->getPlayer();
             if ($out) {

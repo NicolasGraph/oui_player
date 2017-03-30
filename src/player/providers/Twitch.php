@@ -59,12 +59,13 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (!empty($this->play)) {
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
                 $item = $this->getInfos();
-                $item ?: $item = array(
-                    'id'   => $this->play,
-                    'type' => preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel',
-                );
+                $id = $item['id'];
+                $type = $item['type'];
+            } else {
+                $id = $this->play;
+                $type = preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel';
             }
 
             if ($item) {

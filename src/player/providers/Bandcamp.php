@@ -30,15 +30,15 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'album' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)$#i',
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)#i',
                 'id'     => 4,
             ),
             'track' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?[\S]+track=(\d+)\/?)#i',
-                'id'     => array(4, 5),
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+track=(\d+)\/?)#i',
+                'id'     => 4,
             ),
         );
-        protected $src = '//bandcamp.com/EmbeddedPlayer/album=';
+        protected $src = '//bandcamp.com/EmbeddedPlayer/';
         protected $glue = array('/', '/');
         protected $dims = array(
             'width'     => array(
@@ -79,6 +79,68 @@ namespace Oui\Player {
                 'valid'   => array('small', 'medium', 'large'),
             ),
         );
+
+        /**
+         * Get the item URL, provider and ID from the play property.
+         */
+        public function getInfos()
+        {
+            $infos = false;
+
+            foreach ($this->patterns as $pattern => $options) {
+                if (preg_match($options['scheme'], $this->play, $matches)) {
+                    if (!is_array($infos)) {
+                        $infos = array(
+                            'url'      => $this->play,
+                            'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
+                            'id'       => $matches[$options['id']],
+                            'type'     => array($pattern),
+                        );
+                    } else {
+                        $infos['id'] .= 't' . $matches[$options['id']];
+                        $infos['type'][] = $pattern;
+                    }
+                }
+            }
+
+            return $infos;
+        }
+
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                $item = $this->getInfos();
+                $id = $item['id'];
+                $type = $item['type'];
+            } else {
+                $id = is_array($this->play) ? $this->play : explode('t', $this->play);
+                $type = array('album', 'track');
+            }
+
+            if ($id && $type) {
+                $suffix = '';
+                for ($i = 0; $i < count($type); $i++) {
+                    if ($id[$i]) {
+                        $suffix .= $type[$i] . '=' . $id[$i] . '/';
+                    }
+                }
+                $src = $this->src . $suffix;
+                $params = $this->getParams();
+
+                if (!empty($params)) {
+                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
+                    $src .= $glue[0] . implode($this->glue[1], $params);
+                }
+
+                $dims = $this->getSize();
+                extract($dims);
+
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            }
+        }
     }
 
     if (txpinterface === 'admin') {

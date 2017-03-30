@@ -104,19 +104,15 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (!empty($this->play)) {
-                $item = $this->getInfos();
-                $item ?: $item = array(
-                    'id'   => $this->play,
-                    'type' => $this->type,
-                );
-            }
+            $item = $this->getInfos();
+            $id = $item['id'];
+            $type = $item['type'];
 
             if ($item) {
-                if ($item['type'] === 'file') {
-                    $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $item['id'];
+                if ($type === 'file') {
+                    $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $id;
                 } else {
-                    $src = $item['id'];
+                    $src = $id;
                 }
 
                 $params = $this->getParams();

@@ -30,7 +30,6 @@ namespace Oui\Player {
     {
         public $play;
         public $config;
-        public $type = 'video';
 
         protected $patterns = array();
         protected $src;
@@ -210,16 +209,11 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (!empty($this->play)) {
-                $item = $this->getInfos();
-                $item ?: $item = array(
-                    'id'   => $this->play,
-                    'type' => $this->type,
-                );
-            }
+            $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
+            $id = isset($item['id']) ? $item['id'] : $this->play;
 
-            if ($item) {
-                $src = $this->src . $item['id'];
+            if ($id) {
+                $src = $this->src . $id;
                 $params = $this->getParams();
 
                 if (!empty($params)) {
