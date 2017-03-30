@@ -80,23 +80,6 @@ namespace Oui\Player {
                 $dims = $this->getSize();
                 extract($dims);
 
-                if (!$dims || !$height) {
-                    // Work out the aspect ratio.
-                    preg_match("/(\d+):(\d+)/", $ratio, $matches);
-                    if ($matches[0] && $matches[1]!=0 && $matches[2]!=0) {
-                        $aspect = $matches[1] / $matches[2];
-                    } else {
-                        $aspect = 1.778;
-                    }
-
-                    // Calcuate the new width/height.
-                    if ($width) {
-                        $height = $width / $aspect;
-                    } elseif ($height) {
-                        $width = $height * $aspect;
-                    }
-                }
-
                 return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
             }
         }
