@@ -150,7 +150,7 @@ namespace Oui\Player {
                 $value = isset($this->config[$att]) ? $this->config[$att] : '';
 
                 // Add attributes values in use or modified prefs values as player parameters.
-                if ($value === '' && $pref !== $default) {
+                if ($value === '' && ($pref !== $default || isset($infos['force']))) {
                     // Remove # from the color pref as a color type is used for the pref input.
                     $params[] = $param . '=' . str_replace('#', '', $pref);
                 } elseif ($value !== '') {
@@ -196,8 +196,12 @@ namespace Oui\Player {
                 // Calcuate the new width/height.
                 if ($dims['width']) {
                     $dims['height'] = $dims['width'] / $aspect;
+                    preg_match("/(\D+)/", $dims['width'], $unit);
+                    isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
                 } elseif ($dims['height']) {
                     $dims['width'] = $dims['height'] * $aspect;
+                    preg_match("/(\D+)/", $dims['width'], $unit);
+                    isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
                 }
             }
 

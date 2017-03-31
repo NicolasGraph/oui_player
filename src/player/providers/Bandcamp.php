@@ -45,16 +45,21 @@ namespace Oui\Player {
                 'default' => '350px',
             ),
             'height'    => array(
-                'default' => '588px',
+                'default' => '350px',
             ),
             'ratio'     => array(
                 'default' => '',
             ),
         );
         protected $params = array(
+            'size'      => array(
+                'default' => 'large',
+                'force'   => true,
+                'valid'   => array('large', 'small'),
+            ),
             'artwork'   => array(
-                'default' => 'big',
-                'valid'   => array('big', 'small'),
+                'default' => '',
+                'valid'   => array('', 'none', 'big', 'small'),
             ),
             'bgcol'     => array(
                 'default' => '#ffffff',
@@ -64,17 +69,9 @@ namespace Oui\Player {
                 'default' => '#0687f5',
                 'valid'   => 'color',
             ),
-            'minimal'   => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
             'tracklist' => array(
                 'default' => 'true',
                 'valid'   => array('true', 'false'),
-            ),
-            'size'      => array(
-                'default' => '',
-                'valid'   => array('large', 'small'),
             ),
         );
 
