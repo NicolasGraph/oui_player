@@ -30,11 +30,11 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'album' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)#i',
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?(album=\d+)\/?)#i',
                 'id'     => 4,
             ),
             'track' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+track=(\d+)\/?)#i',
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+(track=\d+)\/?)#i',
                 'id'     => 4,
             ),
         );
@@ -42,10 +42,10 @@ namespace Oui\Player {
         protected $glue = array('/', '/');
         protected $dims = array(
             'width'     => array(
-                'default' => '350',
+                'default' => '350px',
             ),
             'height'    => array(
-                'default' => '470',
+                'default' => '588px',
             ),
             'ratio'     => array(
                 'default' => '',
@@ -53,7 +53,8 @@ namespace Oui\Player {
         );
         protected $params = array(
             'artwork'   => array(
-                'default' => '',
+                'default' => 'big',
+                'valid'   => array('big', 'small'),
             ),
             'bgcol'     => array(
                 'default' => '#ffffff',
@@ -67,16 +68,13 @@ namespace Oui\Player {
                 'default' => 'false',
                 'valid'   => array('true', 'false'),
             ),
-            'track'     => array(
-                'default' => '',
-            ),
             'tracklist' => array(
-                'default' => 'false',
+                'default' => 'true',
                 'valid'   => array('true', 'false'),
             ),
-            'dims'      => array(
-                'default' => 'large',
-                'valid'   => array('small', 'medium', 'large'),
+            'size'      => array(
+                'default' => '',
+                'valid'   => array('large', 'small'),
             ),
         );
 
@@ -97,7 +95,7 @@ namespace Oui\Player {
                             'type'     => array($pattern),
                         );
                     } else {
-                        $infos['id'] .= 't' . $matches[$options['id']];
+                        $infos['id'] .= '/' . $matches[$options['id']];
                         $infos['type'][] = $pattern;
                     }
                 }
@@ -111,23 +109,11 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                $item = $this->getInfos();
-                $id = $item['id'];
-                $type = $item['type'];
-            } else {
-                $id = is_array($this->play) ? $this->play : explode('t', $this->play);
-                $type = array('album', 'track');
-            }
+            $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
+            $id = isset($item['id']) ? $item['id'] : $this->play;
 
-            if ($id && $type) {
-                $suffix = '';
-                for ($i = 0; $i < count($type); $i++) {
-                    if ($id[$i]) {
-                        $suffix .= $type[$i] . '=' . $id[$i] . '/';
-                    }
-                }
-                $src = $this->src . $suffix;
+            if ($id) {
+                $src = $this->src . $id;
                 $params = $this->getParams();
 
                 if (!empty($params)) {
@@ -138,7 +124,7 @@ namespace Oui\Player {
                 $dims = $this->getSize();
                 extract($dims);
 
-                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+                return '<iframe style="border: 0; width:' . $width . '; height:' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
             }
         }
     }
