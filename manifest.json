@@ -19,6 +19,7 @@
         "./docs/main/Tags.textile",
         "./docs/providers/Abcnews.textile",
         "./docs/providers/Archive.textile",
+        "./docs/providers/Bandcamp.textile",
         "./docs/providers/Dailymotion.textile",
         "./docs/providers/Audio.textile",
         "./docs/providers/Video.textile",

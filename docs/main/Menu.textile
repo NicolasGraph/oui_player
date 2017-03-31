@@ -10,6 +10,7 @@ notextile. <div role="group">
 * "Tags basics":#tags
 * "ABC News player config":#abc
 * "Archive player config":#archive
+* "Bandcamp player config":#bandcamp
 * "Dailymotion player config":#dailymotion
 * "HTML audio player config":#audio
 * "HTML video player config":#video
