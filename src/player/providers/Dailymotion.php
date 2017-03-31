@@ -24,69 +24,66 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Dailymotion extends Provider
+{
+    protected $patterns = array(
+        'video' => array(
+            'scheme' => '#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i',
+            'id'     => '8',
+        ),
+    );
+    protected $src = '//www.dailymotion.com/embed/video/';
+    protected $params = array(
+        'autoplay'             => array(
+            'default' => 'false',
+            'valid'   => array('true', 'false'),
+        ),
+        'controls'             => array(
+            'default' => 'true',
+            'valid'   => array('true', 'false'),
+        ),
+        'endscreen-enable'     => array(
+            'default' => 'true',
+            'valid'   => array('true', 'false'),
+        ),
+        'mute'                 => array(
+            'default' => 'false',
+            'valid'   => array('true', 'false'),
+        ),
+        'quality'              => array(
+            'default' => 'auto',
+            'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
+        ),
+        'sharing-enable'       => array(
+            'default' => 'true',
+            'valid'   => array('true', 'false'),
+        ),
+        'start'                => array(
+            'default' => '0',
+            'valid'   => 'number'
+        ),
+        'subtitles-default'    => array(
+            'default' => '',
+        ),
+        'ui-highlight'         => array(
+            'default' => '#ffcc33',
+            'valid'   => 'color',
+        ),
+        'ui-logo'              => array(
+            'default' => 'true',
+            'valid'   => array('true', 'false'),
+        ),
+        'ui-theme'             => array(
+            'default' => 'dark',
+            'valid'   => array('dark', 'light'),
+        ),
+        'ui-start-screen-info' => array(
+            'default' => 'true',
+            'valid'   => array('true', 'false'),
+        ),
+    );
+}
 
-    class Dailymotion extends Provider
-    {
-        protected $patterns = array(
-            'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(dailymotion\.com\/((embed\/video)|(video))|(dai\.ly?))\/([A-Za-z0-9]+)#i',
-                'id'     => '8',
-            ),
-        );
-        protected $src = '//www.dailymotion.com/embed/video/';
-        protected $params = array(
-            'autoplay'             => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
-            'controls'             => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
-            ),
-            'endscreen-enable'     => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
-            ),
-            'mute'                 => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
-            'quality'              => array(
-                'default' => 'auto',
-                'valid'   => array('auto', '240', '380', '480', '720', '1080', '1440', '2160'),
-            ),
-            'sharing-enable'       => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
-            ),
-            'start'                => array(
-                'default' => '0',
-                'valid'   => 'number'
-            ),
-            'subtitles-default'    => array(
-                'default' => '',
-            ),
-            'ui-highlight'         => array(
-                'default' => '#ffcc33',
-                'valid'   => 'color',
-            ),
-            'ui-logo'              => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
-            ),
-            'ui-theme'             => array(
-                'default' => 'dark',
-                'valid'   => array('dark', 'light'),
-            ),
-            'ui-start-screen-info' => array(
-                'default' => 'true',
-                'valid'   => array('true', 'false'),
-            ),
-        );
-    }
-
-    if (txpinterface === 'admin') {
-        Dailymotion::getInstance();
-    }
+if (txpinterface === 'admin') {
+    Dailymotion::getInstance();
 }

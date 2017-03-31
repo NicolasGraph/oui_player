@@ -24,68 +24,65 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
-
-    class Player
-    {
-        protected $plugin;
-        protected $providers;
-        protected $tags = array(
-            'oui_player' => array(
-                'class' => array(
-                    'default' => '',
-                ),
-                'label' => array(
-                    'default' => '',
-                ),
-                'labeltag' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
-                'play' => array(
-                    'default' => '',
-                ),
-                'wraptag' => array(
-                    'default' => '',
-                ),
+class Player
+{
+    protected $plugin;
+    protected $providers;
+    protected $tags = array(
+        'oui_player' => array(
+            'class' => array(
+                'default' => '',
             ),
-            'oui_if_player' => array(
-                'play' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
+            'label' => array(
+                'default' => '',
             ),
-        );
-        protected $privs = '1, 2';
-        protected $prefs = array(
-            'custom_field' => array(
-                'widget'  => 'oui_player_custom_fields',
-                'default' => 'article_image',
+            'labeltag' => array(
+                'default' => '',
             ),
             'provider' => array(
+                'default' => '',
             ),
-            'providers' => array(
+            'play' => array(
+                'default' => '',
             ),
-        );
+            'wraptag' => array(
+                'default' => '',
+            ),
+        ),
+        'oui_if_player' => array(
+            'play' => array(
+                'default' => '',
+            ),
+            'provider' => array(
+                'default' => '',
+            ),
+        ),
+    );
+    protected $privs = '1, 2';
+    protected $prefs = array(
+        'custom_field' => array(
+            'widget'  => 'oui_player_custom_fields',
+            'default' => 'article_image',
+        ),
+        'provider' => array(
+        ),
+        'providers' => array(
+        ),
+    );
 
-        private static $instance = null;
+    private static $instance = null;
 
-        /**
-         * Singleton.
-         */
-        public static function getInstance()
-        {
-            $class = get_called_class();
+    /**
+     * Singleton.
+     */
+    public static function getInstance()
+    {
+        $class = get_called_class();
 
-            if (!isset(self::$instance[$class])) {
-                self::$instance[$class] = new static();
-            }
-
-            return self::$instance[$class];
+        if (!isset(self::$instance[$class])) {
+            self::$instance[$class] = new static();
         }
+
+        return self::$instance[$class];
     }
 }

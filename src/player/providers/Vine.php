@@ -24,70 +24,67 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Vine extends Provider
+{
+    protected $patterns = array(
+        'video' => array(
+            'scheme' => '#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i',
+            'id'     => '3'
+        ),
+    );
+    protected $src = '//vine.co/v/';
+    protected $append = '<script src="https://platform.vine.co/static/scripts/embed.js"></script>';
+    protected $glue = array('/embed/', '?');
+    protected $dims = array(
+        'width'    => array(
+            'default' => '600',
+        ),
+        'height'   => array(
+            'default' => '600',
+        ),
+        'ratio'    => array(
+            'default' => '',
+        ),
+    );
+    protected $params = array(
+        'type' => array(
+            'default' => 'simple',
+            'valid'   => array('simple', 'postcard'),
+        ),
+        'audio' => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+    );
 
-    class Vine extends Provider
+    /**
+     * Get player parameters in in use.
+     */
+    public function getParams()
     {
-        protected $patterns = array(
-            'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i',
-                'id'     => '3'
-            ),
-        );
-        protected $src = '//vine.co/v/';
-        protected $append = '<script src="https://platform.vine.co/static/scripts/embed.js"></script>';
-        protected $glue = array('/embed/', '?');
-        protected $dims = array(
-            'width'    => array(
-                'default' => '600',
-            ),
-            'height'   => array(
-                'default' => '600',
-            ),
-            'ratio'    => array(
-                'default' => '',
-            ),
-        );
-        protected $params = array(
-            'type' => array(
-                'default' => 'simple',
-                'valid'   => array('simple', 'postcard'),
-            ),
-            'audio' => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-        );
+        $params = array();
 
-        /**
-         * Get player parameters in in use.
-         */
-        public function getParams()
-        {
-            $params = array();
+        foreach ($this->params as $param => $infos) {
+            $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+            $default = $infos['default'];
+            $value = isset($this->config[$param]) ? $this->config[$param] : '';
 
-            foreach ($this->params as $param => $infos) {
-                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
-                $default = $infos['default'];
-                $value = isset($this->config[$param]) ? $this->config[$param] : '';
-
-                // Add attributes values in use or modified prefs values as player parameters.
-                if ($param === 'type') {
-                    $params[] = $value ?: $pref;
-                } elseif ($value === '' && $pref !== $default) {
-                    // Remove # from the color pref as a color type is used for the pref input.
-                    $params[] = $param . '=' . $pref;
-                } elseif ($value !== '') {
-                    // Remove the # in the color attribute just in case…
-                    $params[] = $param . '=' . $value;
-                }
+            // Add attributes values in use or modified prefs values as player parameters.
+            if ($param === 'type') {
+                $params[] = $value ?: $pref;
+            } elseif ($value === '' && $pref !== $default) {
+                // Remove # from the color pref as a color type is used for the pref input.
+                $params[] = $param . '=' . $pref;
+            } elseif ($value !== '') {
+                // Remove the # in the color attribute just in case…
+                $params[] = $param . '=' . $value;
             }
-
-            return $params;
         }
-    }
 
-    if (txpinterface === 'admin') {
-        Vine::getInstance();
+        return $params;
     }
+}
+
+if (txpinterface === 'admin') {
+    Vine::getInstance();
 }

@@ -24,53 +24,50 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Mixcloud extends Provider
+{
+    protected $patterns = array(
+        'audio' => array(
+            'scheme' => '#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i',
+            'id'     => '1',
+        ),
+    );
+    protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
+    protected $dims = array(
+        'width'        => array(
+            'default' => '100%',
+        ),
+        'height'       => array(
+            'default' => '400',
+        ),
+        'ratio'        => array(
+            'default' => '',
+        ),
+    );
+    protected $params = array(
+        'autoplay'     => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'light'        => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'hide_artwork' => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'hide_cover'   => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'mini'         => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+    );
+}
 
-    class Mixcloud extends Provider
-    {
-        protected $patterns = array(
-            'audio' => array(
-                'scheme' => '#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i',
-                'id'     => '1',
-            ),
-        );
-        protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
-        protected $dims = array(
-            'width'        => array(
-                'default' => '100%',
-            ),
-            'height'       => array(
-                'default' => '400',
-            ),
-            'ratio'        => array(
-                'default' => '',
-            ),
-        );
-        protected $params = array(
-            'autoplay'     => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'light'        => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'hide_artwork' => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'hide_cover'   => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'mini'         => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-        );
-    }
-
-    if (txpinterface === 'admin') {
-        Mixcloud::getInstance();
-    }
+if (txpinterface === 'admin') {
+    Mixcloud::getInstance();
 }

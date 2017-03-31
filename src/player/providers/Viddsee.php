@@ -24,20 +24,17 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Viddsee extends Provider
+{
+    protected $patterns = array(
+        'video' => array(
+            'scheme' => '#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i',
+            'id'     => '6',
+        ),
+    );
+    protected $src = '//www.viddsee.com/player/';
+}
 
-    class Viddsee extends Provider
-    {
-        protected $patterns = array(
-            'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i',
-                'id'     => '6',
-            ),
-        );
-        protected $src = '//www.viddsee.com/player/';
-    }
-
-    if (txpinterface === 'admin') {
-        Viddsee::getInstance();
-    }
+if (txpinterface === 'admin') {
+    Viddsee::getInstance();
 }

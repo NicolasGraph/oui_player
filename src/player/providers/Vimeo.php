@@ -24,54 +24,51 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Vimeo extends Provider
+{
+    protected $patterns = array(
+        'video' => array(
+            'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
+            'id'     => '5',
+        ),
+    );
+    protected $src = '//player.vimeo.com/video/';
+    protected $params = array(
+        'autopause' => array(
+            'default' => '1',
+            'valid'   => array('0', '1'),
+        ),
+        'autoplay'  => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'badge'     => array(
+            'default' => '1',
+            'valid'   => array('0', '1'),
+        ),
+        'byline'    => array(
+            'default' => '1',
+            'valid'   => array('0', '1'),
+        ),
+        'color'     => array(
+            'default' => '#00adef',
+            'valid'   => 'color',
+        ),
+        'loop'      => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'portrait'  => array(
+            'default' => '1',
+            'valid'   => array('0', '1'),
+        ),
+        'title'     => array(
+            'default' => '1',
+            'valid'   => array('0', '1'),
+        ),
+    );
+}
 
-    class Vimeo extends Provider
-    {
-        protected $patterns = array(
-            'video' => array(
-                'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
-                'id'     => '5',
-            ),
-        );
-        protected $src = '//player.vimeo.com/video/';
-        protected $params = array(
-            'autopause' => array(
-                'default' => '1',
-                'valid'   => array('0', '1'),
-            ),
-            'autoplay'  => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'badge'     => array(
-                'default' => '1',
-                'valid'   => array('0', '1'),
-            ),
-            'byline'    => array(
-                'default' => '1',
-                'valid'   => array('0', '1'),
-            ),
-            'color'     => array(
-                'default' => '#00adef',
-                'valid'   => 'color',
-            ),
-            'loop'      => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'portrait'  => array(
-                'default' => '1',
-                'valid'   => array('0', '1'),
-            ),
-            'title'     => array(
-                'default' => '1',
-                'valid'   => array('0', '1'),
-            ),
-        );
-    }
-
-    if (txpinterface === 'admin') {
-        Vimeo::getInstance();
-    }
+if (txpinterface === 'admin') {
+    Vimeo::getInstance();
 }

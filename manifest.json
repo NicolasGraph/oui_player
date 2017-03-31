@@ -38,6 +38,7 @@
         "./docs/misc/_bottom.textile"
     ]},
     "code": {"file" : [
+        "./src/player/namespaces/plugin_begin.php",
         "./src/player/providers/Provider.php",
         "./src/player/providers/Audio.php",
         "./src/player/providers/Video.php",
@@ -56,7 +57,10 @@
         "./src/player/Player.php",
         "./src/player/Admin.php",
         "./src/player/Public.php",
+        "./src/player/namespaces/plugin_end.php",
+        "./src/player/namespaces/global_begin.php",
         "./src/lib.php",
-        "./src/tags.php"
+        "./src/tags.php",
+        "./src/player/namespaces/global_end.php"
     ]}
 }

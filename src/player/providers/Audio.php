@@ -24,72 +24,69 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace Oui\Player {
+class Audio extends Video
+{
+    protected $patterns = array(
+        'file' => array(
+            'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+            'id'     => '1',
+        ),
+        'url' => array(
+            'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+            'id'     => '1',
+        ),
+    );
+    protected $dims = array();
+    protected $params = array(
+        'autoplay' => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'controls' => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'loop'     => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'muted'    => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
+        'preload'  => array(
+            'default' => 'auto',
+            'valid'   => array('none', 'metadata', 'auto'),
+        ),
+        'volume'   => array(
+            'default' => '',
+            'valid'   => 'number',
+        ),
+    );
 
-    class Audio extends Video
+    /**
+     * Get the player code
+     */
+    public function getPlayer()
     {
-        protected $patterns = array(
-            'file' => array(
-                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
-                'id'     => '1',
-            ),
-            'url' => array(
-                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
-                'id'     => '1',
-            ),
-        );
-        protected $dims = array();
-        protected $params = array(
-            'autoplay' => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'controls' => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'loop'     => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'muted'    => array(
-                'default' => '0',
-                'valid'   => array('0', '1'),
-            ),
-            'preload'  => array(
-                'default' => 'auto',
-                'valid'   => array('none', 'metadata', 'auto'),
-            ),
-            'volume'   => array(
-                'default' => '',
-                'valid'   => 'number',
-            ),
-        );
+        $item = $this->getInfos();
+        $id = $item['id'];
+        $type = $item['type'];
 
-        /**
-         * Get the player code
-         */
-        public function getPlayer()
-        {
-            $item = $this->getInfos();
-            $id = $item['id'];
-            $type = $item['type'];
-
-            if ($id && $type) {
-                if ($type === 'file') {
-                    $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $id;
-                } else {
-                    $src = $id;
-                }
-
-                $params = $this->getParams();
-
-                return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_audio_unavailable') . '</audio>' . $this->append;
+        if ($id && $type) {
+            if ($type === 'file') {
+                $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $id;
+            } else {
+                $src = $id;
             }
+
+            $params = $this->getParams();
+
+            return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_audio_unavailable') . '</audio>' . $this->append;
         }
     }
+}
 
-    if (txpinterface === 'admin') {
-        Audio::getInstance();
-    }
+if (txpinterface === 'admin') {
+    Audio::getInstance();
 }
