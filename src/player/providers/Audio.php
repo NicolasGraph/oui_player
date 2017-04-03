@@ -87,7 +87,7 @@ class Audio extends Video
 
             $params = $this->getParams();
 
-            return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></audio>' . $this->append;
+            return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></audio>';
         }
     }
 }

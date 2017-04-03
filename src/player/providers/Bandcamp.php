@@ -119,7 +119,7 @@ class Bandcamp extends Provider
             $dims = $this->getSize();
             extract($dims);
 
-            return '<iframe style="border: 0; width:' . $width . '; height:' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            return '<iframe style="border: 0; width:' . $width . '; height:' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
         }
     }
 }
