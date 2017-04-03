@@ -30,24 +30,24 @@ class Admin extends Player
     {
         if (txpinterface === 'admin') {
             $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            $this->providers = callback_event($this->plugin, 'plug_providers', 0, 'Provider');
+            $this->providers = \callback_event($this->plugin, 'plug_providers', 0, 'Provider');
 
             $this->prefs['provider']['valid'] = $this->providers;
             $this->prefs['provider']['default'] = $this->prefs['provider']['valid'][0];
             $this->prefs['providers']['default'] = implode(', ', $this->prefs['provider']['valid']);
 
-            add_privs('plugin_prefs.' . $this->plugin, $this->privs);
-            add_privs('prefs.' . $this->plugin, $this->privs);
+            \add_privs('plugin_prefs.' . $this->plugin, $this->privs);
+            \add_privs('prefs.' . $this->plugin, $this->privs);
 
-            register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
-            register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
+            \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
+            \register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
 
             // Add privs to provider prefs only if they are enabled.
             foreach ($this->providers as $provider) {
                 $group = $this->plugin . '_' . strtolower($provider);
                 $pref = $group . '_prefs';
                 if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                    add_privs('prefs.' . $group, $this->privs);
+                    \add_privs('prefs.' . $group, $this->privs);
                 }
             }
         } else {
@@ -71,8 +71,8 @@ class Admin extends Player
                 $this->deleteOldPrefs();
                 break;
             case 'deleted':
-                safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
-                safe_delete('txp_lang', "owner = '" . $this->plugin . "'");
+                \safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
+                \safe_delete('txp_lang', "owner = '" . $this->plugin . "'");
                 break;
         }
     }
@@ -130,12 +130,12 @@ class Admin extends Player
             $vals = array();
 
             foreach ($valid as $value) {
-                $value === '' ?: $vals[$value] = gtxt($name . '_' . $value);
+                $value === '' ?: $vals[$value] = \gtxt($name . '_' . $value);
             }
 
-            return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+            return \selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
         } else {
-            return fInput($valid, $name, $val);
+            return \fInput($valid, $name, $val);
         }
     }
 
@@ -199,7 +199,7 @@ class Admin extends Player
     {
         $prefs = $this->getPrefs();
 
-        safe_delete(
+        \safe_delete(
             'txp_prefs',
             "event LIKE '" . $this->plugin . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
         );

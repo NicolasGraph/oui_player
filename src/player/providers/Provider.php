@@ -69,7 +69,7 @@ abstract class Provider
     {
         // Plug in Oui\Player class
         $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-        register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);
+        \register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);
     }
 
     /**

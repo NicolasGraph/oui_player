@@ -78,11 +78,11 @@ class Audio extends Video
                 $src = $id;
             } else {
                 if ($type === 'id') {
-                    $file = fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                    $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
                 } elseif ($type === 'filename') {
-                    $file = fileDownloadFetchInfo("filename = '".doSlash($id)."' and created <= ".now('created'));
+                    $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
                 }
-                $src = filedownloadurl($file['id'], $file['filename']);
+                $src = \filedownloadurl($file['id'], $file['filename']);
             }
 
             $params = $this->getParams();
