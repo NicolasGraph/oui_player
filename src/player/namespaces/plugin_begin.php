@@ -24,4 +24,4 @@
  * along with this program; if not, see https://www.gnu.org/licenses/.
  */
 
-namespace {
+namespace Oui\Player {
