@@ -31,7 +31,7 @@ abstract class Provider
 
     protected $patterns = array();
     protected $src;
-    protected $append;
+    protected $script;
     protected $dims = array(
         'width'    => array(
             'default' => '640',
@@ -70,6 +70,10 @@ abstract class Provider
         // Plug in Oui\Player class
         $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
         \register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);
+
+        if (isset($this->script)) {
+            \register_callback(array($this, 'getScript'), 'textpattern_end');
+        }
     }
 
     /**
@@ -78,6 +82,18 @@ abstract class Provider
     public function getProvider()
     {
         return array(substr(strrchr(get_class($this), '\\'), 1));
+    }
+
+
+    /**
+     * Get the class name as the provider name.
+     */
+    public function getScript()
+    {
+        if ($ob = ob_get_contents()) {
+            ob_clean();
+            echo str_replace('</body>', '<script src="' . $this->script . '"></script>' . n . '</body>', $ob);
+        }
     }
 
     /**
@@ -226,7 +242,7 @@ abstract class Provider
             $dims = $this->getSize();
             extract($dims);
 
-            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
         }
     }
 }

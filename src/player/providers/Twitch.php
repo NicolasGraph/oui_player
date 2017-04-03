@@ -79,7 +79,7 @@ class Twitch extends Provider
             $dims = $this->getSize();
             extract($dims);
 
-            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>' . $this->append;
+            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
         }
     }
 }
