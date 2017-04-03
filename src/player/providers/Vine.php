@@ -33,7 +33,7 @@ class Vine extends Provider
         ),
     );
     protected $src = '//vine.co/v/';
-    protected $append = '<script src="https://platform.vine.co/static/scripts/embed.js"></script>';
+    protected $script = 'https://platform.vine.co/static/scripts/embed.js';
     protected $glue = array('/embed/', '?');
     protected $dims = array(
         'width'    => array(
