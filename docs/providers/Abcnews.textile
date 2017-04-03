@@ -4,9 +4,9 @@ h2. Abc News player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s)://abcnews.go.com/…/video/…[*id*]
-* http(s)://abcnews.go.com/video/embed?id=[*id*]
+* *ID* (using @abcnews@ as the @provider@ attribute value.)
+* http(s)://abcnews.go.com/…/video/…[*ID*]
+* http(s)://abcnews.go.com/video/embed?id=[*ID*]
 
 h3. Player size
 

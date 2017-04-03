@@ -4,9 +4,9 @@ h2. Archive player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s):(www.)//archive.org/details/[*id*]
-* http(s):(www.)//archive.org/embed/[*id*]
+* *ID* (using @archive@ as the @provider@ attribute value.)
+* http(s):(www.)//archive.org/details/[*ID*]
+* http(s):(www.)//archive.org/embed/[*ID*]
 
 h3. Player size
 

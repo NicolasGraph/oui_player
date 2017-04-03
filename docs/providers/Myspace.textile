@@ -4,8 +4,8 @@ h2. Myspace videos player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s)://myspace.com/…/video/…/[*id*]
+* *ID* (using @myspace@ as the @provider@ attribute value.)
+* http(s)://myspace.com/…/video/…/[*ID*]
 
 h3. Player size
 

@@ -4,9 +4,9 @@ h2. Viddsee player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s):(www.)//viddsee.com/video/…/[*id*]
-* http(s):(www.)//viddsee.com/player/[*id*]
+* *ID* (using @viddsee@ as the @provider@ attribute value.)
+* http(s):(www.)//viddsee.com/video/…/[*ID*]
+* http(s):(www.)//viddsee.com/player/[*ID*]
 
 h3. Player size
 

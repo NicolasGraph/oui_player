@@ -4,10 +4,10 @@ h2. Dailymotion player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s)://dai.ly/[*id*]
-* http(s)://www.dailymotion.com/video/[*id*]…
-* http(s)://www.dailymotion.com/embed/video/[*id*]
+* *ID* (using @bandcamp@ as the @provider@ attribute value.)
+* http(s)://dai.ly/[*ID*]
+* http(s)://www.dailymotion.com/video/[*ID*]…
+* http(s)://www.dailymotion.com/embed/video/[*ID*]
 
 h3. Player size
 

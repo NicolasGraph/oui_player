@@ -4,9 +4,9 @@ h2. Vimeo player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s)://vimeo.com/[*id*]
-* http(s)://player.vimeo.com/video/[*id*]
+* *ID* (using @vimeo@ as the @provider@ attribute value.)
+* http(s)://vimeo.com/[*ID*]
+* http(s)://player.vimeo.com/video/[*ID*]
 
 h3. Player size
 

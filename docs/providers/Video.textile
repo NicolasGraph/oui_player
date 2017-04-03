@@ -4,7 +4,9 @@ h2. HTML video player config
 
 h3. Recognised values for the @play@ attribute
 
-An uploaded file name or a file URL using one of the following extension: *.mp4*, *.ogv* or *.wbm*;
+* *ID* (using @video@ as the @provider@ attribute value.)
+* *filename* using one of the following extension: *.mp4*, *.ogv* or *.wbm*;
+* *URL* using one of the following extension: *.mp4*, *.ogv* or *.wbm*;
 
 h3. Player size
 
@@ -31,7 +33,7 @@ Enables the automatic playing if set to @1@.
 *Default:* related plugin pref
 *Initial:* @0@
 *valid:* @0@ or @1@ =:
-- @controlse@ :=
+- @controls@ :=
 Displays the player controls.
 *Default:* related plugin pref
 *Initial:* @0@

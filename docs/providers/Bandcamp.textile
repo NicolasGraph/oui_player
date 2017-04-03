@@ -4,12 +4,12 @@ h2. Bandcamp player config
 
 h3. Recognised values for the @play@ attribute
 
-* album=[*id*]
-* track=[*id*]
-* album=[*id*]/track=[*id*] 
-* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*id*]
-* http(s)://bandcamp.com/(EmbeddedPlayer/)track=[*id*]
-* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*id*]/(…/)track=[*id*]
+* album=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* album=[*ID*]/track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]
+* http(s)://bandcamp.com/(EmbeddedPlayer/)track=[*ID*]
+* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]/(…/)track=[*ID*]
 
 h3. Player size
 
