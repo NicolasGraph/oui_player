@@ -27,7 +27,7 @@
 class Video extends Provider
 {
     protected $patterns = array(
-        'file' => array(
+        'filename' => array(
             'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
             'id'     => '1',
         ),
@@ -78,14 +78,12 @@ class Video extends Provider
 
             // Add attributes values in use or modified prefs values as player parameters.
             if ($value === '' && $pref !== $default) {
-                // Remove # from the color pref as a color type is used for the pref input.
                 if ($infos['valid'] === array('0', '1')) {
                     $params[] = $param;
                 } else {
                     $params[] = $param . '="' . $pref . '"';
                 }
             } elseif ($value !== '') {
-                // Remove the # in the color attribute just in case…
                 if ($infos['valid'] === array('0', '1')) {
                     $params[] = $param;
                 } else {
@@ -102,15 +100,20 @@ class Video extends Provider
      */
     public function getPlayer()
     {
-        $item = $this->getInfos();
-        $id = $item['id'];
-        $type = $item['type'];
+        $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
+        $id = isset($item['id']) ? $item['id'] : $this->play;
+        $type = isset($item['type']) ? $item['type'] : 'id';
 
         if ($item) {
-            if ($type === 'file') {
-                $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $id;
-            } else {
+            if ($type === 'url') {
                 $src = $id;
+            } else {
+                if ($type === 'id') {
+                    $file = fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                } elseif ($type === 'filename') {
+                    $file = fileDownloadFetchInfo("filename = '".doSlash($id)."' and created <= ".now('created'));
+                }
+                $src = filedownloadurl($file['id'], $file['filename']);
             }
 
             $params = $this->getParams();

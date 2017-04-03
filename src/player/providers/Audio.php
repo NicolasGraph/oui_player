@@ -27,7 +27,7 @@
 class Audio extends Video
 {
     protected $patterns = array(
-        'file' => array(
+        'filename' => array(
             'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
             'id'     => '1',
         ),
@@ -69,15 +69,20 @@ class Audio extends Video
      */
     public function getPlayer()
     {
-        $item = $this->getInfos();
-        $id = $item['id'];
-        $type = $item['type'];
+        $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
+        $id = isset($item['id']) ? $item['id'] : $this->play;
+        $type = isset($item['type']) ? $item['type'] : 'id';
 
-        if ($id && $type) {
-            if ($type === 'file') {
-                $src = substr($GLOBALS['file_base_path'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $id;
-            } else {
+        if ($item) {
+            if ($type === 'url') {
                 $src = $id;
+            } else {
+                if ($type === 'id') {
+                    $file = fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                } elseif ($type === 'filename') {
+                    $file = fileDownloadFetchInfo("filename = '".doSlash($id)."' and created <= ".now('created'));
+                }
+                $src = filedownloadurl($file['id'], $file['filename']);
             }
 
             $params = $this->getParams();
