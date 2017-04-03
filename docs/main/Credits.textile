@@ -13,9 +13,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *v1.3.0* (2017-03-28)
-** Fixes prefs display and improves perfs;
-** introduces HTML5 players;
+* *v1.3.0-beta* (2017-04-01)
+** Fixes multiple players prefs display and improves perfs;
+** adds support for:
+*** "Bandcamp":https://bandcamp.com/;
+*** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;
 * *v1.2.1* (2017-01-16)
 ** Fixes the _Field used by default_ pref display when no custom field exists;
 ** fixes Textpack typo;
