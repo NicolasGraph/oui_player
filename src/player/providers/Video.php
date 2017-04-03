@@ -121,7 +121,7 @@ class Video extends Provider
             $dims = $this->getSize();
             extract($dims);
 
-            return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '>' . \gtxt('oui_player_video_unavailable') . '</video>' . $this->append;
+            return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></video>' . $this->append;
         }
     }
 }
