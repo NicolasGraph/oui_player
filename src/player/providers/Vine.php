@@ -73,10 +73,8 @@ class Vine extends Provider
             if ($param === 'type') {
                 $params[] = $value ?: $pref;
             } elseif ($value === '' && $pref !== $default) {
-                // Remove # from the color pref as a color type is used for the pref input.
                 $params[] = $param . '=' . $pref;
             } elseif ($value !== '') {
-                // Remove the # in the color attribute just in case…
                 $params[] = $param . '=' . $value;
             }
         }
