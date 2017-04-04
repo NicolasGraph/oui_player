@@ -172,7 +172,7 @@ class Admin extends Player
         $position = 250;
 
         foreach ($prefs as $pref => $options) {
-            if (\get_pref($pref, null) === null) {
+            if ($pref === 'oui_player_providers' || \get_pref($pref, null) === null) {
                 \set_pref(
                     $pref,
                     $options['default'],
