@@ -63,7 +63,7 @@ class Audio extends Video
      */
     public function getPlayer()
     {
-        $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
+        $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
         $id = isset($item['id']) ? $item['id'] : $this->play;
         $type = isset($item['type']) ? $item['type'] : 'id';
 
