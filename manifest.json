@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
     "description" : "Embed customised players",
-    "version"     : "1.2.1",
+    "version"     : "1.3.0-beta",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
@@ -19,7 +19,10 @@
         "./docs/main/Tags.textile",
         "./docs/providers/Abcnews.textile",
         "./docs/providers/Archive.textile",
+        "./docs/providers/Bandcamp.textile",
         "./docs/providers/Dailymotion.textile",
+        "./docs/providers/Audio.textile",
+        "./docs/providers/Video.textile",
         "./docs/providers/Mixcloud.textile",
         "./docs/providers/Myspace.textile",
         "./docs/providers/Soundcloud.textile",
@@ -35,9 +38,13 @@
         "./docs/misc/_bottom.textile"
     ]},
     "code": {"file" : [
+        "./src/player/namespaces/plugin_begin.php",
         "./src/player/providers/Provider.php",
+        "./src/player/providers/Audio.php",
+        "./src/player/providers/Video.php",
         "./src/player/providers/Abcnews.php",
         "./src/player/providers/Archive.php",
+        "./src/player/providers/Bandcamp.php",
         "./src/player/providers/Dailymotion.php",
         "./src/player/providers/Mixcloud.php",
         "./src/player/providers/Myspace.php",
@@ -50,7 +57,10 @@
         "./src/player/Player.php",
         "./src/player/Admin.php",
         "./src/player/Public.php",
+        "./src/player/namespaces/plugin_end.php",
+        "./src/player/namespaces/global_begin.php",
         "./src/lib.php",
-        "./src/tags.php"
+        "./src/tags.php",
+        "./src/player/namespaces/global_end.php"
     ]}
 }

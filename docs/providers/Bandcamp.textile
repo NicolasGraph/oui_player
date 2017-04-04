@@ -1,0 +1,62 @@
+notextile. <section id="bandcamp" class="options_group">
+
+h2. Bandcamp player config
+
+h3. Recognised values for the @play@ attribute
+
+* album=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* album=[*ID*]/track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]
+* http(s)://bandcamp.com/(EmbeddedPlayer/)track=[*ID*]
+* http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]/(…/)track=[*ID*]
+
+h3. Player size
+
+- @width@ :=
+The width of the player.
+*Default:* related plugin pref
+*Initial:* @350px@
+*valid:* @<length>@ =:
+- @height@ :=
+The height of the player.
+*Default:* related plugin pref
+*Initial:* @350px@
+*valid:* @<length>@ =:
+- @ratio@ :=
+The ratio used to calculate the missing value for the width or the height.
+*Default:* related plugin pref
+*Initial:* none
+*valid:* integer[@:@]integer =:
+
+h3. Player parameters (aplhabetical order)
+
+- @artwork@ :=
+Defines the artwork size.
+*Default:* related plugin pref
+*Initial:* @big@
+*valid:* @big@ or @small@ =:
+- @bgcol@ :=
+Background color.
+*Default:* related plugin pref
+*Initial:* @#ffffff@
+*valid:* hexadecimal color value =:
+- @linkcol@ :=
+Links colors.
+*Default:* related plugin pref
+*Initial:* @#0687f5@
+*valid:* hexadecimal color value =:
+- @tracklist@ :=
+Displays the tracklist.
+*Default:* related plugin pref
+*Initial:* @true@
+*valid:* @true@ or @false@ =:
+- @size@ :=
+Defines the player size type; recommended width and height values are: 
+* @big@: @350px@ × @470px@ (without the tracklist)
+* @small@: @100%@ × @120px@ (or @42px@ for a slim player)
+*Default:* related plugin pref
+*Initial:* none
+*valid:* @big@ or @small@ =:
+
+notextile. </section>

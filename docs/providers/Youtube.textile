@@ -4,11 +4,11 @@ h2. Youtube player config
 
 h3. Recognised values for the @play@ attribute
 
-* *id*
-* http(s)://(www.)youtu.be/[*id*]
-* http(s)://(www.)youtube.com/v/[*id*]
-* http(s)://(www.)youtube.com/watch?v=[*id*]
-* http(s)://(www.)youtube.com/embed/[*id*]
+* *ID* (using @youtube@ as the @provider@ attribute value.)
+* http(s)://(www.)youtu.be/[*ID*]
+* http(s)://(www.)youtube.com/v/[*ID*]
+* http(s)://(www.)youtube.com/watch?v=[*ID*]
+* http(s)://(www.)youtube.com/embed/[*ID*]
 
 h3. Player size
 

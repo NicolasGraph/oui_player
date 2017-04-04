@@ -32,7 +32,7 @@ h4. Main tag attributes
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 - @play@ :=
-The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (Soundcloud accepts URL's only and Twitch id's must be prefixed with a @v@).
+The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values).
 *default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs.
 *valid:* URL, id or custom field name =:
 - @provider@ :=

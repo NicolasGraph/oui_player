@@ -1,12 +1,13 @@
 # oui_player (formerly oui_video)
 
-An extendable plugin to easily embed customized iframe players in [Textpattern CMS](http://www.textpatern.com).
+An extendable plugin to easily display HTML5 players or embed customized iframe players in [Textpattern CMS](http://www.textpatern.com).
 This plugin does not use oembed, it builds iframe embedding codes by its own without any external request.
 
 ## Supported providers
 
 * [Abc News](http://abcnews.go.com/video);
 * [Archive](https://archive.org/);
+* [Bandcamp](https://bandcamp.com/);
 * [Dailymotion](http://www.dailymotion.com/);
 * [Mixcloud](https://www.mixcloud.com/);
 * [Myspace videos](https://myspace.com/myspace/videos);

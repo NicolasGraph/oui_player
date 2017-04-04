@@ -18,17 +18,4 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Myspace extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/myspace\.com\/[\S]+\/video\/[\S]+\/(\d+)$#i',
-            'id'     => '2',
-        ),
-    );
-    protected $src = '//media.myspace.com/play/video/';
-}
-
-if (txpinterface === 'admin') {
-    Myspace::getInstance();
 }

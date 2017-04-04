@@ -13,10 +13,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
+* *v1.3.0-beta* (2017-04-04)
+** Fixes multiple players prefs display and improves perfs;
+** Improves scripts embedding;
+** adds support for:
+*** "Bandcamp":https://bandcamp.com/;
+*** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;
 * *v1.2.1* (2017-01-16)
 ** Fixes the _Field used by default_ pref display when no custom field exists;
-** Fixes Textpack typo;
-** Lighten compiled code by removing license related comments;
+** fixes Textpack typo;
+** lighten compiled code by removing license related comments;
 * *v1.2.0* (2016-12-12)
 ** sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
 ** introduces a @play@ attribute value inheritance in a conditional/container tag context;
