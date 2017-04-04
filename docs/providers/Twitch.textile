@@ -44,6 +44,6 @@ Starts playback at the given timestamp.
 *Initial:* @true@
 *Format:* @1h2m3s@ =:
 
-p(alert-block information). %(ui-icon ui-icon-info).% More informations on "this GitHub webpage":https://github.com/justintv/Twitch-API/blob/master/embed-video.md
+p(alert-block information). %(ui-icon ui-icon-info).% More informations on "this GitHub webpage":https://dev.twitch.tv/docs/v5/guides/embed-video/
 
 notextile. </section>

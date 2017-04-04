@@ -21,7 +21,7 @@ The width of the player.
 - @height@ :=
 The height of the player.
 *Default:* related plugin pref
-*Initial:* @588px@
+*Initial:* @350px@
 *valid:* @<length>@ =:
 - @ratio@ :=
 The ratio used to calculate the missing value for the width or the height.
@@ -46,11 +46,6 @@ Links colors.
 *Default:* related plugin pref
 *Initial:* @#0687f5@
 *valid:* hexadecimal color value =:
-- @minimal@ :=
-Displays the artwork only; usually needs equal width and height values.
-*Default:* related plugin pref
-*Initial:* @false@
-*valid:* @true@ or @false@ =:
 - @tracklist@ :=
 Displays the tracklist.
 *Default:* related plugin pref
@@ -58,8 +53,8 @@ Displays the tracklist.
 *valid:* @true@ or @false@ =:
 - @size@ :=
 Defines the player size type; recommended width and height values are: 
-* @big@: @350px@ × (@588px@ or @470px@ without the tracklist)
-* @small@: @100%@ × (@120px@ or @42px@ for a slim player)
+* @big@: @350px@ × @470px@ (without the tracklist)
+* @small@: @100%@ × @120px@ (or @42px@ for a slim player)
 *Default:* related plugin pref
 *Initial:* none
 *valid:* @big@ or @small@ =:

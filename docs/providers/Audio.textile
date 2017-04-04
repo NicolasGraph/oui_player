@@ -5,8 +5,8 @@ h2. HTML audio player config
 h3. Recognised values for the @play@ attribute
 
 * *ID* (using @audio@ as the @provider@ attribute value.)
-* *filename* using one of the following extension: *.mp3*, *.m4a*, *.ogg*, *.oga*, *.webma* or *.wav*;;
-* *URL* using one of the following extension: *.mp3*, *.m4a*, *.ogg*, *.oga*, *.webma* or *.wav*;
+* *filename* using one of the following extension: @.mp3@, @.m4a@, @.ogg@, @.oga@, @.webma@ or @.wav@
+* *URL* using one of the following extension: @.mp3@, @.m4a@, @.ogg@, @.oga@, @.webma@ or @.wav@
 
 h3. Player parameters (aplhabetical order)
 
