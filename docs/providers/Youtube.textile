@@ -4,7 +4,7 @@ h2. Youtube player config
 
 h3. Recognised values for the @play@ attribute
 
-* *ID* (using @youtube@ as the @provider@ attribute value.)
+* *ID* (using @youtube@ as provider.)
 * http(s)://(www.)youtu.be/[*ID*]
 * http(s)://(www.)youtube.com/v/[*ID*]
 * http(s)://(www.)youtube.com/watch?v=[*ID*]

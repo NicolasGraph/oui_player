@@ -4,9 +4,9 @@ h2. Bandcamp player config
 
 h3. Recognised values for the @play@ attribute
 
-* album=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
-* track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
-* album=[*ID*]/track=[*ID*] (using @bandcamp@ as the @provider@ attribute value.)
+* album=[*ID*] (using @bandcamp@ as provider.)
+* track=[*ID*] (using @bandcamp@ as provider.)
+* album=[*ID*]/track=[*ID*] (using @bandcamp@ as provider.)
 * http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]
 * http(s)://bandcamp.com/(EmbeddedPlayer/)track=[*ID*]
 * http(s)://bandcamp.com/(EmbeddedPlayer/)album=[*ID*]/(…/)track=[*ID*]
