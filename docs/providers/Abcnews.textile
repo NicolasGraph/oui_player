@@ -4,7 +4,7 @@ h2. Abc News player config
 
 h3. Recognised values for the @play@ attribute
 
-* *ID* (using @abcnews@ as the @provider@ attribute value.)
+* *ID* (using @abcnews@ as provider.)
 * http(s)://abcnews.go.com/…/video/…[*ID*]
 * http(s)://abcnews.go.com/video/embed?id=[*ID*]
 

@@ -4,7 +4,7 @@ h2. Vine player config
 
 h3. Recognised values for the @play@ attribute
 
-* *ID* (using @vine@ as the @provider@ attribute value.)
+* *ID* (using @vine@ as provider.)
 * http(s)://(www.)vine.co/v/[*ID*]
 
 h3. Player size

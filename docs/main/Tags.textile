@@ -48,14 +48,14 @@ h3. oui_if_player
 
 In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
 
-bc. <txp:oui_if_player play="…">
+bc. <txp:oui_if_player>
 […]
 </txp:oui_if_player>
 
 h4. Attributes
 
 - @play@ :=
-An URL or a custom field containing an URL to check against valid video URL schemes.
+The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values).
 *Default:* The custom field value of the one selected in the plugin prefs. =:
 - @provider@ :=
 Check the URL against valid URL schemes of the provided provider.

@@ -211,6 +211,7 @@ oui_player_youtube_iv_load_policy_1 => Activer par défaut
 oui_player_youtube_iv_load_policy_3 => Désactiver par défault
 oui_player_youtube_loop => Lire en boucle
 oui_player_youtube_modestbranding => Logo discret
+oui_player_youtube_origin => URL du domaine diffuseur
 oui_player_youtube_playsinline => Empêcher la lecture plein écran par défaut sur iOS
 oui_player_youtube_playlist => Liste de vidéos (id's) à lire ensuite
 oui_player_youtube_rel => Afficher les vidéos associées en fin de lecture

@@ -4,7 +4,7 @@ h2. Twitch player config
 
 h3. Recognised values for the @play@ attribute
 
-* v[*ID*] (using @twitch@ as the @provider@ attribute value.)
+* v[*ID*] (using @twitch@ as provider.)
 * http(s)://(www.)twitch.tv/…/v/[*ID*] (video)
 * http(s)://(www.)twitch.tv/[*ID*] (channel)
 

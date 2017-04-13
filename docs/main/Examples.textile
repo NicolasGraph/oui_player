@@ -16,6 +16,8 @@ bc(language-markup). <txp:oui_player provider="vimeo" play="https://vimeo.com/15
 
 h3. Display a player from manually filled ID
 
+Using the favourite provider set in the prefs.
+
 bc(language-markup). <txp:oui_player play="x4l8awd" />
 
 …or, in conjonction with the @provider@ attribute…
