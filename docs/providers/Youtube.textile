@@ -91,6 +91,12 @@ Lets you use a YouTube player that does not show a YouTube logo.
 *Default:* related plugin pref
 *Initial:* @0@
 *valid:* @0@ or @1@ =:
+- @origin@ :=
+URL scheme (@http://@ or @https://@) and full domain of your host page.
+Required for @https://@ URL's; including it protects against malicious third-party JavaScript being injected into your page and hijacking control of your YouTube player.
+*Default:* related plugin pref
+*Initial:* none
+*valid:* URL =:
 - @playlist@ :=
 A list of video id's to read after the one provided via the @video@ attribute.
 *Default:* related plugin pref
