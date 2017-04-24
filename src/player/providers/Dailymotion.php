@@ -28,6 +28,10 @@ class Dailymotion extends Provider
     );
     protected $src = '//www.dailymotion.com/embed/video/';
     protected $params = array(
+        'api'                  => array(
+            'default' => '',
+            'valid'   => array('', 'postMessage', 'location', '1'),
+        ),
         'autoplay'             => array(
             'default' => 'false',
             'valid'   => array('true', 'false'),
@@ -43,6 +47,9 @@ class Dailymotion extends Provider
         'mute'                 => array(
             'default' => 'false',
             'valid'   => array('true', 'false'),
+        ),
+        'origin'               => array(
+            'default' => '',
         ),
         'quality'              => array(
             'default' => 'auto',

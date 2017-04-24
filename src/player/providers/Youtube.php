@@ -52,6 +52,10 @@ class Youtube extends Provider
             'default' => '0',
             'valid'   => array('0', '1'),
         ),
+        'enablejsapi'    => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
         'end'            => array(
             'default' => '',
             'valid'   => 'number',
