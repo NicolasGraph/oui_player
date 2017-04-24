@@ -28,16 +28,16 @@ class Vimeo extends Provider
     );
     protected $src = '//player.vimeo.com/video/';
     protected $params = array(
+        'api' => array(
+            'default' => '0',
+            'valid'   => array('0', '1'),
+        ),
         'autopause' => array(
             'default' => '1',
             'valid'   => array('0', '1'),
         ),
         'autoplay'  => array(
             'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'badge'     => array(
-            'default' => '1',
             'valid'   => array('0', '1'),
         ),
         'byline'    => array(

@@ -13,10 +13,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *v1.3.0-beta-2* (2017-04-04)
+* *v1.3.0-beta-3* (2017-04-04)
 ** Fixes multiple players prefs display and improves perfs;
 ** Improves scripts embedding;
-** Adds "Youtube":https://www.youtube.com/ player parameter @origin@;
+** Adds Youtube player parameters @enablejsapi@ and @origin@;
+** Adds Dailymotion player parameters @api@ and @origin@;
+** Adds Vimeo player parameter @api@ and removes @badge@;
 ** adds support for:
 *** "Bandcamp":https://bandcamp.com/;
 *** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;

@@ -61,6 +61,11 @@ Disables keyboard commands.
 *Default:* related plugin pref
 *Initial:* @0@
 *valid:* @0@ or @1@ =:
+- @enablejsapi@ :=
+Enables or disables "the javascript player api":https://developers.google.com/youtube/js_api_reference.
+*Default:* related plugin pref
+*Initial:* @0@
+*valid:* @0@ or @1@ =:
 - @end@ :=
 Specifies the time, measured in seconds, when the player should stop playing the video.
 *Default:* related plugin pref
