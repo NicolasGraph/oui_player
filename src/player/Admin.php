@@ -124,7 +124,7 @@ class Admin extends Player
             $vals = array();
 
             foreach ($valid as $value) {
-                $value === '' ?: $vals[$value] = \gtxt($name . '_' . $value);
+                $value === '' ?: $vals[$value] = \gtxt($name . '_' . strtolower($value));
             }
 
             return \selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
