@@ -1,9 +1,9 @@
 {
     "name": "oui/oui_player",
-    "description": "Embed customised players.",
+    "description": "Configurable players embedding plugin for Textpattern CMS",
     "keywords": ["textpattern", "plugin"],
     "homepage": "https://github.com/NicolasGraph/oui_player",
-    "license": "GPL-2.0",
+    "license": "MIT",
     "type": "textpattern-plugin",
     "authors": [
         {
@@ -14,7 +14,7 @@
     ],
     "support": {
         "issues": "https://github.com/NicolasGraph/oui_player/issues",
-        "source": "https://github.com/NicolasGraph/oui_player"
+        "source": "https://github.com/NicolasGraph/oui_player/src"
     },
     "autoload": {
         "files": []
