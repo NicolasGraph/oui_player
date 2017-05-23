@@ -60,7 +60,7 @@ class Admin extends Player
     public function lifeCycle($evt, $stp)
     {
         switch ($stp) {
-            case 'enabled':
+            case 'installed':
                 $this->setPrefs();
                 $this->deleteOldPrefs();
                 break;
