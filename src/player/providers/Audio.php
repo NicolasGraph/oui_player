@@ -18,74 +18,77 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Audio extends Video
-{
-    protected $patterns = array(
-        'filename' => array(
-            'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
-            'id'     => '1',
-        ),
-        'url' => array(
-            'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
-            'id'     => '1',
-        ),
-    );
-    protected $dims = array();
-    protected $params = array(
-        'autoplay' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'controls' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'loop'     => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'muted'    => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'preload'  => array(
-            'default' => 'auto',
-            'valid'   => array('none', 'metadata', 'auto'),
-        ),
-        'volume'   => array(
-            'default' => '',
-            'valid'   => 'number',
-        ),
-    );
+    namespace Oui\Player {
 
-    /**
-     * Get the player code
-     */
-    public function getPlayer()
+    class Audio extends Video
     {
-        $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
-        $id = isset($item['id']) ? $item['id'] : $this->play;
-        $type = isset($item['type']) ? $item['type'] : 'id';
+        protected $patterns = array(
+            'filename' => array(
+                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+                'id'     => '1',
+            ),
+            'url' => array(
+                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+                'id'     => '1',
+            ),
+        );
+        protected $dims = array();
+        protected $params = array(
+            'autoplay' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'controls' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'loop'     => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'muted'    => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'preload'  => array(
+                'default' => 'auto',
+                'valid'   => array('none', 'metadata', 'auto'),
+            ),
+            'volume'   => array(
+                'default' => '',
+                'valid'   => 'number',
+            ),
+        );
 
-        if ($item) {
-            if ($type === 'url') {
-                $src = $id;
-            } else {
-                if ($type === 'id') {
-                    $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
-                } elseif ($type === 'filename') {
-                    $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
+            $id = isset($item['id']) ? $item['id'] : $this->play;
+            $type = isset($item['type']) ? $item['type'] : 'id';
+
+            if ($item) {
+                if ($type === 'url') {
+                    $src = $id;
+                } else {
+                    if ($type === 'id') {
+                        $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                    } elseif ($type === 'filename') {
+                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+                    }
+                    $src = \filedownloadurl($file['id'], $file['filename']);
                 }
-                $src = \filedownloadurl($file['id'], $file['filename']);
+
+                $params = $this->getParams();
+
+                return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></audio>';
             }
-
-            $params = $this->getParams();
-
-            return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></audio>';
         }
     }
-}
 
-if (txpinterface === 'admin') {
-    Audio::getInstance();
+    if (txpinterface === 'admin') {
+        Audio::getInstance();
+    }
 }

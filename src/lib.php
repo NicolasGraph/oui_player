@@ -21,38 +21,40 @@
 /**
  * Plugin pref functions
  */
+namespace {
 
-function oui_player_pref_widget($name, $val)
-{
-    $class = 'Oui\Player\Admin';
-    $obj = $class::getInstance();
-    $widget = $obj->prefFunction($name, $val);
-    return $widget;
-}
-
-function oui_player_custom_fields($name, $val)
-{
-    $vals = array();
-    $vals['article_image'] = gtxt('article_image');
-    $vals['excerpt'] = gtxt('excerpt');
-
-    $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
-
-    if ($custom_fields) {
-        foreach ($custom_fields as $row) {
-            $vals[$row['val']] = $row['val'];
-        }
+    function oui_player_pref_widget($name, $val)
+    {
+        $class = 'Oui\Player\Admin';
+        $obj = $class::getInstance();
+        $widget = $obj->prefFunction($name, $val);
+        return $widget;
     }
 
-    return selectInput($name, $vals, $val);
-}
+    function oui_player_custom_fields($name, $val)
+    {
+        $vals = array();
+        $vals['article_image'] = gtxt('article_image');
+        $vals['excerpt'] = gtxt('excerpt');
 
-function oui_player_truefalseradio($field, $checked = '', $tabindex = 0, $id = '')
-{
-    $vals = array(
-        'false' => gTxt('no'),
-        'true' => gTxt('yes'),
-    );
+        $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
 
-    return radioSet($vals, $field, $checked, $tabindex, $id);
+        if ($custom_fields) {
+            foreach ($custom_fields as $row) {
+                $vals[$row['val']] = $row['val'];
+            }
+        }
+
+        return selectInput($name, $vals, $val);
+    }
+
+    function oui_player_truefalseradio($field, $checked = '', $tabindex = 0, $id = '')
+    {
+        $vals = array(
+            'false' => gTxt('no'),
+            'true' => gTxt('yes'),
+        );
+
+        return radioSet($vals, $field, $checked, $tabindex, $id);
+    }
 }

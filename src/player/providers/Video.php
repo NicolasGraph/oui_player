@@ -18,108 +18,111 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Video extends Provider
-{
-    protected $patterns = array(
-        'filename' => array(
-            'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
-            'id'     => '1',
-        ),
-        'url' => array(
-            'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
-            'id'     => '1',
-        ),
-    );
-    protected $src = '';
-    protected $params = array(
-        'autoplay' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'controls' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'loop'     => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'muted'     => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'poster'  => array(
-            'default' => '',
-            'valid'   => 'url',
-        ),
-        'preload'  => array(
-            'default' => 'auto',
-            'valid'   => array('none', 'metadata', 'auto'),
-        ),
-    );
+namespace Oui\Player {
 
-    /**
-     * Get player parameters in in use.
-     */
-    public function getParams()
+    class Video extends Provider
     {
-        $params = array();
+        protected $patterns = array(
+            'filename' => array(
+                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
+                'id'     => '1',
+            ),
+            'url' => array(
+                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
+                'id'     => '1',
+            ),
+        );
+        protected $src = '';
+        protected $params = array(
+            'autoplay' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'controls' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'loop'     => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'muted'     => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'poster'  => array(
+                'default' => '',
+                'valid'   => 'url',
+            ),
+            'preload'  => array(
+                'default' => 'auto',
+                'valid'   => array('none', 'metadata', 'auto'),
+            ),
+        );
 
-        foreach ($this->params as $param => $infos) {
-            $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
-            $default = $infos['default'];
-            $value = isset($this->config[$param]) ? $this->config[$param] : '';
+        /**
+         * Get player parameters in in use.
+         */
+        public function getParams()
+        {
+            $params = array();
 
-            // Add attributes values in use or modified prefs values as player parameters.
-            if ($value === '' && $pref !== $default) {
-                if ($infos['valid'] === array('0', '1')) {
-                    $params[] = $param;
-                } else {
-                    $params[] = $param . '="' . $pref . '"';
-                }
-            } elseif ($value !== '') {
-                if ($infos['valid'] === array('0', '1')) {
-                    $params[] = $param;
-                } else {
-                    $params[] = $param . '="' . $value . '"';
+            foreach ($this->params as $param => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+                $default = $infos['default'];
+                $value = isset($this->config[$param]) ? $this->config[$param] : '';
+
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($value === '' && $pref !== $default) {
+                    if ($infos['valid'] === array('0', '1')) {
+                        $params[] = $param;
+                    } else {
+                        $params[] = $param . '="' . $pref . '"';
+                    }
+                } elseif ($value !== '') {
+                    if ($infos['valid'] === array('0', '1')) {
+                        $params[] = $param;
+                    } else {
+                        $params[] = $param . '="' . $value . '"';
+                    }
                 }
             }
+
+            return $params;
         }
 
-        return $params;
-    }
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
+            $id = isset($item['id']) ? $item['id'] : $this->play;
+            $type = isset($item['type']) ? $item['type'] : 'id';
 
-    /**
-     * Get the player code
-     */
-    public function getPlayer()
-    {
-        $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
-        $id = isset($item['id']) ? $item['id'] : $this->play;
-        $type = isset($item['type']) ? $item['type'] : 'id';
-
-        if ($item) {
-            if ($type === 'url') {
-                $src = $id;
-            } else {
-                if ($type === 'id') {
-                    $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
-                } elseif ($type === 'filename') {
-                    $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+            if ($item) {
+                if ($type === 'url') {
+                    $src = $id;
+                } else {
+                    if ($type === 'id') {
+                        $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                    } elseif ($type === 'filename') {
+                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+                    }
+                    $src = \filedownloadurl($file['id'], $file['filename']);
                 }
-                $src = \filedownloadurl($file['id'], $file['filename']);
+
+                $params = $this->getParams();
+
+                $dims = $this->getSize();
+                extract($dims);
+
+                return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></video>';
             }
-
-            $params = $this->getParams();
-
-            $dims = $this->getSize();
-            extract($dims);
-
-            return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></video>';
         }
     }
-}
 
-if (txpinterface === 'admin') {
-    Video::getInstance();
+    if (txpinterface === 'admin') {
+        Video::getInstance();
+    }
 }

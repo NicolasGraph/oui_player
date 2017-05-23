@@ -18,43 +18,46 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Archive extends Provider
-{
-    protected $patterns = array(
-        'unknown' => array(
-            'scheme' => '#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i',
-            'id'     => '4',
-        ),
-    );
-    protected $src = '//archive.org/embed/';
-    protected $glue = array('&amp;', '&amp;');
-    protected $dims = array(
-        'width'    => array(
-            'default' => '640',
-        ),
-        'height'   => array(
-            'default' => '480',
-        ),
-        'ratio'    => array(
-            'default' => '',
-        ),
-    );
-    protected $params = array(
-        'autoplay' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'playlist' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'poster'   => array(
-            'default' => '',
-            'valid'   => 'url',
-        ),
-    );
-}
+namespace Oui\Player {
 
-if (txpinterface === 'admin') {
-    Archive::getInstance();
+    class Archive extends Provider
+    {
+        protected $patterns = array(
+            'unknown' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i',
+                'id'     => '4',
+            ),
+        );
+        protected $src = '//archive.org/embed/';
+        protected $glue = array('&amp;', '&amp;');
+        protected $dims = array(
+            'width'    => array(
+                'default' => '640',
+            ),
+            'height'   => array(
+                'default' => '480',
+            ),
+            'ratio'    => array(
+                'default' => '',
+            ),
+        );
+        protected $params = array(
+            'autoplay' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'playlist' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'poster'   => array(
+                'default' => '',
+                'valid'   => 'url',
+            ),
+        );
+    }
+
+    if (txpinterface === 'admin') {
+        Archive::getInstance();
+    }
 }

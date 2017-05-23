@@ -18,51 +18,54 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Vimeo extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
-            'id'     => '5',
-        ),
-    );
-    protected $src = '//player.vimeo.com/video/';
-    protected $params = array(
-        'api' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'autopause' => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'autoplay'  => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'byline'    => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'color'     => array(
-            'default' => '#00adef',
-            'valid'   => 'color',
-        ),
-        'loop'      => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'portrait'  => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'title'     => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-    );
-}
+namespace Oui\Player {
 
-if (txpinterface === 'admin') {
-    Vimeo::getInstance();
+    class Vimeo extends Provider
+    {
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
+                'id'     => '5',
+            ),
+        );
+        protected $src = '//player.vimeo.com/video/';
+        protected $params = array(
+            'api' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'autopause' => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'autoplay'  => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'byline'    => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'color'     => array(
+                'default' => '#00adef',
+                'valid'   => 'color',
+            ),
+            'loop'      => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'portrait'  => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'title'     => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+        );
+    }
+
+    if (txpinterface === 'admin') {
+        Vimeo::getInstance();
+    }
 }

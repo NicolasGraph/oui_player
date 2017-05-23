@@ -18,65 +18,68 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Vine extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i',
-            'id'     => '3'
-        ),
-    );
-    protected $src = '//vine.co/v/';
-    protected $script = 'https://platform.vine.co/static/scripts/embed.js';
-    protected $glue = array('/embed/', '?');
-    protected $dims = array(
-        'width'    => array(
-            'default' => '600',
-        ),
-        'height'   => array(
-            'default' => '600',
-        ),
-        'ratio'    => array(
-            'default' => '',
-        ),
-    );
-    protected $params = array(
-        'type' => array(
-            'default' => 'simple',
-            'valid'   => array('simple', 'postcard'),
-        ),
-        'audio' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-    );
+namespace Oui\Player {
 
-    /**
-     * Get player parameters in in use.
-     */
-    public function getParams()
+    class Vine extends Provider
     {
-        $params = array();
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?vine.co\/v\/([^\&\?\/]+)#i',
+                'id'     => '3'
+            ),
+        );
+        protected $src = '//vine.co/v/';
+        protected $script = 'https://platform.vine.co/static/scripts/embed.js';
+        protected $glue = array('/embed/', '?');
+        protected $dims = array(
+            'width'    => array(
+                'default' => '600',
+            ),
+            'height'   => array(
+                'default' => '600',
+            ),
+            'ratio'    => array(
+                'default' => '',
+            ),
+        );
+        protected $params = array(
+            'type' => array(
+                'default' => 'simple',
+                'valid'   => array('simple', 'postcard'),
+            ),
+            'audio' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+        );
 
-        foreach ($this->params as $param => $infos) {
-            $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
-            $default = $infos['default'];
-            $value = isset($this->config[$param]) ? $this->config[$param] : '';
+        /**
+         * Get player parameters in in use.
+         */
+        public function getParams()
+        {
+            $params = array();
 
-            // Add attributes values in use or modified prefs values as player parameters.
-            if ($param === 'type') {
-                $params[] = $value ?: $pref;
-            } elseif ($value === '' && $pref !== $default) {
-                $params[] = $param . '=' . $pref;
-            } elseif ($value !== '') {
-                $params[] = $param . '=' . $value;
+            foreach ($this->params as $param => $infos) {
+                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+                $default = $infos['default'];
+                $value = isset($this->config[$param]) ? $this->config[$param] : '';
+
+                // Add attributes values in use or modified prefs values as player parameters.
+                if ($param === 'type') {
+                    $params[] = $value ?: $pref;
+                } elseif ($value === '' && $pref !== $default) {
+                    $params[] = $param . '=' . $pref;
+                } elseif ($value !== '') {
+                    $params[] = $param . '=' . $value;
+                }
             }
+
+            return $params;
         }
-
-        return $params;
     }
-}
 
-if (txpinterface === 'admin') {
-    Vine::getInstance();
+    if (txpinterface === 'admin') {
+        Vine::getInstance();
+    }
 }

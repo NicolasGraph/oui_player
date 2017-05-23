@@ -18,17 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Viddsee extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i',
-            'id'     => '6',
-        ),
-    );
-    protected $src = '//www.viddsee.com/player/';
-}
+namespace Oui\Player {
 
-if (txpinterface === 'admin') {
-    Viddsee::getInstance();
+    class Viddsee extends Provider
+    {
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(viddsee\.com\/(video|player)\/)(\S+\/)?([^\&\?\/]+)$#i',
+                'id'     => '6',
+            ),
+        );
+        protected $src = '//www.viddsee.com/player/';
+    }
+
+    if (txpinterface === 'admin') {
+        Viddsee::getInstance();
+    }
 }
