@@ -18,97 +18,100 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Youtube extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i',
-            'id'     => '8'
-        ),
-    );
-    protected $src = '//www.youtube-nocookie.com/embed/';
-    protected $params = array(
-        'autohide'       => array(
-            'default' => '2',
-            'valid'   => array('0', '1', '2'),
-        ),
-        'autoplay'       => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'cc_load_policy' => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'color'          => array(
-            'default' => 'red',
-            'valid'   => array('red', 'white'),
-        ),
-        'controls'       => array(
-            'default' => '1',
-            'valid'   => array('0', '1', '2'),
-        ),
-        'disablekb'      => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'enablejsapi'    => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'end'            => array(
-            'default' => '',
-            'valid'   => 'number',
-        ),
-        'fs'             => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'hl'             => array(
-            'default' => '',
-        ),
-        'iv_load_policy' => array(
-            'default' => '1',
-            'valid'   => array('1', '3'),
-        ),
-        'loop'           => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'modestbranding' => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'origin'    => array(
-            'default' => '',
-            'valid'   => 'url',
-        ),
-        'playlist'    => array(
-            'default' => '',
-        ),
-        'playsinline'    => array(
-            'default' => '0',
-            'valid'   => array('0', '1'),
-        ),
-        'rel'            => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'start'          => array(
-            'default' => '0',
-            'valid'   => 'number',
-        ),
-        'showinfo'       => array(
-            'default' => '1',
-            'valid'   => array('0', '1'),
-        ),
-        'theme'          => array(
-            'default' => 'dark',
-            'valid'   => array('dark', 'light'),
-        ),
-    );
-}
+namespace Oui\Player {
 
-if (txpinterface === 'admin') {
-    Youtube::getInstance();
+    class Youtube extends Provider
+    {
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i',
+                'id'     => '8'
+            ),
+        );
+        protected $src = '//www.youtube-nocookie.com/embed/';
+        protected $params = array(
+            'autohide'       => array(
+                'default' => '2',
+                'valid'   => array('0', '1', '2'),
+            ),
+            'autoplay'       => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'cc_load_policy' => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'color'          => array(
+                'default' => 'red',
+                'valid'   => array('red', 'white'),
+            ),
+            'controls'       => array(
+                'default' => '1',
+                'valid'   => array('0', '1', '2'),
+            ),
+            'disablekb'      => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'enablejsapi'    => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'end'            => array(
+                'default' => '',
+                'valid'   => 'number',
+            ),
+            'fs'             => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'hl'             => array(
+                'default' => '',
+            ),
+            'iv_load_policy' => array(
+                'default' => '1',
+                'valid'   => array('1', '3'),
+            ),
+            'loop'           => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'modestbranding' => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'origin'    => array(
+                'default' => '',
+                'valid'   => 'url',
+            ),
+            'playlist'    => array(
+                'default' => '',
+            ),
+            'playsinline'    => array(
+                'default' => '0',
+                'valid'   => array('0', '1'),
+            ),
+            'rel'            => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'start'          => array(
+                'default' => '0',
+                'valid'   => 'number',
+            ),
+            'showinfo'       => array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            ),
+            'theme'          => array(
+                'default' => 'dark',
+                'valid'   => array('dark', 'light'),
+            ),
+        );
+    }
+
+    if (txpinterface === 'admin') {
+        Youtube::getInstance();
+    }
 }

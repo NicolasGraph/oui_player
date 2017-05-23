@@ -18,15 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Abcnews extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i',
-            'id'     => '4',
-        ),
-    );
-    protected $src = '//abcnews.go.com/video/embed?id=';
-}
+namespace Oui\Player {
 
-Abcnews::getInstance();
+    class Abcnews extends Provider
+    {
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i',
+                'id'     => '4',
+            ),
+        );
+        protected $src = '//abcnews.go.com/video/embed?id=';
+    }
+
+    Abcnews::getInstance();
+}

@@ -18,66 +18,69 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Twitch extends Provider
-{
-    protected $patterns = array(
-        'video' => array(
-            'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/v\/([0-9]+))$#i',
-            'id'     => '4',
-        ),
-        'channel' => array(
-            'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/([^\&\?\/]+))$#i',
-            'id'     => '4',
-        ),
-    );
-    protected $src = '//player.twitch.tv/';
-    protected $params = array(
-        'autoplay' => array(
-            'default' => 'true',
-            'valid'   => array('true', 'false'),
-        ),
-        'muted'    => array(
-            'default' => 'false',
-            'valid'   => array('true', 'false'),
-        ),
-        'time'     => array(
-            'default' => '',
-            'valid'   => 'number',
-        ),
-    );
+namespace Oui\Player {
 
-    /**
-     * Get the player code
-     */
-    public function getPlayer()
+    class Twitch extends Provider
     {
-        if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-            $item = $this->getInfos();
-            $id = $item['id'];
-            $type = $item['type'];
-        } else {
-            $id = $this->play;
-            $type = preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel';
-        }
+        protected $patterns = array(
+            'video' => array(
+                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/v\/([0-9]+))$#i',
+                'id'     => '4',
+            ),
+            'channel' => array(
+                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/([^\&\?\/]+))$#i',
+                'id'     => '4',
+            ),
+        );
+        protected $src = '//player.twitch.tv/';
+        protected $params = array(
+            'autoplay' => array(
+                'default' => 'true',
+                'valid'   => array('true', 'false'),
+            ),
+            'muted'    => array(
+                'default' => 'false',
+                'valid'   => array('true', 'false'),
+            ),
+            'time'     => array(
+                'default' => '',
+                'valid'   => 'number',
+            ),
+        );
 
-        if ($item) {
-            $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
-            $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
-            $params = $this->getParams();
-
-            if (!empty($params)) {
-                $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                $src .= $glue[0] . implode($this->glue[1], $params);
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                $item = $this->getInfos();
+                $id = $item['id'];
+                $type = $item['type'];
+            } else {
+                $id = $this->play;
+                $type = preg_match('/[0-9]+/', $this->play) ? 'video' : 'channel';
             }
 
-            $dims = $this->getSize();
-            extract($dims);
+            if ($item) {
+                $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
+                $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
+                $params = $this->getParams();
 
-            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+                if (!empty($params)) {
+                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
+                    $src .= $glue[0] . implode($this->glue[1], $params);
+                }
+
+                $dims = $this->getSize();
+                extract($dims);
+
+                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+            }
         }
     }
-}
 
-if (txpinterface === 'admin') {
-    Twitch::getInstance();
+    if (txpinterface === 'admin') {
+        Twitch::getInstance();
+    }
 }
