@@ -14,7 +14,7 @@
     ],
     "support": {
         "issues": "https://github.com/NicolasGraph/oui_player/issues",
-        "source": "https://github.com/NicolasGraph/oui_player/src"
+        "source": "https://github.com/NicolasGraph/oui_player"
     },
     "autoload": {
         "files": []
