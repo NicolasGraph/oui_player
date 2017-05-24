@@ -13,7 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *v1.3.0* (2017-05-04)
+* *v1.3.0* (2017-05-24)
 ** Adds "Composer":https://getcomposer.org/ support for "textpattern/installer":https://packagist.org/packages/textpattern/installer;
 ** fixes multiple players prefs display and improves perfs;
 ** improves scripts embedding;
