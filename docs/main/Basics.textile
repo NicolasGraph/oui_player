@@ -31,7 +31,7 @@ oui_player's minimum requirements:
 
 h2. Customization (advanced users)
 
-This plugin can be customized by excluding/adding providers via the _manifest.json_ file. Then it can be installed via "Composer"":https://getcomposer.org or compiled via this "MassPlugCompiler fork":https://github.com/NicolasGraph/MassPlugCompiler.
+This plugin can be customized by excluding/adding providers via the _manifest.json_ file. Then it can be installed via "Composer":https://getcomposer.org or compiled via this "MassPlugCompiler fork":https://github.com/NicolasGraph/MassPlugCompiler.
 
 h2. Installation
 
