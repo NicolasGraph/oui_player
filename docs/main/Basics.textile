@@ -47,11 +47,11 @@ h3. Via Composer
 After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 
 # Target your project directory:
-bc. $ cd /path/to/your/textpattern/installation/dir
+@$ cd /path/to/your/textpattern/installation/dir@
 # If it's not already done, lock your version of Txp:
-bc. $ composer require textpattern/lock:4.6.2
+@$ composer require textpattern/lock:4.6.2@, where @4.6.2@ is the Txp version in use.
 # Install oui_player:
-bc. $ composer require oui/oui_player
+@$ composer require oui/oui_player@
 # Connect to the Txp admin interface and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
 
 h2. Update
