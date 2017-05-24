@@ -13,12 +13,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 h2. Changelog
 
-* *v1.3.0-beta-3* (2017-04-04)
-** Fixes multiple players prefs display and improves perfs;
-** Improves scripts embedding;
-** Adds Youtube player parameters @enablejsapi@ and @origin@;
-** Adds Dailymotion player parameters @api@ and @origin@;
-** Adds Vimeo player parameter @api@ and removes @badge@;
+* *v1.3.0* (2017-05-04)
+** Adds "Composer":https://getcomposer.org/ support for "textpattern/installer":https://packagist.org/packages/textpattern/installer;
+** fixes multiple players prefs display and improves perfs;
+** improves scripts embedding;
+** adds Youtube player parameters @enablejsapi@ and @origin@;
+** adds Dailymotion player parameters @api@ and @origin@;
+** adds Vimeo player parameter @api@ and removes @badge@;
 ** adds support for:
 *** "Bandcamp":https://bandcamp.com/;
 *** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;
