@@ -24,9 +24,30 @@ oui_player's minimum requirements:
 
 * [Textpattern CMS](http://textpattern.com/) 4.6+.
 
-## Documentation
+## Customization (advanced users)
 
-Check the [wiki](https://github.com/NicolasGraph/oui_player/wiki) for more informations.
+This plugin can be customized by excluding/adding providers via the _manifest.json_ file. Then it can be installed via [Composer](https://getcomposer.org) or compiled via this [MassPlugCompiler fork](https://github.com/NicolasGraph/MassPlugCompiler).
+
+## Installation
+
+### From the admin interface
+
+1. [Download](https://github.com/NicolasGraph/oui_player/releases) the compiled plugin file or the source to compile a customized file.
+2. Paste the content of the compiled plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
+3. Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
+4. Enable the plugin and click _Options_ or visit your *Admin > Preferences* tab to fill the plugin prefs.
+
+### Via Composer
+
+After [installing Composer](https://getcomposer.org/doc/00-intro.md)…
+
+1. Target your project directory:
+`$ cd /path/to/your/textpattern/installation/dir`
+2. If it's not already done, lock your version of Txp:
+`$ composer require textpattern/lock:4.6.2`, where `4.6.2` is the Txp version in use.
+3. Install oui_player:
+`$ composer require oui/oui_player`
+4. Connect to the Txp admin interface and click _Options_ or visit your *Admin > Preferences* tab to fill the plugin prefs.
 
 ## Author
 
