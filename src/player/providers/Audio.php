@@ -65,9 +65,14 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $item = preg_match('/([.][a-z]+)/', $this->play) ? $this->getInfos() : $this->play;
-            $id = isset($item['id']) ? $item['id'] : $this->play;
-            $type = isset($item['type']) ? $item['type'] : 'id';
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                $item = $this->getInfos();
+                $id = $item['id'];
+                $type = $item['type'];
+            } else {
+                $id = $this->play;
+                $type = 'id';
+            }
 
             if ($item) {
                 if ($type === 'url') {
