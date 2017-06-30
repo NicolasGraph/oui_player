@@ -100,8 +100,7 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
-            $id = isset($item['id']) ? $item['id'] : $this->play;
+            $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
 
             if ($id) {
                 $src = $this->src . $id;
