@@ -210,8 +210,8 @@ namespace Oui\Player {
                     isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
                 } elseif ($dims['height']) {
                     $dims['width'] = $dims['height'] * $aspect;
-                    preg_match("/(\D+)/", $dims['width'], $unit);
-                    isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
+                    preg_match("/(\D+)/", $dims['height'], $unit);
+                    isset($unit[0]) ? $dims['width'] .= $unit[0] : '';
                 }
             }
 
