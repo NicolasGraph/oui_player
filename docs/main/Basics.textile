@@ -69,7 +69,7 @@ h2. Uninstall
 h3. From the admin interface
 
 # Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
-# open the select list at the bottom of the plugins tables and choose _Delete_.
+# open the select list at the bottom of the plugins table and choose _Delete_.
 # confirm the plugin deletion.
 
 h3. Via Composer

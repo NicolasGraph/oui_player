@@ -27,8 +27,8 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        $class = 'Oui\Player\Main';
-        $obj = $class::getInstance();
+        $player = 'Oui\Player\Main';
+        $obj = $player::getInstance();
 
         // Set tag attributes
         $get_atts = $obj->getAtts(__FUNCTION__);
@@ -45,9 +45,9 @@ namespace {
         }
 
         if ($provider) {
-            $class = 'Oui\Player\\' . $provider;
-            if (class_exists($class)) {
-                $obj = $class::getInstance();
+            $player = 'Oui\Player\\' . $provider;
+            if (class_exists($player)) {
+                $obj = $player::getInstance();
             } else {
                 trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;
@@ -68,8 +68,8 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        $class = 'Oui\Player\Main';
-        $obj = $class::getInstance();
+        $player = 'Oui\Player\Main';
+        $obj = $player::getInstance();
 
         // Set tag attributes
         $get_atts = $obj->getAtts(__FUNCTION__);
@@ -78,9 +78,9 @@ namespace {
 
         // Check if the play attribute value is recognised.
         if ($provider) {
-            $class = 'Oui\Player\\' . $provider;
-            if (class_exists($class)) {
-                $obj = $class::getInstance();
+            $player = 'Oui\Player\\' . $provider;
+            if (class_exists($player)) {
+                $obj = $player::getInstance();
             } else {
                 trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;

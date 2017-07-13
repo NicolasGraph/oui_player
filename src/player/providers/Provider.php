@@ -210,8 +210,8 @@ namespace Oui\Player {
                     isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
                 } elseif ($dims['height']) {
                     $dims['width'] = $dims['height'] * $aspect;
-                    preg_match("/(\D+)/", $dims['width'], $unit);
-                    isset($unit[0]) ? $dims['height'] .= $unit[0] : '';
+                    preg_match("/(\D+)/", $dims['height'], $unit);
+                    isset($unit[0]) ? $dims['width'] .= $unit[0] : '';
                 }
             }
 
@@ -223,8 +223,7 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $item = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos() : $this->play;
-            $id = isset($item['id']) ? $item['id'] : $this->play;
+            $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
 
             if ($id) {
                 $src = $this->src . $id;
