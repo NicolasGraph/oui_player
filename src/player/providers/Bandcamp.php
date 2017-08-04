@@ -103,7 +103,7 @@ namespace Oui\Player {
             $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
 
             if ($id) {
-                $src = $this->src . $id;
+                $src = $this->src . $this->glue[0] . $id;
                 $params = $this->getParams();
 
                 if (!empty($params)) {
