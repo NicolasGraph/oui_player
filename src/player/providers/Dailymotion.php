@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '8',
             ),
         );
-        protected $src = '//www.dailymotion.com/embed/video/';
+        protected $src = '//www.dailymotion.com/';
+        protected $glue = array('embed/video/', '?', '&amp;');
         protected $params = array(
             'api'                  => array(
                 'default' => 'false',

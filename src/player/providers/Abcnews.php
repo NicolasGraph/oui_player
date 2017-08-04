@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '4',
             ),
         );
-        protected $src = '//abcnews.go.com/video/embed?id=';
+        protected $src = '//abcnews.go.com/';
+        protected $glue = array('video/embed?id=', '&amp;', '&amp;');
     }
 
     Abcnews::getInstance();

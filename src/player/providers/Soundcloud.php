@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '1',
             ),
         );
-        protected $src = '//w.soundcloud.com/player/?url=';
+        protected $src = '//w.soundcloud.com/';
+        protected $glue = array('player/?url=', '?', '&amp;');
         protected $dims = array(
             'width'          => array(
                 'default' => '100%',

@@ -40,7 +40,7 @@ namespace Oui\Player {
             ),
         );
         protected $params = array();
-        protected $glue = array('?', '&amp;');
+        protected $glue = array('/', '?', '&amp;');
 
         private static $instance = null;
 
@@ -226,13 +226,10 @@ namespace Oui\Player {
             $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
 
             if ($id) {
-                $src = $this->src . $id;
+                $src = $this->src . $this->glue[0] . $id;
                 $params = $this->getParams();
 
-                if (!empty($params)) {
-                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                    $src .= $glue[0] . implode($this->glue[1], $params);
-                }
+                !empty($params) ? $src .= $this->glue[1] . implode($this->glue[2], $params) : '';
 
                 $dims = $this->getSize();
                 extract($dims);

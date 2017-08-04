@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '5',
             ),
         );
-        protected $src = '//player.vimeo.com/video/';
+        protected $src = '//player.vimeo.com/';
+        protected $glue = array('video/', '?', '&amp;');
         protected $params = array(
             'api' => array(
                 'default' => '0',

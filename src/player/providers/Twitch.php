@@ -32,7 +32,8 @@ namespace Oui\Player {
                 'id'     => '4',
             ),
         );
-        protected $src = '//player.twitch.tv/';
+        protected $src = '//player.twitch.tv';
+        protected $glue = array('/', '?', '&amp;');
         protected $params = array(
             'autoplay' => array(
                 'default' => 'true',

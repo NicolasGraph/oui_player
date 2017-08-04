@@ -24,11 +24,12 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/((watch\?v=)|(embed\/)|(v\/))|youtu\.be\/)([^\&\?\/]+)$#i',
-                'id'     => '8'
+                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)(([^\&\?\/]+)((\&|\?)list=[^\&\?\/]+)?)#i',
+                'id'     => '5',
             ),
         );
-        protected $src = '//www.youtube-nocookie.com/embed/';
+        protected $src = '//www.youtube-nocookie.com/';
+        protected $glue = array('embed/', '?', '&amp;');
         protected $params = array(
             'autohide'       => array(
                 'default' => '2',
@@ -73,6 +74,13 @@ namespace Oui\Player {
                 'default' => '1',
                 'valid'   => array('1', '3'),
             ),
+            'list'           => array(
+                'default' => '',
+            ),
+            'listType'           => array(
+                'default' => '',
+                'valid'   => array('playlist', 'search', 'user_uploads'),
+            ),
             'loop'           => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -109,6 +117,30 @@ namespace Oui\Player {
                 'valid'   => array('dark', 'light'),
             ),
         );
+
+        /**
+         * Get the item URL, provider and ID from the play property.
+         */
+        public function getInfos()
+        {
+            foreach ($this->patterns as $pattern => $options) {
+                if (preg_match($options['scheme'], $this->play, $matches)) {
+                    $infos = array(
+                        'url'      => $this->play,
+                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
+                        'type'     => $pattern,
+                        'id'       => str_replace(
+                            htmlspecialchars_decode($this->glue[2]),
+                            htmlspecialchars_decode($this->glue[1]),
+                            $matches[$options['id']]
+                        ),
+                    );
+                    return $infos;
+                }
+            }
+
+            return false;
+        }
     }
 
     if (txpinterface === 'admin') {

@@ -28,9 +28,9 @@ namespace Oui\Player {
                 'id'     => '3'
             ),
         );
-        protected $src = '//vine.co/v/';
+        protected $src = '//vine.co/';
         protected $script = 'https://platform.vine.co/static/scripts/embed.js';
-        protected $glue = array('/embed/', '?');
+        protected $glue = array('v/', '/embed/', '?');
         protected $dims = array(
             'width'    => array(
                 'default' => '600',

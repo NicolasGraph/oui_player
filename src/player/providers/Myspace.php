@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '2',
             ),
         );
-        protected $src = '//media.myspace.com/play/video/';
+        protected $src = '//media.myspace.com/';
+        protected $glue = array('play/video/', '?', '&amp;');
     }
 
     if (txpinterface === 'admin') {

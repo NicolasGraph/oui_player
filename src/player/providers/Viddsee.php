@@ -28,7 +28,8 @@ namespace Oui\Player {
                 'id'     => '6',
             ),
         );
-        protected $src = '//www.viddsee.com/player/';
+        protected $src = '//www.viddsee.com/';
+        protected $glue = array('player/', '?', '&amp;');
     }
 
     if (txpinterface === 'admin') {

@@ -32,8 +32,8 @@ namespace Oui\Player {
                 'id'     => 4,
             ),
         );
-        protected $src = '//bandcamp.com/EmbeddedPlayer/';
-        protected $glue = array('/', '/');
+        protected $src = '//bandcamp.com/';
+        protected $glue = array('EmbeddedPlayer/', '/', '/');
         protected $dims = array(
             'width'     => array(
                 'default' => '350px',

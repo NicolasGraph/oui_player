@@ -28,8 +28,8 @@ namespace Oui\Player {
                 'id'     => '4',
             ),
         );
-        protected $src = '//archive.org/embed/';
-        protected $glue = array('&amp;', '&amp;');
+        protected $src = '//archive.org/';
+        protected $glue = array('embed/', '&amp;', '&amp;');
         protected $dims = array(
             'width'    => array(
                 'default' => '640',

@@ -28,15 +28,16 @@ namespace Oui\Player {
                 'id'     => '1',
             ),
         );
-        protected $src = '//www.mixcloud.com/widget/iframe/?feed=';
+        protected $src = '//www.mixcloud.com/';
+        protected $glue = array('widget/iframe/?feed=', '?', '&amp;');
         protected $dims = array(
-            'width'        => array(
+            'width'  => array(
                 'default' => '100%',
             ),
-            'height'       => array(
+            'height' => array(
                 'default' => '400',
             ),
-            'ratio'        => array(
+            'ratio'  => array(
                 'default' => '',
             ),
         );
