@@ -86,7 +86,7 @@ namespace Oui\Player {
                             'type'     => array($pattern),
                         );
                     } else {
-                        $infos['id'] .= '/' . $matches[$options['id']];
+                        $infos['id'] .= $this->glue[1] . $matches[$options['id']];
                         $infos['type'][] = $pattern;
                     }
                 }
