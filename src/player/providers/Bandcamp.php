@@ -107,8 +107,7 @@ namespace Oui\Player {
                 $params = $this->getParams();
 
                 if (!empty($params)) {
-                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                    $src .= $glue[0] . implode($this->glue[1], $params);
+                    $src .= $glue[1] . implode($this->glue[2], $params);
                 }
 
                 $dims = $this->getSize();

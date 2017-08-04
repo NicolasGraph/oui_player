@@ -33,7 +33,7 @@ namespace Oui\Player {
             ),
         );
         protected $src = '//player.twitch.tv/';
-        protected $glue = array('', '?', '&amp;');
+        protected $glue = array('?', '&amp;', '&amp;');
         protected $params = array(
             'autoplay' => array(
                 'default' => 'true',
@@ -65,12 +65,11 @@ namespace Oui\Player {
 
             if ($item) {
                 $item['type'] === 'channel' ?: $item['id'] = 'v' . $item['id'];
-                $src = $this->src . '?' . $item['type'] . '=' . $item['id'];
+                $src = $this->src . $this->glue[0] . $item['type'] . '=' . $item['id'];
                 $params = $this->getParams();
 
                 if (!empty($params)) {
-                    $glue[0] = strpos($src, $this->glue[0]) ? $this->glue[1] : $this->glue[0];
-                    $src .= $glue[0] . implode($this->glue[1], $params);
+                    $src .= $glue[1] . implode($this->glue[2], $params);
                 }
 
                 $dims = $this->getSize();
