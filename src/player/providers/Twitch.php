@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/[\S]+\/v\/([0-9]+))$#i',
+                'scheme' => '#^((http|https):\/\/(www.)?twitch\.tv\/videos\/([0-9]+))$#i',
                 'id'     => '4',
                 'prefix' => 'video=v',
             ),
