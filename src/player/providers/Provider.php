@@ -134,10 +134,11 @@ namespace Oui\Player {
         {
             foreach ($this->patterns as $pattern => $options) {
                 if (preg_match($options['scheme'], $this->play, $matches)) {
+                    $prefix = isset($options['prefix']) ? $options['prefix'] : '';
                     $infos = array(
                         'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'play'     => $options['prefix'] . $matches[$options['id']],
+                        'play'     => $prefix . $matches[$options['id']],
                         'type'     => $pattern,
                     );
 
