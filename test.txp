@@ -46,4 +46,4 @@ changed 4. <txp:oui_player play="https://www.twitch.tv/videos/163875882" />
 5. <txp:oui_player play="https://www.youtube.com/embed/4X384XRsfrI" />
 6. <txp:oui_player play="https://www.youtube.com/watch?v=4X384XRsfrI" />
 7. <txp:oui_player play="https://www.youtu.be/4X384XRsfrI" />
-!new 8. <txp:oui_player play="https://www.youtube.com/watch?v=L53gjP-TtGE&list=RD4X384XRsfrI&index=4" />
+new 8. <txp:oui_player play="https://www.youtube.com/watch?v=L53gjP-TtGE&list=RD4X384XRsfrI" />
