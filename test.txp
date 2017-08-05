@@ -1,0 +1,49 @@
+1. <txp:oui_player provider="abcnews" play="49036995" />
+2. <txp:oui_player play="http://abcnews.go.com/US/video/virginia-man-charged-allegedly-holding-girlfriend-children-49036995" />
+3. <txp:oui_player play="http://abcnews.go.com/video/embed?id=49036995" />
+
+1. <txp:oui_player provider="archive" play="odeme" />
+2. <txp:oui_player play="https://archive.org/details/odeme" />
+3. <txp:oui_player play="https://archive.org/embed/odeme" />
+
+1. <txp:oui_player provider="bandcamp" play="album=838845289" />
+2. <txp:oui_player play="http://bandcamp.com/album=838845289" />
+
+1. <txp:oui_player provider="dailymotion" play="x5ke219" />
+2. <txp:oui_player play="http://dai.ly/x5ke219" />
+3. <txp:oui_player play="http://www.dailymotion.com/video/x5ke219" />
+4. <txp:oui_player play="http://www.dailymotion.com/embed/video/x5ke219" />
+
+!new 1. <txp:oui_player provider="mixcloud" play="CaveCarliRadio/itw-vald-ccr-marsatac-2017-24-juin-2017/" />
+2. <txp:oui_player play="https://www.mixcloud.com/CaveCarliRadio/itw-vald-ccr-marsatac-2017-24-juin-2017/" />
+
+1. <txp:oui_player provider="myspace" play="109583400" />
+2. <txp:oui_player play="https://myspace.com/myspace/video/ok-go-the-ferris-wheel-interviews/109583400" />
+
+!new 1. <txp:oui_player provider="soundcloud" play="musicforeverydayz/sets/prod-everydayz" />
+2. <txp:oui_player play="https://soundcloud.com/musicforeverydayz/sets/prod-everydayz" />
+
+changed 1. <txp:oui_player provider="twitch" play="video=v164567018" />
+changed 2. <txp:oui_player provider="twitch" play="channel=dota2ti_ru_4" />
+3. <txp:oui_player play="https://www.twitch.tv/dota2ti_ru_4" />
+changed 4. <txp:oui_player play="https://www.twitch.tv/videos/163875882" />
+
+1. <txp:oui_player provider="viddsee" play="sglid" />
+2. <txp:oui_player play="https://www.viddsee.com/video/happy-new-year/sglid" />
+3. <txp:oui_player play="https://www.viddsee.com/player/sglid" />
+
+1. <txp:oui_player provider="vimeo" play="227657050" />
+2. <txp:oui_player play="https://vimeo.com/227657050" />
+3. <txp:oui_player play="https://player.vimeo.com/video/227657050" />
+
+1. <txp:oui_player provider="vine" play="OMJeia" />
+2. <txp:oui_player play="https://vine.co/OMJeia?mode=list" />
+
+1. <txp:oui_player provider="youtube" play="4X384XRsfrI" />
+!new 2. <txp:oui_player provider="youtube" play="list=4RD4X384XRsfrI" />
+3. <txp:oui_player play="https://www.youtube.com/watch?v=4X384XRsfrI" />
+4. <txp:oui_player play="https://www.youtube.com/v/4X384XRsfrI" />
+5. <txp:oui_player play="https://www.youtube.com/embed/4X384XRsfrI" />
+6. <txp:oui_player play="https://www.youtube.com/watch?v=4X384XRsfrI" />
+7. <txp:oui_player play="https://www.youtu.be/4X384XRsfrI" />
+!new 8. <txp:oui_player play="https://www.youtube.com/watch?v=L53gjP-TtGE&list=RD4X384XRsfrI&index=4" />
