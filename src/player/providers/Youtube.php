@@ -20,12 +20,17 @@
 
 namespace Oui\Player {
 
-    class Youtube extends Provider
+    class Youtube extends Bandcamp
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)(([^\&\?\/]+)((\&|\?)list=[^\&\?\/]+)?)#i',
+                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)(([^\&\?\/]+)?)#i',
                 'id'     => '5',
+            ),
+            'list'  => array(
+                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\S]+list=([^\&\?\/]+)?#i',
+                'id'     => '5',
+                'prefix' => 'list='
             ),
         );
         protected $src = '//www.youtube-nocookie.com/';
@@ -117,31 +122,6 @@ namespace Oui\Player {
                 'valid'   => array('dark', 'light'),
             ),
         );
-
-        /**
-         * Get the item URL, provider and ID from the play property.
-         */
-        public function getInfos()
-        {
-            foreach ($this->patterns as $pattern => $options) {
-                if (preg_match($options['scheme'], $this->play, $matches)) {
-                    $prefix = isset($options['prefix']) ? $options['prefix'] : '';
-                    $infos = array(
-                        'url'      => $this->play,
-                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'type'     => $pattern,
-                        'play'     => $prefix . str_replace(
-                            htmlspecialchars_decode($this->glue[2]),
-                            htmlspecialchars_decode($this->glue[1]),
-                            $matches[$options['id']]
-                        ),
-                    );
-                    return $infos;
-                }
-            }
-
-            return false;
-        }
     }
 
     if (txpinterface === 'admin') {
