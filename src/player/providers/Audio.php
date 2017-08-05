@@ -67,21 +67,21 @@ namespace Oui\Player {
         {
             if (preg_match('/([.][a-z]+\/)/', $this->play)) {
                 $item = $this->getInfos();
-                $id = $item['id'];
+                $play = $item['play'];
                 $type = $item['type'];
             } else {
-                $id = $this->play;
+                $play = $this->play;
                 $type = 'id';
             }
 
             if ($item) {
                 if ($type === 'url') {
-                    $src = $id;
+                    $src = $play;
                 } else {
                     if ($type === 'id') {
-                        $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                        $file = \fileDownloadFetchInfo('id = '.intval($play).' and created <= '.now('created'));
                     } elseif ($type === 'filename') {
-                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($play)."' and created <= ".now('created'));
                     }
                     $src = \filedownloadurl($file['id'], $file['filename']);
                 }

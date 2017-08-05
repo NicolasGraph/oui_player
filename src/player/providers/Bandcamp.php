@@ -24,12 +24,14 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'album' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?(album=\d+)\/?)#i',
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)#i',
                 'id'     => 4,
+                'prefix' => 'album=',
             ),
             'track' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+(track=\d+)\/?)#i',
+                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+track=(\d+)\/?)#i',
                 'id'     => 4,
+                'prefix' => 'track=',
             ),
         );
         protected $src = '//bandcamp.com/';
@@ -82,39 +84,17 @@ namespace Oui\Player {
                         $infos = array(
                             'url'      => $this->play,
                             'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                            'id'       => $matches[$options['id']],
+                            'play'     => $options['prefix'] . $matches[$options['id']],
                             'type'     => array($pattern),
                         );
                     } else {
-                        $infos['id'] .= $this->glue[1] . $matches[$options['id']];
+                        $infos['play'] .= $this->glue[1] . $options['prefix'] . $matches[$options['id']];
                         $infos['type'][] = $pattern;
                     }
                 }
             }
 
             return $infos;
-        }
-
-        /**
-         * Get the player code
-         */
-        public function getPlayer()
-        {
-            $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
-
-            if ($id) {
-                $src = $this->src . $this->glue[0] . $id;
-                $params = $this->getParams();
-
-                if (!empty($params)) {
-                    $src .= $glue[1] . implode($this->glue[2], $params);
-                }
-
-                $dims = $this->getSize();
-                extract($dims);
-
-                return '<iframe style="border: 0; width:' . $width . '; height:' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
-            }
         }
     }
 

@@ -23,6 +23,7 @@ namespace Oui\Player {
     abstract class Provider
     {
         public $play;
+        public $prefix;
         public $config;
 
         protected $patterns = array();
@@ -136,9 +137,10 @@ namespace Oui\Player {
                     $infos = array(
                         'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'id'       => $matches[$options['id']],
+                        'play'     => $options['prefix'] . $matches[$options['id']],
                         'type'     => $pattern,
                     );
+
                     return $infos;
                 }
             }
@@ -223,10 +225,15 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $id = preg_match('/([.][a-z]+\/)/', $this->play) ? $this->getInfos()['id'] : $this->play;
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                $infos = $this->getInfos();
+                $play = $infos['play'];
+            } else {
+                $play = $this->play;
+            }
 
-            if ($id) {
-                $src = $this->src . $this->glue[0] . $id;
+            if ($play) {
+                $src = $this->src . $this->glue[0] . $play;
                 $params = $this->getParams();
 
                 !empty($params) ? $src .= $this->glue[1] . implode($this->glue[2], $params) : '';

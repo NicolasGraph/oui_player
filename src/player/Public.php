@@ -84,7 +84,7 @@ namespace Oui\Player {
                 $infos = array(
                     'url'      => '',
                     'provider' => \get_pref($this->plugin . '_provider'),
-                    'id'       => $this->play,
+                    'play'     => $this->play,
                     'type'     => '',
                 );
             }
@@ -100,7 +100,7 @@ namespace Oui\Player {
             $item = $this->getInfos();
             $class = __NAMESPACE__ . '\\' . $item['provider'];
             $obj = $class::getInstance();
-            $obj->play = $item['id'];
+            $obj->play = $item['play'];
             $obj->config = $this->config;
             $out = $obj->getPlayer();
             if ($out) {

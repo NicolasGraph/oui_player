@@ -33,6 +33,7 @@ namespace Oui\Player {
             ),
         );
         protected $src = '';
+        protected $glue = ' ';
         protected $params = array(
             'autoplay' => array(
                 'default' => '0',
@@ -98,21 +99,21 @@ namespace Oui\Player {
         {
             if (preg_match('/([.][a-z]+\/)/', $this->play)) {
                 $item = $this->getInfos();
-                $id = $item['id'];
+                $play = $item['play'];
                 $type = $item['type'];
             } else {
-                $id = $this->play;
+                $play = $this->play;
                 $type = 'id';
             }
 
             if ($item) {
                 if ($type === 'url') {
-                    $src = $id;
+                    $src = $play;
                 } else {
                     if ($type === 'id') {
-                        $file = \fileDownloadFetchInfo('id = '.intval($id).' and created <= '.now('created'));
+                        $file = \fileDownloadFetchInfo('id = '.intval($play).' and created <= '.now('created'));
                     } elseif ($type === 'filename') {
-                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($id)."' and created <= ".now('created'));
+                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($play)."' and created <= ".now('created'));
                     }
                     $src = \filedownloadurl($file['id'], $file['filename']);
                 }
@@ -122,7 +123,7 @@ namespace Oui\Player {
                 $dims = $this->getSize();
                 extract($dims);
 
-                return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></video>';
+                return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode($this->glue, $params)) . '></video>';
             }
         }
     }

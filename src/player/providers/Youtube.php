@@ -129,7 +129,7 @@ namespace Oui\Player {
                         'url'      => $this->play,
                         'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
                         'type'     => $pattern,
-                        'id'       => str_replace(
+                        'play'       => $options['prefix'] . str_replace(
                             htmlspecialchars_decode($this->glue[2]),
                             htmlspecialchars_decode($this->glue[1]),
                             $matches[$options['id']]
