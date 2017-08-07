@@ -123,6 +123,25 @@ namespace Oui\Player {
                 'valid'   => array('dark', 'light'),
             ),
         );
+
+        /**
+         * Get the player code
+         */
+        public function getPlay()
+        {
+            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                $infos = $this->getInfos();
+                $type = $infos['type'];
+                $play = $infos['play'];
+            } else {
+                $play = $this->play;
+                $type = preg_match('#^(list)=#', $this->play) ? 'list' : 'video';
+            }
+
+            $type === 'list' ? $this->glue[0] = 'embed?' : '';
+
+            return $play;
+        }
     }
 
     if (txpinterface === 'admin') {

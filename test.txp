@@ -40,7 +40,7 @@ changed 4. <txp:oui_player play="https://www.twitch.tv/videos/163875882" />
 2. <txp:oui_player play="https://vine.co/OMJeia?mode=list" />
 
 1. <txp:oui_player provider="youtube" play="4X384XRsfrI" />
-!new 2. <txp:oui_player provider="youtube" play="list=4RD4X384XRsfrI" />
+new 2. <txp:oui_player provider="youtube" play="list=4RD4X384XRsfrI" />
 3. <txp:oui_player play="https://www.youtube.com/watch?v=4X384XRsfrI" />
 4. <txp:oui_player play="https://www.youtube.com/v/4X384XRsfrI" />
 5. <txp:oui_player play="https://www.youtube.com/embed/4X384XRsfrI" />

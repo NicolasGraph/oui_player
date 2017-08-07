@@ -234,7 +234,7 @@ namespace Oui\Player {
         /**
          * Get the player code
          */
-        public function getPlayer()
+        public function getPlay()
         {
             if (preg_match('/([.][a-z]+\/)/', $this->play)) {
                 $infos = $this->getInfos();
@@ -243,17 +243,27 @@ namespace Oui\Player {
                 $play = $this->play;
             }
 
-            if ($play) {
-                $src = $this->src . $this->glue[0] . $play;
-                $params = $this->getParams();
+            return $play;
+        }
 
-                !empty($params) ? $src .= $this->glue[1] . implode($this->glue[2], $params) : '';
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            $play = $this->getPlay();
+            $src = $this->src . $this->glue[0] . $play;
+            $params = $this->getParams();
 
-                $dims = $this->getSize();
-                extract($dims);
-
-                return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+            if (!empty($params)) {
+                $joint = strpos($src, $this->glue[1]) ? $this->glue[2] : $this->glue[1];
+                $src .= $joint . implode($this->glue[2], $params);
             }
+
+            $dims = $this->getSize();
+            extract($dims);
+
+            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
         }
     }
 }
