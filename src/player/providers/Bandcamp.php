@@ -27,6 +27,7 @@ namespace Oui\Player {
                 'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)#i',
                 'id'     => 4,
                 'prefix' => 'album=',
+                'next' => true,
             ),
             'track' => array(
                 'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+track=(\d+)\/?)#i',
@@ -70,33 +71,6 @@ namespace Oui\Player {
                 'valid'   => array('true', 'false'),
             ),
         );
-
-        /**
-         * Get the item URL, provider and ID from the play property.
-         */
-        public function getInfos()
-        {
-            $infos = false;
-
-            foreach ($this->patterns as $pattern => $options) {
-                if (preg_match($options['scheme'], $this->play, $matches)) {
-                    $prefix = isset($options['prefix']) ? $options['prefix'] : '';
-                    if (!is_array($infos)) {
-                        $infos = array(
-                            'url'      => $this->play,
-                            'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                            'play'     => $prefix . $matches[$options['id']],
-                            'type'     => $pattern,
-                        );
-                    } else {
-                        $infos['play'] .= $this->glue[1] . $prefix . $matches[$options['id']];
-                        $infos['type'] = array($infos['type'], $pattern);
-                    }
-                }
-            }
-
-            return $infos;
-        }
     }
 
     if (txpinterface === 'admin') {

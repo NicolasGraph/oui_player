@@ -132,21 +132,31 @@ namespace Oui\Player {
          */
         public function getInfos()
         {
+            $infos = false;
+
             foreach ($this->patterns as $pattern => $options) {
                 if (preg_match($options['scheme'], $this->play, $matches)) {
                     $prefix = isset($options['prefix']) ? $options['prefix'] : '';
-                    $infos = array(
-                        'url'      => $this->play,
-                        'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                        'play'     => $prefix . $matches[$options['id']],
-                        'type'     => $pattern,
-                    );
 
-                    return $infos;
+                    if (!$infos) {
+                        $infos = array(
+                            'url'      => $this->play,
+                            'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
+                            'play'     => $prefix . $matches[$options['id']],
+                            'type'     => $pattern,
+                        );
+                        if (!isset($options['next'])) {
+                            break;
+                        }
+                    } else {
+                        // Bandcamp accepts track+album, Youtube accepts video+list.
+                        $infos['play'] .= $this->glue[1] . $prefix . $matches[$options['id']];
+                        $infos['type'] = array($infos['type'], $pattern);
+                    }
                 }
             }
 
-            return false;
+            return $infos;
         }
 
         /**

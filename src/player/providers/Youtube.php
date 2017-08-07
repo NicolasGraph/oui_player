@@ -20,12 +20,13 @@
 
 namespace Oui\Player {
 
-    class Youtube extends Bandcamp
+    class Youtube extends Provider
     {
         protected $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)(([^\&\?\/]+)?)#i',
                 'id'     => '5',
+                'next'   => true,
             ),
             'list'  => array(
                 'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\S]+list=([^\&\?\/]+)?#i',
