@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/((player\.vimeo\.com\/video)|(vimeo\.com))\/(\d+)$#i',
+                'scheme' => '#^(http|https)://((player\.vimeo\.com/video)|(vimeo\.com))/(\d+)$#i',
                 'id'     => '5',
             ),
         );

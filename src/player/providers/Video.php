@@ -24,11 +24,11 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'filename' => array(
-                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
+                'scheme' => '#^((?!(http|https)://(www\.)?)\S+\.(mp4|ogv|webm))$#i',
                 'id'     => '1',
             ),
             'url' => array(
-                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp4|ogv|webm))$#i',
+                'scheme' => '#^(((http|https)://(www\.)?)\S+\.(mp4|ogv|webm))$#i',
                 'id'     => '1',
             ),
         );

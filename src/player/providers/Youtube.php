@@ -24,12 +24,12 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)(([^\&\?\/]+)?)#i',
+                'scheme' => '#^(http|https)://(www\.)?(youtube\.com/(watch\?v=|embed/|v/)|youtu\.be/)(([^&?/]+)?)#i',
                 'id'     => '5',
                 'next'   => true,
             ),
             'list'  => array(
-                'scheme' => '#^(http|https):\/\/(www.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\S]+list=([^\&\?\/]+)?#i',
+                'scheme' => '#^(http|https)://(www\.)?(youtube\.com/(watch\?v=|embed/|v/)|youtu\.be/)[\S]+list=([^&?/]+)?#i',
                 'id'     => '5',
                 'prefix' => 'list='
             ),

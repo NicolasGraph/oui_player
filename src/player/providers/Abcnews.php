@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/(abcnews\.go\.com\/([A-Z]+\/)?video)\/[^0-9]+([0-9]+)$#i',
+                'scheme' => '#^(http|https)://(abcnews\.go\.com/([A-Z]+/)?video)/[^0-9]+([0-9]+)$#i',
                 'id'     => '4',
             ),
         );

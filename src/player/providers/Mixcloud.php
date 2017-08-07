@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'audio' => array(
-                'scheme' => '#^((http|https):\/\/(www.)?mixcloud.com\/[\S]+)$#i',
+                'scheme' => '#^((http|https)://(www\.)?mixcloud.com/[\S]+)$#i',
                 'id'     => '1',
             ),
         );

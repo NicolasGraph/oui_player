@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'audio' => array(
-                'scheme' => '#((http|https):\/\/(api.)?soundcloud\.com\/[\S]+)#i',
+                'scheme' => '#((http|https)://(api\.)?soundcloud\.com/[\S]+)#i',
                 'id'     => '1',
             ),
         );

@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'unknown' => array(
-                'scheme' => '#^(http|https):\/\/(www.)?archive\.org\/(details|embed)\/([^\&\?\/]+)$#i',
+                'scheme' => '#^(http|https)://(www\.)?archive\.org/(details|embed)/([^&?/]+)$#i',
                 'id'     => '4',
             ),
         );

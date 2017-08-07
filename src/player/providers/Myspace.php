@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https):\/\/myspace\.com\/[\S]+\/video\/[\S]+\/(\d+)$#i',
+                'scheme' => '#^(http|https)://myspace\.com/[\S]+/video/[\S]+/(\d+)$#i',
                 'id'     => '2',
             ),
         );

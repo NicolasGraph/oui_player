@@ -24,7 +24,7 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'filename' => array(
-                'scheme' => '#^((?!(http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+                'scheme' => '#^((?!(http|https)://(www\.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
                 'id'     => '1',
             ),
             'url' => array(

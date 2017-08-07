@@ -24,13 +24,13 @@ namespace Oui\Player {
     {
         protected $patterns = array(
             'album' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?album=(\d+)\/?)#i',
+                'scheme' => '#((http|https)://bandcamp\.com/(EmbeddedPlayer/)?album=(\d+)/?)#i',
                 'id'     => 4,
                 'prefix' => 'album=',
                 'next' => true,
             ),
             'track' => array(
-                'scheme' => '#((http|https):\/\/bandcamp\.com\/(EmbeddedPlayer\/)?[\S]+track=(\d+)\/?)#i',
+                'scheme' => '#((http|https)://bandcamp\.com/(EmbeddedPlayer/)?[\S]+track=(\d+)/?)#i',
                 'id'     => 4,
                 'prefix' => 'track=',
             ),
