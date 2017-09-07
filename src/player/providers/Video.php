@@ -123,7 +123,13 @@ namespace Oui\Player {
                 $dims = $this->getSize();
                 extract($dims);
 
-                return '<video width="' . $width . '" height="' . $height . '" src="' . $src . '"' . (empty($params) ? '' : ' ' . implode($this->glue, $params)) . '></video>';
+                return sprintf(
+                    '<video width="%s" height="%s" src="%s"%s></video>',
+                    $width,
+                    $height,
+                    $src,
+                    (empty($params) ? '' : ' ' . implode($this->glue, $params))
+                );
             }
         }
     }

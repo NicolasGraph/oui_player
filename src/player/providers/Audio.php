@@ -88,7 +88,11 @@ namespace Oui\Player {
 
                 $params = $this->getParams();
 
-                return '<audio src="' . $src . '"' . (empty($params) ? '' : ' ' . implode(' ', $params)) . '></audio>';
+                return sprintf(
+                    '<audio src="%s"%s></audio>',
+                    $src,
+                    (empty($params) ? '' : ' ' . implode(' ', $params))
+                );
             }
         }
     }

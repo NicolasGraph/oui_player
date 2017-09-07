@@ -263,7 +263,13 @@ namespace Oui\Player {
             $dims = $this->getSize();
             extract($dims);
 
-            return '<iframe width="' . $width . '" height="' . $height . '" src="' . $src . '" frameborder="0" allowfullscreen></iframe>';
+            return sprintf(
+                '<iframe width="%s" height="%s" src="%s" %s></iframe>',
+                $width,
+                $height,
+                $src,
+                'frameborder="0" allowfullscreen'
+            );
         }
     }
 }
