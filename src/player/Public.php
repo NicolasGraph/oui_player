@@ -23,6 +23,8 @@ namespace Oui\Player {
     class Main extends Player
     {
         public $play;
+        public $provider;
+        public $infos = array();
         public $config;
 
         public function __construct()
@@ -58,38 +60,22 @@ namespace Oui\Player {
         /**
          * Check if the play property is a recognised URL scheme.
          */
-        public function checkUrl()
+        public function getInfos()
         {
             foreach ($this->providers as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = $class::getInstance();
                 $obj->play = $this->play;
                 $infos = $obj->getInfos();
+
                 if ($infos) {
-                    return $infos;
+                    $this->provider = $provider;
+                    $this->infos = $infos;
+                    return;
                 }
             }
 
             return false;
-        }
-
-        /**
-         * Get the item URL, provider and ID from the play property.
-         */
-        public function getInfos()
-        {
-            $infos = $this->checkUrl();
-
-            if (!$infos) {
-                $infos = array(
-                    'url'      => '',
-                    'provider' => \get_pref($this->plugin . '_provider'),
-                    'play'     => $this->play,
-                    'type'     => '',
-                );
-            }
-
-            return $infos;
         }
 
         /**
@@ -98,11 +84,19 @@ namespace Oui\Player {
         public function getPlayer()
         {
             $item = $this->getInfos();
-            $class = __NAMESPACE__ . '\\' . $item['provider'];
+
+            if ($this->provider) {
+                $class = __NAMESPACE__ . '\\' . $this->provider;
+            } else {
+                $class = __NAMESPACE__ . '\\' . \get_pref($this->plugin . '_provider');
+            }
+
             $obj = $class::getInstance();
-            $obj->play = $item['play'];
+            $obj->play = $this->play;
+            $obj->infos = $this->infos;
             $obj->config = $this->config;
             $out = $obj->getPlayer();
+
             if ($out) {
                 return $out;
             }

@@ -65,33 +65,53 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                $item = $this->getInfos();
-                $play = $item['play'];
-                $type = $item['type'];
-            } else {
-                $play = $this->play;
-                $type = 'id';
+            if (!$this->infos) {
+                if (preg_match('/([.][a-z]+\/)/', $this->play)) {
+                    $this->infos = $this->getInfos();
+                } else {
+                    $this->infos = array();
+
+                    foreach (explode(', ', $this->play) as $play) {
+                        $this->infos[$play] = array(
+                            'play' => $play,
+                            'type' => 'id',
+                        );
+                    }
+                }
             }
 
-            if ($item) {
+            $sources = array();
+
+            foreach ($this->infos as $play => $infos) {
+                extract($infos);
                 if ($type === 'url') {
-                    $src = $play;
+                    $sources[] = $play;
                 } else {
                     if ($type === 'id') {
-                        $file = \fileDownloadFetchInfo('id = '.intval($play).' and created <= '.now('created'));
+                        $file = \fileDownloadFetchInfo(
+                            'id = '.intval($play).' and created <= '.now('created')
+                        );
                     } elseif ($type === 'filename') {
-                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($play)."' and created <= ".now('created'));
+                        $file = \fileDownloadFetchInfo(
+                            "filename = '".\doSlash($play)."' and created <= ".now('created')
+                        );
                     }
-                    $src = \filedownloadurl($file['id'], $file['filename']);
+                    $sources[] = \filedownloadurl($file['id'], $file['filename']);
                 }
+            }
+
+            if ($sources) {
+                $src = $sources[0];
+                unset($sources[0]);
 
                 $params = $this->getParams();
 
                 return sprintf(
-                    '<audio src="%s"%s></audio>',
+                    '<video src="%s"%s>%s%s</video>',
                     $src,
-                    (empty($params) ? '' : ' ' . implode(' ', $params))
+                    (empty($params) ? '' : ' ' . implode($this->glue, $params)),
+                    ($sources ? n . '<source src="' . implode('">' . n . '<source src="', $sources) . '">' : ''),
+                    n . \gtxt('html_player_not_supported', array('{type}' => '<audio>')) . n
                 );
             }
         }

@@ -23,6 +23,7 @@ namespace Oui\Player {
     abstract class Provider
     {
         public $play;
+        public $infos;
         public $prefix;
         public $config;
 
@@ -132,30 +133,29 @@ namespace Oui\Player {
          */
         public function getInfos()
         {
-            $infos = false;
+            $infos = array();
 
-            foreach ($this->patterns as $pattern => $options) {
-                if (preg_match($options['scheme'], $this->play, $matches)) {
-                    $prefix = isset($options['prefix']) ? $options['prefix'] : '';
+            foreach (explode(', ', $this->play) as $play) {
+                foreach ($this->patterns as $pattern => $options) {
+                    if (preg_match($options['scheme'], $play, $matches)) {
+                        $prefix = isset($options['prefix']) ? $options['prefix'] : '';
 
-                    if (!$infos) {
-                        $infos = array(
-                            'url'      => $this->play,
-                            'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                            'play'     => $prefix . $matches[$options['id']],
-                            'type'     => $pattern,
-                        );
-                        if (!isset($options['next'])) {
-                            break;
+                        if (!array_key_exists($play, $infos)) {
+                            $infos[$play] = array(
+                                    'play' => $prefix . $matches[$options['id']],
+                                    'type' => $pattern,
+                                );
+                            if (!isset($options['next'])) {
+                                break;
+                            }
+                        } else {
+                            // Bandcamp accepts track+album, Youtube accepts video+list.
+                            $infos['play'] .= $this->glue[1] . $prefix . $matches[$options['id']];
+                            $infos['type'] = array($infos['type'], $pattern);
                         }
-                    } else {
-                        // Bandcamp accepts track+album, Youtube accepts video+list.
-                        $infos['play'] .= $this->glue[1] . $prefix . $matches[$options['id']];
-                        $infos['type'] = array($infos['type'], $pattern);
                     }
                 }
             }
-
             return $infos;
         }
 
@@ -238,7 +238,7 @@ namespace Oui\Player {
         {
             if (preg_match('/([.][a-z]+\/)/', $this->play)) {
                 $infos = $this->getInfos();
-                $play = $infos['play'];
+                $play = $infos[$this->play]['play'];
             } else {
                 $play = $this->play;
             }
@@ -251,7 +251,8 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $play = $this->getPlay();
+            $play = $this->infos ? $this->infos[$this->play]['play'] : $this->getPlay();
+
             $src = $this->src . $this->glue[0] . $play;
             $params = $this->getParams();
 
