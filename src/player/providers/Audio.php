@@ -22,18 +22,18 @@ namespace Oui\Player {
 
     class Audio extends Video
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'filename' => array(
-                'scheme' => '#^((?!(http|https)://(www\.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+                'scheme' => '#^((?!(http|https)://(www\.)?)\S+\.(mp3|ogg|oga|wav))$#i',
                 'id'     => '1',
             ),
             'url' => array(
-                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|m4a|ogg|oga|webma|wav))$#i',
+                'scheme' => '#^(((http|https):\/\/(www.)?)\S+\.(mp3|ogg|oga|wav))$#i',
                 'id'     => '1',
             ),
         );
-        protected $dims = array();
-        protected $params = array(
+        protected static $dims = array();
+        protected static $params = array(
             'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -65,53 +65,26 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            if (!$this->infos) {
-                if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                    $this->infos = $this->getInfos();
-                } else {
-                    $this->infos = array();
-
-                    foreach (explode(', ', $this->play) as $play) {
-                        $this->infos[$play] = array(
-                            'play' => $play,
-                            'type' => 'id',
-                        );
-                    }
-                }
-            }
-
-            $sources = array();
-
-            foreach ($this->infos as $play => $infos) {
-                extract($infos);
-                if ($type === 'url') {
-                    $sources[] = $play;
-                } else {
-                    if ($type === 'id') {
-                        $file = \fileDownloadFetchInfo(
-                            'id = '.intval($play).' and created <= '.now('created')
-                        );
-                    } elseif ($type === 'filename') {
-                        $file = \fileDownloadFetchInfo(
-                            "filename = '".\doSlash($play)."' and created <= ".now('created')
-                        );
-                    }
-                    $sources[] = \filedownloadurl($file['id'], $file['filename']);
-                }
-            }
-
-            if ($sources) {
+            if ($sources = $this->getSources()) {
                 $src = $sources[0];
+
                 unset($sources[0]);
 
                 $params = $this->getParams();
 
                 return sprintf(
-                    '<video src="%s"%s>%s%s</video>',
+                    '<audio src="%s"%s>%s%s</audio>',
                     $src,
-                    (empty($params) ? '' : ' ' . implode($this->glue, $params)),
+                    (empty($params) ? '' : ' ' . implode(static::$glue, $params)),
                     ($sources ? n . '<source src="' . implode('">' . n . '<source src="', $sources) . '">' : ''),
-                    n . \gtxt('html_player_not_supported', array('{type}' => '<audio>')) . n
+                    n . \gtxt(
+                        'html_player_not_supported',
+                        array(
+                            '{player}' => '<audio>',
+                            '{src}'    => $src,
+                            '{file}'   => basename($src),
+                        )
+                    ) . n
                 );
             }
         }

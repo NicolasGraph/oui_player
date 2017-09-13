@@ -25,10 +25,7 @@ namespace {
 
     function oui_player_pref_widget($name, $val)
     {
-        $class = 'Oui\Player\Admin';
-        $obj = $class::getInstance();
-        $widget = $obj->prefFunction($name, $val);
-        return $widget;
+        return Oui\Player\Admin::prefFunction($name, $val);
     }
 
     function oui_player_custom_fields($name, $val)

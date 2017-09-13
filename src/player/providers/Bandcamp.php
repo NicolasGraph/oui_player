@@ -22,7 +22,7 @@ namespace Oui\Player {
 
     class Bandcamp extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'album' => array(
                 'scheme' => '#((http|https)://bandcamp\.com/(EmbeddedPlayer/)?album=(\d+)/?)#i',
                 'id'     => 4,
@@ -35,9 +35,9 @@ namespace Oui\Player {
                 'prefix' => 'track=',
             ),
         );
-        protected $src = '//bandcamp.com/';
-        protected $glue = array('EmbeddedPlayer/', '/', '/');
-        protected $dims = array(
+        protected static $src = '//bandcamp.com/';
+        protected static $glue = array('EmbeddedPlayer/', '/', '/');
+        protected static $dims = array(
             'width'     => array(
                 'default' => '350px',
             ),
@@ -48,7 +48,7 @@ namespace Oui\Player {
                 'default' => '',
             ),
         );
-        protected $params = array(
+        protected static $params = array(
             'size'      => array(
                 'default' => 'large',
                 'force'   => true,

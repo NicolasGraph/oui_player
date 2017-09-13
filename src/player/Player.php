@@ -22,9 +22,9 @@ namespace Oui\Player {
 
     class Player
     {
-        protected $plugin;
-        protected $providers;
-        protected $tags = array(
+        protected static $plugin;
+        protected static $providers;
+        protected static $tags = array(
             'oui_player' => array(
                 'class' => array(
                     'default' => '',
@@ -54,8 +54,8 @@ namespace Oui\Player {
                 ),
             ),
         );
-        protected $privs = '1, 2';
-        protected $prefs = array(
+        protected static $privs = '1, 2';
+        protected static $prefs = array(
             'custom_field' => array(
                 'widget'  => 'oui_player_custom_fields',
                 'default' => 'article_image',

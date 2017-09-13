@@ -25,29 +25,29 @@ namespace Oui\Player {
         public function __construct()
         {
             if (txpinterface === 'admin') {
-                $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-                $this->providers = \callback_event($this->plugin, 'plug_providers', 0, 'Provider');
+                static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+                static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
 
-                $this->prefs['provider']['valid'] = $this->providers;
-                $this->prefs['provider']['default'] = $this->prefs['provider']['valid'][0];
-                $this->prefs['providers']['default'] = implode(', ', $this->prefs['provider']['valid']);
+                static::$prefs['provider']['valid'] = static::$providers;
+                static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
+                static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
 
-                \add_privs('plugin_prefs.' . $this->plugin, $this->privs);
-                \add_privs('prefs.' . $this->plugin, $this->privs);
+                \add_privs('plugin_prefs.' . static::$plugin, static::$privs);
+                \add_privs('prefs.' . static::$plugin, static::$privs);
 
-                \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . $this->plugin);
-                \register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . $this->plugin, null, 1);
+                \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
+                \register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . static::$plugin, null, 1);
 
                 // Add privs to provider prefs only if they are enabled.
-                foreach ($this->providers as $provider) {
-                    $group = $this->plugin . '_' . strtolower($provider);
+                foreach (static::$providers as $provider) {
+                    $group = static::$plugin . '_' . strtolower($provider);
                     $pref = $group . '_prefs';
                     if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                        \add_privs('prefs.' . $group, $this->privs);
+                        \add_privs('prefs.' . $group, static::$privs);
                     }
                 }
             } else {
-                foreach ($this->tags as $tag => $attributes) {
+                foreach (static::$tags as $tag => $attributes) {
                     \Txp::get('\Textpattern\Tag\Registry')->register($tag);
                 }
             }
@@ -67,8 +67,8 @@ namespace Oui\Player {
                     $this->deleteOldPrefs();
                     break;
                 case 'deleted':
-                    \safe_delete('txp_prefs', "event LIKE '" . $this->plugin . "%'");
-                    \safe_delete('txp_lang', "owner = '" . $this->plugin . "'");
+                    \safe_delete('txp_prefs', "event LIKE '" . static::$plugin . "%'");
+                    \safe_delete('txp_lang', "owner = '" . static::$plugin . "'");
                     break;
             }
         }
@@ -78,7 +78,7 @@ namespace Oui\Player {
          */
         public function optionsLink()
         {
-            $url = '?event=prefs#prefs_group_' . $this->plugin;
+            $url = '?event=prefs#prefs_group_' . static::$plugin;
             header('Location: ' . $url);
         }
 
@@ -98,12 +98,12 @@ namespace Oui\Player {
                 if (empty($yesno_diff)) {
                     $widget = 'yesnoradio';
                 } elseif (empty($truefalse_diff)) {
-                    $widget = $this->plugin . '_truefalseradio';
+                    $widget = static::$plugin . '_truefalseradio';
                 } else {
-                    $widget = $this->plugin . '_pref_widget';
+                    $widget = static::$plugin . '_pref_widget';
                 }
             } elseif ($valid) {
-                $widget = $this->plugin . '_pref_widget';
+                $widget = static::$plugin . '_pref_widget';
             } else {
                 $widget = 'text_input';
             }
@@ -117,9 +117,9 @@ namespace Oui\Player {
          * @param string $name The name of the preference (Textpattern variable)
          * @param string $val  The value of the preference (Textpattern variable)
          */
-        public function prefFunction($name, $val)
+        public static function prefFunction($name, $val)
         {
-            $prefs = $this->getPrefs();
+            $prefs = self::getPrefs();
             $valid = $prefs[$name]['valid'];
 
             if (is_array($valid)) {
@@ -138,22 +138,22 @@ namespace Oui\Player {
         /**
          * Collect plugin prefs
          */
-        public function getPrefs()
+        public static function getPrefs()
         {
             $prefs = array();
 
-            foreach ($this->prefs as $pref => $options) {
-                $options['group'] = $this->plugin;
+            foreach (static::$prefs as $pref => $options) {
+                $options['group'] = static::$plugin;
                 $pref = $options['group'] . '_' . $pref;
                 $prefs[$pref] = $options;
             }
 
-            foreach ($this->providers as $provider) {
+            foreach (static::$providers as $provider) {
                 $options = array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
                 );
-                $options['group'] = $this->plugin;
+                $options['group'] = static::$plugin;
                 $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
                 $prefs[$pref] = $options;
 
@@ -197,7 +197,7 @@ namespace Oui\Player {
 
             \safe_delete(
                 'txp_prefs',
-                "event LIKE '" . $this->plugin . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
+                "event LIKE '" . static::$plugin . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
             );
         }
     }

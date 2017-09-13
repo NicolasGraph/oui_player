@@ -22,15 +22,15 @@ namespace Oui\Player {
 
     class Vimeo extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://((player\.vimeo\.com/video)|(vimeo\.com))/(\d+)$#i',
                 'id'     => '5',
             ),
         );
-        protected $src = '//player.vimeo.com/';
-        protected $glue = array('video/', '?', '&amp;');
-        protected $params = array(
+        protected static $src = '//player.vimeo.com/';
+        protected static $glue = array('video/', '?', '&amp;');
+        protected static $params = array(
             'api' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),

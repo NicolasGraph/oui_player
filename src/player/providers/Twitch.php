@@ -22,7 +22,7 @@ namespace Oui\Player {
 
     class Twitch extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^((http|https)://(www\.)?twitch\.tv/videos/([0-9]+))$#i',
                 'id'     => '4',
@@ -34,9 +34,9 @@ namespace Oui\Player {
                 'prefix' => 'channel=',
             ),
         );
-        protected $src = '//player.twitch.tv/';
-        protected $glue = array('?', '&amp;', '&amp;');
-        protected $params = array(
+        protected static $src = '//player.twitch.tv/';
+        protected static $glue = array('?', '&amp;', '&amp;');
+        protected static $params = array(
             'autoplay' => array(
                 'default' => 'true',
                 'valid'   => array('true', 'false'),
