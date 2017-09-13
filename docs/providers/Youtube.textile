@@ -5,9 +5,10 @@ h2. Youtube player config
 h3. Recognised values for the @play@ attribute
 
 * *ID* (using @youtube@ as provider.)
+* list=[*list_ID*]
 * http(s)://(www.)youtu.be/[*ID*]
 * http(s)://(www.)youtube.com/v/[*ID*]
-* http(s)://(www.)youtube.com/watch?v=[*ID*]
+* http(s)://(www.)youtube.com/watch?v=[*ID*](&list=[*list_ID*])
 * http(s)://(www.)youtube.com/embed/[*ID*]
 
 h3. Player size

@@ -4,9 +4,9 @@ h2. HTML video player config
 
 h3. Recognised values for the @play@ attribute
 
-* *File ID* (using @video@ as provider.)
-* *filename* using one of the following extension: @.mp4@, @.ogv@ or @.wbm@;
-* *URL* using one of the following extension: @.mp4@, @.ogv@ or @.wbm@;
+* comma separated list of *File ID's* (using @video@ as provider.)
+* comma separated list of *filenames* using one of the following extension: @.mp4@, @.ogv@ or @.wbm@;
+* comma separated list of *URL's* using the following extensions: @.mp4@, @.ogv@ or @.wbm@;
 
 h3. Player size
 
