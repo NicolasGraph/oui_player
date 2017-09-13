@@ -26,12 +26,12 @@ namespace Oui\Player {
             'video' => array(
                 'scheme' => '#^(http|https)://(www\.)?(youtube\.com/(watch\?v=|embed/|v/)|youtu\.be/)(([^&?/]+)?)#i',
                 'id'     => '5',
-                'next'   => true,
+                'glue'   => '&amp;',
             ),
             'list'  => array(
                 'scheme' => '#^(http|https)://(www\.)?(youtube\.com/(watch\?v=|embed/|v/)|youtu\.be/)[\S]+list=([^&?/]+)?#i',
                 'id'     => '5',
-                'prefix' => 'list='
+                'prefix' => 'list=',
             ),
         );
         protected static $src = '//www.youtube-nocookie.com/';
@@ -139,7 +139,7 @@ namespace Oui\Player {
                 foreach ($this->getPlay() as $play) {
                     $infos[$play] = array(
                         'play' => $play,
-                        'type' => preg_match('#^(list)=#', $this->play) ? 'list' : 'video',
+                        'type' => preg_match('#^(list)=#', $play) ? 'list' : 'video',
                     );
                 }
             }

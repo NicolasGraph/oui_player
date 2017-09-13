@@ -147,6 +147,8 @@ namespace Oui\Player {
             $infos = array();
 
             foreach ($this->getPlay() as $play) {
+                $glue = null;
+
                 foreach (static::$patterns as $pattern => $options) {
                     if (preg_match($options['scheme'], $play, $matches)) {
                         $prefix = isset($options['prefix']) ? $options['prefix'] : '';
@@ -156,13 +158,16 @@ namespace Oui\Player {
                                     'play' => $prefix . $matches[$options['id']],
                                     'type' => $pattern,
                                 );
-                            if (!isset($options['next'])) {
+
+                            if (!isset($options['glue'])) {
                                 break;
+                            } else {
+                                $glue = $options['glue'];
                             }
                         } else {
                             // Bandcamp accepts track+album, Youtube accepts video+list.
-                            $infos['play'] .= static::$glue[1] . $prefix . $matches[$options['id']];
-                            $infos['type'] = array($infos['type'], $pattern);
+                            $infos[$play]['play'] .= $glue . $prefix . $matches[$options['id']];
+                            $infos[$play]['type'] = $pattern;
                         }
                     }
                 }

@@ -27,7 +27,7 @@ namespace Oui\Player {
                 'scheme' => '#((http|https)://bandcamp\.com/(EmbeddedPlayer/)?album=(\d+)/?)#i',
                 'id'     => 4,
                 'prefix' => 'album=',
-                'next' => true,
+                'glue' => '/',
             ),
             'track' => array(
                 'scheme' => '#((http|https)://bandcamp\.com/(EmbeddedPlayer/)?[\S]+track=(\d+)/?)#i',
