@@ -21,7 +21,7 @@ bc(language-php).. $class = 'Oui\Player\Main';
 $obj = $class::getInstance();
 $obj->play = "https://vimeo.com/186406583";
 
-if ($obj->checkUrl()) {
+if ($obj->setInfos()) {
     echo $obj->getPlayer();
 }
 
@@ -35,7 +35,7 @@ bc(language-php).. $class = 'Oui\Player\Vimeo';
 $obj = $class::getInstance();
 $obj->play = "186406583";
 $obj->config = array(
-    'width'     => '480',
+    'width'    => '480',
     'autoplay' => '1',
 );
 
