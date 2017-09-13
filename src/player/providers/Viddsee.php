@@ -22,14 +22,14 @@ namespace Oui\Player {
 
     class Viddsee extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://(www\.)?(viddsee\.com/(video|player)/)(\S+/)?([^&?/]+)$#i',
                 'id'     => '6',
             ),
         );
-        protected $src = '//www.viddsee.com/';
-        protected $glue = array('player/', '?', '&amp;');
+        protected static $src = '//www.viddsee.com/';
+        protected static $glue = array('player/', '?', '&amp;');
     }
 
     if (txpinterface === 'admin') {

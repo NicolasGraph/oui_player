@@ -22,16 +22,16 @@ namespace Oui\Player {
 
     class Vine extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://(www\.)?vine.co/v/([^&?/]+)#i',
                 'id'     => '3'
             ),
         );
-        protected $src = '//vine.co/';
-        protected $script = 'https://platform.vine.co/static/scripts/embed.js';
-        protected $glue = array('v/', '/embed/', '?');
-        protected $dims = array(
+        protected static $src = '//vine.co/';
+        protected static $script = 'https://platform.vine.co/static/scripts/embed.js';
+        protected static $glue = array('v/', '/embed/', '?');
+        protected static $dims = array(
             'width'    => array(
                 'default' => '600',
             ),
@@ -42,7 +42,7 @@ namespace Oui\Player {
                 'default' => '',
             ),
         );
-        protected $params = array(
+        protected static $params = array(
             'type' => array(
                 'default' => 'simple',
                 'valid'   => array('simple', 'postcard'),
@@ -60,7 +60,7 @@ namespace Oui\Player {
         {
             $params = array();
 
-            foreach ($this->params as $param => $infos) {
+            foreach (static::$params as $param => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $value = isset($this->config[$param]) ? $this->config[$param] : '';

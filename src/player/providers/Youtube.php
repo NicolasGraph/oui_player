@@ -22,7 +22,7 @@ namespace Oui\Player {
 
     class Youtube extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://(www\.)?(youtube\.com/(watch\?v=|embed/|v/)|youtu\.be/)(([^&?/]+)?)#i',
                 'id'     => '5',
@@ -34,9 +34,9 @@ namespace Oui\Player {
                 'prefix' => 'list='
             ),
         );
-        protected $src = '//www.youtube-nocookie.com/';
-        protected $glue = array('embed/', '?', '&amp;');
-        protected $params = array(
+        protected static $src = '//www.youtube-nocookie.com/';
+        protected static $glue = array('embed/', '?', '&amp;');
+        protected static $params = array(
             'autohide'       => array(
                 'default' => '2',
                 'valid'   => array('0', '1', '2'),
@@ -125,22 +125,28 @@ namespace Oui\Player {
         );
 
         /**
-         * Get the player code
+         * Check if the play property is a recognised URL scheme.
          */
-        public function getPlay()
+        public function getInfos()
         {
-            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                $infos = $this->getInfos();
-                $type = $infos['type'];
-                $play = $infos['play'];
+            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
+
+            if ($this->infos || ($isUrl && $this->setInfos() !== false)) {
+                $infos = $this->infos;
             } else {
-                $play = $this->play;
-                $type = preg_match('#^(list)=#', $this->play) ? 'list' : 'video';
+                $infos = array();
+
+                foreach ($this->getPlay() as $play) {
+                    $infos[$play] = array(
+                        'play' => $play,
+                        'type' => preg_match('#^(list)=#', $this->play) ? 'list' : 'video',
+                    );
+                }
             }
 
-            $type === 'list' ? $this->glue[0] = 'embed?' : '';
+            $infos[$this->getPlay()[0]]['type'] === 'list' ? static::$glue[0] = 'embed?' : '';
 
-            return $play;
+            return $infos;
         }
     }
 

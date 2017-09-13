@@ -22,7 +22,7 @@ namespace Oui\Player {
 
     class Video extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'filename' => array(
                 'scheme' => '#^((?!(http|https)://(www\.)?)\S+\.(mp4|ogv|webm))$#i',
                 'id'     => '1',
@@ -32,9 +32,9 @@ namespace Oui\Player {
                 'id'     => '1',
             ),
         );
-        protected $src = '';
-        protected $glue = ' ';
-        protected $params = array(
+        protected static $src = '';
+        protected static $glue = ' ';
+        protected static $params = array(
             'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),
@@ -68,7 +68,7 @@ namespace Oui\Player {
         {
             $params = array();
 
-            foreach ($this->params as $param => $infos) {
+            foreach (static::$params as $param => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $value = isset($this->config[$param]) ? $this->config[$param] : '';
@@ -95,40 +95,65 @@ namespace Oui\Player {
         /**
          * Get the player code
          */
-        public function getPlayer()
+        public function getSources()
         {
-            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                $item = $this->getInfos();
-                $play = $item['play'];
-                $type = $item['type'];
-            } else {
-                $play = $this->play;
-                $type = 'id';
-            }
+            $infos = $this->getInfos();
 
-            if ($item) {
+            $sources = array();
+
+            foreach ($infos as $play => $info) {
+                extract($info);
+
                 if ($type === 'url') {
-                    $src = $play;
+                    $sources[] = $play;
                 } else {
                     if ($type === 'id') {
-                        $file = \fileDownloadFetchInfo('id = '.intval($play).' and created <= '.now('created'));
+                        $file = \fileDownloadFetchInfo(
+                            'id = '.intval($play).' and created <= '.now('created')
+                        );
                     } elseif ($type === 'filename') {
-                        $file = \fileDownloadFetchInfo("filename = '".\doSlash($play)."' and created <= ".now('created'));
+                        $file = \fileDownloadFetchInfo(
+                            "filename = '".\doSlash($play)."' and created <= ".now('created')
+                        );
                     }
-                    $src = \filedownloadurl($file['id'], $file['filename']);
+
+                    $sources[] = \filedownloadurl($file['id'], $file['filename']);
                 }
+            }
+
+            return $sources;
+        }
+
+        /**
+         * Get the player code
+         */
+        public function getPlayer()
+        {
+            if ($sources = $this->getSources()) {
+                $src = $sources[0];
+
+                unset($sources[0]);
 
                 $params = $this->getParams();
-
                 $dims = $this->getSize();
+
                 extract($dims);
 
                 return sprintf(
-                    '<video width="%s" height="%s" src="%s"%s></video>',
+                    '<video width="%s" height="%s" src="%s"%s>%s%s</video>',
                     $width,
                     $height,
                     $src,
-                    (empty($params) ? '' : ' ' . implode($this->glue, $params))
+                    (empty($params) ? '' : ' ' . implode(static::$glue, $params)),
+                    ($sources ? n . '<source src="' . implode('">' . n . '<source src="', $sources) . '">' : ''),
+                    n . \gtxt(
+                        'html_player_not_supported',
+                        array(
+                            '{player}' => '<video>',
+                            '{src}'    => $src,
+                            '{file}'   => basename($src),
+                        )
+                    ) . n
                 );
             }
         }

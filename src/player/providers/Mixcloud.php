@@ -22,15 +22,15 @@ namespace Oui\Player {
 
     class Mixcloud extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'audio' => array(
                 'scheme' => '#^((http|https)://(www\.)?mixcloud.com/[\S]+)$#i',
                 'id'     => '1',
             ),
         );
-        protected $src = '//www.mixcloud.com/';
-        protected $glue = array('widget/iframe/?feed=', '?', '&amp;');
-        protected $dims = array(
+        protected static $src = '//www.mixcloud.com/';
+        protected static $glue = array('widget/iframe/?feed=', '?', '&amp;');
+        protected static $dims = array(
             'width'  => array(
                 'default' => '100%',
             ),
@@ -41,7 +41,7 @@ namespace Oui\Player {
                 'default' => '',
             ),
         );
-        protected $params = array(
+        protected static $params = array(
             'autoplay'     => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),

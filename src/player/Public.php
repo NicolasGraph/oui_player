@@ -23,12 +23,14 @@ namespace Oui\Player {
     class Main extends Player
     {
         public $play;
+        public $provider;
+        public $infos = array();
         public $config;
 
         public function __construct()
         {
-            $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            $this->providers = explode(', ', \get_pref($this->plugin . '_providers'));
+            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            static::$providers = explode(', ', \get_pref(static::$plugin . '_providers'));
         }
 
         /**
@@ -40,12 +42,12 @@ namespace Oui\Player {
         {
             $get_atts = array();
 
-            foreach ($this->tags[$tag] as $att => $options) {
+            foreach (static::$tags[$tag] as $att => $options) {
                 $get_atts[$att] = '';
             }
 
-            if ($tag === $this->plugin) {
-                foreach ($this->providers as $provider) {
+            if ($tag === static::$plugin) {
+                foreach (static::$providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
                     $obj = $class::getInstance();
                     $get_atts = $obj->getAtts($tag, $get_atts);
@@ -58,38 +60,58 @@ namespace Oui\Player {
         /**
          * Check if the play property is a recognised URL scheme.
          */
-        public function checkUrl()
+        public function setInfos()
         {
-            foreach ($this->providers as $provider) {
+            foreach (static::$providers as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = $class::getInstance();
-                $obj->play = $this->play;
-                $infos = $obj->getInfos();
-                if ($infos) {
-                    return $infos;
+                $obj->play = $this->getPlay();
+
+                if ($this->infos = $obj->setInfos()) {
+                    return $this->provider = $provider;
                 }
             }
 
-            return false;
+            $this->infos = array(
+                $this->getPlay() => array(
+                    'play' => $this->getPlay(),
+                    'type' => 'id',
+                )
+            );
+
+            return $this->provider = \get_pref(static::$plugin . '_provider');
         }
 
         /**
-         * Get the item URL, provider and ID from the play property.
+         * Check if the play property is a recognised URL scheme.
+         */
+        public function getProvider()
+        {
+            return $this->provider ? $this->provider : $this->setInfos();
+        }
+
+        /**
+         * Check if the play property is a recognised URL scheme.
          */
         public function getInfos()
         {
-            $infos = $this->checkUrl();
-
-            if (!$infos) {
-                $infos = array(
-                    'url'      => '',
-                    'provider' => \get_pref($this->plugin . '_provider'),
-                    'play'     => $this->play,
-                    'type'     => '',
-                );
+            if ($this->infos || $this->setInfos()) {
+                return $this->infos;
             }
 
-            return $infos;
+            throw new \Exception(gtxt('undefined_infos'));
+        }
+
+        /**
+         * Check if the play property is a recognised URL scheme.
+         */
+        public function getPlay()
+        {
+            if ($this->play) {
+                return $this->play;
+            }
+
+            throw new \Exception(gtxt('undefined_property'));
         }
 
         /**
@@ -97,17 +119,18 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $item = $this->getInfos();
-            $class = __NAMESPACE__ . '\\' . $item['provider'];
-            $obj = $class::getInstance();
-            $obj->play = $item['play'];
-            $obj->config = $this->config;
-            $out = $obj->getPlayer();
-            if ($out) {
-                return $out;
+            if ($provider = $this->setInfos()) {
+                $class = __NAMESPACE__ . '\\' . $provider;
+
+                $obj = $class::getInstance();
+                $obj->play = $this->getPlay();
+                $obj->infos = $this->getInfos();
+                $obj->config = $this->config;
+
+                return $obj->getPlayer();
             }
 
-            return false;
+            throw new \Exception(gtxt('undefined_player'));
         }
     }
 }

@@ -22,14 +22,14 @@ namespace Oui\Player {
 
     class Myspace extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://myspace\.com/[\S]+/video/[\S]+/(\d+)$#i',
                 'id'     => '2',
             ),
         );
-        protected $src = '//media.myspace.com/';
-        protected $glue = array('play/video/', '?', '&amp;');
+        protected static $src = '//media.myspace.com/';
+        protected static $glue = array('play/video/', '?', '&amp;');
     }
 
     if (txpinterface === 'admin') {

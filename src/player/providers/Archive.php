@@ -22,15 +22,15 @@ namespace Oui\Player {
 
     class Archive extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'unknown' => array(
                 'scheme' => '#^(http|https)://(www\.)?archive\.org/(details|embed)/([^&?/]+)$#i',
                 'id'     => '4',
             ),
         );
-        protected $src = '//archive.org/';
-        protected $glue = array('embed/', '&amp;', '&amp;');
-        protected $dims = array(
+        protected static $src = '//archive.org/';
+        protected static $glue = array('embed/', '&amp;', '&amp;');
+        protected static $dims = array(
             'width'    => array(
                 'default' => '640',
             ),
@@ -41,7 +41,7 @@ namespace Oui\Player {
                 'default' => '',
             ),
         );
-        protected $params = array(
+        protected static $params = array(
             'autoplay' => array(
                 'default' => '0',
                 'valid'   => array('0', '1'),

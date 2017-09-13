@@ -22,15 +22,15 @@ namespace Oui\Player {
 
     class Dailymotion extends Provider
     {
-        protected $patterns = array(
+        protected static $patterns = array(
             'video' => array(
                 'scheme' => '#^(http|https)://(www\.)?(dailymotion\.com/((embed/video)|(video))|(dai\.ly?))/([A-Za-z0-9]+)#i',
                 'id'     => '8',
             ),
         );
-        protected $src = '//www.dailymotion.com/';
-        protected $glue = array('embed/video/', '?', '&amp;');
-        protected $params = array(
+        protected static $src = '//www.dailymotion.com/';
+        protected static $glue = array('embed/video/', '?', '&amp;');
+        protected static $params = array(
             'api'                  => array(
                 'default' => 'false',
                 'valid'   => array('false', 'postMessage', 'location', '1'),

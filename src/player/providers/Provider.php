@@ -23,13 +23,13 @@ namespace Oui\Player {
     abstract class Provider
     {
         public $play;
-        public $prefix;
+        public $infos;
         public $config;
 
-        protected $patterns = array();
-        protected $src;
-        protected $script;
-        protected $dims = array(
+        protected static $patterns = array();
+        protected static $src;
+        protected static $script;
+        protected static $dims = array(
             'width'    => array(
                 'default' => '640',
             ),
@@ -40,8 +40,8 @@ namespace Oui\Player {
                 'default' => '16:9',
             ),
         );
-        protected $params = array();
-        protected $glue = array('/', '?', '&amp;');
+        protected static $params = array();
+        protected static $glue = array('/', '?', '&amp;');
 
         private static $instance = null;
 
@@ -65,10 +65,10 @@ namespace Oui\Player {
         public function __construct()
         {
             // Plug in Oui\Player class
-            $this->plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            \register_callback(array($this, 'getProvider'), $this->plugin, 'plug_providers', 0);
+            $plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            \register_callback(array($this, 'getProvider'), $plugin, 'plug_providers', 0);
 
-            if (isset($this->script)) {
+            if (isset(static::$script)) {
                 \register_callback(array($this, 'getScript'), 'textpattern_end');
             }
         }
@@ -89,7 +89,7 @@ namespace Oui\Player {
         {
             if ($ob = ob_get_contents()) {
                 ob_clean();
-                echo str_replace('</body>', '<script src="' . $this->script . '"></script>' . n . '</body>', $ob);
+                echo str_replace('</body>', '<script src="' . static::$script . '"></script>' . n . '</body>', $ob);
             }
         }
 
@@ -98,7 +98,7 @@ namespace Oui\Player {
          */
         public function getPrefs($prefs)
         {
-            $merge_prefs = array_merge($this->dims, $this->params);
+            $merge_prefs = array_merge(static::$dims, static::$params);
 
             foreach ($merge_prefs as $pref => $options) {
                 $options['group'] = strtolower(str_replace('\\', '_', get_class($this)));
@@ -117,7 +117,7 @@ namespace Oui\Player {
          */
         public function getAtts($tag, $get_atts)
         {
-            $atts = array_merge($this->dims, $this->params);
+            $atts = array_merge(static::$dims, static::$params);
 
             foreach ($atts as $att => $options) {
                 $att = str_replace('-', '_', $att);
@@ -128,35 +128,47 @@ namespace Oui\Player {
         }
 
         /**
+         * Check if the play property is a recognised URL scheme.
+         */
+        public function getPlay()
+        {
+            if ($this->play) {
+                return explode(', ', $this->play);
+            }
+
+            throw new \Exception(gtxt('undefined_property'));
+        }
+
+        /**
          * Get the item URL, provider and ID from the play property.
          */
-        public function getInfos()
+        public function setInfos()
         {
-            $infos = false;
+            $infos = array();
 
-            foreach ($this->patterns as $pattern => $options) {
-                if (preg_match($options['scheme'], $this->play, $matches)) {
-                    $prefix = isset($options['prefix']) ? $options['prefix'] : '';
+            foreach ($this->getPlay() as $play) {
+                foreach (static::$patterns as $pattern => $options) {
+                    if (preg_match($options['scheme'], $play, $matches)) {
+                        $prefix = isset($options['prefix']) ? $options['prefix'] : '';
 
-                    if (!$infos) {
-                        $infos = array(
-                            'url'      => $this->play,
-                            'provider' => strtolower(substr(strrchr(get_class($this), '\\'), 1)),
-                            'play'     => $prefix . $matches[$options['id']],
-                            'type'     => $pattern,
-                        );
-                        if (!isset($options['next'])) {
-                            break;
+                        if (!array_key_exists($play, $infos)) {
+                            $infos[$play] = array(
+                                    'play' => $prefix . $matches[$options['id']],
+                                    'type' => $pattern,
+                                );
+                            if (!isset($options['next'])) {
+                                break;
+                            }
+                        } else {
+                            // Bandcamp accepts track+album, Youtube accepts video+list.
+                            $infos['play'] .= static::$glue[1] . $prefix . $matches[$options['id']];
+                            $infos['type'] = array($infos['type'], $pattern);
                         }
-                    } else {
-                        // Bandcamp accepts track+album, Youtube accepts video+list.
-                        $infos['play'] .= $this->glue[1] . $prefix . $matches[$options['id']];
-                        $infos['type'] = array($infos['type'], $pattern);
                     }
                 }
             }
 
-            return $infos;
+            return $this->infos = $infos;
         }
 
         /**
@@ -166,7 +178,7 @@ namespace Oui\Player {
         {
             $params = array();
 
-            foreach ($this->params as $param => $infos) {
+            foreach (static::$params as $param => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $att = str_replace('-', '_', $param);
@@ -192,7 +204,7 @@ namespace Oui\Player {
         {
             $dims = array();
 
-            foreach ($this->dims as $dim => $infos) {
+            foreach (static::$dims as $dim => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
                 $default = $infos['default'];
                 $value = isset($this->config[$dim]) ? $this->config[$dim] : '';
@@ -232,18 +244,26 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the player code
+         * Check if the play property is a recognised URL scheme.
          */
-        public function getPlay()
+        public function getInfos()
         {
-            if (preg_match('/([.][a-z]+\/)/', $this->play)) {
-                $infos = $this->getInfos();
-                $play = $infos['play'];
-            } else {
-                $play = $this->play;
+            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
+
+            if ($this->infos || ($isUrl && $this->setInfos() !== false)) {
+                return $this->infos;
             }
 
-            return $play;
+            $infos = array();
+
+            foreach ($this->getPlay() as $play) {
+                $infos[$play] = array(
+                    'play' => $play,
+                    'type' => 'id',
+                );
+            }
+
+            return $infos;
         }
 
         /**
@@ -251,13 +271,14 @@ namespace Oui\Player {
          */
         public function getPlayer()
         {
-            $play = $this->getPlay();
-            $src = $this->src . $this->glue[0] . $play;
+            $play = $this->getInfos()[$this->getPlay()[0]]['play'];
+
+            $src = static::$src . static::$glue[0] . $play;
             $params = $this->getParams();
 
             if (!empty($params)) {
-                $joint = strpos($src, $this->glue[1]) ? $this->glue[2] : $this->glue[1];
-                $src .= $joint . implode($this->glue[2], $params);
+                $joint = strpos($src, static::$glue[1]) ? static::$glue[2] : static::$glue[1];
+                $src .= $joint . implode(static::$glue[2], $params);
             }
 
             $dims = $this->getSize();
