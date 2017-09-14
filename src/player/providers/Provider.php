@@ -363,28 +363,26 @@ namespace Oui\Player {
                 }
             }
 
-            if (!isset($width) || !isset($height)) {
+            if ((!isset($width) || !isset($height)) && isset($ratio)) {
                 // Works out the aspect ratio.
-                if (isset($ratio)) {
-                    preg_match("/(\d+):(\d+)/", $ratio, $matches);
+                preg_match("/(\d+):(\d+)/", $ratio, $matches);
 
-                    if ($matches && $matches[1]!=0 && $matches[2]!=0) {
-                        $aspect = $matches[1] / $matches[2];
-                    } else {
-                        trigger_error(gtxt('invalid_player_ratio'));
-                    }
-
-                    // Calculates the new width/height.
-                    $defined = $width ? 'width' : 'height';
-                    $undefined = $defined === 'width' ? 'height' : 'width';
-                    $$undefined = $$defined / $aspect;
-                    // Has unit?
-                    preg_match("/(\D+)/", $$defined, $unit);
-                    // Adds unit if it exists.
-                    isset($unit[0]) ? $$undefined .= $unit[0] : '';
+                if ($matches && $matches[1]!=0 && $matches[2]!=0) {
+                    $aspect = $matches[1] / $matches[2];
                 } else {
-                    trigger_error(gtxt('undefined_player_size'));
+                    trigger_error(gtxt('invalid_player_ratio'));
                 }
+
+                // Calculates the new width/height.
+                $defined = $width ? 'width' : 'height';
+                $undefined = $defined === 'width' ? 'height' : 'width';
+                $$undefined = $$defined / $aspect;
+                // Has unit?
+                preg_match("/(\D+)/", $$defined, $unit);
+                // Adds unit if it exists.
+                isset($unit[0]) ? $$undefined .= $unit[0] : '';
+            } else {
+                trigger_error(gtxt('undefined_player_size'));
             }
 
             return array('width' => $width, 'height' => $height);
