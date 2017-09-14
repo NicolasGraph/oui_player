@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016 Nicolas Morand
+ * Copyright (C) 2016-2017 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -18,16 +18,35 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Admin
+ *
+ * Manages admin side plugin features.
+ *
+ * @package Oui\Player
+ */
+
 namespace Oui\Player {
 
     class Admin extends Player
     {
+        /**
+         * Constructor
+         *
+         * @see \callback_event()
+         *      \add_privs()
+         *      \register_callback()
+         *      \get_pref()
+         */
+
         public function __construct()
         {
             if (txpinterface === 'admin') {
+                // Gets the plugin name from the class namespace.
                 static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+                // Adds an event to plug providers and store them.
                 static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
-
+                // Completes plugin main prefs.
                 static::$prefs['provider']['valid'] = static::$providers;
                 static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
                 static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
@@ -38,15 +57,17 @@ namespace Oui\Player {
                 \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
                 \register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . static::$plugin, null, 1);
 
-                // Add privs to provider prefs only if they are enabled.
+                // Adds privilieges to provider prefs only if they are enabled.
                 foreach (static::$providers as $provider) {
                     $group = static::$plugin . '_' . strtolower($provider);
                     $pref = $group . '_prefs';
+
                     if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
                         \add_privs('prefs.' . $group, static::$privs);
                     }
                 }
             } else {
+                // Registers plugin tags.
                 foreach (static::$tags as $tag => $attributes) {
                     \Txp::get('\Textpattern\Tag\Registry')->register($tag);
                 }
@@ -54,11 +75,15 @@ namespace Oui\Player {
         }
 
         /**
-         * Handler for plugin lifecycle events.
+         * Plugin lifecycle events handler.
          *
-         * @param string $evt Textpattern action event
-         * @param string $stp Textpattern action step
+         * @param string $evt Textpattern event
+         * @param string $stp Textpattern step
+         * @see   setPrefs()
+         *        deleteOldPrefs()
+         *        \safe_delete()
          */
+
         public function lifeCycle($evt, $stp)
         {
             switch ($stp) {
@@ -74,19 +99,25 @@ namespace Oui\Player {
         }
 
         /**
-         * Jump to the prefs panel.
+         * Links 'options' to the prefs panel.
          */
+
         public function optionsLink()
         {
-            $url = '?event=prefs#prefs_group_' . static::$plugin;
-            header('Location: ' . $url);
+            header('Location: ?event=prefs#prefs_group_' . static::$plugin);
         }
 
         /**
-         * Define the pref widget
+         * Defines a plugin pref widget.
          *
-         * @param array $options Current pref options
+         * @param  array  $options Current pref options
+         * @return string HTML
+         * @see    \yesnoradio()
+         *         \oui_player_truefalseradio()
+         *         \oui_player_pref_widget()
+         *         \text_input()
          */
+
         public function prefWidget($options)
         {
             $valid = isset($options['valid']) ? $options['valid'] : false;
@@ -112,11 +143,17 @@ namespace Oui\Player {
         }
 
         /**
-         * Build plugin pref inputs
+         * Builds a plugin pref widget.
          *
-         * @param string $name The name of the preference (Textpattern variable)
-         * @param string $val  The value of the preference (Textpattern variable)
+         * @param  string $name The preference name (Txp var)
+         * @param  string $val  The preference value (Txp var)
+         * @return string HTML
+         * @see    getPrefs()
+         *         \gtxt()
+         *         \selectInput()
+         *         \fInput()
          */
+
         public static function prefFunction($name, $val)
         {
             $prefs = self::getPrefs();
@@ -136,12 +173,17 @@ namespace Oui\Player {
         }
 
         /**
-         * Collect plugin prefs
+         * Collects plugin prefs
+         *
+         * @return array Preferences
+         * @see    getPrefs()
          */
+
         public static function getPrefs()
         {
             $prefs = array();
 
+            // Collects the plugin main prefs.
             foreach (static::$prefs as $pref => $options) {
                 $options['group'] = static::$plugin;
                 $pref = $options['group'] . '_' . $pref;
@@ -149,6 +191,7 @@ namespace Oui\Player {
             }
 
             foreach (static::$providers as $provider) {
+                // Adds a pref per provider to display/hide its own prefs group.
                 $options = array(
                     'default' => '0',
                     'valid'   => array('0', '1'),
@@ -157,6 +200,7 @@ namespace Oui\Player {
                 $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
                 $prefs[$pref] = $options;
 
+                // Collects provider prefs.
                 $class = __NAMESPACE__ . '\\' . $provider;
                 $obj = new $class;
                 $prefs = $obj->getPrefs($prefs);
@@ -166,8 +210,14 @@ namespace Oui\Player {
         }
 
         /**
-         * Install plugin prefs
+         * Set plugin prefs.
+         *
+         * @see getPrefs()
+         *      \get_pref()
+         *      \set_pref()
+         *      prefWidget()
          */
+
         public function setPrefs()
         {
             $prefs = $this->getPrefs();
@@ -184,13 +234,18 @@ namespace Oui\Player {
                         $position
                     );
                 }
-                $position = $position + 10;
+
+                $position += 10;
             }
         }
 
         /**
-         * Delete potential old unused plugin prefs
+         * Deletes old unused plugin prefs.
+         *
+         * @see getPrefs()
+         *      \safe_delete()
          */
+
         public function deleteOldPrefs()
         {
             $prefs = $this->getPrefs();

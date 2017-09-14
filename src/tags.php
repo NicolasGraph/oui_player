@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016 Nicolas Morand
+ * Copyright (C) 2016-2017 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -19,11 +19,19 @@
  */
 
 /*
- * Display a video
+ * Plugin tags
  */
+
 namespace {
 
-    function oui_player($atts, $thing)
+    /**
+     * Generates a player.
+     *
+     * @param  array  $atts Tag attributes
+     * @return string HTML
+     */
+
+    function oui_player($atts)
     {
         global $thisarticle, $oui_player_item;
 
@@ -33,6 +41,7 @@ namespace {
         // Set tag attributes
         $get_atts = $obj->getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
+
         extract($latts);
 
         if (!$play) {
@@ -46,6 +55,7 @@ namespace {
 
         if ($provider) {
             $player = 'Oui\Player\\' . $provider;
+
             if (class_exists($player)) {
                 $obj = $player::getInstance();
             } else {
@@ -61,9 +71,17 @@ namespace {
         return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
     }
 
-    /*
-     * Check a video url and its provider if provided.
+    /**
+     * Generates tag contents or alternative contents.
+     *
+     * Generated contents depends on whether the 'play' attribute value
+     * matches a provider URL scheme.
+     *
+     * @param  array  $atts  Tag attributes
+     * @param  string $thing Tag contents
+     * @return mixed  Tag contents or alternative contents
      */
+
     function oui_if_player($atts, $thing)
     {
         global $thisarticle, $oui_player_item;
@@ -71,14 +89,16 @@ namespace {
         $player = 'Oui\Player\Main';
         $obj = $player::getInstance();
 
-        // Set tag attributes
+        // Sets tag attributes
         $get_atts = $obj->getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
+
         extract($latts);
 
-        // Check if the play attribute value is recognised.
+        // Checks if the play attribute value is recognised.
         if ($provider) {
             $player = 'Oui\Player\\' . $provider;
+
             if (class_exists($player)) {
                 $obj = $player::getInstance();
             } else {
@@ -92,6 +112,7 @@ namespace {
         $oui_player_item = $obj->getInfos();
 
         $out = parse($thing, $oui_player_item);
+
         unset($GLOBALS['oui_player_item']);
 
         return $out;

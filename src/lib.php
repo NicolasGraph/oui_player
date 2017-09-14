@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016 Nicolas Morand
+ * Copyright (C) 2016-2017 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -21,12 +21,29 @@
 /**
  * Plugin pref functions
  */
+
 namespace {
+
+    /**
+     * Generates the right pref widget.
+     *
+     * @param  string $name The name of the preference (Textpattern variable)
+     * @param  string $val  The value of the preference (Textpattern variable)
+     * @return string HTML
+     */
 
     function oui_player_pref_widget($name, $val)
     {
         return Oui\Player\Admin::prefFunction($name, $val);
     }
+
+    /**
+     * Generates a select list of custom + article_image + excerpt fields.
+     *
+     * @param  string $name The name of the preference (Textpattern variable)
+     * @param  string $val  The value of the preference (Textpattern variable)
+     * @return string HTML
+     */
 
     function oui_player_custom_fields($name, $val)
     {
@@ -44,6 +61,17 @@ namespace {
 
         return selectInput($name, $vals, $val);
     }
+
+    /**
+     * Generates a Yes/No radio button toggle using 'true'/'false' as values.
+     *
+     * @param  string $field    The field name
+     * @param  string $checked  The checked button, either 'true', 'false'
+     * @param  int    $tabindex The HTML tabindex
+     * @param  string $id       The HTML id
+     * @see    radioSet()
+     * @return string HTML
+     */
 
     function oui_player_truefalseradio($field, $checked = '', $tabindex = 0, $id = '')
     {

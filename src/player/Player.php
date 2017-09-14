@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016 Nicolas Morand
+ * Copyright (C) 2016-2017 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -18,12 +18,41 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+ /**
+  * Player
+  *
+  * Plugin base class.
+  *
+  * @package Oui\Player
+  */
+
 namespace Oui\Player {
 
     class Player
     {
+        /**
+         * The plugin name.
+         *
+         * @var string
+         */
+
         protected static $plugin;
+
+        /**
+         * The plugged providers.
+         *
+         * @var array
+         */
+
         protected static $providers;
+
+        /**
+         * Multidimensional associative array of plugin tags,
+         * attributes and attibute values.
+         *
+         * @var array
+         */
+
         protected static $tags = array(
             'oui_player' => array(
                 'class' => array(
@@ -54,23 +83,43 @@ namespace Oui\Player {
                 ),
             ),
         );
+
+        /**
+         * Plugin prefs related privilege levels.
+         *
+         * @var string
+         */
+
         protected static $privs = '1, 2';
+
+        /**
+         * Multidimensional associative array
+         * of plugin general prefs.
+         *
+         * @var array.
+         */
+
         protected static $prefs = array(
             'custom_field' => array(
                 'widget'  => 'oui_player_custom_fields',
                 'default' => 'article_image',
             ),
-            'provider' => array(
-            ),
-            'providers' => array(
-            ),
+            'provider' => array(),
+            'providers' => array(),
         );
+
+        /**
+         * Caches the class instance.
+         *
+         * @var object
+         */
 
         private static $instance = null;
 
         /**
          * Singleton.
          */
+
         public static function getInstance()
         {
             $class = get_called_class();

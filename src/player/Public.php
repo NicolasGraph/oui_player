@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016 Nicolas Morand
+ * Copyright (C) 2016-2017 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -18,14 +18,57 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+ /**
+  * Main
+  *
+  * Manages public side plugin features.
+  *
+  * @package Oui\Player
+  */
+
 namespace Oui\Player {
 
     class Main extends Player
     {
+        /**
+         * The value provided through the 'play'
+         * attribute value of the plugin tag.
+         *
+         * @var string
+         */
+
         public $play;
+
+        /**
+         * The $play related provider.
+         *
+         * @var string
+         */
+
         public $provider;
+
+        /**
+         * Associative array of 'play' value(s) and their.
+         *
+         * @var array
+         */
+
         public $infos = array();
+
+        /**
+         * Associative array of player parameters
+         * provided via attributes.
+         *
+         * @var array
+         */
+
         public $config;
+
+        /**
+         * Constructor.
+         *
+         * @see \get_pref()
+         */
 
         public function __construct()
         {
@@ -36,17 +79,21 @@ namespace Oui\Player {
         /**
          * Get tag attributes.
          *
-         * @param string $tag The plugin tag.
+         * @param  string $tag The plugin tag
+         * @return array  An associative array using attributes as keys.
          */
+
         public function getAtts($tag)
         {
             $get_atts = array();
 
+            // Collects main attributes.
             foreach (static::$tags[$tag] as $att => $options) {
                 $get_atts[$att] = '';
             }
 
             if ($tag === static::$plugin) {
+                // Collects provider attributes.
                 foreach (static::$providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
                     $obj = $class::getInstance();
@@ -58,8 +105,13 @@ namespace Oui\Player {
         }
 
         /**
-         * Check if the play property is a recognised URL scheme.
+         * Finds the right provider to use and set the current media(s) infos.
+         *
+         * @return string The matched provider.
+         * @see    getPlay()
+         *         \get_pref()
          */
+
         public function setInfos()
         {
             foreach (static::$providers as $provider) {
@@ -72,6 +124,7 @@ namespace Oui\Player {
                 }
             }
 
+            // No matched provider, set default infos.
             $this->infos = array(
                 $this->getPlay() => array(
                     'play' => $this->getPlay(),
@@ -83,16 +136,25 @@ namespace Oui\Player {
         }
 
         /**
-         * Check if the play property is a recognised URL scheme.
+         * Gets the provider property; set it if necessary.
+         *
+         * @return string A provider
+         * @see    setInfos()
          */
+
         public function getProvider()
         {
             return $this->provider ? $this->provider : $this->setInfos();
         }
 
         /**
-         * Check if the play property is a recognised URL scheme.
+         * Gets the infos property; set it if necessary.
+         *
+         * @return array An associative array of
+         * @see    setInfos()
+         *         \gtxt()
          */
+
         public function getInfos()
         {
             if ($this->infos || $this->setInfos()) {
@@ -103,8 +165,12 @@ namespace Oui\Player {
         }
 
         /**
-         * Check if the play property is a recognised URL scheme.
+         * Gets the play property.
+         *
+         * @throws \Exception
+         * @see    \gtxt()
          */
+
         public function getPlay()
         {
             if ($this->play) {
@@ -115,8 +181,15 @@ namespace Oui\Player {
         }
 
         /**
-         * Get the player code
+         * Gets the player code
+         *
+         * @throws \Exception
+         * @see    setInfos()
+         *         getPlay()
+         *         getInfos()
+         *         \gtxt()
          */
+
         public function getPlayer()
         {
             if ($provider = $this->setInfos()) {
