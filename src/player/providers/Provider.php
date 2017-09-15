@@ -350,39 +350,44 @@ namespace Oui\Player {
         {
             foreach (static::$dims as $dim => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
-                $default = $infos['default'];
                 $att = isset($this->config[$dim]) ? $this->config[$dim] : '';
 
                 // Adds attributes values in use or modified prefs values as player parameters.
                 if ($att) {
                     $$dim = $att;
-                } elseif ($pref && $pref !== $default) {
+                } elseif ($pref) {
                     $$dim = $pref;
-                } elseif ($default) {
-                    $$dim = $default;
                 }
             }
 
-            if ((!isset($width) || !isset($height)) && isset($ratio)) {
-                // Works out the aspect ratio.
-                preg_match("/(\d+):(\d+)/", $ratio, $matches);
-
-                if ($matches && $matches[1]!=0 && $matches[2]!=0) {
-                    $aspect = $matches[1] / $matches[2];
-                } else {
-                    trigger_error(gtxt('invalid_player_ratio'));
-                }
-
-                // Calculates the new width/height.
-                $defined = $width ? 'width' : 'height';
-                $undefined = $defined === 'width' ? 'height' : 'width';
-                $$undefined = $$defined / $aspect;
-                // Has unit?
-                preg_match("/(\D+)/", $$defined, $unit);
-                // Adds unit if it exists.
-                isset($unit[0]) ? $$undefined .= $unit[0] : '';
-            } else {
+            if (!isset($width) && !isset($height)) {
                 trigger_error(gtxt('undefined_player_size'));
+            } elseif (!isset($width) || !isset($height)) {
+                if (isset($ratio)) {
+                    // Works out the aspect ratio.
+                    preg_match("/(\d+):(\d+)/", $ratio, $matches);
+
+                    if ($matches && $matches[1]!=0 && $matches[2]!=0) {
+                        $aspect = $matches[1] / $matches[2];
+                    } else {
+                        trigger_error(gtxt('invalid_player_ratio'));
+                    }
+
+                    // Calculates the new width/height.
+                    if (isset($width)) {
+                        $height = $width / $aspect;
+                        // Has unit?
+                        preg_match("/(\D+)/", $width, $unit);
+                        // Adds unit if it exists.
+                        isset($unit[0]) ? $height .= $unit[0] : '';
+                    } else {
+                        $width = $height * $aspect;
+                        preg_match("/(\D+)/", $height, $unit);
+                        isset($unit[0]) ? $width .= $unit[0] : '';
+                    }
+                } else {
+                    trigger_error(gtxt('undefined_player_size'));
+                }
             }
 
             return array('width' => $width, 'height' => $height);
