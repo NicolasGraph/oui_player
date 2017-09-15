@@ -351,19 +351,13 @@ namespace Oui\Player {
             foreach (static::$dims as $dim => $infos) {
                 $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
                 $att = isset($this->config[$dim]) ? $this->config[$dim] : '';
-
-                // Adds attributes values in use or modified prefs values as player parameters.
-                if ($att) {
-                    $$dim = $att;
-                } elseif ($pref) {
-                    $$dim = $pref;
-                }
+                $$dim = $att ? $att : $pref;
             }
 
-            if (!isset($width) && !isset($height)) {
+            if (!$width && !$height) {
                 trigger_error(gtxt('undefined_player_size'));
-            } elseif (!isset($width) || !isset($height)) {
-                if (isset($ratio)) {
+            } elseif (!$width || !$height) {
+                if ($ratio) {
                     // Works out the aspect ratio.
                     preg_match("/(\d+):(\d+)/", $ratio, $matches);
 
@@ -374,7 +368,7 @@ namespace Oui\Player {
                     }
 
                     // Calculates the new width/height.
-                    if (isset($width)) {
+                    if ($width) {
                         $height = $width / $aspect;
                         // Has unit?
                         preg_match("/(\D+)/", $width, $unit);
