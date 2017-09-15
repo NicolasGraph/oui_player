@@ -151,7 +151,7 @@ namespace Oui\Player {
                 }
             }
 
-            $infos[$this->getPlay()[0]]['type'] === 'list' ? static::$glue[0] = 'embed?' : '';
+            static::$glue[0] = $infos[$this->getPlay()[0]]['type'] === 'list' ? 'embed?' : 'embed/';
 
             return $infos;
         }
