@@ -270,14 +270,22 @@ namespace Oui\Player {
             $position = 250;
 
             foreach ($prefs as $pref => $options) {
+                $widget = isset($options['widget']) ? $options['widget'] : self::prefWidget($options);
+
                 if ($pref === 'oui_player_providers' || \get_pref($pref, null) === null) {
                     \set_pref(
                         $pref,
                         $options['default'],
                         $options['group'],
                         $pref === 'oui_player_providers' ? PREF_HIDDEN : PREF_PLUGIN,
-                        isset($options['widget']) ? $options['widget'] : self::prefWidget($options),
+                        $widget,
                         $position
+                    );
+                } else {
+                    \safe_update(
+                        doSlash('txp_prefs'),
+                        "html = '".doSlash($widget)."'",
+                        "name = '".doSlash($pref)."'"
                     );
                 }
 
