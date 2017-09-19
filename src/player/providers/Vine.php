@@ -30,8 +30,8 @@ namespace Oui\Player {
     {
         protected static $patterns = array(
             'video' => array(
-                'scheme' => '#^(http|https)://(www\.)?vine.co/v/([^&?/]+)#i',
-                'id'     => '3'
+                'scheme' => '#^(http|https)://(www\.)?vine.co/(v/)?([^&?/]+)#i',
+                'id'     => '4'
             ),
         );
         protected static $src = '//vine.co/';
