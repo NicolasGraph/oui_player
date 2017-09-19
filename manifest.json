@@ -56,7 +56,6 @@
         "./src/player/Player.php",
         "./src/player/Admin.php",
         "./src/player/Public.php",
-        "./src/lib.php",
         "./src/tags.php"
     ]}
 }

@@ -129,12 +129,12 @@ namespace Oui\Player {
                 if (empty($yesno_diff)) {
                     $widget = 'yesnoradio';
                 } elseif (empty($truefalse_diff)) {
-                    $widget = static::$plugin . '_truefalseradio';
+                    $widget = 'Oui\Player\Admin::truefalseradio';
                 } else {
-                    $widget = static::$plugin . '_pref_widget';
+                    $widget = 'Oui\Player\Admin::prefFunction';
                 }
             } elseif ($valid) {
-                $widget = static::$plugin . '_pref_widget';
+                $widget = 'Oui\Player\Admin::prefFunction';
             } else {
                 $widget = 'text_input';
             }
@@ -170,6 +170,52 @@ namespace Oui\Player {
             } else {
                 return \fInput($valid, $name, $val);
             }
+        }
+
+        /**
+         * Generates a select list of custom + article_image + excerpt fields.
+         *
+         * @param  string $name The name of the preference (Textpattern variable)
+         * @param  string $val  The value of the preference (Textpattern variable)
+         * @return string HTML
+         */
+
+        public static function customFields($name, $val)
+        {
+            $vals = array();
+            $vals['article_image'] = gtxt('article_image');
+            $vals['excerpt'] = gtxt('excerpt');
+
+            $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
+
+            if ($custom_fields) {
+                foreach ($custom_fields as $row) {
+                    $vals[$row['val']] = $row['val'];
+                }
+            }
+
+            return selectInput($name, $vals, $val);
+        }
+
+        /**
+         * Generates a Yes/No radio button toggle using 'true'/'false' as values.
+         *
+         * @param  string $field    The field name
+         * @param  string $checked  The checked button, either 'true', 'false'
+         * @param  int    $tabindex The HTML tabindex
+         * @param  string $id       The HTML id
+         * @see    radioSet()
+         * @return string HTML
+         */
+
+        public static function truefalseradio($field, $checked = '', $tabindex = 0, $id = '')
+        {
+            $vals = array(
+                'false' => gTxt('no'),
+                'true' => gTxt('yes'),
+            );
+
+            return radioSet($vals, $field, $checked, $tabindex, $id);
         }
 
         /**

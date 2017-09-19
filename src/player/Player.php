@@ -101,7 +101,7 @@ namespace Oui\Player {
 
         protected static $prefs = array(
             'custom_field' => array(
-                'widget'  => 'oui_player_custom_fields',
+                'widget'  => 'Oui\Player\Admin::customFields',
                 'default' => 'article_image',
             ),
             'provider' => array(),
