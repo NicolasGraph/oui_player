@@ -86,9 +86,6 @@ namespace Oui\Player {
                 'default' => '1',
                 'valid'   => array('1', '3'),
             ),
-            'list'           => array(
-                'default' => '',
-            ),
             'listType'           => array(
                 'default' => '',
                 'valid'   => array('playlist', 'search', 'user_uploads'),

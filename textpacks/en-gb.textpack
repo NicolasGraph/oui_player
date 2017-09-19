@@ -219,6 +219,7 @@ oui_player_youtube_iv_load_policy => Video annotations display
 oui_player_youtube_iv_load_policy_1 => Enable by default
 oui_player_youtube_iv_load_policy_3 => Disable by default
 oui_player_youtube_loop => Replay the video once finished
+oui_player_youtube_listType => List Type
 oui_player_youtube_modestbranding => Modest branding
 oui_player_youtube_origin => Origin domain URL
 oui_player_youtube_playsinline => Avoid fullscreen playback by default on iOS
