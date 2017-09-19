@@ -70,7 +70,7 @@ namespace Oui\Player {
          * @see \get_pref()
          */
 
-        private function __construct()
+        protected function __construct()
         {
             static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
             static::$providers = explode(', ', \get_pref(static::$plugin . '_providers'));
@@ -83,7 +83,7 @@ namespace Oui\Player {
          * @return array  An associative array using attributes as keys.
          */
 
-        public function getAtts($tag)
+        public static function getAtts($tag)
         {
             $get_atts = array();
 

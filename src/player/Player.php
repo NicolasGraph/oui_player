@@ -114,7 +114,7 @@ namespace Oui\Player {
          * @var object
          */
 
-        private static $instance = null;
+        protected static $instance = null;
 
         /**
          * Singleton.
@@ -124,11 +124,11 @@ namespace Oui\Player {
         {
             $class = get_called_class();
 
-            if (!isset(self::$instance[$class])) {
-                self::$instance[$class] = new static();
+            if (!isset(static::$instance[$class])) {
+                static::$instance[$class] = new static();
             }
 
-            return self::$instance[$class];
+            return static::$instance[$class];
         }
     }
 }

@@ -197,7 +197,7 @@ namespace Oui\Player {
          * Embeds the provider script.
          */
 
-        protected static function embedScript()
+        public static function embedScript()
         {
             if ($ob = ob_get_contents()) {
                 ob_clean();
