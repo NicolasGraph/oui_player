@@ -120,7 +120,7 @@ namespace Oui\Player {
          * Singleton.
          */
 
-        public static function getInstance()
+        final public static function getInstance()
         {
             $class = get_called_class();
 

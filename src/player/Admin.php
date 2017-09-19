@@ -39,7 +39,7 @@ namespace Oui\Player {
          *      \get_pref()
          */
 
-        public function __construct()
+        protected function __construct()
         {
             if (txpinterface === 'admin') {
                 // Gets the plugin name from the class namespace.
@@ -55,7 +55,7 @@ namespace Oui\Player {
                 \add_privs('prefs.' . static::$plugin, static::$privs);
 
                 \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
-                \register_callback(array($this, 'optionsLink'), 'plugin_prefs.' . static::$plugin, null, 1);
+                \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
 
                 // Adds privilieges to provider prefs only if they are enabled.
                 foreach (static::$providers as $provider) {
@@ -102,7 +102,7 @@ namespace Oui\Player {
          * Links 'options' to the prefs panel.
          */
 
-        public function optionsLink()
+        public static function optionsLink()
         {
             header('Location: ?event=prefs#prefs_group_' . static::$plugin);
         }
@@ -118,7 +118,7 @@ namespace Oui\Player {
          *         \text_input()
          */
 
-        public function prefWidget($options)
+        private static function prefWidget($options)
         {
             $valid = isset($options['valid']) ? $options['valid'] : false;
 
@@ -248,7 +248,7 @@ namespace Oui\Player {
 
                 // Collects provider prefs.
                 $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = new $class;
+                $obj = $class::getInstance();
                 $prefs = $obj->getPrefs($prefs);
             }
 
@@ -264,7 +264,7 @@ namespace Oui\Player {
          *      prefWidget()
          */
 
-        public function setPrefs()
+        private function setPrefs()
         {
             $prefs = $this->getPrefs();
             $position = 250;
@@ -276,7 +276,7 @@ namespace Oui\Player {
                         $options['default'],
                         $options['group'],
                         $pref === 'oui_player_providers' ? PREF_HIDDEN : PREF_PLUGIN,
-                        isset($options['widget']) ? $options['widget'] : $this->prefWidget($options),
+                        isset($options['widget']) ? $options['widget'] : self::prefWidget($options),
                         $position
                     );
                 }
@@ -292,7 +292,7 @@ namespace Oui\Player {
          *      \safe_delete()
          */
 
-        public function deleteOldPrefs()
+        private function deleteOldPrefs()
         {
             $prefs = $this->getPrefs();
 

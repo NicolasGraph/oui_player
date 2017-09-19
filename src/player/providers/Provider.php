@@ -172,14 +172,14 @@ namespace Oui\Player {
          * @see \register_callback()
          */
 
-        public function __construct()
+        protected function __construct()
         {
             // Plugs in the Player class.
             $plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
             \register_callback(array($this, 'getProvider'), $plugin, 'plug_providers', 0);
 
             if (isset(static::$script)) {
-                \register_callback(array($this, 'embedScript'), 'textpattern_end');
+                \register_callback('Oui\Player\Provider::embedScript', 'textpattern_end');
             }
         }
 
@@ -197,7 +197,7 @@ namespace Oui\Player {
          * Embeds the provider script.
          */
 
-        public function embedScript()
+        protected static function embedScript()
         {
             if ($ob = ob_get_contents()) {
                 ob_clean();
@@ -237,7 +237,7 @@ namespace Oui\Player {
          * @return array  Attributes
          */
 
-        public function getAtts($tag, $get_atts)
+        public static function getAtts($tag, $get_atts)
         {
             $atts = array_merge(static::$dims, static::$params);
 

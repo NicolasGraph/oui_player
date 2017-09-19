@@ -39,7 +39,7 @@ namespace {
         $obj = $player::getInstance();
 
         // Set tag attributes
-        $get_atts = $obj->getAtts(__FUNCTION__);
+        $get_atts = $obj::getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
 
         extract($latts);
@@ -90,7 +90,7 @@ namespace {
         $obj = $player::getInstance();
 
         // Sets tag attributes
-        $get_atts = $obj->getAtts(__FUNCTION__);
+        $get_atts = $obj::getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
 
         extract($latts);

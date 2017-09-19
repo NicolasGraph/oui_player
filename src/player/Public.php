@@ -70,7 +70,7 @@ namespace Oui\Player {
          * @see \get_pref()
          */
 
-        public function __construct()
+        private function __construct()
         {
             static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
             static::$providers = explode(', ', \get_pref(static::$plugin . '_providers'));
