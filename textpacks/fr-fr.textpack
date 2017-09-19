@@ -1,5 +1,5 @@
-#@admin
 #@language fr-fr
+#@admin
 oui_player => Lecteurs embarqués (oui_player)
 oui_player_provider => Service préféré
 oui_player_custom_field => Champ utilisé par défaut
@@ -228,3 +228,5 @@ oui_player_youtube_showinfo => Afficher les informations sur la vidéo
 oui_player_youtube_theme => Thème préféré pour le lecteur
 oui_player_youtube_theme_dark => Sombre
 oui_player_youtube_theme_light => Clair
+#@public
+oui_player_html_player_not_supported => Malheureusement, votre navigateur n'est pas capable de lire <a href="{src}">{file}</a>. La balise HTML5 {player} n'est prise en charge. 

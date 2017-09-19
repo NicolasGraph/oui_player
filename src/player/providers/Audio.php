@@ -87,7 +87,7 @@ namespace Oui\Player {
                     (empty($params) ? '' : ' ' . implode(static::$glue, $params)),
                     ($sources ? n . '<source src="' . implode('">' . n . '<source src="', $sources) . '">' : ''),
                     n . \gtxt(
-                        'html_player_not_supported',
+                        'oui_player_html_player_not_supported',
                         array(
                             '{player}' => '<audio>',
                             '{src}'    => $src,

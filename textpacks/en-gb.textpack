@@ -1,5 +1,5 @@
-#@admin
 #Default language, en-us, en-gb
+#@admin
 oui_player => Embedded players (oui_player)
 oui_player_provider => Favourite provider
 oui_player_custom_field => Field used by default
@@ -232,3 +232,5 @@ oui_player_youtube_theme_light => Light
 oui_player_youtube_width => Player width
 oui_player_youtube_height => Player height
 oui_player_youtube_ratio => Player ratio by default
+#@public
+oui_player_html_player_not_supported => Unfortunatly, your browser is not able to read <a href="{src}">{file}</a>. The HTML5 {player} tag is not supported. 
