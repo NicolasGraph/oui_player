@@ -58,8 +58,8 @@ namespace Oui\Player {
             static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
             static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
 
-            \add_privs('plugin_prefs.' . static::$plugin, static::$privs);
-            \add_privs('prefs.' . static::$plugin, static::$privs);
+            \add_privs('plugin_prefs.' . static::$plugin, self::$privs);
+            \add_privs('prefs.' . static::$plugin, self::$privs);
 
             \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
             \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
@@ -70,7 +70,7 @@ namespace Oui\Player {
                 $pref = $group . '_prefs';
 
                 if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                    \add_privs('prefs.' . $group, static::$privs);
+                    \add_privs('prefs.' . $group, self::$privs);
                 }
             }
         }
