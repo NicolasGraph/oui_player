@@ -105,7 +105,7 @@ namespace {
 
         $obj = $player::getInstance(isset($thisarticle[$play]) ? $thisarticle[$play] : $play);
 
-        $oui_player_item = $obj->getInfos(false);
+        $oui_player_item = $obj->isValid();
 
         $out = parse($thing, $oui_player_item);
 

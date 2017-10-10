@@ -19,7 +19,7 @@ p. This can be achieve with the following PHP code.
 
 bc(language-php).. $obj = Oui\Player\Main::getInstance("https://vimeo.com/186406583");
 
-echo $obj->getInfos(false) ? $obj->getPlayer() : 'Nothing to see here.';
+echo $obj->isValid ? $obj->getPlayer() : 'Nothing to see here.';
 
 h4. Display a Vimeo customized player
 

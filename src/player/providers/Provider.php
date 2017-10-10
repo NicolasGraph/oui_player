@@ -426,6 +426,18 @@ namespace Oui\Player {
         }
 
         /**
+         * Whether a provided URL to play matches a provider URL scheme or not.
+         *
+         * @return bool
+         * @see    getInfos()
+         */
+
+        public function isValid()
+        {
+            return $this->getInfos();
+        }
+
+        /**
          * Generates the player.
          *
          * @return string HTML
