@@ -103,6 +103,18 @@ namespace Oui\Player {
         }
 
         /**
+         * Registers plugin tags.
+         */
+
+        public static function registerTags()
+        {
+            // Registers plugin tags.
+            foreach (self::$tags as $tag => $attributes) {
+                \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+            }
+        }
+
+        /**
          * Get tag attributes.
          *
          * @param  string $tag The plugin tag
@@ -114,7 +126,7 @@ namespace Oui\Player {
             $get_atts = array();
 
             // Collects main attributes.
-            foreach (static::$tags[$tag] as $att => $options) {
+            foreach (self::$tags[$tag] as $att => $options) {
                 $get_atts[$att] = '';
             }
 
@@ -265,5 +277,9 @@ namespace Oui\Player {
 
             throw new \Exception(gtxt('undefined_player'));
         }
+    }
+
+    if (txpinterface === 'public') {
+        Main::registerTags();
     }
 }

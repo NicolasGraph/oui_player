@@ -47,54 +47,32 @@ namespace Oui\Player {
          *      \get_pref()
          */
 
-        private function __construct()
+        public function __construct()
         {
-            if (txpinterface === 'admin') {
-                // Gets the plugin name from the class namespace.
-                static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-                // Adds an event to plug providers and store them.
-                static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
-                // Completes plugin main prefs.
-                static::$prefs['provider']['valid'] = static::$providers;
-                static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
-                static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
+            // Gets the plugin name from the class namespace.
+            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            // Adds an event to plug providers and store them.
+            static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
+            // Completes plugin main prefs.
+            static::$prefs['provider']['valid'] = static::$providers;
+            static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
+            static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
 
-                \add_privs('plugin_prefs.' . static::$plugin, static::$privs);
-                \add_privs('prefs.' . static::$plugin, static::$privs);
+            \add_privs('plugin_prefs.' . static::$plugin, static::$privs);
+            \add_privs('prefs.' . static::$plugin, static::$privs);
 
-                \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
-                \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
+            \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
+            \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
 
-                // Adds privilieges to provider prefs only if they are enabled.
-                foreach (static::$providers as $provider) {
-                    $group = static::$plugin . '_' . strtolower($provider);
-                    $pref = $group . '_prefs';
+            // Adds privilieges to provider prefs only if they are enabled.
+            foreach (static::$providers as $provider) {
+                $group = static::$plugin . '_' . strtolower($provider);
+                $pref = $group . '_prefs';
 
-                    if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                        \add_privs('prefs.' . $group, static::$privs);
-                    }
-                }
-            } else {
-                // Registers plugin tags.
-                foreach (static::$tags as $tag => $attributes) {
-                    \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
+                    \add_privs('prefs.' . $group, static::$privs);
                 }
             }
-        }
-
-        /**
-         * Singleton.
-         */
-
-        final public static function getInstance()
-        {
-            $class = get_called_class();
-
-            if (!isset(static::$instance[$class])) {
-                static::$instance[$class] = new static();
-            }
-
-            return static::$instance[$class];
         }
 
         /**
@@ -333,5 +311,7 @@ namespace Oui\Player {
         }
     }
 
-    Admin::getInstance();
+    if (txpinterface === 'admin') {
+        new Admin;
+    }
 }
