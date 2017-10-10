@@ -109,7 +109,7 @@ namespace {
 
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
         $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-        $oui_player_item = $obj->getInfos();
+        $oui_player_item = $obj->getInfos(false);
 
         $out = parse($thing, $oui_player_item);
 

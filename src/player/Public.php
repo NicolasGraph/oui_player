@@ -107,7 +107,7 @@ namespace Oui\Player {
         /**
          * Finds the right provider to use and set the current media(s) infos.
          *
-         * @return string The matched provider.
+         * @return bool false if no provider is found.
          * @see    getPlay()
          *         \get_pref()
          */
@@ -120,10 +120,24 @@ namespace Oui\Player {
                 $obj->play = $this->getPlay();
 
                 if ($this->infos = $obj->setInfos()) {
-                    return $this->provider = $provider;
+                    $this->provider = $provider;
+
+                    return true;
                 }
             }
 
+            return false;
+        }
+
+        /**
+         * Set the current media(s) infos fallback.
+         *
+         * @see getPlay()
+         *      \get_pref()
+         */
+
+        public function setFallbackInfos()
+        {
             // No matched provider, set default infos.
             $this->infos = array(
                 $this->getPlay() => array(
@@ -132,36 +146,47 @@ namespace Oui\Player {
                 )
             );
 
-            return $this->provider = \get_pref(static::$plugin . '_provider');
-        }
-
-        /**
-         * Gets the provider property; set it if necessary.
-         *
-         * @return string A provider
-         * @see    setInfos()
-         */
-
-        public function getProvider()
-        {
-            return $this->provider ? $this->provider : $this->setInfos();
+            $this->provider = \get_pref(static::$plugin . '_provider');
         }
 
         /**
          * Gets the infos property; set it if necessary.
          *
+         * @param  bool  $fallback Whether to set fallback infos or not.
          * @return array An associative array of
          * @see    setInfos()
          *         \gtxt()
          */
 
-        public function getInfos()
+        public function getInfos($fallback = true)
         {
-            if ($this->infos || $this->setInfos()) {
+            if ($this->infos && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
                 return $this->infos;
+            } elseif ($fallback) {
+                return $this->setFallbackInfos();
             }
 
-            throw new \Exception(gtxt('undefined_infos'));
+            return false;
+        }
+
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @param  bool  $fallback Whether to set fallback infos or not.
+         * @return array An associative array of
+         * @see    setInfos()
+         *         \gtxt()
+         */
+
+        public function getProvider($fallback = true)
+        {
+            if ($this->provider && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
+                return $this->provider;
+            } elseif ($fallback) {
+                return $this->setFallbackInfos();
+            }
+
+            return false;
         }
 
         /**
@@ -192,7 +217,7 @@ namespace Oui\Player {
 
         public function getPlayer()
         {
-            if ($provider = $this->setInfos()) {
+            if ($provider = $this->getProvider()) {
                 $class = __NAMESPACE__ . '\\' . $provider;
 
                 $obj = $class::getInstance();
