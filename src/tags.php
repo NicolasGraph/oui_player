@@ -35,11 +35,8 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        $player = 'Oui\Player\Main';
-        $obj = $player::getInstance();
-
         // Set tag attributes
-        $get_atts = $obj::getAtts(__FUNCTION__);
+        $get_atts = Oui\Player\Main::getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
 
         extract($latts);
@@ -53,20 +50,20 @@ namespace {
             }
         }
 
+        $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
+
         if ($provider) {
             $player = 'Oui\Player\\' . $provider;
 
-            if (class_exists($player)) {
-                $obj = $player::getInstance();
-            } else {
+            if (!class_exists($player)) {
                 trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;
             }
+        } else {
+            $player = 'Oui\Player\Main';
         }
 
-        $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-        $obj->config = $latts;
-        $out = $obj->getPlayer($labeltag, $label, $wraptag, $class);
+        $out = $player::getInstance($play, $latts)->getPlayer();
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
     }
@@ -86,11 +83,8 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        $player = 'Oui\Player\Main';
-        $obj = $player::getInstance();
-
         // Sets tag attributes
-        $get_atts = $obj::getAtts(__FUNCTION__);
+        $get_atts = Oui\Player\Main::getAtts(__FUNCTION__);
         $latts = lAtts($get_atts, $atts);
 
         extract($latts);
@@ -99,16 +93,18 @@ namespace {
         if ($provider) {
             $player = 'Oui\Player\\' . $provider;
 
-            if (class_exists($player)) {
-                $obj = $player::getInstance();
-            } else {
+            if (!class_exists($player)) {
                 trigger_error('Unknown or unset provider: "' . $provider . '".');
                 return;
             }
+        } else {
+            $player = 'Oui\Player\Main';
         }
 
         $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
-        $obj->play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
+
+        $obj = $player::getInstance(isset($thisarticle[$play]) ? $thisarticle[$play] : $play);
+
         $oui_player_item = $obj->getInfos(false);
 
         $out = parse($thing, $oui_player_item);

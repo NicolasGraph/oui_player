@@ -35,7 +35,7 @@ namespace Oui\Player {
          * @var string
          */
 
-        public $play;
+        protected $play;
 
         /**
          * Infos.
@@ -44,7 +44,7 @@ namespace Oui\Player {
          * @see setInfos()
          */
 
-        public $infos;
+        protected $infos;
 
         /**
          * Associative array attributes in use and their values.
@@ -52,7 +52,7 @@ namespace Oui\Player {
          * @var array
          */
 
-        public $config;
+        protected $config;
 
         /**
          * Associative array of 'play' value(s) and their.
@@ -163,13 +163,17 @@ namespace Oui\Player {
          * Singleton.
          */
 
-        public static function getInstance()
+        public static function getInstance($play = null, $config = null, $infos = null)
         {
             $class = get_called_class();
 
             if (!isset(self::$instance[$class])) {
                 self::$instance[$class] = new static();
             }
+
+            $play ? self::$instance[$class]->play = $play : '';
+            $config ? self::$instance[$class]->config = $config : '';
+            $infos ? self::$instance[$class]->infos = $infos : '';
 
             return self::$instance[$class];
         }
@@ -220,12 +224,12 @@ namespace Oui\Player {
          * @return array Collected prefs merged with ones already provided.
          */
 
-        public function getPrefs($prefs)
+        public static function getPrefs($prefs)
         {
             $merge_prefs = array_merge(static::$dims, static::$params);
 
             foreach ($merge_prefs as $pref => $options) {
-                $options['group'] = strtolower(str_replace('\\', '_', get_class($this)));
+                $options['group'] = strtolower(str_replace('\\', '_', get_called_class()));
                 $pref = $options['group'] . '_' . $pref;
                 $prefs[$pref] = $options;
             }

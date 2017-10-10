@@ -31,6 +31,14 @@ namespace Oui\Player {
     class Admin extends Player
     {
         /**
+         * Caches the class instance.
+         *
+         * @var object
+         */
+
+        private static $instance = null;
+
+        /**
          * Constructor
          *
          * @see \callback_event()
@@ -39,7 +47,7 @@ namespace Oui\Player {
          *      \get_pref()
          */
 
-        protected function __construct()
+        private function __construct()
         {
             if (txpinterface === 'admin') {
                 // Gets the plugin name from the class namespace.
@@ -72,6 +80,21 @@ namespace Oui\Player {
                     \Txp::get('\Textpattern\Tag\Registry')->register($tag);
                 }
             }
+        }
+
+        /**
+         * Singleton.
+         */
+
+        final public static function getInstance()
+        {
+            $class = get_called_class();
+
+            if (!isset(static::$instance[$class])) {
+                static::$instance[$class] = new static();
+            }
+
+            return static::$instance[$class];
         }
 
         /**
@@ -248,8 +271,7 @@ namespace Oui\Player {
 
                 // Collects provider prefs.
                 $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = $class::getInstance();
-                $prefs = $obj->getPrefs($prefs);
+                $prefs = $class::getPrefs($prefs);
             }
 
             return $prefs;

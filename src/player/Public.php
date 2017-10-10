@@ -37,7 +37,7 @@ namespace Oui\Player {
          * @var string
          */
 
-        public $play;
+        protected $play;
 
         /**
          * The $play related provider.
@@ -45,7 +45,7 @@ namespace Oui\Player {
          * @var string
          */
 
-        public $provider;
+        protected $provider;
 
         /**
          * Associative array of 'play' value(s) and their.
@@ -53,7 +53,7 @@ namespace Oui\Player {
          * @var array
          */
 
-        public $infos = array();
+        protected $infos = array();
 
         /**
          * Associative array of player parameters
@@ -62,7 +62,15 @@ namespace Oui\Player {
          * @var array
          */
 
-        public $config;
+        protected $config;
+
+        /**
+         * Caches the class instance.
+         *
+         * @var object
+         */
+
+        private static $instance = null;
 
         /**
          * Constructor.
@@ -70,10 +78,28 @@ namespace Oui\Player {
          * @see \get_pref()
          */
 
-        protected function __construct()
+        private function __construct()
         {
             static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
             static::$providers = explode(', ', \get_pref(static::$plugin . '_providers'));
+        }
+
+        /**
+         * Singleton.
+         */
+
+        final public static function getInstance($play, $config = null)
+        {
+            $class = get_called_class();
+
+            if (!isset(static::$instance[$class])) {
+                static::$instance[$class] = new static();
+            }
+
+            static::$instance[$class]->play = $play;
+            $config ? static::$instance[$class]->config = $config : '';
+
+            return static::$instance[$class];
         }
 
         /**
@@ -96,8 +122,7 @@ namespace Oui\Player {
                 // Collects provider attributes.
                 foreach (static::$providers as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
-                    $obj = $class::getInstance();
-                    $get_atts = $obj->getAtts($tag, $get_atts);
+                    $get_atts = $class::getAtts($tag, $get_atts);
                 }
             }
 
@@ -116,8 +141,7 @@ namespace Oui\Player {
         {
             foreach (static::$providers as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = $class::getInstance();
-                $obj->play = $this->getPlay();
+                $obj = $class::getInstance($this->getPlay());
 
                 if ($this->infos = $obj->setInfos()) {
                     $this->provider = $provider;
@@ -220,12 +244,11 @@ namespace Oui\Player {
             if ($provider = $this->getProvider()) {
                 $class = __NAMESPACE__ . '\\' . $provider;
 
-                $obj = $class::getInstance();
-                $obj->play = $this->getPlay();
-                $obj->infos = $this->getInfos();
-                $obj->config = $this->config;
-
-                return $obj->getPlayer();
+                return $class::getInstance(
+                    $this->getPlay(),
+                    $this->config,
+                    $this->getInfos()
+                )->getPlayer();
             }
 
             throw new \Exception(gtxt('undefined_player'));

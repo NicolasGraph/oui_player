@@ -107,28 +107,5 @@ namespace Oui\Player {
             'provider' => array(),
             'providers' => array(),
         );
-
-        /**
-         * Caches the class instance.
-         *
-         * @var object
-         */
-
-        protected static $instance = null;
-
-        /**
-         * Singleton.
-         */
-
-        final public static function getInstance()
-        {
-            $class = get_called_class();
-
-            if (!isset(static::$instance[$class])) {
-                static::$instance[$class] = new static();
-            }
-
-            return static::$instance[$class];
-        }
     }
 }
