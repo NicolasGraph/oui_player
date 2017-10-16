@@ -35,37 +35,29 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        // Set tag attributes
-        $get_atts = Oui\Player\Main::getAtts(__FUNCTION__);
-        $latts = lAtts($get_atts, $atts);
+        $namespace = 'Oui\Player'; // Plugin namespace.
+        $main_class = $namespace . '\Main'; // Main plugin class.
+        $lAtts = lAtts($main_class::getAtts(__FUNCTION__), $atts); // Gets used attributes.
 
-        extract($latts);
+        extract($lAtts); // Extracts used attributes.
 
         if (!$play) {
-            if ($oui_player_item) {
-                $provider = $oui_player_item['provider'];
-                $play = $oui_player_item['url'];
+            if (isset($oui_player_item['play'])) {
+                $play = $oui_player_item['play'];
             } else {
-                $play = strtolower(get_pref('oui_player_custom_field'));
+                $play = $thisarticle[get_pref('oui_player_custom_field')];
             }
         }
 
-        $play = isset($thisarticle[$play]) ? $thisarticle[$play] : $play;
-
-        if ($provider) {
-            $player = 'Oui\Player\\' . $provider;
-
-            if (!class_exists($player)) {
-                trigger_error('Unknown or unset provider: "' . $provider . '".');
-                return;
-            }
-        } else {
-            $player = 'Oui\Player\Main';
+        if (!$provider && isset($oui_player_item['provider'])) {
+            $provider = $oui_player_item['provider'];
         }
 
-        $out = $player::getInstance($play, $latts)->getPlayer();
+        $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-        return doLabel($label, $labeltag).(($wraptag) ? doTag($out, $wraptag, $class) : $out);
+        $player = $class_in_use::getInstance($play, $lAtts)->getPlayer();
+
+        return doLabel($label, $labeltag).(($wraptag) ? doTag($player, $wraptag, $class) : $player);
     }
 
     /**
@@ -83,31 +75,21 @@ namespace {
     {
         global $thisarticle, $oui_player_item;
 
-        // Sets tag attributes
-        $get_atts = Oui\Player\Main::getAtts(__FUNCTION__);
-        $latts = lAtts($get_atts, $atts);
+        $namespace = 'Oui\Player'; // Plugin namespace.
+        $main_class = $namespace . '\Main'; // Main plugin class.
 
-        extract($latts);
+        extract(lAtts($main_class::getAtts(__FUNCTION__), $atts)); // Extracts used attributes.
 
-        // Checks if the play attribute value is recognised.
-        if ($provider) {
-            $player = 'Oui\Player\\' . $provider;
+        $play ?: $play = $thisarticle[get_pref('oui_player_custom_field')];
 
-            if (!class_exists($player)) {
-                trigger_error('Unknown or unset provider: "' . $provider . '".');
-                return;
-            }
-        } else {
-            $player = 'Oui\Player\Main';
+        $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
+
+        if ($is_valid = $class_in_use::getInstance($play)->isValid()) {
+            $oui_player_item = array('play' => $play);
+            $provider ? $oui_player_item['provider'] = $provider : '';
         }
 
-        $play ?: $play = strtolower(get_pref('oui_player_custom_field'));
-
-        $obj = $player::getInstance(isset($thisarticle[$play]) ? $thisarticle[$play] : $play);
-
-        $oui_player_item = $obj->isValid();
-
-        $out = parse($thing, $oui_player_item);
+        $out = parse($thing, $is_valid);
 
         unset($GLOBALS['oui_player_item']);
 

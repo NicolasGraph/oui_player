@@ -199,7 +199,9 @@ namespace Oui\Player {
             if ($this->infos && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
                 return $this->infos;
             } elseif ($fallback) {
-                return $this->setFallbackInfos();
+                $this->setFallbackInfos();
+
+                return $this->infos;
             }
 
             return false;
@@ -231,7 +233,9 @@ namespace Oui\Player {
             if ($this->provider && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
                 return $this->provider;
             } elseif ($fallback) {
-                return $this->setFallbackInfos();
+                $this->setFallbackInfos();
+
+                return $this->provider;
             }
 
             return false;
