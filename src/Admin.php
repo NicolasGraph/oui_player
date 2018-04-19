@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016-2017 Nicolas Morand
+ * Copyright (C) 2016-2018 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -39,6 +39,14 @@ namespace Oui\Player {
         private static $instance = null;
 
         /**
+         * Caches the collected prefs.
+         *
+         * @var object
+         */
+
+        private static $allPrefs = null;
+
+        /**
          * Constructor
          *
          * @see \callback_event()
@@ -49,54 +57,38 @@ namespace Oui\Player {
 
         public function __construct()
         {
+            global $event;
+
             // Gets the plugin name from the class namespace.
             static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            // Adds an event to plug providers and store them.
-            static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
-            // Completes plugin main prefs.
-            static::$prefs['provider']['valid'] = static::$providers;
-            static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
-            static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
 
             \add_privs('plugin_prefs.' . static::$plugin, self::$privs);
             \add_privs('prefs.' . static::$plugin, self::$privs);
 
-            \register_callback(array($this, 'lifeCycle'), 'plugin_lifecycle.' . static::$plugin);
+            \register_callback(array($this, 'uninstall'), 'plugin_lifecycle.' . static::$plugin, 'deleted');
+
+            if ($event === 'prefs') {
+                \register_callback(array($this, 'install'), 'admin_side', 'head_end');
+            }
+
             \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
+        }
 
-            // Adds privilieges to provider prefs only if they are enabled.
-            foreach (static::$providers as $provider) {
-                $group = static::$plugin . '_' . strtolower($provider);
-                $pref = $group . '_prefs';
+        public function install()
+        {
+            $this->plugProviders();
 
-                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                    \add_privs('prefs.' . $group, self::$privs);
-                }
+            if (static::$providers) {
+                $this->setPrefs();
+                $this->deleteOldPrefs();
+            } else {
+                $this->uninstall();
             }
         }
 
-        /**
-         * Plugin lifecycle events handler.
-         *
-         * @param string $evt Textpattern event
-         * @param string $stp Textpattern step
-         * @see   setPrefs()
-         *        deleteOldPrefs()
-         *        \safe_delete()
-         */
-
-        public function lifeCycle($evt, $stp)
+        public function uninstall()
         {
-            switch ($stp) {
-                case 'installed':
-                    $this->setPrefs();
-                    $this->deleteOldPrefs();
-                    break;
-                case 'deleted':
-                    \safe_delete('txp_prefs', "event LIKE '" . static::$plugin . "%'");
-                    \safe_delete('txp_lang', "owner = '" . static::$plugin . "'");
-                    break;
-            }
+            \safe_delete('txp_prefs', "event LIKE '" . static::$plugin . "%'");
         }
 
         /**
@@ -149,7 +141,7 @@ namespace Oui\Player {
          * @param  string $name The preference name (Txp var)
          * @param  string $val  The preference value (Txp var)
          * @return string HTML
-         * @see    getPrefs()
+         * @see    GetAllPrefs()
          *         \gtxt()
          *         \selectInput()
          *         \fInput()
@@ -157,7 +149,7 @@ namespace Oui\Player {
 
         public static function prefFunction($name, $val)
         {
-            $prefs = self::getPrefs();
+            $prefs = self::GetAllPrefs();
             $valid = $prefs[$name]['valid'];
 
             if (is_array($valid)) {
@@ -220,15 +212,33 @@ namespace Oui\Player {
         }
 
         /**
+         * $allPrefs property setter
          * Collects plugin prefs
          *
-         * @return array Preferences
-         * @see    getPrefs()
+         * @return array $allPrefs
+         * @see    getAllPrefs()
          */
 
-        public static function getPrefs()
+        public static function PlugProviders()
+        {
+            return static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
+        }
+
+        /**
+         * $allPrefs property setter
+         * Collects plugin prefs
+         *
+         * @return array $allPrefs
+         * @see    getAllPrefs()
+         */
+
+        public static function SetAllPrefs()
         {
             $prefs = array();
+
+            static::$prefs['provider']['valid'] = static::$providers;
+            static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
+            static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
 
             // Collects the plugin main prefs.
             foreach (static::$prefs as $pref => $options) {
@@ -238,6 +248,14 @@ namespace Oui\Player {
             }
 
             foreach (static::$providers as $provider) {
+                // Adds privilieges to provider prefs only if they are enabled.
+                $group = static::$plugin . '_' . strtolower($provider);
+                $pref = $group . '_prefs';
+
+                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
+                    \add_privs('prefs.' . $group, self::$privs);
+                }
+
                 // Adds a pref per provider to display/hide its own prefs group.
                 $options = array(
                     'default' => '0',
@@ -249,24 +267,38 @@ namespace Oui\Player {
 
                 // Collects provider prefs.
                 $class = __NAMESPACE__ . '\\' . $provider;
-                $prefs = $class::getPrefs($prefs);
+                $prefs = $class::GetPrefs($prefs);
             }
 
-            return $prefs;
+            return static::$allPrefs = $prefs;
+        }
+
+        /**
+         * $allPrefs property getter
+         *
+         * @return array $allPrefs
+         * @see    setAllPrefs()
+         */
+
+        public static function GetAllPrefs()
+        {
+            static::$allPrefs or self::SetAllPrefs();
+
+            return static::$allPrefs;
         }
 
         /**
          * Set plugin prefs.
          *
-         * @see getPrefs()
+         * @see GetAllPrefs()
          *      \get_pref()
          *      \set_pref()
          *      prefWidget()
          */
 
-        private function setPrefs()
+        public function setPrefs()
         {
-            $prefs = $this->getPrefs();
+            $prefs = $this->GetAllPrefs();
             $position = 250;
 
             foreach ($prefs as $pref => $options) {
@@ -296,13 +328,13 @@ namespace Oui\Player {
         /**
          * Deletes old unused plugin prefs.
          *
-         * @see getPrefs()
+         * @see GetAllPrefs()
          *      \safe_delete()
          */
 
         private function deleteOldPrefs()
         {
-            $prefs = $this->getPrefs();
+            $prefs = $this->GetAllPrefs();
 
             \safe_delete(
                 'txp_prefs',

@@ -1,5 +1,3 @@
-notextile. <section id="for-developers" class="options_group">
-
 h2. For Developpers
 
 h3. Using plugin classes and methods
@@ -33,5 +31,3 @@ h3. Extending
 
 This plugin was designed to make it easily extendable.
 For more informations, take a look at the @Oui\Player\Provider@ class which is the parent class of each provider class.
-
-notextile. </section>

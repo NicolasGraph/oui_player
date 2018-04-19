@@ -1,3 +1,0 @@
-notextile. <style type="text/css">
-.txp-layout-textbox { max-width: 100%; }
-</style>

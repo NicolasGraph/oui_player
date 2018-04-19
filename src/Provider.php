@@ -7,7 +7,7 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016-2017 Nicolas Morand
+ * Copyright (C) 2016-2018 Nicolas Morand
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -199,7 +199,6 @@ namespace Oui\Player {
         {
             return array(substr(strrchr(get_class($this), '\\'), 1));
         }
-
 
         /**
          * Embeds the provider script.
