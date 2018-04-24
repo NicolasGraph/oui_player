@@ -82,17 +82,21 @@ namespace {
 
         $play ?: $play = $thisarticle[get_pref('oui_player_custom_field')];
 
-        $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
+        if ($play) {
+            $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-        if ($is_valid = $class_in_use::getInstance($play)->isValid()) {
-            $oui_player_item = array('play' => $play);
-            $provider ? $oui_player_item['provider'] = $provider : '';
+            if ($is_valid = $class_in_use::getInstance($play)->isValid()) {
+                $oui_player_item = array('play' => $play);
+                $provider ? $oui_player_item['provider'] = $provider : '';
+            }
+
+            $out = parse($thing, $is_valid);
+
+            unset($GLOBALS['oui_player_item']);
+
+            return $out;
         }
 
-        $out = parse($thing, $is_valid);
-
-        unset($GLOBALS['oui_player_item']);
-
-        return $out;
+        return false;
     }
 }
