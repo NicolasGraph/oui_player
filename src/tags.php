@@ -80,9 +80,14 @@ namespace {
 
         extract(lAtts($main_class::getAtts(__FUNCTION__), $atts)); // Extracts used attributes.
 
-        if (!$play) {
-            $field = get_pref('oui_player_custom_field');
-            $play = isset($thisarticle[$field]) ? $thisarticle[$field] : false;
+        $field = get_pref('oui_player_custom_field');
+
+        if ($play && isset($thisarticle[$play])) {
+            $play = $thisarticle[$play];
+        } elseif (!$play && isset($thisarticle[$field])) {
+            $play = $thisarticle[$field];
+        } else {
+            $play = false;
         }
 
         if ($play) {
