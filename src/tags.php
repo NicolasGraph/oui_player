@@ -80,7 +80,10 @@ namespace {
 
         extract(lAtts($main_class::getAtts(__FUNCTION__), $atts)); // Extracts used attributes.
 
-        $play ?: $play = $thisarticle[get_pref('oui_player_custom_field')];
+        if (!$play) {
+            $field = get_pref('oui_player_custom_field');
+            $play = isset($thisarticle[$field]) ? $thisarticle[$field] : false;
+        }
 
         if ($play) {
             $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
@@ -97,6 +100,6 @@ namespace {
             return $out;
         }
 
-        return false;
+        return parse($thing, false);
     }
 }
