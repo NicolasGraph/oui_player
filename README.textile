@@ -27,7 +27,7 @@ oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+.
 
-h2. Installation
+h2. Install
 
 h3. From the admin interface
 
@@ -38,7 +38,7 @@ Follow the below instructions before or after installing the wanted oui_player e
 # Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
 # Enable the plugin.
 
-Once the plugin and its extensions enables, you will need to complete the setup by clicking _Options_ or visiting your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab.
+Once the plugin and its extensions enabled, you will need to complete the setup by clicking _Options_ or visiting your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab.
 This last step need to be repeated each time you add or remove one or more oui_player extensions to update the plugin preferences.
 
 h3. Via Composer
@@ -57,8 +57,8 @@ h2. Update
 
 h3. From the admin interface
 
-Follow the installation instruction above.
-If you are updating from v1.*, be sure to install all wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouch.
+Follow the install instructions.
+If you are updating from v1.*, be sure to install all wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
 
 h3. Via Composer
 
