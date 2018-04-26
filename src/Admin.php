@@ -301,11 +301,19 @@ namespace Oui\Player {
             $prefs = $this->GetAllPrefs();
             $position = 250;
 
+            $existing = array();
+
+            if ($rs = safe_rows_start('name, html', doSlash('txp_prefs'), "name LIKE '".doSlash('oui_player_%')."'")) {
+                while ($row = nextRow($rs)) {
+                    $existing[$row['name']] =  $row['html'];
+                }
+            }
+
             foreach ($prefs as $pref => $options) {
                 $widget = isset($options['widget']) ? $options['widget'] : self::prefWidget($options);
 
-                if ($pref === 'oui_player_providers' || \get_pref($pref, null) === null) {
-                    \set_pref(
+                if ($pref === 'oui_player_providers' || !isset($existing[$pref])) {
+                    \create_pref(
                         $pref,
                         $options['default'],
                         $options['group'],
@@ -313,11 +321,14 @@ namespace Oui\Player {
                         $widget,
                         $position
                     );
-                } else {
-                    \safe_update(
-                        doSlash('txp_prefs'),
-                        "html = '".doSlash($widget)."'",
-                        "name = '".doSlash($pref)."'"
+                } elseif (isset($existing[$pref]) && $existing[$pref] !== $widget) {
+                    \update_pref(
+                        $pref,
+                        $options['default'],
+                        null,
+                        null,
+                        $widget,
+                        null
                     );
                 }
 
