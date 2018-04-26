@@ -312,24 +312,26 @@ namespace Oui\Player {
             foreach ($prefs as $pref => $options) {
                 $widget = isset($options['widget']) ? $options['widget'] : self::prefWidget($options);
 
-                if ($pref === 'oui_player_providers' || !isset($existing[$pref])) {
+                if ($pref === 'oui_player_providers') {
+                    \set_pref(
+                        $pref,
+                        $options['default'],
+                        $options['group'],
+                        PREF_HIDDEN,
+                        $widget,
+                        $position
+                    );
+                } elseif (!isset($existing[$pref])) {
                     \create_pref(
                         $pref,
                         $options['default'],
                         $options['group'],
-                        $pref === 'oui_player_providers' ? PREF_HIDDEN : PREF_PLUGIN,
+                        PREF_PLUGIN,
                         $widget,
                         $position
                     );
                 } elseif (isset($existing[$pref]) && $existing[$pref] !== $widget) {
-                    \update_pref(
-                        $pref,
-                        $options['default'],
-                        null,
-                        null,
-                        $widget,
-                        null
-                    );
+                    \update_pref($pref, $options['default'], null, null, $widget, null);
                 }
 
                 $position += 10;
