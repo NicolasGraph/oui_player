@@ -86,6 +86,11 @@ namespace Oui\Player {
             }
         }
 
+        public static function getPrivs()
+        {
+            return self::$privs;
+        }
+
         public function uninstall()
         {
             \safe_delete('txp_prefs', "event LIKE '" . static::$plugin . "%'");
@@ -358,7 +363,7 @@ namespace Oui\Player {
 
     global $event;
 
-    if (txpinterface === 'admin' && ($event === 'prefs' || $event === 'plugin')) {
+    if (txpinterface === 'admin' && in_array($event, array('plugin', 'plugin_prefs.oui_player', 'prefs'))) {
         new Admin;
     }
 }

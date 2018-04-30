@@ -35,6 +35,15 @@ namespace Oui\Player {
          * @var string
          */
 
+        protected static $provider;
+
+        /**
+         * The value provided through the 'play'
+         * attribute value of the plugin tag.
+         *
+         * @var string
+         */
+
         protected $play;
 
         /**
@@ -175,6 +184,15 @@ namespace Oui\Player {
             $config ? self::$instance[$class]->config = $config : '';
             $infos ? self::$instance[$class]->infos = $infos : '';
 
+            \add_privs('plugin_prefs.' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider), Admin::getPrivs());
+
+            \register_callback(
+                'Oui\Player\Provider::optionsLink',
+                'plugin_prefs.' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider),
+                null,
+                1
+            );
+
             return self::$instance[$class];
         }
 
@@ -187,8 +205,18 @@ namespace Oui\Player {
         protected function __construct()
         {
             // Plugs in the Player class.
-            $plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            \register_callback(array($this, 'getProvider'), $plugin, 'plug_providers', 0);
+            \register_callback(array($this, 'getProvider'), strtolower(str_replace('\\', '_', __NAMESPACE__)), 'plug_providers', 0);
+
+            static::$provider = $this->getProvider()[0];
+        }
+
+        /**
+         * Links 'options' to the prefs panel.
+         */
+
+        public static function optionsLink()
+        {
+            header('Location: ?event=prefs#prefs_group_' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider));
         }
 
         /**
