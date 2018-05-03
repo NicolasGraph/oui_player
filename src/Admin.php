@@ -48,37 +48,49 @@ namespace Oui\Player {
 
         /**
          * Constructor
-         *
-         * @see \callback_event()
-         *      \add_privs()
-         *      \register_callback()
-         *      \get_pref()
          */
 
         public function __construct()
         {
             global $event;
 
-            // Gets the plugin name from the class namespace.
-            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+            $plugin = self::getPlugin();
+            $privs = self::getPrivs();
 
-            \add_privs('plugin_prefs.' . static::$plugin, self::$privs);
-            \add_privs('prefs.' . static::$plugin, self::$privs);
-
-            \register_callback(array($this, 'uninstall'), 'plugin_lifecycle.' . static::$plugin, 'deleted');
-
-            if ($event === 'prefs') {
-                \register_callback(array($this, 'install'), 'admin_side', 'head_end');
+            foreach (array('plugin_prefs.', 'prefs.') as $ev) {
+                add_privs($ev . $plugin, $privs);
             }
 
-            \register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . static::$plugin, null, 1);
+            register_callback(
+                array($this, 'uninstall'),
+                'plugin_lifecycle.' . $plugin,
+                'deleted'
+            );
+
+            if ($event === 'prefs') {
+                register_callback(array($this, 'install'), 'admin_side', 'head_end');
+            }
+
+            register_callback(
+                'Oui\Player\Admin::optionsLink',
+                'plugin_prefs.' . $plugin,
+                null,
+                1
+            );
+        }
+
+        /**
+         * $providers property setter.
+         */
+
+        public static function setProviders()
+        {
+            static::$providers = callback_event(self::getPlugin(), 'plug_providers', 0, array());
         }
 
         public function install()
         {
-            $this->plugProviders();
-
-            if (static::$providers) {
+            if (self::getProviders()) {
                 $this->setPrefs();
                 $this->deleteOldPrefs();
             } else {
@@ -86,14 +98,9 @@ namespace Oui\Player {
             }
         }
 
-        public static function getPrivs()
-        {
-            return self::$privs;
-        }
-
         public function uninstall()
         {
-            \safe_delete('txp_prefs', "event LIKE '" . static::$plugin . "%'");
+            safe_delete('txp_prefs', "event LIKE '" . self::getPlugin() . "%'");
         }
 
         /**
@@ -102,7 +109,7 @@ namespace Oui\Player {
 
         public static function optionsLink()
         {
-            header('Location: ?event=prefs#prefs_group_' . static::$plugin);
+            header('Location: ?event=prefs#prefs_group_' . self::getPlugin());
         }
 
         /**
@@ -110,10 +117,6 @@ namespace Oui\Player {
          *
          * @param  array  $options Current pref options
          * @return string HTML
-         * @see    \yesnoradio()
-         *         \oui_player_truefalseradio()
-         *         \oui_player_pref_widget()
-         *         \text_input()
          */
 
         private static function prefWidget($options)
@@ -146,27 +149,23 @@ namespace Oui\Player {
          * @param  string $name The preference name (Txp var)
          * @param  string $val  The preference value (Txp var)
          * @return string HTML
-         * @see    GetAllPrefs()
-         *         \gtxt()
-         *         \selectInput()
-         *         \fInput()
          */
 
         public static function prefFunction($name, $val)
         {
-            $prefs = self::GetAllPrefs();
+            $prefs = self::getAllPrefs();
             $valid = $prefs[$name]['valid'];
 
             if (is_array($valid)) {
                 $vals = array();
 
                 foreach ($valid as $value) {
-                    $value === '' ?: $vals[$value] = \gtxt($name . '_' . strtolower($value));
+                    $value === '' ?: $vals[$value] = gtxt($name . '_' . strtolower($value));
                 }
 
-                return \selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+                return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
             } else {
-                return \fInput($valid, $name, $val);
+                return fInput($valid, $name, $val);
             }
         }
 
@@ -184,7 +183,11 @@ namespace Oui\Player {
             $vals['article_image'] = gtxt('article_image');
             $vals['excerpt'] = gtxt('excerpt');
 
-            $custom_fields = safe_rows("name, val", 'txp_prefs', "name LIKE 'custom_%_set' AND val<>'' ORDER BY name");
+            $custom_fields = safe_rows(
+                "name, val",
+                'txp_prefs',
+                "name LIKE 'custom_%_set' AND val<>'' ORDER BY name"
+            );
 
             if ($custom_fields) {
                 foreach ($custom_fields as $row) {
@@ -202,12 +205,15 @@ namespace Oui\Player {
          * @param  string $checked  The checked button, either 'true', 'false'
          * @param  int    $tabindex The HTML tabindex
          * @param  string $id       The HTML id
-         * @see    radioSet()
          * @return string HTML
          */
 
-        public static function truefalseradio($field, $checked = '', $tabindex = 0, $id = '')
-        {
+        public static function truefalseradio(
+            $field,
+            $checked = '',
+            $tabindex = 0,
+            $id = ''
+        ) {
             $vals = array(
                 'false' => gTxt('no'),
                 'true' => gTxt('yes'),
@@ -221,44 +227,32 @@ namespace Oui\Player {
          * Collects plugin prefs
          *
          * @return array $allPrefs
-         * @see    getAllPrefs()
          */
 
-        public static function PlugProviders()
-        {
-            return static::$providers = \callback_event(static::$plugin, 'plug_providers', 0, 'Provider');
-        }
-
-        /**
-         * $allPrefs property setter
-         * Collects plugin prefs
-         *
-         * @return array $allPrefs
-         * @see    getAllPrefs()
-         */
-
-        public static function SetAllPrefs()
+        public static function setAllPrefs()
         {
             $prefs = array();
+            $plugin = self::getPlugin();
+            $providers = self::getProviders();
 
-            static::$prefs['provider']['valid'] = static::$providers;
-            static::$prefs['provider']['default'] = static::$prefs['provider']['valid'][0];
-            static::$prefs['providers']['default'] = implode(', ', static::$prefs['provider']['valid']);
+            self::setPref('provider', 'valid', $providers);
+            self::setPref('provider', 'default', self::getPref('provider', 'valid')[0]);
+            self::setPref('providers', 'default', implode(', ', self::getPref('provider', 'valid')));
 
             // Collects the plugin main prefs.
-            foreach (static::$prefs as $pref => $options) {
-                $options['group'] = static::$plugin;
+            foreach (self::getPrefs() as $pref => $options) {
+                $options['group'] = $plugin;
                 $pref = $options['group'] . '_' . $pref;
                 $prefs[$pref] = $options;
             }
 
-            foreach (static::$providers as $provider) {
+            foreach ($providers as $provider) {
                 // Adds privilieges to provider prefs only if they are enabled.
-                $group = static::$plugin . '_' . strtolower($provider);
+                $group = $plugin . '_' . strtolower($provider);
                 $pref = $group . '_prefs';
 
-                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && \get_pref($pref))) {
-                    \add_privs('prefs.' . $group, self::$privs);
+                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && get_pref($pref))) {
+                    add_privs('prefs.' . $group, self::getPrivs());
                 }
 
                 // Adds a pref per provider to display/hide its own prefs group.
@@ -266,7 +260,7 @@ namespace Oui\Player {
                     'default' => '0',
                     'valid'   => array('0', '1'),
                 );
-                $options['group'] = static::$plugin;
+                $options['group'] = $plugin;
                 $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
                 $prefs[$pref] = $options;
 
@@ -282,33 +276,33 @@ namespace Oui\Player {
          * $allPrefs property getter
          *
          * @return array $allPrefs
-         * @see    setAllPrefs()
          */
 
-        public static function GetAllPrefs()
+        public static function getAllPrefs()
         {
-            static::$allPrefs or self::SetAllPrefs();
+            static::$allPrefs or self::setAllPrefs();
 
             return static::$allPrefs;
         }
 
         /**
          * Set plugin prefs.
-         *
-         * @see GetAllPrefs()
-         *      \get_pref()
-         *      \set_pref()
-         *      prefWidget()
          */
 
         public function setPrefs()
         {
-            $prefs = $this->GetAllPrefs();
+            $prefs = $this->getAllPrefs();
             $position = 250;
 
             $existing = array();
 
-            if ($rs = safe_rows_start('name, html', doSlash('txp_prefs'), "name LIKE '".doSlash('oui_player_%')."'")) {
+            $rs = safe_rows_start(
+                'name, html',
+                doSlash('txp_prefs'),
+                "name LIKE '".doSlash('oui_player_%')."'"
+            );
+
+            if ($rs) {
                 while ($row = nextRow($rs)) {
                     $existing[$row['name']] =  $row['html'];
                 }
@@ -318,7 +312,7 @@ namespace Oui\Player {
                 $widget = isset($options['widget']) ? $options['widget'] : self::prefWidget($options);
 
                 if ($pref === 'oui_player_providers') {
-                    \set_pref(
+                    set_pref(
                         $pref,
                         $options['default'],
                         $options['group'],
@@ -327,7 +321,7 @@ namespace Oui\Player {
                         $position
                     );
                 } elseif (!isset($existing[$pref])) {
-                    \create_pref(
+                    create_pref(
                         $pref,
                         $options['default'],
                         $options['group'],
@@ -336,7 +330,7 @@ namespace Oui\Player {
                         $position
                     );
                 } elseif (isset($existing[$pref]) && $existing[$pref] !== $widget) {
-                    \update_pref($pref, $options['default'], null, null, $widget, null);
+                    update_pref($pref, $options['default'], null, null, $widget, null);
                 }
 
                 $position += 10;
@@ -345,25 +339,34 @@ namespace Oui\Player {
 
         /**
          * Deletes old unused plugin prefs.
-         *
-         * @see GetAllPrefs()
-         *      \safe_delete()
          */
 
         private function deleteOldPrefs()
         {
-            $prefs = $this->GetAllPrefs();
+            $prefs = $this->getAllPrefs();
 
-            \safe_delete(
+            safe_delete(
                 'txp_prefs',
-                "event LIKE '" . static::$plugin . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
+                "event LIKE '" .self::getPlugin() . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
             );
         }
     }
 
     global $event;
 
-    if (txpinterface === 'admin' && in_array($event, array('plugin', 'plugin_prefs.oui_player', 'prefs'))) {
+    $pluginPrefs = 'plugin_prefs.' . Admin::getPlugin();
+
+    if (txpinterface === 'admin' && (in_array($event, array('plugin', 'prefs')) || substr($event, 0, strlen($pluginPrefs)) === $pluginPrefs)) {
         new Admin;
+
+        $providers = Admin::getProviders();
+
+        if ($providers) {
+            foreach ($providers as $provider) {
+                if (in_array($event, array($pluginPrefs . '_' . lcfirst($provider), 'prefs'))) {
+                    $provider::getInstance();
+                }
+            }
+        }
     }
 }

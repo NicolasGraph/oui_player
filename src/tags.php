@@ -55,7 +55,10 @@ namespace {
 
         $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-        $player = $class_in_use::getInstance($play, $lAtts)->getPlayer();
+        $player = $class_in_use::getInstance()
+            ->setPlay($play)
+            ->setConfig($lAtts)
+            ->getPlayer();
 
         return doLabel($label, $labeltag).(($wraptag) ? doTag($player, $wraptag, $class) : $player);
     }
@@ -93,7 +96,7 @@ namespace {
         if ($play) {
             $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-            if ($is_valid = $class_in_use::getInstance($play)->isValid()) {
+            if ($is_valid = $class_in_use::getInstance()->setPlay()->isValid()) {
                 $oui_player_item = array('play' => $play);
                 $provider ? $oui_player_item['provider'] = $provider : '';
             }
