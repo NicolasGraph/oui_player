@@ -220,14 +220,13 @@ namespace Oui\Player {
         public function setPlay($value)
         {
             $this->play = $value;
-var_dump($this);
+            $this->setInfos(array());
+
             return $this;
         }
 
         /**
          * Gets the play property.
-         *
-         * @throws \Exception
          */
 
         protected function getPlay()
@@ -237,8 +236,6 @@ var_dump($this);
 
         /**
          * Gets the play property.
-         *
-         * @throws \Exception
          */
 
         public function setConfig($value)
@@ -398,7 +395,7 @@ var_dump($this);
         public function setInfos($infos = null)
         {
             if ($infos === null) {
-                $infos = array();
+                $this->infos = array();
 
                 foreach ($this->getPlay() as $play) {
                     $glue = null;
@@ -407,8 +404,8 @@ var_dump($this);
                         if (preg_match($options['scheme'], $play, $matches)) {
                             $prefix = isset($options['prefix']) ? $options['prefix'] : '';
 
-                            if (!array_key_exists($play, $infos)) {
-                                $infos[$play] = array(
+                            if (!array_key_exists($play, $this->infos)) {
+                                $this->infos[$play] = array(
                                     'play' => $prefix . $matches[$options['id']],
                                     'type' => $pattern,
                                 );
@@ -420,15 +417,52 @@ var_dump($this);
                                     $glue = $options['glue'];
                                 }
                             } else {
-                                $infos[$play]['play'] .= $glue . $prefix . $matches[$options['id']];
-                                $infos[$play]['type'] = $pattern;
+                                $this->infos[$play]['play'] .= $glue . $prefix . $matches[$options['id']];
+                                $this->infos[$play]['type'] = $pattern;
                             }
                         }
                     }
                 }
+            } else {
+                $this->infos = $infos;
             }
 
-            return $this->infos = $infos;
+            return $this;
+        }
+
+        public function setFallbackInfos()
+        {
+            $this->infos = array();
+
+            foreach ($this->getPlay() as $play) {
+                $this->infos[$play] = array(
+                    'play' => $play,
+                    'type' => 'id',
+                );
+            }
+
+            return $this;
+        }
+
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @return array An associative array of
+         */
+
+        public function getInfos($fallback = false)
+        {
+            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
+
+            if ($isUrl && !$this->infos) {
+                $this->setInfos();
+            }
+
+            if (!$this->infos && $fallback) {
+                $this->setFallbackInfos();
+            }
+
+            return $this->infos;
         }
 
         /**
@@ -514,34 +548,6 @@ var_dump($this);
         }
 
         /**
-         * Gets the infos property; set it if necessary.
-         *
-         * @return array An associative array of
-         */
-
-        public function getInfos()
-        {
-            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
-
-            // Returns infos from parsed URL's…
-            if ($this->infos || ($isUrl && $this->setInfos() !== false)) {
-                return $this->infos;
-            }
-
-            // or build default ones.
-            $infos = array();
-
-            foreach ($this->getPlay() as $play) {
-                $infos[$play] = array(
-                    'play' => $play,
-                    'type' => 'id',
-                );
-            }
-
-            return $infos;
-        }
-
-        /**
          * Whether a provided URL to play matches a provider URL scheme or not.
          *
          * @return bool
@@ -550,6 +556,21 @@ var_dump($this);
         public function isValid()
         {
             return $this->getInfos();
+        }
+
+        protected function getPlaySrc()
+        {
+            $play = $this->getInfos(true)[$this->getPlay()[0]]['play'];
+            $glue = self::getGlue();
+            $src = self::getSrc() . $glue[0] . $play;
+            $params = $this->getPlayerParams();
+
+            if (!empty($params)) {
+                $joint = strpos($src, $glue[1]) ? $glue[2] : $glue[1];
+                $src .= $joint . implode($glue[2], $params);
+            }
+
+            return $src;
         }
 
         /**
@@ -565,17 +586,7 @@ var_dump($this);
                 static::$scriptEmbedded = true;
             }
 
-            $play = $this->getInfos()[$this->getPlay()[0]]['play'];
-
-            $glue = self::getGlue();
-            $src = self::getSrc() . $glue[0] . $play;
-            $params = $this->getPlayerParams();
-
-            if (!empty($params)) {
-                $joint = strpos($src, $glue[1]) ? $glue[2] : $glue[1];
-                $src .= $joint . implode($glue[2], $params);
-            }
-
+            $src = $this->getPlaySrc();
             $dims = $this->getSize();
 
             extract($dims);

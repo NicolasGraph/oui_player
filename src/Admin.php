@@ -191,7 +191,7 @@ namespace Oui\Player {
 
             if ($custom_fields) {
                 foreach ($custom_fields as $row) {
-                    $vals[$row['val']] = $row['val'];
+                    $vals[strtolower($row['val'])] = $row['val'];
                 }
             }
 
@@ -216,7 +216,7 @@ namespace Oui\Player {
         ) {
             $vals = array(
                 'false' => gTxt('no'),
-                'true' => gTxt('yes'),
+                'true'  => gTxt('yes'),
             );
 
             return radioSet($vals, $field, $checked, $tabindex, $id);
@@ -236,8 +236,8 @@ namespace Oui\Player {
             $providers = self::getProviders();
 
             self::setPref('provider', 'valid', $providers);
-            self::setPref('provider', 'default', self::getPref('provider', 'valid')[0]);
-            self::setPref('providers', 'default', implode(', ', self::getPref('provider', 'valid')));
+            self::setPref('provider', 'default', $providers[0]);
+            self::setPref('providers', 'default', implode(', ', $providers));
 
             // Collects the plugin main prefs.
             foreach (self::getPrefs() as $pref => $options) {
