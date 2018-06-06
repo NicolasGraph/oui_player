@@ -217,10 +217,14 @@ namespace Oui\Player {
          * @throws \Exception
          */
 
-        public function setPlay($value)
+        public function setPlay($value, $fallback = false)
         {
             $this->play = $value;
-            $this->setInfos(array());
+            $infos = $this->getInfos();
+
+            if (!$infos || !array_key_exists($value, $infos)) {
+                $this->setInfos($fallback);
+            }
 
             return $this;
         }
@@ -392,12 +396,14 @@ namespace Oui\Player {
          * @return array The current media(s) infos.
          */
 
-        public function setInfos($infos = null)
+        public function setInfos($fallback = false)
         {
-            if ($infos === null) {
-                $this->infos = array();
+            $this->infos = array();
 
-                foreach ($this->getPlay() as $play) {
+            foreach ($this->getPlay() as $play) {
+                $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
+
+                if ($isUrl) {
                     $glue = null;
 
                     foreach (self::getPatterns() as $pattern => $options) {
@@ -422,24 +428,14 @@ namespace Oui\Player {
                             }
                         }
                     }
+                } elseif ($fallback) {
+                    $this->infos[$play] = array(
+                        'play' => $play,
+                        'type' => 'id',
+                    );
                 }
-            } else {
-                $this->infos = $infos;
             }
 
-            return $this;
-        }
-
-        public function setFallbackInfos()
-        {
-            $this->infos = array();
-
-            foreach ($this->getPlay() as $play) {
-                $this->infos[$play] = array(
-                    'play' => $play,
-                    'type' => 'id',
-                );
-            }
 
             return $this;
         }
@@ -450,18 +446,8 @@ namespace Oui\Player {
          * @return array An associative array of
          */
 
-        public function getInfos($fallback = false)
+        public function getInfos()
         {
-            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
-
-            if ($isUrl && !$this->infos) {
-                $this->setInfos();
-            }
-
-            if (!$this->infos && $fallback) {
-                $this->setFallbackInfos();
-            }
-
             return $this->infos;
         }
 
@@ -560,7 +546,7 @@ namespace Oui\Player {
 
         protected function getPlaySrc()
         {
-            $play = $this->getInfos(true)[$this->getPlay()[0]]['play'];
+            $play = $this->getInfos()[$this->getPlay()[0]]['play'];
             $glue = self::getGlue();
             $src = self::getSrc() . $glue[0] . $play;
             $params = $this->getPlayerParams();

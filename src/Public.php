@@ -96,10 +96,14 @@ namespace Oui\Player {
             static::$providers = explode(', ', get_pref(self::getPlugin() . '_providers'));
         }
 
-        public function setPlay($value)
+        public function setPlay($value, $fallback = false)
         {
             $this->play = $value;
-            $this->infos = array();
+            $infos = $this->getInfos();
+
+            if (!$infos || !array_key_exists($value, $infos)) {
+                $this->setInfos($fallback);
+            }
 
             return $this;
         }
@@ -120,15 +124,11 @@ namespace Oui\Player {
          * @return array An associative array of
          */
 
-        public function getProvider($fallback = true)
+        public function getProvider($fallback = false)
         {
-            $this->infos or $this->setInfos();
+            $this->infos or $this->setInfos($fallback);
 
             if ($this->provider && array_key_exists($this->getPlay(), $this->infos)) {
-                return $this->provider;
-            } elseif ($fallback) {
-                $this->setFallbackInfos();
-
                 return $this->provider;
             }
 
@@ -141,7 +141,7 @@ namespace Oui\Player {
          * @return bool false if no provider is found.
          */
 
-        public function setInfos()
+        public function setInfos($fallback = false)
         {
             foreach (self::getProviders() as $provider) {
                 $class = __NAMESPACE__ . '\\' . $provider;
@@ -152,28 +152,23 @@ namespace Oui\Player {
                 if ($this->infos) {
                     $this->provider = $provider;
 
-                    return true;
+                    return $this->infos;
                 }
             }
 
-            return false;
-        }
+            if (!$this->infos && $fallback) {
+                // No matched provider, set default infos.
+                $this->infos = array(
+                    $this->getPlay() => array(
+                        'play' => $this->getPlay(),
+                        'type' => 'id',
+                    )
+                );
 
-        /**
-         * Set the current media(s) infos fallback.
-         */
+                $this->provider = get_pref(self::getPlugin() . '_provider');
+            }
 
-        public function setFallbackInfos()
-        {
-            // No matched provider, set default infos.
-            $this->infos = array(
-                $this->getPlay() => array(
-                    'play' => $this->getPlay(),
-                    'type' => 'id',
-                )
-            );
-
-            $this->provider = get_pref(self::getPlugin() . '_provider');
+            return $this->infos;
         }
 
         /**
@@ -183,19 +178,9 @@ namespace Oui\Player {
          * @return array An associative array of
          */
 
-        public function getInfos($fallback = false)
+        public function getInfos()
         {
-            $this->infos or $this->setInfos();
-
-            if ($this->infos && array_key_exists($this->getPlay(), $this->infos)) {
-                return $this->infos;
-            } elseif ($fallback) {
-                $this->setFallbackInfos();
-
-                return $this->infos;
-            }
-
-            return false;
+            return $this->infos;
         }
 
         public function setConfig($value)
@@ -255,7 +240,7 @@ namespace Oui\Player {
 
         public function getPlayer()
         {
-            if ($provider = $this->getProvider()) {
+            if ($provider = $this->getProvider(true)) {
                 $class = __NAMESPACE__ . '\\' . $provider;
 
                 return $class::getInstance()

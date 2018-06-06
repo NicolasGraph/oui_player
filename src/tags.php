@@ -56,7 +56,7 @@ namespace {
         $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
         $player = $class_in_use::getInstance()
-            ->setPlay($play)
+            ->setPlay($play, true)
             ->setConfig($lAtts)
             ->getPlayer();
 
