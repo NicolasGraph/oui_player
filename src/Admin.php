@@ -67,9 +67,7 @@ namespace Oui\Player {
                 'deleted'
             );
 
-            if ($event === 'prefs') {
-                register_callback(array($this, 'install'), 'admin_side', 'head_end');
-            }
+            register_callback(array($this, 'install'), 'prefs', '', 1);
 
             register_callback(
                 'Oui\Player\Admin::optionsLink',

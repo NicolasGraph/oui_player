@@ -401,9 +401,9 @@ namespace Oui\Player {
             $this->infos = array();
 
             foreach ($this->getPlay() as $play) {
-                $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
+                $notId = preg_match('/([.][a-z]+)/', $play); // URL or filename.
 
-                if ($isUrl) {
+                if ($notId) {
                     $glue = null;
 
                     foreach (self::getPatterns() as $pattern => $options) {
