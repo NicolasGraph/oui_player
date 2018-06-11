@@ -101,7 +101,7 @@ namespace Oui\Player {
             $this->play = $value;
             $infos = $this->getInfos();
 
-            if (!$infos || !array_key_exists($value, $infos)) {
+            if (!$infos || array_diff(explode(', ', $value), array_keys($infos))) {
                 $this->setInfos($fallback);
             }
 
@@ -128,7 +128,7 @@ namespace Oui\Player {
         {
             $this->infos or $this->setInfos($fallback);
 
-            if ($this->provider && array_key_exists($this->getPlay(), $this->infos)) {
+            if ($this->provider && !array_diff(explode(', ', $this->getPlay()), array_keys($this->infos))) {
                 return $this->provider;
             }
 
