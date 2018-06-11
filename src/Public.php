@@ -73,22 +73,10 @@ namespace Oui\Player {
         private static $instance = null;
 
         /**
-         * Constructor.
-         *
-         * @see \get_pref()
-         */
-
-        private function __construct()
-        {
-            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-            static::$providers = explode(', ', \get_pref(static::$plugin . '_providers'));
-        }
-
-        /**
          * Singleton.
          */
 
-        final public static function getInstance($play, $config = null)
+        final public static function getInstance()
         {
             $class = get_called_class();
 
@@ -96,22 +84,115 @@ namespace Oui\Player {
                 static::$instance[$class] = new static();
             }
 
-            static::$instance[$class]->play = $play;
-            $config ? static::$instance[$class]->config = $config : '';
-
             return static::$instance[$class];
         }
 
         /**
-         * Registers plugin tags.
+         * $providers property setter.
          */
 
-        public static function registerTags()
+        public static function setProviders()
         {
-            // Registers plugin tags.
-            foreach (self::$tags as $tag => $attributes) {
-                \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+            static::$providers = explode(', ', get_pref(self::getPlugin() . '_providers'));
+        }
+
+        public function setPlay($value, $fallback = false)
+        {
+            $this->play = $value;
+            $infos = $this->getInfos();
+
+            if (!$infos || array_diff(explode(', ', $value), array_keys($infos))) {
+                $this->setInfos($fallback);
             }
+
+            return $this;
+        }
+
+        /**
+         * Gets the play property.
+         */
+
+        public function getPlay()
+        {
+            return $this->play;
+        }
+
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @param  bool  $fallback Whether to set fallback infos or not.
+         * @return array An associative array of
+         */
+
+        public function getProvider($fallback = false)
+        {
+            $this->infos or $this->setInfos($fallback);
+
+            if ($this->provider && !array_diff(explode(', ', $this->getPlay()), array_keys($this->infos))) {
+                return $this->provider;
+            }
+
+            return false;
+        }
+
+        /**
+         * Finds the right provider to use and set the current media(s) infos.
+         *
+         * @return bool false if no provider is found.
+         */
+
+        public function setInfos($fallback = false)
+        {
+            foreach (self::getProviders() as $provider) {
+                $class = __NAMESPACE__ . '\\' . $provider;
+                $this->infos = $class::getInstance()
+                    ->setPlay($this->getPlay())
+                    ->getInfos();
+
+                if ($this->infos) {
+                    $this->provider = $provider;
+
+                    return $this->infos;
+                }
+            }
+
+            if (!$this->infos && $fallback) {
+                // No matched provider, set default infos.
+                $this->infos = array(
+                    $this->getPlay() => array(
+                        'play' => $this->getPlay(),
+                        'type' => 'id',
+                    )
+                );
+
+                $this->provider = get_pref(self::getPlugin() . '_provider');
+            }
+
+            return $this->infos;
+        }
+
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @param  bool  $fallback Whether to set fallback infos or not.
+         * @return array An associative array of
+         */
+
+        public function getInfos()
+        {
+            return $this->infos;
+        }
+
+        public function setConfig($value)
+        {
+            $this->config = $value;
+
+            return $this;
+        }
+
+        public function getConfig()
+        {
+            return $this->config;
         }
 
         /**
@@ -124,15 +205,16 @@ namespace Oui\Player {
         public static function getAtts($tag)
         {
             $get_atts = array();
+            $tags = self::getTags();
 
             // Collects main attributes.
-            foreach (self::$tags[$tag] as $att => $options) {
+            foreach ($tags[$tag] as $att => $options) {
                 $get_atts[$att] = '';
             }
 
-            if ($tag === static::$plugin) {
+            if ($tag === self::getPlugin()) {
                 // Collects provider attributes.
-                foreach (static::$providers as $provider) {
+                foreach (self::getProviders() as $provider) {
                     $class = __NAMESPACE__ . '\\' . $provider;
                     $get_atts = $class::getAtts($tag, $get_atts);
                 }
@@ -142,148 +224,38 @@ namespace Oui\Player {
         }
 
         /**
-         * Finds the right provider to use and set the current media(s) infos.
-         *
-         * @return bool false if no provider is found.
-         * @see    getPlay()
-         *         \get_pref()
-         */
-
-        public function setInfos()
-        {
-            foreach (static::$providers as $provider) {
-                $class = __NAMESPACE__ . '\\' . $provider;
-                $obj = $class::getInstance($this->getPlay());
-
-                if ($this->infos = $obj->setInfos()) {
-                    $this->provider = $provider;
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /**
-         * Set the current media(s) infos fallback.
-         *
-         * @see getPlay()
-         *      \get_pref()
-         */
-
-        public function setFallbackInfos()
-        {
-            // No matched provider, set default infos.
-            $this->infos = array(
-                $this->getPlay() => array(
-                    'play' => $this->getPlay(),
-                    'type' => 'id',
-                )
-            );
-
-            $this->provider = \get_pref(static::$plugin . '_provider');
-        }
-
-        /**
-         * Gets the infos property; set it if necessary.
-         *
-         * @param  bool  $fallback Whether to set fallback infos or not.
-         * @return array An associative array of
-         * @see    setInfos()
-         *         \gtxt()
-         */
-
-        public function getInfos($fallback = true)
-        {
-            if ($this->infos && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
-                return $this->infos;
-            } elseif ($fallback) {
-                $this->setFallbackInfos();
-
-                return $this->infos;
-            }
-
-            return false;
-        }
-
-        /**
          * Whether a provided URL to play matches a provider URL scheme or not.
          *
          * @return bool
-         * @see    getInfos()
          */
 
         public function isValid()
         {
-            return $this->getInfos(false);
-        }
-
-        /**
-         * Gets the infos property; set it if necessary.
-         *
-         * @param  bool  $fallback Whether to set fallback infos or not.
-         * @return array An associative array of
-         * @see    setInfos()
-         *         \gtxt()
-         */
-
-        public function getProvider($fallback = true)
-        {
-            if ($this->provider && array_key_exists($this->getPlay(), $this->infos) || $this->setInfos()) {
-                return $this->provider;
-            } elseif ($fallback) {
-                $this->setFallbackInfos();
-
-                return $this->provider;
-            }
-
-            return false;
-        }
-
-        /**
-         * Gets the play property.
-         *
-         * @throws \Exception
-         * @see    \gtxt()
-         */
-
-        public function getPlay()
-        {
-            if ($this->play) {
-                return $this->play;
-            }
-
-            throw new \Exception(gtxt('undefined_property'));
+            return $this->getInfos();
         }
 
         /**
          * Gets the player code
-         *
-         * @throws \Exception
-         * @see    setInfos()
-         *         getPlay()
-         *         getInfos()
-         *         \gtxt()
          */
 
         public function getPlayer()
         {
-            if ($provider = $this->getProvider()) {
+            if ($provider = $this->getProvider(true)) {
                 $class = __NAMESPACE__ . '\\' . $provider;
 
-                return $class::getInstance(
-                    $this->getPlay(),
-                    $this->config,
-                    $this->getInfos()
-                )->getPlayer();
+                return $class::getInstance()
+                    ->setPlay($this->getPlay())
+                    ->setConfig($this->getConfig())
+                    ->getPlayer();
             }
 
-            throw new \Exception(gtxt('undefined_player'));
+            trigger_error('Undefined oui_player provider.');
         }
     }
 
     if (txpinterface === 'public') {
-        Main::registerTags();
+        foreach (Main::getTags() as $tag => $attributes) {
+            \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+        }
     }
 }

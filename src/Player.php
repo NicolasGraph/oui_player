@@ -111,5 +111,83 @@ namespace Oui\Player {
                 'default' => '',
             ),
         );
+
+        /**
+         * Plugin property setter.
+         */
+
+        public static function setPlugin()
+        {
+            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
+        }
+
+        /**
+         * $plugin property getter.
+         *
+         * @return string self::$plugin
+         */
+
+        public static function getPlugin()
+        {
+            self::$plugin or self::setPlugin();
+
+            return self::$plugin;
+        }
+
+        /**
+         * $providers property getter.
+         *
+         * @return array static::$providers
+         */
+
+        public static function getProviders()
+        {
+            static::$providers or static::setProviders();
+
+            return static::$providers;
+        }
+
+        /**
+         * $tags property getter.
+         *
+         * @return array static::$tags
+         */
+
+        public static function getTags()
+        {
+            return static::$tags;
+        }
+
+        /**
+         * $privs property getter.
+         *
+         * @return array self::$privs
+         */
+
+        public static function getPrivs()
+        {
+            return self::$privs;
+        }
+
+        /**
+         * $prefs property getter.
+         *
+         * @return array static::$prefs
+         */
+
+        public static function getPrefs()
+        {
+            return static::$prefs;
+        }
+
+        public static function getPref($name = null, $key = null)
+        {
+            return $key ? static::$prefs[$name][$key] : static::$prefs[$name];
+        }
+
+        public static function setPref($name, $key, $value)
+        {
+            static::$prefs[$name][$key] = $value;
+        }
     }
 }

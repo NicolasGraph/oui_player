@@ -38,6 +38,14 @@ namespace Oui\Player {
         protected static $provider;
 
         /**
+         * The provider plugin extension name.
+         *
+         * @var string
+         */
+
+        protected static $extension;
+
+        /**
          * The value provided through the 'play'
          * attribute value of the plugin tag.
          *
@@ -50,7 +58,6 @@ namespace Oui\Player {
          * Infos.
          *
          * @var array
-         * @see setInfos()
          */
 
         protected $infos;
@@ -172,7 +179,7 @@ namespace Oui\Player {
          * Singleton.
          */
 
-        public static function getInstance($play = null, $config = null, $infos = null)
+        public static function getInstance()
         {
             $class = get_called_class();
 
@@ -180,34 +187,141 @@ namespace Oui\Player {
                 self::$instance[$class] = new static();
             }
 
-            $play ? self::$instance[$class]->play = $play : '';
-            $config ? self::$instance[$class]->config = $config : '';
-            $infos ? self::$instance[$class]->infos = $infos : '';
-
-            \add_privs('plugin_prefs.' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider), Admin::getPrivs());
-
-            \register_callback(
-                'Oui\Player\Provider::optionsLink',
-                'plugin_prefs.' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider),
-                null,
-                1
-            );
-
             return self::$instance[$class];
         }
 
         /**
          * Constructor.
-         *
-         * @see \register_callback()
          */
 
         protected function __construct()
         {
-            // Plugs in the Player class.
-            \register_callback(array($this, 'getProvider'), strtolower(str_replace('\\', '_', __NAMESPACE__)), 'plug_providers', 0);
+            self::setProvider();
+            self::setExtension();
 
-            static::$provider = $this->getProvider()[0];
+            $extension = self::getExtension();
+
+            add_privs('plugin_prefs.' . $extension, Admin::getPrivs());
+
+            register_callback(
+                'Oui\Player\Provider::optionsLink',
+                'plugin_prefs.' . $extension,
+                null,
+                1
+            );
+        }
+
+        /**
+         * Gets the play property.
+         *
+         * @throws \Exception
+         */
+
+        public function setPlay($value, $fallback = false)
+        {
+            $this->play = $value;
+            $infos = $this->getInfos();
+
+            if (!$infos || !array_key_exists($value, $infos)) {
+                $this->setInfos($fallback);
+            }
+
+            return $this;
+        }
+
+        /**
+         * Gets the play property.
+         */
+
+        protected function getPlay()
+        {
+            return explode(', ', $this->play);
+        }
+
+        /**
+         * Gets the play property.
+         */
+
+        public function setConfig($value)
+        {
+            $this->config = $value;
+
+            return $this;
+        }
+
+        protected function getConfig($att = null)
+        {
+            return $att ? $this->config[$att] : $this->config;
+        }
+
+        protected static function setExtension()
+        {
+            static::$extension = Player::getPlugin() . '_' . strtolower(self::getProvider()[0]);
+        }
+
+        protected static function getExtension()
+        {
+            return static::$extension;
+        }
+
+        protected static function setProvider()
+        {
+            static::$provider = substr(strrchr(get_called_class(), '\\'), 1);
+        }
+
+        /**
+         * Gets the class name as the provider name.
+         */
+
+        public static function getProvider()
+        {
+            self::setProvider();
+
+            return array(static::$provider);
+        }
+
+        protected static function getScript($wrap = false)
+        {
+            if (isset(static::$script)) {
+                return $wrap ? '<script src="' . static::$script . '"></script>' : static::$script;
+            }
+
+            return false;
+        }
+
+        protected static function getScriptEmbedded()
+        {
+            return static::$scriptEmbedded;
+        }
+
+        protected static function getDims()
+        {
+            return static::$dims;
+        }
+
+        protected static function getParams()
+        {
+            return static::$params;
+        }
+
+        protected static function getPatterns()
+        {
+            return static::$patterns;
+        }
+
+        protected static function getSrc()
+        {
+            return static::$src;
+        }
+
+        protected static function getGlue($i = null)
+        {
+            return $i ? static::$glue[$i] : static::$glue;
+        }
+
+        protected static function setGlue($i, $value)
+        {
+            static::$glue[$i] = $value;
         }
 
         /**
@@ -216,16 +330,7 @@ namespace Oui\Player {
 
         public static function optionsLink()
         {
-            header('Location: ?event=prefs#prefs_group_' . strtolower(str_replace('\\', '_', __NAMESPACE__) . '_' . static::$provider));
-        }
-
-        /**
-         * Gets the class name as the provider name.
-         */
-
-        public function getProvider()
-        {
-            return array(substr(strrchr(get_class($this), '\\'), 1));
+            header('Location: ?event=prefs#prefs_group_' . self::getExtension());
         }
 
         /**
@@ -236,9 +341,10 @@ namespace Oui\Player {
         {
             if ($ob = ob_get_contents()) {
                 ob_clean();
+
                 echo str_replace(
                     '</body>',
-                    '<script src="' . static::$script . '"></script>' . n . '</body>',
+                    self::getScript(true) . n . '</body>',
                     $ob
                 );
             }
@@ -253,7 +359,7 @@ namespace Oui\Player {
 
         public static function getPrefs($prefs)
         {
-            $merge_prefs = array_merge(static::$dims, static::$params);
+            $merge_prefs = array_merge(self::getDims(), self::getParams());
 
             foreach ($merge_prefs as $pref => $options) {
                 $options['group'] = strtolower(str_replace('\\', '_', get_called_class()));
@@ -274,7 +380,7 @@ namespace Oui\Player {
 
         public static function getAtts($tag, $get_atts)
         {
-            $atts = array_merge(static::$dims, static::$params);
+            $atts = array_merge(self::getDims(), self::getParams());
 
             foreach ($atts as $att => $options) {
                 $att = str_replace('-', '_', $att);
@@ -285,59 +391,64 @@ namespace Oui\Player {
         }
 
         /**
-         * Gets the play property.
-         *
-         * @throws \Exception
-         */
-
-        public function getPlay()
-        {
-            if ($this->play) {
-                return explode(', ', $this->play);
-            }
-
-            throw new \Exception(gtxt('undefined_property'));
-        }
-
-        /**
          * Sets the current media(s) infos.
          *
          * @return array The current media(s) infos.
-         * @see    get_Play()
          */
 
-        public function setInfos()
+        public function setInfos($fallback = false)
         {
-            $infos = array();
+            $this->infos = array();
 
             foreach ($this->getPlay() as $play) {
-                $glue = null;
+                $notId = preg_match('/([.][a-z]+)/', $play); // URL or filename.
 
-                foreach (static::$patterns as $pattern => $options) {
-                    if (preg_match($options['scheme'], $play, $matches)) {
-                        $prefix = isset($options['prefix']) ? $options['prefix'] : '';
+                if ($notId) {
+                    $glue = null;
 
-                        if (!array_key_exists($play, $infos)) {
-                            $infos[$play] = array(
-                                'play' => $prefix . $matches[$options['id']],
-                                'type' => $pattern,
-                            );
+                    foreach (self::getPatterns() as $pattern => $options) {
+                        if (preg_match($options['scheme'], $play, $matches)) {
+                            $prefix = isset($options['prefix']) ? $options['prefix'] : '';
 
-                            // Bandcamp and Youtube accept multiple matches.
-                            if (!isset($options['glue'])) {
-                                break;
+                            if (!array_key_exists($play, $this->infos)) {
+                                $this->infos[$play] = array(
+                                    'play' => $prefix . $matches[$options['id']],
+                                    'type' => $pattern,
+                                );
+
+                                // Bandcamp and Youtube accept multiple matches.
+                                if (!isset($options['glue'])) {
+                                    break;
+                                } else {
+                                    $glue = $options['glue'];
+                                }
                             } else {
-                                $glue = $options['glue'];
+                                $this->infos[$play]['play'] .= $glue . $prefix . $matches[$options['id']];
+                                $this->infos[$play]['type'] = $pattern;
                             }
-                        } else {
-                            $infos[$play]['play'] .= $glue . $prefix . $matches[$options['id']];
-                            $infos[$play]['type'] = $pattern;
                         }
                     }
+                } elseif ($fallback) {
+                    $this->infos[$play] = array(
+                        'play' => $play,
+                        'type' => 'id',
+                    );
                 }
             }
 
-            return $this->infos = $infos;
+
+            return $this;
+        }
+
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @return array An associative array of
+         */
+
+        public function getInfos()
+        {
+            return $this->infos;
         }
 
         /**
@@ -346,18 +457,18 @@ namespace Oui\Player {
          * or from the plugin prefs.
          *
          * @return array Parameters and their values.
-         * @see    \get_pref()
          */
 
-        public function getParams()
+        protected function getPlayerParams()
         {
             $params = array();
 
-            foreach (static::$params as $param => $infos) {
-                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
+            foreach (self::getParams() as $param => $infos) {
+                $pref = get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $param);
                 $default = $infos['default'];
                 $att = str_replace('-', '_', $param);
-                $value = isset($this->config[$att]) ? $this->config[$att] : '';
+                $config = $this->getConfig();
+                $value = isset($config[$att]) ? $config[$att] : '';
 
                 // Adds attributes values in use or modified prefs values as player parameters.
                 if ($value === '' && ($pref !== $default || isset($infos['force']))) {
@@ -378,14 +489,14 @@ namespace Oui\Player {
          * or from the plugin prefs.
          *
          * @return array Player size.
-         * @see    \get_pref()
          */
 
-        public function getSize()
+        protected function getSize()
         {
-            foreach (static::$dims as $dim => $infos) {
-                $pref = \get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
-                $att = isset($this->config[$dim]) ? $this->config[$dim] : '';
+            foreach (self::getDims() as $dim => $infos) {
+                $pref = get_pref(strtolower(str_replace('\\', '_', get_class($this))) . '_' . $dim);
+                $config = $this->getConfig();
+                $att = isset($config[$dim]) ? $config[$dim] : '';
                 $$dim = $att ? $att : $pref;
             }
 
@@ -423,40 +534,9 @@ namespace Oui\Player {
         }
 
         /**
-         * Gets the infos property; set it if necessary.
-         *
-         * @return array An associative array of
-         * @see    getPlay()
-         *         setInfos()
-         */
-
-        public function getInfos()
-        {
-            $isUrl = preg_grep('/([.][a-z]+\/)/', $this->getPlay());
-
-            // Returns infos from parsed URL's…
-            if ($this->infos || ($isUrl && $this->setInfos() !== false)) {
-                return $this->infos;
-            }
-
-            // or build default ones.
-            $infos = array();
-
-            foreach ($this->getPlay() as $play) {
-                $infos[$play] = array(
-                    'play' => $play,
-                    'type' => 'id',
-                );
-            }
-
-            return $infos;
-        }
-
-        /**
          * Whether a provided URL to play matches a provider URL scheme or not.
          *
          * @return bool
-         * @see    getInfos()
          */
 
         public function isValid()
@@ -464,33 +544,35 @@ namespace Oui\Player {
             return $this->getInfos();
         }
 
+        protected function getPlaySrc()
+        {
+            $play = $this->getInfos()[$this->getPlay()[0]]['play'];
+            $glue = self::getGlue();
+            $src = self::getSrc() . $glue[0] . $play;
+            $params = $this->getPlayerParams();
+
+            if (!empty($params)) {
+                $joint = strpos($src, $glue[1]) ? $glue[2] : $glue[1];
+                $src .= $joint . implode($glue[2], $params);
+            }
+
+            return $src;
+        }
+
         /**
          * Generates the player.
          *
          * @return string HTML
-         * @see    getinfos()
-         *         getPlay()
-         *         getParams()
-         *         getSize()
          */
 
         public function getPlayer()
         {
-            if (isset(static::$script) && !static::$scriptEmbedded) {
-                \register_callback(array($this, 'embedScript'), 'textpattern_end');
+            if (self::getScript() && !self::getScriptEmbedded()) {
+                register_callback(array($this, 'embedScript'), 'textpattern_end');
                 static::$scriptEmbedded = true;
             }
 
-            $play = $this->getInfos()[$this->getPlay()[0]]['play'];
-
-            $src = static::$src . static::$glue[0] . $play;
-            $params = $this->getParams();
-
-            if (!empty($params)) {
-                $joint = strpos($src, static::$glue[1]) ? static::$glue[2] : static::$glue[1];
-                $src .= $joint . implode(static::$glue[2], $params);
-            }
-
+            $src = $this->getPlaySrc();
             $dims = $this->getSize();
 
             extract($dims);
