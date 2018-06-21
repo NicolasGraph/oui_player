@@ -7,11 +7,6 @@
     "author_uri"  : "http://github.com/NicolasGraph",
     "order"       : 5,
     "flags"       : 3,
-    "help"        : {"file" : [
-        "./docs/main/Basics.textile",
-        "./docs/main/Prefs.textile",
-        "./docs/main/Tags.textile"
-    ]},
     "code": {"file" : [
         "./src/Provider.php",
         "./src/Player.php",

@@ -1,6 +1,6 @@
 h1. oui_player (formerly oui_video)
 
-h2. Basics
+h2. Introduction
 
 An extendable plugin to easily embed customized audio and video players.
 
@@ -21,15 +21,17 @@ h3. Supported providers as extensions
 * "Vine":http://vine.co/: "oui_player_vine":https://github.com/oui-textpattern/oui_player_vine;
 * "Youtube":https://www.youtube.com/: "oui_player_youtube":https://github.com/oui-textpattern/oui_player_youtube.
 
-h2. Plugin requirements
+h3. Plugin requirements
 
 oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+.
 
-h2. Install
+h2. Plugin management
 
-h3. From the admin interface
+h3. Installation
+
+h4. From the admin interface
 
 Follow the below instructions before or after installing the wanted oui_player extensions:
 
@@ -41,7 +43,7 @@ Follow the below instructions before or after installing the wanted oui_player e
 Once the plugin and its extensions enabled, you will need to complete the setup by clicking _Options_ or visiting your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab.
 This last step need to be repeated each time you add or remove one or more oui_player extensions to update the plugin preferences.
 
-h3. Via Composer
+h4. Via Composer
 
 After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 
@@ -53,26 +55,26 @@ After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 @$ composer require oui/oui_player@
 # Connect to the Txp admin interface and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
 
-h2. Update
+h3. Update
 
-h3. From the admin interface
+h4. From the admin interface
 
 Follow the install instructions.
 If you are updating from v1.*, be sure to install all wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
 
-h3. Via Composer
+h4. Via Composer
 
 bc. $ composer update oui/oui_player
 
-h2. Uninstall
+h3. Uninstall
 
-h3. From the admin interface
+h4. From the admin interface
 
 # Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
 # open the select list at the bottom of the plugins table and choose _Delete_.
 # confirm the plugin deletion.
 
-h3. Via Composer
+h4. Via Composer
 
 bc. $ composer remove oui/oui_player
 
@@ -91,9 +93,12 @@ Defines a field to use as the default @play@ attribute value.
 Set the default @provider@ attribute value.
 *Default:* the first plugged provider
 *valid:* Any plugged provider in the select list =:
-- @Display the provider player prefs@ :=
-Displays the defined provider prefs as a goup of prefs.
+- @Render responsive player@ :=
 *Default:* no
+*valid:* yes or no =:
+- @Display the provider player preferences@ :=
+Displays the defined provider prefs as a goup of prefs.
+*Default:* yes
 *valid:* yes or no =:
 
 h3. Providers prefs
@@ -106,9 +111,9 @@ h2. Tags
 
 h3. oui_player
 
-Embeds a video in the page using an iframe.
+Embeds a player.
 
-bc. <txp:oui_player />
+bc(language-markup). <txp:oui_player />
 
 h4. Presentational attributes
 
@@ -128,6 +133,9 @@ HTML tag to be used as the content wraptag, without brackets.
 CSS class for HTML content wraptag.
 *default:* none
 *valid:* string =:
+- @responsive@ :=
+*Default:* none
+*valid:* @true@ or @false@ =:
 
 h4. Main tag attributes
 
@@ -148,9 +156,9 @@ See the related link in the table of contents.
 
 h3. oui_if_player
 
-In addition to oui_player this plugin also comes with oui_if_player, a conditional tag for checking if the video URL is a valid one.
+Checks the @play@ attribute value againsts defined URL schemes.
 
-bc. <txp:oui_if_player>
+bc(language-markup). <txp:oui_if_player>
 […]
 </txp:oui_if_player>
 
@@ -162,3 +170,114 @@ The item to play; *required if* it does not use the value of the custom field se
 - @provider@ :=
 Check the URL against valid URL schemes of the provided provider.
 *Default:* none =:
+
+h2. Examples
+
+h3. Display a player from the default values collected via plugin prefs
+
+bc(language-markup). <txp:oui_player />
+
+h3. Display a player from a manually filled URL
+
+bc(language-markup). <txp:oui_player play="https://vimeo.com/155020267" />
+
+…or, maybe a bit faster…
+
+bc(language-markup). <txp:oui_player provider="vimeo" play="https://vimeo.com/155020267" />
+
+h3. Display a player from manually filled ID
+
+Using the favourite provider set in the prefs.
+
+bc(language-markup). <txp:oui_player play="x4l8awd" />
+
+…or, in conjonction with the @provider@ attribute…
+
+bc(language-markup). <txp:oui_player provider="dailymotion" play="x4l8awd" />
+
+h3. Display a player only if its URL is recognized as a provider URL scheme
+
+With the default values collected via plugin prefs…
+
+bc(language-markup).. <txp:oui_if_player>
+    <txp:oui_player />
+</txp:oui_if_player>
+
+p. …or, with a manually filled URL…
+
+bc(language-markup).. <txp:oui_if_player play="https://vimeo.com/155020267">
+    <txp:oui_player />
+</txp:oui_if_player>
+
+p. You can also add the provider attribute to check the URL against URL schemes of a defined provider.
+
+h2. Credits
+
+h3. Author
+
+"Nicolas Morand":https://twitter.com/NicolasGraph, initially inspired by "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com.
+_Thank you to the Textpattern community and the core team._
+
+h3. License
+
+This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+h3. Changelog
+
+* *v2.0.0-beta* (2017-06-24)
+** changed: providers now work as pluggable extensions:
+*** Provider base (required): "oui_player_provider":https://github.com/oui-textpattern/;
+*** ABC News: "oui_player_abcnews":https://github.com/oui-textpattern/oui_player_abcnews;
+*** Archive: "oui_player_archive":https://github.com/oui-textpattern/oui_player_archive;
+*** Bandcamp: "oui_player_bandcamp":https://github.com/oui-textpattern/oui_player_bandcamp;
+*** Dailymotion: "oui_player_bandcamp":https://github.com/oui-textpattern/oui_player_dailymotion;
+*** Giphy: "oui_player_giphy":https://github.com/oui-textpattern/oui_player_giphy (new);
+*** Mixcloud: "oui_player_mixcloud":https://github.com/oui-textpattern/oui_player_mixcloud;
+*** MySpace: "oui_player_myspace":https://github.com/oui-textpattern/oui_player_myspace;
+*** HTML: "oui_player_html":https://github.com/oui-textpattern/oui_player_html;
+*** Soundcloud: "oui_player_soundcloud":https://github.com/oui-textpattern/oui_player_soundcloud;
+*** Twitch: "oui_player_twitch":https://github.com/oui-textpattern/oui_player_twitch;
+*** Viddsee: "oui_player_viddsee":https://github.com/oui-textpattern/oui_player_viddsee;
+*** Vimeo: "oui_player_vimeo":https://github.com/oui-textpattern/oui_player_vimeo;
+*** Vine: "oui_player_vine":https://github.com/oui-textpattern/oui_player_vine;
+*** Youtube: "oui_player_youtube":https://github.com/oui-textpattern/oui_player_youtube;
+** changed: providers related preferences displayed by default.
+* *v1.3.1* (2017-07-13)
+* *v1.3.0* (2017-05-24)
+** Adds "Composer":https://getcomposer.org/ support for "textpattern/installer":https://packagist.org/packages/textpattern/installer;
+** fixes multiple players prefs display and improves perfs;
+** improves scripts embedding;
+** added: Youtube player parameters @enablejsapi@ and @origin@;
+** added: Dailymotion player parameters @api@ and @origin@;
+** added: Vimeo player parameter @api@ and removes @badge@;
+** added: support for:
+*** "Bandcamp":https://bandcamp.com/;
+*** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;
+* *v1.2.1* (2017-01-16)
+** Fixed: Fixes the _Field used by default_ pref display when no custom field exists;
+** fixed: fixes Textpack typo;
+** changed: compiled code lightened by removing duplicated license related comments;
+* *v1.2.0* (2016-12-12)
+** added: sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
+** added: introduces a @play@ attribute value inheritance in a conditional/container tag context;
+** added: support for:
+*** "Twitch channels":https://www.twitch.tv/,
+*** "Vine":https://vine.co/;
+** changed: improves PHP classes and methods use (see _For developers_).
+* *oui_player v1.1.0* (2016-10-14)
+** changed: plugin/tag names;
+** removed: Txp 4.5 support;
+** changed: consistency between attribute and player parameter names increased;
+** changed: code rework to be easily extendable;
+** added: support for:
+*** "Abc News":http://abcnews.go.com/video,
+*** "Archive":https://archive.org/,
+*** "Mixcloud":https://www.mixcloud.com/,
+*** "Myspace videos":https://myspace.com/myspace/videos,
+*** "Soundcloud":https://soundcloud.com/,
+*** "Twitch":https://www.twitch.tv/,
+*** "Viddsee":https://www.viddsee.com/;
+** (changed) Help file styling improvements.
+* *oui_video v0.1.0* (2016-09-13)
