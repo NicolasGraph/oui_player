@@ -58,9 +58,9 @@ namespace {
         $player = $class_in_use::getInstance()
             ->setPlay($play, true)
             ->setConfig($lAtts)
-            ->getPlayer();
+            ->getPlayer($wraptag, $class);
 
-        return doLabel($label, $labeltag).(($wraptag) ? doTag($player, $wraptag, $class) : $player);
+        return doLabel($label, $labeltag) . $player;
     }
 
     /**
@@ -85,18 +85,18 @@ namespace {
 
         $field = get_pref('oui_player_custom_field');
 
-        if ($play && isset($thisarticle[$play])) {
-            $play = $thisarticle[$play];
-        } elseif (!$play && isset($thisarticle[$field])) {
-            $play = $thisarticle[$field];
-        } else {
-            $play = false;
+        if (!$play) {
+            if (!$play && isset($thisarticle[$field])) {
+                $play = $thisarticle[$field];
+            } else {
+                $play = false;
+            }
         }
 
         if ($play) {
             $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-            if ($is_valid = $class_in_use::getInstance()->setPlay()->isValid()) {
+            if ($is_valid = $class_in_use::getInstance()->setPlay($play)->isValid()) {
                 $oui_player_item = array('play' => $play);
                 $provider ? $oui_player_item['provider'] = $provider : '';
             }

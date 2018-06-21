@@ -73,6 +73,9 @@ namespace Oui\Player {
                 'wraptag' => array(
                     'default' => '',
                 ),
+                'responsive' => array(
+                    'default' => '',
+                ),
             ),
             'oui_if_player' => array(
                 'play' => array(
@@ -106,6 +109,10 @@ namespace Oui\Player {
             ),
             'provider' => array(
                 'default' => '',
+            ),
+            'responsive' => array(
+                'default' => 'true',
+                'valid'   => array('true', 'false'),
             ),
             'providers' => array(
                 'default' => '',

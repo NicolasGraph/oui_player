@@ -75,6 +75,17 @@ namespace Oui\Player {
                 null,
                 1
             );
+
+            foreach (self::getProviders() as $provider) {
+                add_privs('plugin_prefs.' . $plugin . '_' . $provider, self::getPrivs());
+
+                register_callback(
+                    'Oui\Player\Admin::optionsLink',
+                    'plugin_prefs.' . $plugin . '_' . $provider,
+                    null,
+                    1
+                );
+            }
         }
 
         /**
@@ -83,7 +94,20 @@ namespace Oui\Player {
 
         public static function setProviders()
         {
-            static::$providers = callback_event(self::getPlugin(), 'plug_providers', 0, array());
+            $providers = array();
+
+            $namespace = __NAMESPACE__ . "\\";
+
+            foreach(get_declared_classes() as $name) {
+                if(strpos($name, $namespace) === 0) {
+                    $providers[] = strtolower(substr($name, strlen($namespace)));
+                }
+            }
+
+            static::$providers = array_merge(array_diff(
+                $providers,
+                array('admin', 'player', 'main', 'provider')
+            ));
         }
 
         public function install()
@@ -107,7 +131,9 @@ namespace Oui\Player {
 
         public static function optionsLink()
         {
-            header('Location: ?event=prefs#prefs_group_' . self::getPlugin());
+            global $event;
+
+            header('Location: ?event=' . str_replace('plugin_prefs.', 'prefs#prefs_group_', $event));
         }
 
         /**
@@ -255,7 +281,7 @@ namespace Oui\Player {
 
                 // Adds a pref per provider to display/hide its own prefs group.
                 $options = array(
-                    'default' => '0',
+                    'default' => '1',
                     'valid'   => array('0', '1'),
                 );
                 $options['group'] = $plugin;
@@ -356,15 +382,5 @@ namespace Oui\Player {
 
     if (txpinterface === 'admin' && (in_array($event, array('plugin', 'prefs')) || substr($event, 0, strlen($pluginPrefs)) === $pluginPrefs)) {
         new Admin;
-
-        $providers = Admin::getProviders();
-
-        if ($providers) {
-            foreach ($providers as $provider) {
-                if (in_array($event, array($pluginPrefs . '_' . lcfirst($provider), 'prefs'))) {
-                    $provider::getInstance();
-                }
-            }
-        }
     }
 }

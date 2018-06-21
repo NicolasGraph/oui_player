@@ -31,7 +31,7 @@ namespace Oui\Player {
     class Main extends Player
     {
         /**
-         * The value provided through the 'play'
+         * The value provided through the play
          * attribute value of the plugin tag.
          *
          * @var string
@@ -48,7 +48,7 @@ namespace Oui\Player {
         protected $provider;
 
         /**
-         * Associative array of 'play' value(s) and their.
+         * Associative array of play value(s) and their.
          *
          * @var array
          */
@@ -256,6 +256,10 @@ namespace Oui\Player {
     if (txpinterface === 'public') {
         foreach (Main::getTags() as $tag => $attributes) {
             \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+
+            foreach (Main::getProviders() as $provider) {
+                \Txp::get('\Textpattern\Tag\Registry')->register(str_replace('player', strtolower($provider), $tag));
+            }
         }
     }
 }
