@@ -1,6 +1,6 @@
 #Default language, en-us, en-gb
 #@admin
-oui_player => Embedded players (oui_player)
+oui_player => Embedded players
 oui_player_provider => Favourite provider
 oui_player_custom_field => Field used by default
 oui_player_responsive => Render responsive players
