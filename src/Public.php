@@ -31,7 +31,7 @@ namespace Oui\Player {
     class Main extends Player
     {
         /**
-         * The value provided through the 'play'
+         * The value provided through the play
          * attribute value of the plugin tag.
          *
          * @var string
@@ -48,7 +48,7 @@ namespace Oui\Player {
         protected $provider;
 
         /**
-         * Associative array of 'play' value(s) and their.
+         * Associative array of play value(s) and their.
          *
          * @var array
          */
