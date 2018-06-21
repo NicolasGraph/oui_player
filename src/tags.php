@@ -58,9 +58,9 @@ namespace {
         $player = $class_in_use::getInstance()
             ->setPlay($play, true)
             ->setConfig($lAtts)
-            ->getPlayer();
+            ->getPlayer($wraptag, $class);
 
-        return doLabel($label, $labeltag).(($wraptag) ? doTag($player, $wraptag, $class) : $player);
+        return doLabel($label, $labeltag) . $player;
     }
 
     /**

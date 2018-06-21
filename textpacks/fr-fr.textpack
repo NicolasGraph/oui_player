@@ -3,3 +3,4 @@
 oui_player => Lecteurs embarqués (oui_player)
 oui_player_provider => Service préféré
 oui_player_custom_field => Champ utilisé par défaut
+oui_player_responsive => Rendre les lecteurs adaptatifs 
