@@ -256,6 +256,10 @@ namespace Oui\Player {
     if (txpinterface === 'public') {
         foreach (Main::getTags() as $tag => $attributes) {
             \Txp::get('\Textpattern\Tag\Registry')->register($tag);
+
+            foreach (Main::getProviders() as $provider) {
+                \Txp::get('\Textpattern\Tag\Registry')->register(str_replace('player', strtolower($provider), $tag));
+            }
         }
     }
 }
