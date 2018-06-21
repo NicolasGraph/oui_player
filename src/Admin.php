@@ -281,7 +281,7 @@ namespace Oui\Player {
 
                 // Adds a pref per provider to display/hide its own prefs group.
                 $options = array(
-                    'default' => '0',
+                    'default' => '1',
                     'valid'   => array('0', '1'),
                 );
                 $options['group'] = $plugin;
