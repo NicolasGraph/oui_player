@@ -83,7 +83,20 @@ namespace Oui\Player {
 
         public static function setProviders()
         {
-            static::$providers = callback_event(self::getPlugin(), 'plug_providers', 0, array());
+            $providers = array();
+
+            $namespace = __NAMESPACE__ . "\\";
+
+            foreach(get_declared_classes() as $name) {
+                if(strpos($name, $namespace) === 0) {
+                    $providers[] = strtolower(substr($name, strlen($namespace)));
+                }
+            }
+
+            static::$providers = array_merge(array_diff(
+                $providers,
+                array('admin', 'player', 'main', 'provider')
+            ));
         }
 
         public function install()
