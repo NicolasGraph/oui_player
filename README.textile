@@ -215,14 +215,16 @@ h2. Credits
 
 h3. Author
 
-"Nicolas Morand":https://twitter.com/NicolasGraph, initially inspired by "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com.
+"Nicolas Morand":https://twitter.com/NicolasGraph
 _Thank you to the Textpattern community and the core team._
 
 h3. License
 
-This plugin is distributed under the "MIT licence":https://opensource.org/licenses/MIT.
+This plugin is distributed under "GPL v2.0":https://www.gnu.org/licenses/gpl-2.0.txt.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+oui_player version 2, Copyright (C) 2018 Nicolas Morand
+This Textpattern plugin comes with ABSOLUTELY "NO WARRANTY":https://www.gnu.org/licenses/gpl-2.0.html#section11.
+This is free software, and you are welcome to redistribute it "under certain conditions":https://www.gnu.org/licenses/gpl-2.0.html#SEC3.
 
 h3. Changelog
 
@@ -281,3 +283,4 @@ h3. Changelog
 *** "Viddsee":https://www.viddsee.com/;
 ** (changed) Help file styling improvements.
 * *oui_video v0.1.0* (2016-09-13)
+* *oui_dailymotion v1.3.1* (2016-02-25) inspired by "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com.
