@@ -21,7 +21,7 @@
         "youtube"
     ],
     "homepage": "https://github.com/NicolasGraph/oui_player",
-    "license": "MIT",
+    "license": "GPL-2.0-only",
     "type": "textpattern-plugin",
     "authors": [
         {
