@@ -116,7 +116,7 @@ namespace Oui\Player {
                 'default' => '',
             ),
             'responsive' => array(
-                'default' => 'true',
+                'default' => 'false',
                 'valid'   => array('true', 'false'),
             ),
             'providers' => array(
