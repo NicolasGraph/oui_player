@@ -82,11 +82,11 @@ namespace Oui\Player {
             );
 
             foreach (self::getProviders() as $provider) {
-                add_privs('plugin_prefs.' . $plugin . '_' . $provider, self::getPrivs());
+                add_privs('plugin_prefs.oui_' . $provider, self::getPrivs());
 
                 register_callback(
                     'Oui\Player\Admin::optionsLink',
-                    'plugin_prefs.' . $plugin . '_' . $provider,
+                    'plugin_prefs.oui_' . $provider,
                     null,
                     1
                 );
@@ -385,7 +385,7 @@ namespace Oui\Player {
 
     $pluginPrefs = 'plugin_prefs.' . Admin::getPlugin();
 
-    if (txpinterface === 'admin' && (in_array($event, array('plugin', 'prefs')) || substr($event, 0, strlen($pluginPrefs)) === $pluginPrefs)) {
+    if (txpinterface === 'admin') {
         new Admin;
     }
 }
