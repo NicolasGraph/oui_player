@@ -6,26 +6,33 @@ An extendable plugin to easily embed customized audio and video players.
 
 p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes and HTML5 players by its own without any external request for better performances.
 
-h3. Supported providers as extensions
+h3. Supported extensions
 
-* "Abc News":http://abcnews.go.com/video: "oui_player_abcnews":https://github.com/oui-textpattern/oui_player_abcnews;
-* "Archive":https://archive.org/: "oui_player_archive":https://github.com/oui-textpattern/oui_player_archive;
-* "Bandcamp":https://bandcamp.com/: "oui_player_bandcamp":https://github.com/oui-textpattern/oui_player_bandcamp;
-* "Dailymotion":http://www.dailymotion.com/: "oui_player_dailymotion":https://github.com/oui-textpattern/oui_player_dailymotion;
-* "Mixcloud":https://www.mixcloud.com/: "oui_player_mixcloud":https://github.com/oui-textpattern/oui_player_mixcloud;
-* "Myspace videos":https://myspace.com/myspace/videos: "oui_player_myspace":https://github.com/oui-textpattern/oui_player_myspace;
-* "Soundcloud":https://soundcloud.com/: "oui_player_soundcloud":https://github.com/oui-textpattern/oui_player_soundcloud;
-* "Twitch":https://www.twitch.tv/: "oui_player_twitch":https://github.com/oui-textpattern/oui_player_twitch;
-* "Viddsee":https://www.viddsee.com/: "oui_player_viddsee":https://github.com/oui-textpattern/oui_player_viddsee;
-* "Vimeo":http://www.vimeo.com/: "oui_player_vimeo":https://github.com/oui-textpattern/oui_player_vimeo;
-* "Vine":http://vine.co/: "oui_player_vine":https://github.com/oui-textpattern/oui_player_vine;
-* "Youtube":https://www.youtube.com/: "oui_player_youtube":https://github.com/oui-textpattern/oui_player_youtube.
+As known at the last plugin release…
+
+* "Abc News":http://abcnews.go.com/video: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
+* "Archive":https://archive.org/: "oui_archive":https://github.com/NicolasGraph/oui_archive;
+* "Bandcamp":https://bandcamp.com/: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
+* "Dailymotion":http://www.dailymotion.com/: "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion;
+* "Giphy":https://giphy.com/: "oui_giphy":https://github.com/NicolasGraph/oui_giphy;
+* "HTML5 <audio>":https://developer.mozilla.org/docs/Web/HTML/Element/audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
+* "HTML5 <video>":https://developer.mozilla.org/docs/Web/HTML/Element/video: "oui_video":https://github.com/NicolasGraph/oui_video;
+* "Mixcloud":https://www.mixcloud.com/: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
+* "Myspace videos":https://myspace.com/myspace/videos: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
+* "Soundcloud":https://soundcloud.com/: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
+* "Twitch":https://www.twitch.tv/: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
+* "Viddsee":https://www.viddsee.com/: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
+* "Vimeo":http://www.vimeo.com/: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
+* "Vine":http://vine.co/: "oui_vine":https://github.com/NicolasGraph/oui_vine;
+* "Youtube":https://www.youtube.com/: "oui_youtube":https://github.com/NicolasGraph/oui_youtube.
 
 h3. Plugin requirements
 
 oui_player's minimum requirements:
 
-* "Textpattern CMS":http://textpattern.com/ 4.6+.
+* "Textpattern CMS":http://textpattern.com/ 4.6+;
+* "oui_player_provider":https://github.com/NicolasGraph/oui_player_provider v1+;
+* Any of the above provider related extension.
 
 h2. Plugin management
 
@@ -118,37 +125,33 @@ bc(language-markup). <txp:oui_player />
 h4. Presentational attributes
 
 - @label@ :=
-Label for the video.
-*default:* none
-*valid:* string =:
+String; none by default.
+Label for the video. =:
 - @labeltag@ :=
-HTML wraptag for the label, without brackets.
-*default:* none
-*valid:* HTML container tag =:
+HTML container tag name; none by default.
+HTML wraptag for the label, without brackets. =:
 - @wraptag@ :=
-HTML tag to be used as the content wraptag, without brackets.
-*default:* none
-*valid:* HTML container tag =:
+HTML container tag name; none by default.
+HTML tag to be used as the content wraptag, without brackets. =:
 - @class@ :=
-CSS class for HTML content wraptag.
-*default:* none
-*valid:* string =:
+String; none by default.
+CSS class for HTML content wraptag. =:
 - @responsive@ :=
-*Default:* none
-*valid:* @true@ or @false@ =:
+@true@ or @false@, related preference value used by default.
+Adapts the final player size from provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
 
 h4. Main tag attributes
 
 Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
 
 - @play@ :=
+Valid values differs from one provider to another, check each extension.
 The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values).
-*default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs.
-*valid:* URL, id or custom field name =:
+*default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs. =:
 - @provider@ :=
-The provider to use; *required if* the @play@ attribute is an id, *recommended anyways* if known as it increases the plugin performances by skipping the provider guess.
-*default:* plugin pref
-*valid:* a defined provider
+Extension related provider name; uses the related preference value by default.
+The provider to use; *required if* the @play@ attribute is an id, *recommended anyways* if known as it increases the plugin performances by skipping the provider guess. =:
 
 h4. Providers related tag attributes
 
@@ -165,11 +168,11 @@ bc(language-markup). <txp:oui_if_player>
 h4. Attributes
 
 - @play@ :=
-The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values).
-*Default:* The custom field value of the one selected in the plugin prefs. =:
+The custom field value of the one selected in the plugin prefs by default.
+The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values). =:
 - @provider@ :=
-Check the URL against valid URL schemes of the provided provider.
-*Default:* none =:
+Extension related provider name; none by default.
+Check the URL against valid URL schemes of the defined provider. =:
 
 h2. Examples
 
@@ -230,21 +233,22 @@ h3. Changelog
 
 * *v2.0.0-beta* (2017-06-24)
 ** changed: providers now work as pluggable extensions:
-*** Provider base (required): "oui_player_provider":https://github.com/oui-textpattern/;
-*** ABC News: "oui_player_abcnews":https://github.com/oui-textpattern/oui_player_abcnews;
-*** Archive: "oui_player_archive":https://github.com/oui-textpattern/oui_player_archive;
-*** Bandcamp: "oui_player_bandcamp":https://github.com/oui-textpattern/oui_player_bandcamp;
-*** Dailymotion: "oui_player_bandcamp":https://github.com/oui-textpattern/oui_player_dailymotion;
-*** Giphy: "oui_player_giphy":https://github.com/oui-textpattern/oui_player_giphy (new);
-*** Mixcloud: "oui_player_mixcloud":https://github.com/oui-textpattern/oui_player_mixcloud;
-*** MySpace: "oui_player_myspace":https://github.com/oui-textpattern/oui_player_myspace;
-*** HTML: "oui_player_html":https://github.com/oui-textpattern/oui_player_html;
-*** Soundcloud: "oui_player_soundcloud":https://github.com/oui-textpattern/oui_player_soundcloud;
-*** Twitch: "oui_player_twitch":https://github.com/oui-textpattern/oui_player_twitch;
-*** Viddsee: "oui_player_viddsee":https://github.com/oui-textpattern/oui_player_viddsee;
-*** Vimeo: "oui_player_vimeo":https://github.com/oui-textpattern/oui_player_vimeo;
-*** Vine: "oui_player_vine":https://github.com/oui-textpattern/oui_player_vine;
-*** Youtube: "oui_player_youtube":https://github.com/oui-textpattern/oui_player_youtube;
+*** Provider base (required): "oui_player_provider":https://github.com/NicolasGraph/;
+*** ABC News: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
+*** Archive: "oui_archive":https://github.com/NicolasGraph/oui_archive;
+*** Bandcamp: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
+*** Dailymotion: "oui_bandcamp":https://github.com/NicolasGraph/oui_dailymotion;
+*** Giphy: "oui_giphy":https://github.com/NicolasGraph/oui_giphy (new);
+*** Mixcloud: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
+*** MySpace: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
+*** HTML: "oui_html":https://github.com/NicolasGraph/oui_html;
+*** Soundcloud: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
+*** Twitch: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
+*** Viddsee: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
+*** Vimeo: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
+*** Vine: "oui_vine":https://github.com/NicolasGraph/oui_vine;
+*** Youtube: "oui_youtube":https://github.com/NicolasGraph/oui_youtube;
+** added: responsive embedding;
 ** changed: providers related preferences displayed by default.
 * *v1.3.1* (2017-07-13)
 * *v1.3.0* (2017-05-24)
