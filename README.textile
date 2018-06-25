@@ -231,7 +231,7 @@ This is free software, and you are welcome to redistribute it "under certain con
 
 h3. Changelog
 
-* *v2.0.0-beta* (2017-06-24)
+* *v2.0.0-alpha* (2018-06-25)
 ** changed: providers now work as pluggable extensions:
 *** Provider base (required): "oui_player_provider":https://github.com/NicolasGraph/;
 *** ABC News: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
