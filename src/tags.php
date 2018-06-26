@@ -7,15 +7,20 @@
  *
  * https://github.com/NicolasGraph/oui_player
  *
- * Copyright (C) 2016-2017 Nicolas Morand
+ * Copyright (C) 2018 Nicolas Morand
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
- * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA..
  */
 
 /*
@@ -55,9 +60,12 @@ namespace {
 
         $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-        $player = $class_in_use::getInstance($play, $lAtts)->getPlayer();
+        $player = $class_in_use::getInstance()
+            ->setPlay($play, true)
+            ->setConfig($lAtts)
+            ->getPlayer($wraptag, $class);
 
-        return doLabel($label, $labeltag).(($wraptag) ? doTag($player, $wraptag, $class) : $player);
+        return doLabel($label, $labeltag) . $player;
     }
 
     /**
@@ -80,19 +88,31 @@ namespace {
 
         extract(lAtts($main_class::getAtts(__FUNCTION__), $atts)); // Extracts used attributes.
 
-        $play ?: $play = $thisarticle[get_pref('oui_player_custom_field')];
+        $field = get_pref('oui_player_custom_field');
 
-        $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
-
-        if ($is_valid = $class_in_use::getInstance($play)->isValid()) {
-            $oui_player_item = array('play' => $play);
-            $provider ? $oui_player_item['provider'] = $provider : '';
+        if (!$play) {
+            if (!$play && isset($thisarticle[$field])) {
+                $play = $thisarticle[$field];
+            } else {
+                $play = false;
+            }
         }
 
-        $out = parse($thing, $is_valid);
+        if ($play) {
+            $class_in_use = $provider ? $namespace . '\\' . ucfirst($provider) : $main_class;
 
-        unset($GLOBALS['oui_player_item']);
+            if ($is_valid = $class_in_use::getInstance()->setPlay($play)->isValid()) {
+                $oui_player_item = array('play' => $play);
+                $provider ? $oui_player_item['provider'] = $provider : '';
+            }
 
-        return $out;
+            $out = parse($thing, $is_valid);
+
+            unset($GLOBALS['oui_player_item']);
+
+            return $out;
+        }
+
+        return parse($thing, false);
     }
 }

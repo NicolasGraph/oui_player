@@ -1,6 +1,6 @@
 {
-    "name": "oui/oui_player",
-    "description": "Configurable players embedding plugin for Textpattern CMS",
+    "name": "nicolasgraph/oui_player",
+    "description": "Manage configurable media players in Textpattern CMS",
     "keywords": [
         "textpattern",
         "plugin",
@@ -11,6 +11,8 @@
         "archive",
         "bandcamp",
         "dailymotion",
+        "giphy",
+        "html5",
         "mixcloud",
         "myspace",
         "soundcloud",
@@ -21,7 +23,7 @@
         "youtube"
     ],
     "homepage": "https://github.com/NicolasGraph/oui_player",
-    "license": "MIT",
+    "license": "GPL-2.0-only",
     "type": "textpattern-plugin",
     "authors": [
         {
@@ -35,7 +37,8 @@
         "source": "https://github.com/NicolasGraph/oui_player"
     },
     "require": {
-        "textpattern/lock": "4.6.*",
+        "textpattern/lock": "^4.6",
         "textpattern/installer": "*"
-    }
+    },
+    "minimum-stability": "beta"
 }
