@@ -15,8 +15,8 @@ As known at the last plugin release…
 * "Bandcamp":https://bandcamp.com/: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
 * "Dailymotion":http://www.dailymotion.com/: "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion;
 * "Giphy":https://giphy.com/: "oui_giphy":https://github.com/NicolasGraph/oui_giphy;
-* "HTML5 <audio>":https://developer.mozilla.org/docs/Web/HTML/Element/audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
-* "HTML5 <video>":https://developer.mozilla.org/docs/Web/HTML/Element/video: "oui_video":https://github.com/NicolasGraph/oui_video;
+* "HTML5 audio":https://developer.mozilla.org/docs/Web/HTML/Element/audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
+* "HTML5 video":https://developer.mozilla.org/docs/Web/HTML/Element/video: "oui_video":https://github.com/NicolasGraph/oui_video;
 * "Mixcloud":https://www.mixcloud.com/: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
 * "Myspace videos":https://myspace.com/myspace/videos: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
 * "Soundcloud":https://soundcloud.com/: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
