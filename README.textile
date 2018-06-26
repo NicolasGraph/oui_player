@@ -31,7 +31,7 @@ h3. Plugin requirements
 oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+;
-* "oui_player_provider":https://github.com/NicolasGraph/oui_player_provider v1+;
+* "oui_provider":https://github.com/NicolasGraph/oui_provider v1+;
 * Any of the above provider related extension.
 
 h2. Plugin management
@@ -233,7 +233,7 @@ h3. Changelog
 
 * *v2.0.0-BETA1* (2018-06-26)
 ** changed: providers now work as pluggable extensions:
-*** Provider base (required): "oui_player_provider":https://github.com/NicolasGraph/;
+*** Provider base (required): "oui_provider":https://github.com/NicolasGraph/;
 *** ABC News: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
 *** Archive: "oui_archive":https://github.com/NicolasGraph/oui_archive;
 *** Bandcamp: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
