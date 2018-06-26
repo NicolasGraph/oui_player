@@ -50,7 +50,7 @@ Follow the below instructions before or after installing the wanted oui_player e
 Once the plugin and its extensions enabled, you will need to complete the setup by clicking _Options_ or visiting your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab.
 This last step need to be repeated each time you add or remove one or more oui_player extensions to update the plugin preferences.
 
-h4. Via Composer
+h4. Via Composer (not available yet)
 
 After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 
@@ -59,7 +59,7 @@ After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 # If it's not already done, lock your version of Txp:
 @$ composer require textpattern/lock:4.6.2@, where @4.6.2@ is the Txp version in use.
 # Install oui_player:
-@$ composer require oui/oui_player@
+@$ composer require nicolasgraph/oui_player@
 # Connect to the Txp admin interface and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
 
 h3. Update
@@ -69,9 +69,9 @@ h4. From the admin interface
 Follow the install instructions.
 If you are updating from v1.*, be sure to install all wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
 
-h4. Via Composer
+h4. Via Composer (not available yet)
 
-bc. $ composer update oui/oui_player
+bc. $ composer update nicolasgraph/oui_player
 
 h3. Uninstall
 
@@ -81,9 +81,9 @@ h4. From the admin interface
 # open the select list at the bottom of the plugins table and choose _Delete_.
 # confirm the plugin deletion.
 
-h4. Via Composer
+h4. Via Composer (not available yet)
 
-bc. $ composer remove oui/oui_player
+bc. $ composer remove nicolasgraph/oui_player
 
 h2. Preferences/options
 
@@ -231,7 +231,7 @@ This is free software, and you are welcome to redistribute it "under certain con
 
 h3. Changelog
 
-* *v2.0.0-alpha* (2018-06-25)
+* *v2.0.0-BETA1* (2018-06-26)
 ** changed: providers now work as pluggable extensions:
 *** Provider base (required): "oui_player_provider":https://github.com/NicolasGraph/;
 *** ABC News: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;

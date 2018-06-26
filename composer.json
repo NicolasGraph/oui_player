@@ -1,6 +1,6 @@
 {
-    "name": "oui/oui_player",
-    "description": "Configurable players embedding plugin for Textpattern CMS",
+    "name": "nicolasgraph/oui_player",
+    "description": "Manage configurable media players in Textpattern CMS",
     "keywords": [
         "textpattern",
         "plugin",
@@ -37,7 +37,8 @@
         "source": "https://github.com/NicolasGraph/oui_player"
     },
     "require": {
-        "textpattern/lock": "4.6.*",
+        "textpattern/lock": "^4.6",
         "textpattern/installer": "*"
-    }
+    },
+    "minimum-stability": "beta"
 }

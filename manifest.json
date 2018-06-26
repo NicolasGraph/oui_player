@@ -1,7 +1,7 @@
 {
     "name"        : "oui_player",
-    "description" : "Embed customised players",
-    "version"     : "2.0.0-alpha",
+    "description" : "Manage configurable media players",
+    "version"     : "2.0.0-BETA1",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
