@@ -244,7 +244,8 @@ h3. Changelog
 **** Giphy: "oui_giphy":https://github.com/NicolasGraph/oui_giphy (new);
 **** Mixcloud: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
 **** MySpace: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
-**** HTML: "oui_html":https://github.com/NicolasGraph/oui_html;
+**** HTML5 audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
+**** HTML5 video: "oui_video":https://github.com/NicolasGraph/oui_video;
 **** Soundcloud: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
 **** Twitch: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
 **** Viddsee: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
