@@ -31,18 +31,10 @@
  * @package Oui\Player
  */
 
-namespace Oui\Player {
+namespace Oui {
 
-    class Admin extends Player
+    class PlayerAdmin extends PlayerBase
     {
-        /**
-         * Caches the class instance.
-         *
-         * @var object
-         */
-
-        private static $instance = null;
-
         /**
          * Caches the collected prefs.
          *
@@ -75,18 +67,20 @@ namespace Oui\Player {
             register_callback(array($this, 'install'), 'prefs', '', 1);
 
             register_callback(
-                'Oui\Player\Admin::optionsLink',
+                'Oui\PlayerAdmin::optionsLink',
                 'plugin_prefs.' . $plugin,
                 null,
                 1
             );
 
-            foreach (self::getProviders() as $provider) {
-                add_privs('plugin_prefs.oui_' . $provider, self::getPrivs());
+            foreach (self::getProviders() as $provider => $author) {
+                $extension = $author . '_' . $provider;
+
+                add_privs('plugin_prefs.' . $extension, self::getPrivs());
 
                 register_callback(
-                    'Oui\Player\Admin::optionsLink',
-                    'plugin_prefs.oui_' . $provider,
+                    'Oui\PlayerAdmin::optionsLink',
+                    'plugin_prefs.' . $extension,
                     null,
                     1
                 );
@@ -99,20 +93,17 @@ namespace Oui\Player {
 
         public static function setProviders()
         {
-            $providers = array();
+            foreach(array_map('strtolower', get_declared_classes()) as $name) {
+                if (is_subclass_of($name, 'Oui\Provider')) {
+                    $nameParts = explode('\\', $name);
+                    $author = $nameParts[0];
+                    $provider = $nameParts[1];
 
-            $namespace = __NAMESPACE__ . "\\";
-
-            foreach(get_declared_classes() as $name) {
-                if(strpos($name, $namespace) === 0) {
-                    $providers[] = strtolower(substr($name, strlen($namespace)));
+                    if (!array_key_exists($provider, static::$providers)) {
+                        static::$providers[$provider] = $author;
+                    }
                 }
             }
-
-            static::$providers = array_merge(array_diff(
-                $providers,
-                array('admin', 'player', 'main', 'provider')
-            ));
         }
 
         public function install()
@@ -159,12 +150,12 @@ namespace Oui\Player {
                 if (empty($yesno_diff)) {
                     $widget = 'yesnoradio';
                 } elseif (empty($truefalse_diff)) {
-                    $widget = 'Oui\Player\Admin::truefalseradio';
+                    $widget = 'Oui\PlayerAdmin::truefalseradio';
                 } else {
-                    $widget = 'Oui\Player\Admin::prefFunction';
+                    $widget = 'Oui\PlayerAdmin::prefFunction';
                 }
             } elseif ($valid) {
-                $widget = 'Oui\Player\Admin::prefFunction';
+                $widget = 'Oui\PlayerAdmin::prefFunction';
             } else {
                 $widget = 'text_input';
             }
@@ -212,14 +203,14 @@ namespace Oui\Player {
             $vals['article_image'] = gtxt('article_image');
             $vals['excerpt'] = gtxt('excerpt');
 
-            $custom_fields = safe_rows(
+            $customFields = safe_rows(
                 "name, val",
                 'txp_prefs',
                 "name LIKE 'custom_%_set' AND val<>'' ORDER BY name"
             );
 
-            if ($custom_fields) {
-                foreach ($custom_fields as $row) {
+            if ($customFields) {
+                foreach ($customFields as $row) {
                     $vals[strtolower($row['val'])] = $row['val'];
                 }
             }
@@ -263,10 +254,11 @@ namespace Oui\Player {
             $prefs = array();
             $plugin = self::getPlugin();
             $providers = self::getProviders();
+            $providerNames = array_keys($providers);
 
-            self::setPref('provider', 'valid', $providers);
-            self::setPref('provider', 'default', $providers[0]);
-            self::setPref('providers', 'default', implode(', ', $providers));
+            self::setPref('provider', 'valid', $providerNames);
+            self::setPref('provider', 'default', $providerNames[0]);
+            self::setPref('providers', 'default', http_build_query($providers));
 
             // Collects the plugin main prefs.
             foreach (self::getPrefs() as $pref => $options) {
@@ -275,7 +267,7 @@ namespace Oui\Player {
                 $prefs[$pref] = $options;
             }
 
-            foreach ($providers as $provider) {
+            foreach ($providers as $provider => $author) {
                 // Adds privilieges to provider prefs only if they are enabled.
                 $group = $plugin . '_' . strtolower($provider);
                 $pref = $group . '_prefs';
@@ -294,7 +286,7 @@ namespace Oui\Player {
                 $prefs[$pref] = $options;
 
                 // Collects provider prefs.
-                $class = __NAMESPACE__ . '\\' . $provider;
+                $class = $author . '\\' . $provider;
                 $prefs = $class::GetPrefs($prefs);
             }
 
@@ -383,9 +375,9 @@ namespace Oui\Player {
 
     global $event;
 
-    $pluginPrefs = 'plugin_prefs.' . Admin::getPlugin();
+    $pluginPrefs = 'plugin_prefs.' . PlayerAdmin::getPlugin();
 
     if (txpinterface === 'admin') {
-        new Admin;
+        new PlayerAdmin;
     }
 }

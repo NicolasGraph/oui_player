@@ -24,182 +24,334 @@
  */
 
  /**
-  * Player
+  * Main
   *
-  * Plugin base class.
+  * Manages public side plugin features.
   *
   * @package Oui\Player
   */
 
-namespace Oui\Player {
+namespace Oui {
 
-    class Player
+    class Player extends PlayerBase
     {
         /**
-         * The plugin name.
+         * The value provided through the play
+         * attribute value of the plugin tag.
          *
          * @var string
          */
 
-        protected static $plugin;
+        protected $play;
 
         /**
-         * The plugged providers.
-         *
-         * @var array
-         */
-
-        protected static $providers;
-
-        /**
-         * Multidimensional associative array of plugin tags,
-         * attributes and attibute values.
-         *
-         * @var array
-         */
-
-        protected static $tags = array(
-            'oui_player' => array(
-                'class' => array(
-                    'default' => '',
-                ),
-                'label' => array(
-                    'default' => '',
-                ),
-                'labeltag' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
-                'play' => array(
-                    'default' => '',
-                ),
-                'wraptag' => array(
-                    'default' => '',
-                ),
-                'responsive' => array(
-                    'default' => '',
-                ),
-            ),
-            'oui_if_player' => array(
-                'play' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
-            ),
-        );
-
-        /**
-         * Plugin prefs related privilege levels.
+         * The $play related provider.
          *
          * @var string
          */
 
-        protected static $privs = '1, 2';
+        protected $provider;
 
         /**
-         * Multidimensional associative array
-         * of plugin general prefs.
+         * Associative array of play value(s) and their.
          *
-         * @var array.
+         * @var array
          */
 
-        protected static $prefs = array(
-            'custom_field' => array(
-                'widget'  => 'Oui\Player\Admin::customFields',
-                'default' => 'article_image',
-            ),
-            'provider' => array(
-                'default' => '',
-            ),
-            'responsive' => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
-            'providers' => array(
-                'default' => '',
-            ),
-        );
+        protected $infos = array();
 
         /**
-         * Plugin property setter.
-         */
-
-        public static function setPlugin()
-        {
-            static::$plugin = strtolower(str_replace('\\', '_', __NAMESPACE__));
-        }
-
-        /**
-         * $plugin property getter.
+         * Associative array of player parameters
+         * provided via attributes.
          *
-         * @return string self::$plugin
+         * @var array
          */
 
-        public static function getPlugin()
-        {
-            self::$plugin or self::setPlugin();
+        protected $config;
 
-            return self::$plugin;
+        public function __construct() {
+            foreach (Player::getTags() as $tag => $attributes) {
+                $tagMethod = str_replace(array('oui', '_'), array('render', ''), $tag);
+                $tagMethods[$tag] = $tagMethod;
+
+                \Txp::get('\Textpattern\Tag\Registry')->register('Oui\Player::' . $tagMethod, $tag);
+            }
+
+            foreach (Player::getProviders() as $provider => $author) {
+                foreach ($tagMethods as $tag => $method) {
+                    \Txp::get('\Textpattern\Tag\Registry')->register($author . '\\' . $provider . '::' . $method, str_replace('player', $provider, $tag));
+                }
+            }
         }
 
         /**
-         * $providers property getter.
-         *
-         * @return array static::$providers
+         * $providers property setter.
          */
 
-        public static function getProviders()
+        public static function setProviders()
         {
-            static::$providers or static::setProviders();
+            foreach (explode('&', get_pref(self::getPlugin() . '_providers')) as $providerAuthor) {
+                $providerAuthor = explode('=', $providerAuthor);
+                $provider = $providerAuthor[0];
+                $author = $providerAuthor[1];
 
-            return static::$providers;
+                static::$providers[$provider] = $author;
+            }
+        }
+
+        public function setPlay($value, $fallback = false)
+        {
+            $this->play = $value;
+            $infos = $this->getInfos();
+
+            if (!$infos || array_diff(explode(', ', $value), array_keys($infos))) {
+                $this->setInfos($fallback);
+            }
+
+            return $this;
         }
 
         /**
-         * $tags property getter.
-         *
-         * @return array static::$tags
+         * Gets the play property.
          */
 
-        public static function getTags()
+        public function getPlay()
         {
-            return static::$tags;
+            return $this->play;
         }
 
         /**
-         * $privs property getter.
+         * Gets the infos property; set it if necessary.
          *
-         * @return array self::$privs
+         * @param  bool  $fallback Whether to set fallback infos or not.
+         * @return array An associative array of
          */
 
-        public static function getPrivs()
+        public function getProvider($fallback = false)
         {
-            return self::$privs;
+            $this->infos or $this->setInfos($fallback);
+
+            if ($this->provider && !array_diff(explode(', ', $this->getPlay()), array_keys($this->infos))) {
+                return $this->provider;
+            }
+
+            return false;
         }
 
         /**
-         * $prefs property getter.
+         * Finds the right provider to use and set the current media(s) infos.
          *
-         * @return array static::$prefs
+         * @return bool false if no provider is found.
          */
 
-        public static function getPrefs()
+        public function setInfos($fallback = false)
         {
-            return static::$prefs;
+            $providers = self::getProviders();
+
+            foreach ($providers as $provider => $author) {
+                $class = $author . '\\' . $provider;
+                $this->infos = \Txp::get($class)
+                    ->setPlay($this->getPlay())
+                    ->getInfos();
+
+                if ($this->infos) {
+                    $this->provider = $class;
+
+                    return $this->infos;
+                }
+            }
+
+            if (!$this->infos && $fallback) {
+                // No matched provider, set default infos.
+                $this->infos = array(
+                    $this->getPlay() => array(
+                        'play' => $this->getPlay(),
+                        'type' => 'id',
+                    )
+                );
+
+                $providerName = get_pref(self::getPlugin() . '_provider');
+                $this->provider = $providers[$providerName] . '\\' . $providerName;
+            }
+
+            return $this->infos;
         }
 
-        public static function getPref($name = null, $key = null)
+        /**
+         * Gets the infos property; set it if necessary.
+         *
+         * @param  bool  $fallback Whether to set fallback infos or not.
+         * @return array An associative array of
+         */
+
+        public function getInfos()
         {
-            return $key ? static::$prefs[$name][$key] : static::$prefs[$name];
+            return $this->infos;
         }
 
-        public static function setPref($name, $key, $value)
+        public function setConfig($value)
         {
-            static::$prefs[$name][$key] = $value;
+            $this->config = $value;
+
+            return $this;
         }
+
+        public function getConfig()
+        {
+            return $this->config;
+        }
+
+        /**
+         * Get tag attributes.
+         *
+         * @param  string $tag The plugin tag
+         * @return array  An associative array using attributes as keys.
+         */
+
+        public static function getAtts($tag)
+        {
+            $allAtts = array();
+            $tags = self::getTags();
+
+            // Collects main attributes.
+            foreach ($tags[$tag] as $att => $options) {
+                $allAtts[$att] = '';
+            }
+
+            if ($tag === self::getPlugin()) {
+                // Collects provider attributes.
+                foreach (self::getProviders() as $provider => $author) {
+                    $class = $author . '\\' . $provider;
+                    $allAtts = $class::getAtts($tag, $allAtts);
+                }
+            }
+
+            return $allAtts;
+        }
+
+        /**
+         * Whether a provided URL to play matches a provider URL scheme or not.
+         *
+         * @return bool
+         */
+
+        public function isValid()
+        {
+            return $this->getInfos();
+        }
+
+        /**
+         * Gets the player code
+         */
+
+        public function getPlayer()
+        {
+            if ($provider = $this->getProvider(true)) {
+                return \Txp::get($provider)
+                    ->setPlay($this->getPlay())
+                    ->setConfig($this->getConfig())
+                    ->getPlayer();
+            }
+
+            trigger_error('Undefined oui_player provider.');
+        }
+
+        /**
+         * Generates a player.
+         *
+         * @param  array  $atts Tag attributes
+         * @return string HTML
+         */
+
+        public static function renderPlayer($atts)
+        {
+            global $thisarticle, $oui_player_item;
+
+            $lAtts = lAtts(self::getAtts('oui_player'), $atts); // Gets used attributes.
+
+            extract($lAtts); // Extracts used attributes.
+
+            if (!$play) {
+                if (isset($oui_player_item['play'])) {
+                    $play = $oui_player_item['play'];
+                } else {
+                    $play = $thisarticle[get_pref('oui_player_custom_field')];
+                }
+            }
+
+            if (!$provider && isset($oui_player_item['provider'])) {
+                $provider = $oui_player_item['provider'];
+            }
+
+            if ($provider) {
+                $providers = self::getProviders();
+                $class_in_use = $providers[$provider] . '\\' . $provider;
+            } else {
+                $class_in_use = __CLASS__;
+            }
+
+            $player = \Txp::get($class_in_use)
+                ->setPlay($play, true)
+                ->setConfig($lAtts)
+                ->getPlayer($wraptag, $class);
+
+            return doLabel($label, $labeltag) . $player;
+        }
+
+        /**
+         * Generates tag contents or alternative contents.
+         *
+         * Generated contents depends on whether the 'play' attribute value
+         * matches a provider URL scheme.
+         *
+         * @param  array  $atts  Tag attributes
+         * @param  string $thing Tag contents
+         * @return mixed  Tag contents or alternative contents
+         */
+
+        public static function renderIfPlayer($atts, $thing)
+        {
+            global $thisarticle, $oui_player_item;
+
+            extract(lAtts(self::getAtts('oui_if_player'), $atts)); // Extracts used attributes.
+
+            $field = get_pref('oui_player_custom_field');
+
+            if (!$play) {
+                if (!$play && isset($thisarticle[$field])) {
+                    $play = $thisarticle[$field];
+                } else {
+                    $play = false;
+                }
+            }
+
+            if ($play) {
+                if ($provider) {
+                    $providers = self::getProviders();
+                    $class_in_use = $providers[$provider] . '\\' . $provider;
+                } else {
+                    $class_in_use = __CLASS__;
+                }
+
+                if ($is_valid = \Txp::get($class_in_use)->setPlay($play)->isValid()) {
+                    $oui_player_item = array('play' => $play);
+                    $provider ? $oui_player_item['provider'] = $provider : '';
+                }
+
+                $out = parse($thing, $is_valid);
+
+                unset($GLOBALS['oui_player_item']);
+
+                return $out;
+            }
+
+            return parse($thing, false);
+        }
+    }
+}
+
+namespace {
+    if (txpinterface === 'public') {
+        \Txp::get('Oui\Player');
     }
 }

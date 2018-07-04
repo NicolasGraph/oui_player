@@ -1,17 +1,15 @@
 {
     "name"        : "oui_player",
     "description" : "Manage configurable media players",
-    "version"     : "2.0.0-BETA1",
+    "version"     : "2.0.0-BETA2",
     "type"        : 1,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
     "order"       : 5,
     "flags"       : 3,
     "code": {"file" : [
-        "./src/Provider.php",
-        "./src/Player.php",
-        "./src/Admin.php",
-        "./src/Public.php",
-        "./src/tags.php"
+        "./src/PlayerBase.php",
+        "./src/PlayerAdmin.php",
+        "./src/Player.php"
     ]}
 }
