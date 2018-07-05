@@ -231,7 +231,7 @@ This is free software, and you are welcome to redistribute it "under certain con
 
 h3. Changelog
 
-* *v2.0.0-BETA2* (2018-07-04)
+* *v2.0.0-BETA2* (2018-07-05)
 ** Added: responsive embedding;
 *** changed: providers related preferences displayed by default;
 ** changed: code rework:
