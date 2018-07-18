@@ -81,6 +81,9 @@ namespace Oui {
                 'responsive' => array(
                     'default' => '',
                 ),
+                'microdata' => array(
+                    'default' => '',
+                ),
             ),
             'oui_if_player' => array(
                 'play' => array(
@@ -116,6 +119,10 @@ namespace Oui {
                 'default' => '',
             ),
             'responsive' => array(
+                'default' => 'false',
+                'valid'   => array('true', 'false'),
+            ),
+            'microdata' => array(
                 'default' => 'false',
                 'valid'   => array('true', 'false'),
             ),
