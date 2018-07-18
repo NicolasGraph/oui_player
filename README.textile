@@ -103,6 +103,10 @@ Set the default @provider@ attribute value.
 - @Render responsive players@ :=
 *Default:* no
 *valid:* yes or no =:
+- @Add microdata@ :=
+Add @itemscope@ and the right @itemtype@ to the player wraptag (uses a @div@ if not provided) and add a @meta@ tag declaring the @embedURL@ property right after the embedding code.
+*Default:* no
+*valid:* yes or no =:
 - @Display the provider player preferences@ :=
 Displays the defined provider prefs as a goup of prefs.
 *Default:* yes
