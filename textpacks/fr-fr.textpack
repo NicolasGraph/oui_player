@@ -3,4 +3,5 @@
 oui_player => Lecteurs embarqués
 oui_player_provider => Service préféré
 oui_player_custom_field => Champ utilisé par défaut
-oui_player_responsive => Rendre les lecteurs adaptatifs 
+oui_player_responsive => Rendre les lecteurs adaptatifs
+oui_player_microdata => Ajouter les microdonnées
