@@ -1,8 +1,8 @@
 {
     "name"        : "oui_player",
     "description" : "Manage configurable media players",
-    "version"     : "2.0.0-BETA2",
-    "type"        : 1,
+    "version"     : "2.0.0-BETA3",
+    "type"        : 5,
     "author"      : "Nicolas Morand",
     "author_uri"  : "http://github.com/NicolasGraph",
     "order"       : 5,

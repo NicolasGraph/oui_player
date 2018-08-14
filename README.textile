@@ -103,10 +103,6 @@ Set the default @provider@ attribute value.
 - @Render responsive players@ :=
 *Default:* no
 *valid:* yes or no =:
-- @Add microdata@ :=
-Add @itemscope@ and the right @itemtype@ to the player wraptag (uses a @div@ if not provided) and add a @meta@ tag declaring the @embedURL@ property right after the embedding code.
-*Default:* no
-*valid:* yes or no =:
 - @Display the provider player preferences@ :=
 Displays the defined provider prefs as a goup of prefs.
 *Default:* yes
@@ -159,7 +155,7 @@ The provider to use; *required if* the @play@ attribute is an id, *recommended a
 
 h4. Providers related tag attributes
 
-See the related link in the table of contents.
+See each provider related extension.
 
 h3. oui_if_player
 
@@ -229,13 +225,15 @@ h3. License
 
 This plugin is distributed under "GPL v2.0":https://www.gnu.org/licenses/gpl-2.0.txt.
 
-oui_player version 2.0.0-BETA2, Copyright (C) 2018 Nicolas Morand
+oui_player version 2.0.0-BETA3, Copyright (C) 2018 Nicolas Morand
 This Textpattern plugin comes with ABSOLUTELY "NO WARRANTY":https://www.gnu.org/licenses/gpl-2.0.html#section11.
 This is free software, and you are welcome to redistribute it "under certain conditions":https://www.gnu.org/licenses/gpl-2.0.html#SEC3.
 
 h3. Changelog
 
-* *v2.0.0-BETA2* (2018-07-05)
+* *v2.0.0-BETA3* (2018-08-15)
+** Added: admin side player preview;
+** Changed: excerpt field no longer supported;
 ** Added: responsive embedding;
 *** changed: providers related preferences displayed by default;
 ** changed: code rework:
@@ -256,7 +254,7 @@ h3. Changelog
 **** Vimeo: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
 **** Vine: "oui_vine":https://github.com/NicolasGraph/oui_vine;
 **** Youtube: "oui_youtube":https://github.com/NicolasGraph/oui_youtube;
-*** single author prefix related namespace (@Oui@);
+*** author prefix related namespace;
 *** new class names (@Admin@ => @PlayerAdmin@, @Main@ => @Player@, @Player@ => @PlayerBase@);
 *** tags now registered with related callback methods from the @Player@ class;
 *** providers stored with their plugin author related prefix/namespace.

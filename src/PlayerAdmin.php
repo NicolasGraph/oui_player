@@ -24,360 +24,452 @@
  */
 
 /**
- * Admin
+ * PalyerAdmin
  *
  * Manages admin side plugin features.
  *
  * @package Oui\Player
  */
 
-namespace Oui {
+namespace Oui;
 
-    class PlayerAdmin extends PlayerBase
+class PlayerAdmin extends PlayerBase
+{
+    /**
+     * Plugin preferences visibility related privilege levels.
+     *
+     * @var string
+     * @see getPrivs();
+     */
+
+    protected static $privs = '1, 2';
+
+    /**
+     * Associative array of all preference names and their initial related infos.
+     * TODO: complete docs.
+     *
+     * @var array
+     * @see setIniPrefs(), getIniPrefs().
+     */
+
+    protected static $iniPrefs;
+
+    /**
+     * Associative array of all preference names and their current related values.
+     *
+     * @var array.
+     * @see getPrefs();
+     */
+
+    protected static $prefs;
+
+    /**
+     * Constructor
+     * - Add main privileges;
+     * - register callbacks.
+     */
+
+    public function __construct()
     {
-        /**
-         * Caches the collected prefs.
-         *
-         * @var object
-         */
+        parent::__construct();
 
-        private static $allPrefs = null;
+        $plugin = self::getPlugin();
 
-        /**
-         * Constructor
-         */
-
-        public function __construct()
-        {
-            global $event;
-
-            $plugin = self::getPlugin();
-            $privs = self::getPrivs();
-
-            foreach (array('plugin_prefs.', 'prefs.') as $ev) {
-                add_privs($ev . $plugin, $privs);
-            }
-
-            register_callback(
-                array($this, 'uninstall'),
-                'plugin_lifecycle.' . $plugin,
-                'deleted'
-            );
-
-            register_callback(array($this, 'install'), 'prefs', '', 1);
-
-            register_callback(
-                'Oui\PlayerAdmin::optionsLink',
-                'plugin_prefs.' . $plugin,
-                null,
-                1
-            );
-
-            foreach (self::getProviders() as $provider => $author) {
-                $extension = $author . '_' . $provider;
-
-                add_privs('plugin_prefs.' . $extension, self::getPrivs());
-
-                register_callback(
-                    'Oui\PlayerAdmin::optionsLink',
-                    'plugin_prefs.' . $extension,
-                    null,
-                    1
-                );
-            }
+        foreach (array('plugin_prefs.', 'prefs.') as $event) {
+            add_privs($event . $plugin, self::getPrivs());
         }
 
-        /**
-         * $providers property setter.
-         */
+        register_callback(array($this, 'managePrefs'), 'prefs', '', 1);
+        register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $plugin, null, 1);
+        register_callback(array($this, 'uninstall'), 'plugin_lifecycle.' . $plugin, 'deleted');
 
-        public static function setProviders()
-        {
-            foreach(array_map('strtolower', get_declared_classes()) as $name) {
-                if (is_subclass_of($name, 'Oui\Provider')) {
-                    $nameParts = explode('\\', $name);
-                    $author = $nameParts[0];
-                    $provider = $nameParts[1];
+        foreach (self::getProviders() as $provider => $author) {
+            $extension = $author . '_' . strtolower($provider);
 
-                    if (!array_key_exists($provider, static::$providers)) {
-                        static::$providers[$provider] = $author;
-                    }
-                }
-            }
+            add_privs('plugin_prefs.' . $extension, self::getPrivs());
+            register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $extension, null, 1);
         }
 
-        public function install()
-        {
-            if (self::getProviders()) {
-                $this->setPrefs();
-                $this->deleteOldPrefs();
-            } else {
-                $this->uninstall();
-            }
-        }
+        $mediaField = self::getMediaField();
+        $step = $mediaField === 'article_image' ? $mediaField : 'custom_fields';
 
-        public function uninstall()
-        {
-            safe_delete('txp_prefs', "event LIKE '" . self::getPlugin() . "%'");
-        }
+        register_callback(array($this, 'render'), 'article_ui', $step);
+    }
 
-        /**
-         * Links 'options' to the prefs panel.
-         */
+    /**
+     * $providers setter.
+     * Trigger an error on duplicate provider related extensions.
+     */
 
-        public static function optionsLink()
-        {
-            global $event;
+    public static function setProviders()
+    {
+        foreach(get_declared_classes() as $className) {
+            if (is_subclass_of($className, 'Oui\Provider')) {
+                list($author, $provider) = explode('\\', $className);
 
-            header('Location: ?event=' . str_replace('plugin_prefs.', 'prefs#prefs_group_', $event));
-        }
-
-        /**
-         * Defines a plugin pref widget.
-         *
-         * @param  array  $options Current pref options
-         * @return string HTML
-         */
-
-        private static function prefWidget($options)
-        {
-            $valid = isset($options['valid']) ? $options['valid'] : false;
-
-            if ($valid && is_array($valid)) {
-                $yesno_diff = array_diff($valid, array('0', '1'));
-                $truefalse_diff = array_diff($valid, array('true', 'false'));
-
-                if (empty($yesno_diff)) {
-                    $widget = 'yesnoradio';
-                } elseif (empty($truefalse_diff)) {
-                    $widget = 'Oui\PlayerAdmin::truefalseradio';
+                if (array_key_exists($provider, static::$providers)) {
+                    trigger_error(gtxt(array(
+                        'oui_player_duplicate_provider_extensions',
+                        '{provider}' => $provider,
+                    )));
                 } else {
-                    $widget = 'Oui\PlayerAdmin::prefFunction';
-                }
-            } elseif ($valid) {
-                $widget = 'Oui\PlayerAdmin::prefFunction';
-            } else {
-                $widget = 'text_input';
-            }
-
-            return $widget;
-        }
-
-        /**
-         * Builds a plugin pref widget.
-         *
-         * @param  string $name The preference name (Txp var)
-         * @param  string $val  The preference value (Txp var)
-         * @return string HTML
-         */
-
-        public static function prefFunction($name, $val)
-        {
-            $prefs = self::getAllPrefs();
-            $valid = $prefs[$name]['valid'];
-
-            if (is_array($valid)) {
-                $vals = array();
-
-                foreach ($valid as $value) {
-                    $value === '' ?: $vals[$value] = gtxt($name . '_' . strtolower($value));
-                }
-
-                return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
-            } else {
-                return fInput($valid, $name, $val);
-            }
-        }
-
-        /**
-         * Generates a select list of custom + article_image + excerpt fields.
-         *
-         * @param  string $name The name of the preference (Textpattern variable)
-         * @param  string $val  The value of the preference (Textpattern variable)
-         * @return string HTML
-         */
-
-        public static function customFields($name, $val)
-        {
-            $vals = array();
-            $vals['article_image'] = gtxt('article_image');
-            $vals['excerpt'] = gtxt('excerpt');
-
-            $customFields = safe_rows(
-                "name, val",
-                'txp_prefs',
-                "name LIKE 'custom_%_set' AND val<>'' ORDER BY name"
-            );
-
-            if ($customFields) {
-                foreach ($customFields as $row) {
-                    $vals[strtolower($row['val'])] = $row['val'];
+                    static::$providers[$provider] = $author;
                 }
             }
-
-            return selectInput($name, $vals, $val);
-        }
-
-        /**
-         * Generates a Yes/No radio button toggle using 'true'/'false' as values.
-         *
-         * @param  string $field    The field name
-         * @param  string $checked  The checked button, either 'true', 'false'
-         * @param  int    $tabindex The HTML tabindex
-         * @param  string $id       The HTML id
-         * @return string HTML
-         */
-
-        public static function truefalseradio(
-            $field,
-            $checked = '',
-            $tabindex = 0,
-            $id = ''
-        ) {
-            $vals = array(
-                'false' => gTxt('no'),
-                'true'  => gTxt('yes'),
-            );
-
-            return radioSet($vals, $field, $checked, $tabindex, $id);
-        }
-
-        /**
-         * $allPrefs property setter
-         * Collects plugin prefs
-         *
-         * @return array $allPrefs
-         */
-
-        public static function setAllPrefs()
-        {
-            $prefs = array();
-            $plugin = self::getPlugin();
-            $providers = self::getProviders();
-            $providerNames = array_keys($providers);
-
-            self::setPref('provider', 'valid', $providerNames);
-            self::setPref('provider', 'default', $providerNames[0]);
-            self::setPref('providers', 'default', http_build_query($providers));
-
-            // Collects the plugin main prefs.
-            foreach (self::getPrefs() as $pref => $options) {
-                $options['group'] = $plugin;
-                $pref = $options['group'] . '_' . $pref;
-                $prefs[$pref] = $options;
-            }
-
-            foreach ($providers as $provider => $author) {
-                // Adds privilieges to provider prefs only if they are enabled.
-                $group = $plugin . '_' . strtolower($provider);
-                $pref = $group . '_prefs';
-
-                if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && get_pref($pref))) {
-                    add_privs('prefs.' . $group, self::getPrivs());
-                }
-
-                // Adds a pref per provider to display/hide its own prefs group.
-                $options = array(
-                    'default' => '1',
-                    'valid'   => array('0', '1'),
-                );
-                $options['group'] = $plugin;
-                $pref = $options['group'] . '_' . strtolower($provider) . '_prefs';
-                $prefs[$pref] = $options;
-
-                // Collects provider prefs.
-                $class = $author . '\\' . $provider;
-                $prefs = $class::GetPrefs($prefs);
-            }
-
-            return static::$allPrefs = $prefs;
-        }
-
-        /**
-         * $allPrefs property getter
-         *
-         * @return array $allPrefs
-         */
-
-        public static function getAllPrefs()
-        {
-            static::$allPrefs or self::setAllPrefs();
-
-            return static::$allPrefs;
-        }
-
-        /**
-         * Set plugin prefs.
-         */
-
-        public function setPrefs()
-        {
-            $prefs = $this->getAllPrefs();
-            $position = 250;
-
-            $existing = array();
-
-            $rs = safe_rows_start(
-                'name, html',
-                doSlash('txp_prefs'),
-                "name LIKE '".doSlash('oui_player_%')."'"
-            );
-
-            if ($rs) {
-                while ($row = nextRow($rs)) {
-                    $existing[$row['name']] =  $row['html'];
-                }
-            }
-
-            foreach ($prefs as $pref => $options) {
-                $widget = isset($options['widget']) ? $options['widget'] : self::prefWidget($options);
-
-                if ($pref === 'oui_player_providers') {
-                    set_pref(
-                        $pref,
-                        $options['default'],
-                        $options['group'],
-                        PREF_HIDDEN,
-                        $widget,
-                        $position
-                    );
-                } elseif (!isset($existing[$pref])) {
-                    create_pref(
-                        $pref,
-                        $options['default'],
-                        $options['group'],
-                        PREF_PLUGIN,
-                        $widget,
-                        $position
-                    );
-                } elseif (isset($existing[$pref]) && $existing[$pref] !== $widget) {
-                    update_pref($pref, $options['default'], null, null, $widget, null);
-                }
-
-                $position += 10;
-            }
-        }
-
-        /**
-         * Deletes old unused plugin prefs.
-         */
-
-        private function deleteOldPrefs()
-        {
-            $prefs = $this->getAllPrefs();
-
-            safe_delete(
-                'txp_prefs',
-                "event LIKE '" .self::getPlugin() . "%' AND name NOT IN ( '" . implode(array_keys($prefs), "', '") . "' )"
-            );
         }
     }
 
-    global $event;
+    /**
+     * $privs getter.
+     *
+     * @return array
+     */
 
-    $pluginPrefs = 'plugin_prefs.' . PlayerAdmin::getPlugin();
+    public static function getPrivs()
+    {
+        return self::$privs;
+    }
 
-    if (txpinterface === 'admin') {
-        new PlayerAdmin;
+    /**
+     * $iniPrefs property setter
+     */
+
+    public static function setIniPrefs()
+    {
+        $providers = self::getProviders();
+        $providerNames = array_keys($providers);
+
+        $mainPrefs = array(
+            'custom_field' => array(
+                'widget'  => 'Oui\PlayerAdmin::customFields',
+                'default' => 'article_image',
+            ),
+            'provider' => array(
+                'default' => $providerNames[0],
+                'valid'   => $providerNames,
+            ),
+            'responsive' => array(
+                'default' => 'false',
+                'valid'   => array('true', 'false'),
+            ),
+            'providers' => array(
+                'default' => http_build_query($providers),
+                'type'    => PREF_HIDDEN,
+            ),
+        );
+
+        $plugin = self::getPlugin();
+
+        // Collect the plugin main prefs.
+        foreach ($mainPrefs as $pref => $options) {
+            $options['group'] = $plugin;
+            $pref = $options['group'] . '_' . $pref;
+            static::$iniPrefs[$pref] = $options;
+        }
+
+        foreach ($providers as $provider => $author) {
+            // Add privilieges to provider prefs only if they are enabled.
+            $group = $plugin . '_' . strtolower($provider);
+            $pref = $group . '_prefs';
+
+            if (!empty($_POST[$pref]) || (!isset($_POST[$pref]) && get_pref($pref))) {
+                add_privs('prefs.' . $group, self::getPrivs());
+            }
+
+            // Add a pref per provider to display/hide its own prefs group.
+            $options = array(
+                'default' => '1',
+                'valid'   => array('0', '1'),
+            );
+            $options['group'] = $plugin;
+            static::$iniPrefs[$pref] = $options;
+
+            // Collect provider prefs.
+            $class = $author . '\\' . $provider;
+            static::$iniPrefs = array_merge(static::$iniPrefs, $class::GetIniPrefs());
+        }
+    }
+
+    /**
+     * $iniPrefs getter
+     *
+     * @return array
+     */
+
+    public static function getIniPrefs()
+    {
+        static::$iniPrefs or self::setIniPrefs();
+
+        return static::$iniPrefs;
+    }
+
+    /**
+     * $prefs setter.
+     */
+
+    protected static function setPrefs()
+    {
+        $rs = safe_rows_start(
+            'name, html',
+            doSlash('txp_prefs'),
+            "name LIKE '" . doSlash(self::getPlugin() . '_%') . "'"
+        );
+
+        if ($rs) {
+            static::$prefs = array();
+
+            while ($row = nextRow($rs)) {
+                static::$prefs[$row['name']] = $row['html'];
+            }
+        }
+    }
+
+    /**
+     * $prefs getter.
+     * Call setter if necesary.
+     *
+     * @return array
+     */
+
+    public static function getPrefs()
+    {
+        static::$prefs or self::setPrefs();
+
+        return static::$prefs;
+    }
+
+    /**
+     * Install/update/remove preferences.
+     */
+
+    public function managePrefs()
+    {
+        if (self::getProviders()) {
+            $this->upsertPrefs();
+            $this->deleteOldPrefs();
+        } else {
+            $this->uninstall();
+        }
+    }
+
+    /**
+     * Upsert plugin preferences.
+     */
+
+    public function upsertPrefs()
+    {
+        $iniPrefs = $this->getIniPrefs();
+        $position = 250;
+        $existing = self::getPrefs();
+
+        foreach ($iniPrefs as $pref => $options) {
+            $default = isset($options['default']) ? $options['default'] : '';
+
+            if (isset($options['widget'])) {
+                $widget = $options['widget'];
+            } else {
+                $valid = isset($options['valid']) ? $options['valid'] : null;
+                $widget = self::getPrefWidget($valid);
+            }
+
+            if ($pref === 'oui_player_providers') {
+                set_pref(
+                    $pref,
+                    $default,
+                    $options['group'],
+                    PREF_HIDDEN,
+                    $widget,
+                    $position
+                );
+            } elseif (!isset($existing[$pref])) {
+                create_pref(
+                    $pref,
+                    $default,
+                    $options['group'],
+                    isset($options['type']) ? $options['type'] : PREF_PLUGIN,
+                    $widget,
+                    $position
+                );
+            } elseif ($existing[$pref] !== $widget) {
+                update_pref($pref, $default, null, null, $widget, null);
+            }
+
+            $position += 10;
+        }
+    }
+
+    /**
+     * Delete outdated plugin preferences.
+     */
+
+    protected function deleteOldPrefs()
+    {
+        safe_delete(
+            'txp_prefs',
+            "event LIKE '" . self::getPlugin() . "%' AND " .
+            "name NOT IN ( '" . implode(array_keys($this->getIniPrefs()), "', '") . "' )"
+        );
+    }
+
+    /**
+     * Remove plugin preferences.
+     */
+
+    public function uninstall()
+    {
+        safe_delete('txp_prefs', "event LIKE '" . self::getPlugin() . "%'");
+    }
+
+    /**
+     * Redirect Options links to the general preferences tab.
+     */
+
+    public static function optionsLink()
+    {
+        global $event;
+
+        header('Location: ?event=' . str_replace('plugin_prefs.', 'prefs#prefs_group_', $event));
+    }
+
+    /**
+     * Define a plugin preference widget.
+     *
+     * @param  array  $options Current pref options.
+     * @return string Function/method name.
+     */
+
+    protected static function getPrefWidget($valid = null)
+    {
+        if ($valid) {
+            $validIsArray = is_array($valid);
+
+            if ($validIsArray && empty(array_diff($valid, array('0', '1')))) {
+                $widget = 'yesnoradio';
+            } elseif ($validIsArray && empty(array_diff($valid, array('true', 'false')))) {
+                $widget = 'Oui\PlayerAdmin::truefalseradio';
+            } else {
+                $widget = 'Oui\PlayerAdmin::prefFunction';
+            }
+        } else {
+            $widget = 'text_input';
+        }
+
+        return $widget;
+    }
+
+    /**
+     * Generate a Yes/No radio button toggle using 'true' and 'false' as values.
+     *
+     * @param  string $field    The field name
+     * @param  string $checked  The checked button, either 'true', 'false'
+     * @param  int    $tabindex The HTML tabindex
+     * @param  string $id       The HTML id
+     * @return string HTML
+     */
+
+    public static function truefalseradio(
+        $field,
+        $checked = '',
+        $tabindex = 0,
+        $id = ''
+    ) {
+        $vals = array(
+            'false' => gTxt('no'),
+            'true'  => gTxt('yes'),
+        );
+
+        return radioSet($vals, $field, $checked, $tabindex, $id);
+    }
+
+    /**
+     * Plugin preference widget.
+     *
+     * @param  string $name The preference name
+     * @param  string $val  The preference value
+     * @return string HTML
+     */
+
+    public static function prefFunction($name, $val)
+    {
+        $prefs = self::getIniPrefs();
+        $valid = $prefs[$name]['valid'];
+
+        if (is_array($valid)) {
+            $vals = array();
+
+            foreach ($valid as $value) {
+                $value === '' ?: $vals[$value] = gtxt($name . '_' . strtolower($value));
+            }
+
+            return selectInput($name, $vals, $val, $valid[0] === '' ? true : false);
+        } else {
+            return fInput($valid, $name, $val);
+        }
+    }
+
+    /**
+     * Generate a select list of article_image + custom fields.
+     *
+     * @param  string $name The name of the preference
+     * @param  string $val  The value of the preference
+     * @return string HTML
+     */
+
+    public static function customFields($name, $val)
+    {
+        $vals = array();
+        $vals['article_image'] = gtxt('article_image');
+        // $vals['excerpt'] = gtxt('excerpt');
+
+        $customFields = safe_rows(
+            "name, val",
+            'txp_prefs',
+            "name LIKE 'custom_%_set' AND val<>'' ORDER BY name"
+        );
+
+        foreach ($customFields as $row) {
+            $vals[$row['val']] = $row['val'];
+        }
+
+        return selectInput($name, $vals, $val);
+    }
+
+    /**
+     * Add a responsive player preview near to the media related field.
+     *
+     * @param  string $evt  Textpattern event (panel)
+     * @param  string $stp  Textpattern step (action)
+     * @param  string $data Original markup
+     * @param  array  $rs   Accompanyng record set
+     * @return string       HTML
+     */
+
+    public function render($evt, $stp, $data, $rs)
+    {
+        $fieldCol = self::getMediaField();
+
+        // Find the $mediaField related ID.
+        if ($fieldCol === 'article_image') {
+            $inputName = 'Image';
+        } else {
+            $inputName = str_replace('_set', '', safe_field('name', 'txp_prefs', 'val LIKE "' . $fieldCol . '"'));
+        }
+
+        if ($rs[$inputName]) { // Add the player preview.
+            $pluginName = self::getPlugin();
+            $inputID = str_replace('_', '-', $inputName);
+            $class = $inputID . str_replace('_', '-', $pluginName);
+            $data .= \Txp::get('\Oui\Player')->renderPlayer(array(
+                    'play'       => $rs[$inputName],
+                    'wraptag'    => 'div',
+                    'class'      => $class,
+                    'responsive' => true,
+                )) . '</div>' . n .
+                '<script>$(function() { $( ".' . $class . '" ).css("margin-top", "1em").insertAfter( "#' . $inputID . '" ); });</script>';
+        }
+
+        return $data;
     }
 }
+
+txpinterface === 'admin' ? new PlayerAdmin : '';
