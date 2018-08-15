@@ -42,13 +42,10 @@ h4. From the admin interface
 
 Follow the below instructions before or after installing the wanted oui_player extensions:
 
-# "Download":https://github.com/NicolasGraph/oui_player/releases the compiled plugin file or the source to compile a customized file.
-# Paste the content of the compiled plugin file under the "Admin > Plugins":?event=plugin tab and click the _Upload_ button.
-# Confirm the plugin install by clicking the _Install_ button on the plugin preview page.
-# Enable the plugin.
-
-Once the plugin and its extensions enabled, you will need to complete the setup by clicking _Options_ or visiting your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab.
-This last step need to be repeated each time you add or remove one or more oui_player extensions to update the plugin preferences.
+# "Download":https://github.com/NicolasGraph/oui_player/releases the @.txt@ or @_zip.txt@ compiled plugin file;
+# Upload its contents through the _Admin > Plugins_ tab;
+# Confirm the plugin install on the preview page.
+# Enable the plugin *and* click the _Options_ link to set the plugin preferences.
 
 h4. Via Composer (not available yet)
 
@@ -77,9 +74,9 @@ h3. Uninstall
 
 h4. From the admin interface
 
-# Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
-# open the select list at the bottom of the plugins table and choose _Delete_.
-# confirm the plugin deletion.
+# In the _Admin > Plugins_ tab, check the box on the left of the plugin related row.
+# Under the plugins list, select the the _Delete_ option.
+# confirm the deletion.
 
 h4. Via Composer (not available yet)
 
@@ -87,7 +84,7 @@ bc. $ composer remove nicolasgraph/oui_player
 
 h2. Preferences/options
 
-Plugin prefs can be set under the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab and are mainly used as default values for the @<txp:oui_player />@ tag attributes.
+Plugin prefs can be set under the _Admin > Preferences_ tab and are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 
 h3. Global prefs
 
@@ -95,14 +92,11 @@ h3. Global prefs
 Defines a field to use as the default @play@ attribute value.
 %(warning)The provided fieldname must be different than any value entered in it; avoid digits if you use ID's as @play@ attribute values%
 *Default:* @article_image@
-*valid:* @article_image@, @excerpt@ or any existing custom field =:
+*valid:* @article_image@ or any existing custom field =:
 - @Favourite provider@ :=
 Set the default @provider@ attribute value.
 *Default:* the first plugged provider
 *valid:* Any plugged provider in the select list =:
-- @Render responsive player@ :=
-*Default:* no
-*valid:* yes or no =:
 - @Display the provider player preferences@ :=
 Displays the defined provider prefs as a goup of prefs.
 *Default:* yes
@@ -125,16 +119,16 @@ bc(language-markup). <txp:oui_player />
 h4. Presentational attributes
 
 - @label@ :=
-String; none by default.
+String; empty by default.
 Label for the video. =:
 - @labeltag@ :=
-HTML container tag name; none by default.
+HTML container tag name; empty by default.
 HTML wraptag for the label, without brackets. =:
 - @wraptag@ :=
-HTML container tag name; none by default.
+HTML container tag name; empty by default.
 HTML tag to be used as the content wraptag, without brackets. =:
 - @class@ :=
-String; none by default.
+String; empty by default.
 CSS class for HTML content wraptag. =:
 - @responsive@ :=
 @true@ or @false@, related preference value used by default.
@@ -155,7 +149,7 @@ The provider to use; *required if* the @play@ attribute is an id, *recommended a
 
 h4. Providers related tag attributes
 
-See the related link in the table of contents.
+See each provider related extension.
 
 h3. oui_if_player
 
@@ -171,7 +165,7 @@ h4. Attributes
 The custom field value of the one selected in the plugin prefs by default.
 The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values). =:
 - @provider@ :=
-Extension related provider name; none by default.
+Extension related provider name; empty by default.
 Check the URL against valid URL schemes of the defined provider. =:
 
 h2. Examples
@@ -225,13 +219,15 @@ h3. License
 
 This plugin is distributed under "GPL v2.0":https://www.gnu.org/licenses/gpl-2.0.txt.
 
-oui_player version 2.0.0-BETA2, Copyright (C) 2018 Nicolas Morand
+oui_player version 2.0.0-BETA3, Copyright (C) 2018 Nicolas Morand
 This Textpattern plugin comes with ABSOLUTELY "NO WARRANTY":https://www.gnu.org/licenses/gpl-2.0.html#section11.
 This is free software, and you are welcome to redistribute it "under certain conditions":https://www.gnu.org/licenses/gpl-2.0.html#SEC3.
 
 h3. Changelog
 
-* *v2.0.0-BETA2* (2018-07-05)
+* *v2.0.0-BETA3* (2018-08-15)
+** Added: admin side player preview;
+** Changed: excerpt field no longer supported;
 ** Added: responsive embedding;
 *** changed: providers related preferences displayed by default;
 ** changed: code rework:
@@ -252,7 +248,7 @@ h3. Changelog
 **** Vimeo: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
 **** Vine: "oui_vine":https://github.com/NicolasGraph/oui_vine;
 **** Youtube: "oui_youtube":https://github.com/NicolasGraph/oui_youtube;
-*** single author prefix related namespace (@Oui@);
+*** author prefix related namespace;
 *** new class names (@Admin@ => @PlayerAdmin@, @Main@ => @Player@, @Player@ => @PlayerBase@);
 *** tags now registered with related callback methods from the @Player@ class;
 *** providers stored with their plugin author related prefix/namespace.

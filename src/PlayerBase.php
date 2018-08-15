@@ -24,182 +24,92 @@
  */
 
  /**
-  * Player
+  * PlayerBase
   *
   * Plugin base class.
   *
   * @package Oui\Player
   */
 
-namespace Oui {
+namespace Oui;
 
-    abstract class PlayerBase
+abstract class PlayerBase
+{
+    /**
+     * Master plugin name.
+     *
+     * @var string
+     * @see getPlugin().
+     */
+
+    protected static $plugin = 'oui_player';
+
+    /**
+     * Installed providers as an array of provider names
+     * associated with their extensions related plugin author prefixes.
+     *
+     * @var array
+     * @see setProviders(), getProviders().
+     */
+
+    protected static $providers = array();
+
+    /**
+     * Media related field name.
+     *
+     * @var string
+     * @see setMediaField(), getMediaField().
+     */
+
+    protected static $mediaField;
+
+    /**
+     * Constructor.
+     */
+
+    public function __construct()
     {
-        /**
-         * The plugin name.
-         *
-         * @var string
-         */
+        self::setMediaField();
+        static::setProviders();
+    }
 
-        protected static $plugin;
+    /**
+     * $plugin getter.
+     *
+     * @return string
+     */
 
-        /**
-         * The plugged providers.
-         *
-         * @var array
-         */
+    public static function getPlugin()
+    {
+        return self::$plugin;
+    }
 
-        protected static $providers = array();
+    /**
+     * $providers getter.
+     *
+     * @return array
+     */
 
-        /**
-         * Multidimensional associative array of plugin tags,
-         * attributes and attibute values.
-         *
-         * @var array
-         */
+    protected static function getProviders()
+    {
+        return static::$providers;
+    }
 
-        protected static $tags = array(
-            'oui_player' => array(
-                'class' => array(
-                    'default' => '',
-                ),
-                'label' => array(
-                    'default' => '',
-                ),
-                'labeltag' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
-                'play' => array(
-                    'default' => '',
-                ),
-                'wraptag' => array(
-                    'default' => '',
-                ),
-                'responsive' => array(
-                    'default' => '',
-                ),
-            ),
-            'oui_if_player' => array(
-                'play' => array(
-                    'default' => '',
-                ),
-                'provider' => array(
-                    'default' => '',
-                ),
-            ),
-        );
+    /**
+     * $mediaField setter.
+     */
 
-        /**
-         * Plugin prefs related privilege levels.
-         *
-         * @var string
-         */
+    protected static function setMediaField()
+    {
+        return self::$mediaField = get_pref('oui_player_custom_field');
+    }
 
-        protected static $privs = '1, 2';
+    /**
+     * $mediaField getter.
+     */
 
-        /**
-         * Multidimensional associative array
-         * of plugin general prefs.
-         *
-         * @var array.
-         */
-
-        protected static $prefs = array(
-            'custom_field' => array(
-                'widget'  => 'Oui\PlayerAdmin::customFields',
-                'default' => 'article_image',
-            ),
-            'provider' => array(
-                'default' => '',
-            ),
-            'responsive' => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
-            'providers' => array(
-                'default' => '',
-            ),
-        );
-
-        /**
-         * Plugin property setter.
-         */
-
-        public static function setPlugin()
-        {
-            static::$plugin = 'oui_player';
-        }
-
-        /**
-         * $plugin property getter.
-         *
-         * @return string self::$plugin
-         */
-
-        public static function getPlugin()
-        {
-            self::$plugin or self::setPlugin();
-
-            return self::$plugin;
-        }
-
-        /**
-         * $providers property getter.
-         *
-         * @return array static::$providers
-         */
-
-        public static function getProviders()
-        {
-            static::$providers or static::setProviders();
-
-            return static::$providers;
-        }
-
-        /**
-         * $tags property getter.
-         *
-         * @return array static::$tags
-         */
-
-        public static function getTags()
-        {
-            return static::$tags;
-        }
-
-        /**
-         * $privs property getter.
-         *
-         * @return array self::$privs
-         */
-
-        public static function getPrivs()
-        {
-            return self::$privs;
-        }
-
-        /**
-         * $prefs property getter.
-         *
-         * @return array static::$prefs
-         */
-
-        public static function getPrefs()
-        {
-            return static::$prefs;
-        }
-
-        public static function getPref($name = null, $key = null)
-        {
-            return $key ? static::$prefs[$name][$key] : static::$prefs[$name];
-        }
-
-        public static function setPref($name, $key, $value)
-        {
-            static::$prefs[$name][$key] = $value;
-        }
+    protected static function getMediaField()
+    {
+        return self::$mediaField;
     }
 }
