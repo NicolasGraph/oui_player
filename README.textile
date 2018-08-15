@@ -74,9 +74,9 @@ h3. Uninstall
 
 h4. From the admin interface
 
-# Check the box on the left of the plugin row under the "Admin > Plugins":?event=plugin.
-# open the select list at the bottom of the plugins table and choose _Delete_.
-# confirm the plugin deletion.
+# In the _Admin > Plugins_ tab, check the box on the left of the plugin related row.
+# Under the plugins list, select the the _Delete_ option.
+# confirm the deletion.
 
 h4. Via Composer (not available yet)
 
@@ -84,7 +84,7 @@ bc. $ composer remove nicolasgraph/oui_player
 
 h2. Preferences/options
 
-Plugin prefs can be set under the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab and are mainly used as default values for the @<txp:oui_player />@ tag attributes.
+Plugin prefs can be set under the _Admin > Preferences_ tab and are mainly used as default values for the @<txp:oui_player />@ tag attributes.
 
 h3. Global prefs
 
@@ -92,7 +92,7 @@ h3. Global prefs
 Defines a field to use as the default @play@ attribute value.
 %(warning)The provided fieldname must be different than any value entered in it; avoid digits if you use ID's as @play@ attribute values%
 *Default:* @article_image@
-*valid:* @article_image@, @excerpt@ or any existing custom field =:
+*valid:* @article_image@ or any existing custom field =:
 - @Favourite provider@ :=
 Set the default @provider@ attribute value.
 *Default:* the first plugged provider
@@ -122,16 +122,16 @@ bc(language-markup). <txp:oui_player />
 h4. Presentational attributes
 
 - @label@ :=
-String; none by default.
+String; empty by default.
 Label for the video. =:
 - @labeltag@ :=
-HTML container tag name; none by default.
+HTML container tag name; empty by default.
 HTML wraptag for the label, without brackets. =:
 - @wraptag@ :=
-HTML container tag name; none by default.
+HTML container tag name; empty by default.
 HTML tag to be used as the content wraptag, without brackets. =:
 - @class@ :=
-String; none by default.
+String; empty by default.
 CSS class for HTML content wraptag. =:
 - @responsive@ :=
 @true@ or @false@, related preference value used by default.
@@ -168,7 +168,7 @@ h4. Attributes
 The custom field value of the one selected in the plugin prefs by default.
 The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values). =:
 - @provider@ :=
-Extension related provider name; none by default.
+Extension related provider name; empty by default.
 Check the URL against valid URL schemes of the defined provider. =:
 
 h2. Examples
