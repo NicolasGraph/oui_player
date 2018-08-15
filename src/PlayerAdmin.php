@@ -148,10 +148,6 @@ class PlayerAdmin extends PlayerBase
                 'default' => $providerNames[0],
                 'valid'   => $providerNames,
             ),
-            'responsive' => array(
-                'default' => 'false',
-                'valid'   => array('true', 'false'),
-            ),
             'providers' => array(
                 'default' => http_build_query($providers),
                 'type'    => PREF_HIDDEN,

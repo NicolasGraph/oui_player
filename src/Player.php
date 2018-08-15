@@ -50,7 +50,6 @@ class Player extends PlayerBase implements \Textpattern\Container\ReusableInterf
             'provider',
             'play',
             'wraptag',
-            'responsive',
         ),
         'oui_if_player' => array(
             'play',

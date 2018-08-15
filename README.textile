@@ -97,9 +97,6 @@ Defines a field to use as the default @play@ attribute value.
 Set the default @provider@ attribute value.
 *Default:* the first plugged provider
 *valid:* Any plugged provider in the select list =:
-- @Render responsive players@ :=
-*Default:* no
-*valid:* yes or no =:
 - @Display the provider player preferences@ :=
 Displays the defined provider prefs as a goup of prefs.
 *Default:* yes
