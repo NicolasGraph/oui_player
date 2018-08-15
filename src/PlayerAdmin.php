@@ -84,7 +84,7 @@ class PlayerAdmin extends PlayerBase
         register_callback(array($this, 'uninstall'), 'plugin_lifecycle.' . $plugin, 'deleted');
 
         foreach (self::getProviders() as $provider => $author) {
-            $extension = $author . '_' . strtolower($provider);
+            $extension = strtolower($author . '_' . $provider);
 
             add_privs('plugin_prefs.' . $extension, self::getPrivs());
             register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $extension, null, 1);
