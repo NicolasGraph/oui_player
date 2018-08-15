@@ -421,7 +421,7 @@ class Player extends PlayerBase implements \Textpattern\Container\ReusableInterf
             explode(', ', $play, -1) ? $play = explode(', ', $play) : '';
 
             // Find the potentially missing provider name.
-            $provider ?: $provider = $this->setMedia($play)->getMediaProvider($fallback);
+            $provider = $provider ? ucfirst($provider) : $this->setMedia($play)->getMediaProvider($fallback);
             $play = compact('play', 'provider');
         }
 
