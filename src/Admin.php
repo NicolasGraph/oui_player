@@ -31,9 +31,9 @@
  * @package Oui\Player
  */
 
-namespace Oui;
+namespace Oui\Player;
 
-class PlayerAdmin extends PlayerBase
+class Admin extends Base
 {
     /**
      * Plugin preferences visibility related privilege levels.
@@ -80,14 +80,14 @@ class PlayerAdmin extends PlayerBase
         }
 
         register_callback(array($this, 'managePrefs'), 'prefs', '', 1);
-        register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $plugin, null, 1);
+        register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . $plugin, null, 1);
         register_callback(array($this, 'uninstall'), 'plugin_lifecycle.' . $plugin, 'deleted');
 
         foreach (self::getProviders() as $provider => $author) {
             $extension = strtolower($author . '_' . $provider);
 
             add_privs('plugin_prefs.' . $extension, self::getPrivs());
-            register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $extension, null, 1);
+            register_callback('Oui\Player\Admin::optionsLink', 'plugin_prefs.' . $extension, null, 1);
         }
     }
 
@@ -99,7 +99,7 @@ class PlayerAdmin extends PlayerBase
     public static function setProviders()
     {
         foreach(get_declared_classes() as $className) {
-            if (is_subclass_of($className, 'Oui\Provider')) {
+            if (is_subclass_of($className, 'Oui\Player\Provider')) {
                 list($author, $provider) = explode('\\', $className);
 
                 if (array_key_exists($provider, static::$providers)) {
@@ -136,7 +136,7 @@ class PlayerAdmin extends PlayerBase
 
         $mainPrefs = array(
             'custom_field' => array(
-                'widget'  => 'Oui\PlayerAdmin::customFields',
+                'widget'  => 'Oui\Player\Admin::customFields',
                 'default' => 'article_image',
             ),
             'provider' => array(
@@ -337,9 +337,9 @@ class PlayerAdmin extends PlayerBase
             if ($validIsArray && empty(array_diff($valid, array('0', '1')))) {
                 $widget = 'yesnoradio';
             } elseif ($validIsArray && empty(array_diff($valid, array('true', 'false')))) {
-                $widget = 'Oui\PlayerAdmin::truefalseradio';
+                $widget = 'Oui\Player\Admin::truefalseradio';
             } else {
-                $widget = 'Oui\PlayerAdmin::prefFunction';
+                $widget = 'Oui\Player\Admin::prefFunction';
             }
         } else {
             $widget = 'text_input';
@@ -426,4 +426,4 @@ class PlayerAdmin extends PlayerBase
     }
 }
 
-txpinterface === 'admin' ? new PlayerAdmin : '';
+txpinterface === 'admin' ? new Admin : '';

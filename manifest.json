@@ -8,8 +8,8 @@
     "order"       : 5,
     "flags"       : 3,
     "code": {"file" : [
-        "./src/PlayerBase.php",
-        "./src/PlayerAdmin.php",
+        "./src/Base.php",
+        "./src/Admin.php",
         "./src/Player.php"
     ]}
 }

@@ -31,9 +31,9 @@
   * @package Oui\Player
   */
 
-namespace Oui;
+namespace Oui\Player;
 
-abstract class PlayerBase
+abstract class Base
 {
     /**
      * Master plugin name.

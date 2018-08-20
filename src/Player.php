@@ -31,9 +31,9 @@
   * @package Oui\Player
   */
 
-namespace Oui;
+namespace Oui\Player;
 
-class Player extends PlayerBase implements \Textpattern\Container\ReusableInterface
+class Player extends Base implements \Textpattern\Container\ReusableInterface
 {
     /**
      * Initial plugin tags and attributes.
@@ -432,4 +432,4 @@ class Player extends PlayerBase implements \Textpattern\Container\ReusableInterf
     }
 }
 
-txpinterface === 'public' ? \Txp::get('Oui\Player') : '';
+txpinterface === 'public' ? \Txp::get('Oui\Player\Player') : '';
