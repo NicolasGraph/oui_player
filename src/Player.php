@@ -432,4 +432,4 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
     }
 }
 
-txpinterface === 'public' ? \Txp::get('Oui\Player\Player') : '';
+txpinterface === 'public' ? \Txp::get('\Oui\Player\Player') : '';
