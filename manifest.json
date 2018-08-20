@@ -10,6 +10,7 @@
     "code": {"file" : [
         "./src/PlayerBase.php",
         "./src/PlayerAdmin.php",
-        "./src/Player.php"
+        "./src/Player.php",
+        "./src/PlayerPreview.php"
     ]}
 }

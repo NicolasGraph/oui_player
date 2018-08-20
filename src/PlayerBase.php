@@ -108,7 +108,7 @@ abstract class PlayerBase
      * $mediaField getter.
      */
 
-    protected static function getMediaField()
+    public static function getMediaField()
     {
         return self::$mediaField;
     }

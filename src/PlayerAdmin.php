@@ -89,11 +89,6 @@ class PlayerAdmin extends PlayerBase
             add_privs('plugin_prefs.' . $extension, self::getPrivs());
             register_callback('Oui\PlayerAdmin::optionsLink', 'plugin_prefs.' . $extension, null, 1);
         }
-
-        $mediaField = self::getMediaField();
-        $step = $mediaField === 'article_image' ? $mediaField : 'custom_fields';
-
-        register_callback(array($this, 'render'), 'article_ui', $step);
     }
 
     /**
@@ -428,43 +423,6 @@ class PlayerAdmin extends PlayerBase
         }
 
         return selectInput($name, $vals, $val);
-    }
-
-    /**
-     * Add a responsive player preview near to the media related field.
-     *
-     * @param  string $evt  Textpattern event (panel)
-     * @param  string $stp  Textpattern step (action)
-     * @param  string $data Original markup
-     * @param  array  $rs   Accompanyng record set
-     * @return string       HTML
-     */
-
-    public function render($evt, $stp, $data, $rs)
-    {
-        $fieldCol = self::getMediaField();
-
-        // Find the $mediaField related ID.
-        if ($fieldCol === 'article_image') {
-            $inputName = 'Image';
-        } else {
-            $inputName = str_replace('_set', '', safe_field('name', 'txp_prefs', 'val LIKE "' . $fieldCol . '"'));
-        }
-
-        if ($rs[$inputName]) { // Add the player preview.
-            $pluginName = self::getPlugin();
-            $inputID = str_replace('_', '-', $inputName);
-            $class = $inputID . str_replace('_', '-', $pluginName);
-            $data .= \Txp::get('\Oui\Player')->renderPlayer(array(
-                    'play'       => $rs[$inputName],
-                    'wraptag'    => 'div',
-                    'class'      => $class,
-                    'responsive' => true,
-                )) . '</div>' . n .
-                '<script>$(function() { $( ".' . $class . '" ).css("margin-top", "1em").insertAfter( "#' . $inputID . '" ); });</script>';
-        }
-
-        return $data;
     }
 }
 
