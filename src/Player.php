@@ -340,8 +340,12 @@ class Player extends PlayerBase implements \Textpattern\Container\ReusableInterf
 
         $player = \Txp::get(self::getProviders()[$provider] . '\\' . $provider)
             ->setMedia($play, true)
-            ->setDims($width, $height, $ratio, $responsive)
-            ->setParams($params);
+            ->setDims(
+                $width,
+                isset($height) ? $height : null,
+                isset($ratio) ? $ratio : null,
+                $responsive
+            )->setParams($params);
 
         $label ? $player->setLabel($label, $labeltag) : '';
         $wraptag ? $player->setWrap($wraptag, $class) : '';
