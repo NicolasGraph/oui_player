@@ -334,9 +334,9 @@ class Admin extends Base
         if ($valid) {
             $validIsArray = is_array($valid);
 
-            if ($validIsArray && empty(array_diff($valid, array('0', '1')))) {
+            if ($validIsArray && !array_diff($valid, array('0', '1'))) {
                 $widget = 'yesnoradio';
-            } elseif ($validIsArray && empty(array_diff($valid, array('true', 'false')))) {
+            } elseif ($validIsArray && !array_diff($valid, array('true', 'false'))) {
                 $widget = 'Oui\Player\Admin::truefalseradio';
             } else {
                 $widget = 'Oui\Player\Admin::prefFunction';
