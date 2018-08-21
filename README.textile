@@ -59,14 +59,14 @@ After "installing Composer":https://getcomposer.org/doc/00-intro.md…
 @$ composer require textpattern/lock:4.6.2@, where @4.6.2@ is the Txp version in use.
 # Install oui_player:
 @$ composer require nicolasgraph/oui_player@
-# Connect to the Txp admin interface and click _Options_ or visit your "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to fill the plugin prefs.
+# Connect to the Txp admin interface and click _Options_ or visit your _Admin > Preferences_ tab to fill the plugin prefs.
 
 h3. Update
 
 h4. From the admin interface
 
 Follow the install instructions.
-If you are updating from v1.*, be sure to install all wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
+If you are updating from v1.*, be sure to install all wanted extensions before to visit the _Admin > Preferences_ tab to keep your preference values untouched.
 
 h4. Via Composer (not available yet)
 
