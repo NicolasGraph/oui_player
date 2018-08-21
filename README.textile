@@ -13,6 +13,7 @@ As known at the last plugin release…
 * "Abc News":http://abcnews.go.com/video: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
 * "Archive":https://archive.org/: "oui_archive":https://github.com/NicolasGraph/oui_archive;
 * "Bandcamp":https://bandcamp.com/: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
+* "Coub":https://coub.com/: "oui_coub":https://github.com/NicolasGraph/oui_coub;
 * "Dailymotion":http://www.dailymotion.com/: "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion;
 * "Giphy":https://giphy.com/: "oui_giphy":https://github.com/NicolasGraph/oui_giphy;
 * "HTML5 audio":https://developer.mozilla.org/docs/Web/HTML/Element/audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
@@ -20,10 +21,11 @@ As known at the last plugin release…
 * "Mixcloud":https://www.mixcloud.com/: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
 * "Myspace videos":https://myspace.com/myspace/videos: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
 * "Soundcloud":https://soundcloud.com/: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
+* "Spotify":https://www.spotify.com/: "oui_spotify":https://github.com/NicolasGraph/oui_spotify;
+* "Ted":https://www.ted.com/: "oui_ted":https://github.com/NicolasGraph/oui_ted;
 * "Twitch":https://www.twitch.tv/: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
 * "Viddsee":https://www.viddsee.com/: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
 * "Vimeo":http://www.vimeo.com/: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
-* "Vine":http://vine.co/: "oui_vine":https://github.com/NicolasGraph/oui_vine;
 * "Youtube":https://www.youtube.com/: "oui_youtube":https://github.com/NicolasGraph/oui_youtube.
 
 h3. Plugin requirements
