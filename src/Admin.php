@@ -99,7 +99,7 @@ class Admin extends Base
     public static function setProviders()
     {
         foreach(get_declared_classes() as $className) {
-            if (is_subclass_of($className, 'Oui\Player\Provider') && $className !== 'Oui\Player\Oembed') {
+            if (is_subclass_of($className, 'Oui\Player\Embed') && $className !== 'Oui\Player\OEmbed') {
                 list($author, $provider) = explode('\\', $className);
 
                 if (array_key_exists($provider, static::$providers)) {
