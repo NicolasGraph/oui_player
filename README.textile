@@ -66,7 +66,9 @@ h3. Update
 h4. From the admin interface
 
 Follow the install instructions.
-If you are updating from v1.*, be sure to install all wanted extensions before to visit the _Admin > Preferences_ tab to keep your preference values untouched.
+
+If you are updating from v1.*, you can install all the wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
+However, if you proceed like so, note that new preferences may be not displayed in a logical order.
 
 h4. Via Composer (not available yet)
 
@@ -221,35 +223,18 @@ h3. License
 
 This plugin is distributed under "GPL v2.0":https://www.gnu.org/licenses/gpl-2.0.txt.
 
-oui_player version 2.0.0-BETA3, Copyright (C) 2018 Nicolas Morand
+oui_player version 2.0.0, Copyright (C) 2018 Nicolas Morand
 This Textpattern plugin comes with ABSOLUTELY "NO WARRANTY":https://www.gnu.org/licenses/gpl-2.0.html#section11.
 This is free software, and you are welcome to redistribute it "under certain conditions":https://www.gnu.org/licenses/gpl-2.0.html#SEC3.
 
 h3. Changelog
 
-* *v2.0.0-BETA3* (2018-08-15)
-** Added: admin side player preview;
+* *v2.0.0* (2018-08-22)
 ** Changed: excerpt field no longer supported;
 ** Added: responsive embedding;
 *** changed: providers related preferences displayed by default;
 ** changed: code rework:
-*** providers now work as pluggable extensions:
-**** Extension base (required): "oui_provider":https://github.com/NicolasGraph/oui_provider; any plugin extending the @\Oui\Provider@ class in an author prefix related namespace will be plugged into _oui_player_;
-**** ABC News: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
-**** Archive: "oui_archive":https://github.com/NicolasGraph/oui_archive;
-**** Bandcamp: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
-**** Dailymotion: "oui_bandcamp":https://github.com/NicolasGraph/oui_dailymotion;
-**** Giphy: "oui_giphy":https://github.com/NicolasGraph/oui_giphy (new);
-**** Mixcloud: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
-**** MySpace: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
-**** HTML5 audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
-**** HTML5 video: "oui_video":https://github.com/NicolasGraph/oui_video;
-**** Soundcloud: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
-**** Twitch: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
-**** Viddsee: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
-**** Vimeo: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
-**** Vine: "oui_vine":https://github.com/NicolasGraph/oui_vine;
-**** Youtube: "oui_youtube":https://github.com/NicolasGraph/oui_youtube;
+*** providers now work as pluggable extensions;
 *** author prefix related namespace;
 *** new class names (@Admin@ => @PlayerAdmin@, @Main@ => @Player@, @Player@ => @PlayerBase@);
 *** tags now registered with related callback methods from the @Player@ class;
