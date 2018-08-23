@@ -314,9 +314,9 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
         $player = \Txp::get(self::getProviders()[$provider] . '\\' . $provider)
             ->setMedia($play, true)
             ->setDims(
-                $width,
-                isset($height) ? $height : null,
-                isset($ratio) ? $ratio : null,
+                isset($atts['width']) ? $atts['width'] : null,
+                isset($atts['height']) ? $atts['height'] : null,
+                isset($atts['ratio']) ? $atts['ratio'] : null,
                 $responsive
             )->setParams($atts);
 
