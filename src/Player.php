@@ -301,33 +301,6 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
     {
         $lAtts = lAtts(self::getTagAtts('oui_player'), $atts);
 
-        $notParams = array_merge(
-            self::getIniTagAtts(),
-            array('width', 'height', 'ratio', 'responsive')
-        );
-
-        $params = array();
-
-        // Parse attribute values.
-        foreach ($lAtts as $lAtt => $value) {
-            switch ($value) {
-                case '':
-                    $lAtts[$lAtt] = null;
-                    break;
-                case 'true':
-                    $lAtts[$lAtt] = true;
-                    break;
-                case 'false':
-                    $lAtts[$lAtt] = false;
-                    break;
-            }
-
-            // Store player parameters related values.
-            if (!in_array($lAtt, $notParams) && $lAtts[$lAtt] !== null) {
-                $params[$lAtt] = $lAtts[$lAtt];
-            }
-        }
-
         extract($lAtts);
 
         $playProvider = $this->parsePlayProvider($play, $provider, true, true);
@@ -345,7 +318,7 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
                 isset($height) ? $height : null,
                 isset($ratio) ? $ratio : null,
                 $responsive
-            )->setParams($params);
+            )->setParams($atts);
 
         $label ? $player->setLabel($label, $labeltag) : '';
         $wraptag ? $player->setWrap($wraptag, $class) : '';
