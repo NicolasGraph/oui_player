@@ -1,0 +1,9 @@
+#@language fr-fr
+#@admin
+oui_player_provider_abcnews => ABC News
+oui_player_abcnews => Lecteur ABC News
+oui_player_abcnews_prefs => Afficher les préférences du lecteur ABC News
+oui_player_abcnews_width => Largeur du lecteur
+oui_player_abcnews_height => Hauteur du lecteur
+oui_player_abcnews_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_abcnews_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies

@@ -1,0 +1,12 @@
+#@language fr-fr
+#@admin
+oui_player_provider_archive => Archive
+oui_player_archive => Lecteur Archive
+oui_player_archive_prefs => Afficher les préférences du lecteur Archive
+oui_player_archive_width => Largeur du lecteur
+oui_player_archive_height => Hauteur du lecteur
+oui_player_archive_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_archive_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_archive_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_archive_playlist => <code>playlist</code> — Afficher la liste des titres pour une playlist
+oui_player_archive_poster => <code>poster</code> — URL d'une image à affichée comme image de début

@@ -1,0 +1,89 @@
+h2. Credits
+
+h3. Author
+
+"Nicolas Morand":https://twitter.com/NicolasGraph
+_Thank you to the Textpattern community and the core team._
+
+h3. License
+
+This plugin is distributed under "GPL v2.0":https://www.gnu.org/licenses/gpl-2.0.txt.
+
+oui_player version 2.0.0-BETA4, Copyright (C) 2018 Nicolas Morand
+This Textpattern plugin comes with ABSOLUTELY "NO WARRANTY":https://www.gnu.org/licenses/gpl-2.0.html#section11.
+This is free software, and you are welcome to redistribute it "under certain conditions":https://www.gnu.org/licenses/gpl-2.0.html#SEC3.
+
+h3. Changelog
+
+* *v2.0.0-BETA4* (2018-08-31)
+** Changed: code rework;
+** removed: @oui_player_provider@ preference, the default provider will be the first defined through @oui_player_providers@;
+** changed: @oui_player_providers@ now visible and editable to sort providers in use;
+** changed: excerpt field no longer supported;
+** changed: player paramater names added to the related preference names;
+** fixed: textpacks french strings;
+** added: support for:
+*** "Coub":https://coub.com/;
+*** "Giphy":https://giphy.com/;
+*** "Spotify":https://www.spotify.com/;
+*** "Ted":https://www.ted.com/.
+** added: basic oEmbed support (get the player size when not provided) for:
+*** "Coub":https://coub.com/;
+*** "Dailymotion":https://www.dailymotion.com/;
+*** "Giphy":https://giphy.com/;
+*** "Mixcloud":https://www.mixcloud.com/;
+*** "Soundcloud":https://soundcloud.com/;
+*** "Spotify":https://www.spotify.com/;
+*** "Ted":https://www.ted.com/;
+*** "Twitch":https://www.twitch.tv/;
+*** "VideoPress":https://videopress.com/;
+*** "Vimeo":https://vimeo.com/;
+*** "YouTube":https://www.youtube.com/
+** added: provider related tags (i.e. @<txp:oui_youtube /> // === <txp:oui_player provider="Youtube" />@);
+** added: Vimeo player parameters @dnt@, @muted, @playsinline, @transparent@;
+** added: Commented Vimeo player parameters @background@, @fun@, @quality@, @speed@ for _Plus_ accounts or higher;
+** added: responsive rendering;
+** added: HTML5 valid rendering;
+** added: basic @<iframe>@ title support for better accessibility;
+** added: @pluggable_ui@ event (@oui_player_ui@) and steps (provider names);
+** changed: providers related preferences displayed by default;
+** added: player preview extension for the plugin related article field.
+** removed: _Composer_ support (temporarily?);
+* *v1.3.1* (2017-07-13)
+* *v1.3.0* (2017-05-24)
+** Adds "Composer":https://getcomposer.org/ support for "textpattern/installer":https://packagist.org/packages/textpattern/installer;
+** fixes multiple players prefs display and improves perfs;
+** improves scripts embedding;
+** added: Youtube player parameters @enablejsapi@ and @origin@;
+** added: Dailymotion player parameters @api@ and @origin@;
+** added: Vimeo player parameter @api@ and removes @badge@;
+** added: support for:
+*** "Bandcamp":https://bandcamp.com/;
+*** HTML5 "audio":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Audio + "video":https://developer.mozilla.org/fr/docs/Web/HTML/Element/Video;
+* *v1.2.1* (2017-01-16)
+** Fixed: Fixes the _Field used by default_ pref display when no custom field exists;
+** fixed: fixes Textpack typo;
+** changed: compiled code lightened by removing duplicated license related comments;
+* *v1.2.0* (2016-12-12)
+** added: sets the custom field plugin pref as the defaut value of the conditional tag @play@ attribute;
+** added: introduces a @play@ attribute value inheritance in a conditional/container tag context;
+** added: support for:
+*** "Twitch channels":https://www.twitch.tv/,
+*** "Vine":https://vine.co/;
+** changed: improves PHP classes and methods use (see _For developers_).
+* *oui_player v1.1.0* (2016-10-14)
+** changed: plugin/tag names;
+** removed: Txp 4.5 support;
+** changed: consistency between attribute and player parameter names increased;
+** changed: code rework to be easily extendable;
+** added: support for:
+*** "Abc News":http://abcnews.go.com/video,
+*** "Archive":https://archive.org/,
+*** "Mixcloud":https://www.mixcloud.com/,
+*** "Myspace videos":https://myspace.com/myspace/videos,
+*** "Soundcloud":https://soundcloud.com/,
+*** "Twitch":https://www.twitch.tv/,
+*** "Viddsee":https://www.viddsee.com/;
+** (changed) Help file styling improvements.
+* *oui_video v0.1.0* (2016-09-13)
+* *oui_dailymotion v1.3.1* (2016-02-25) inspired by "arc_youtube":http://andy-carter.com/txp/arc_youtube and "arc_vimeo":http://andy-carter.com/txp/arc_vimeo by "Andy Carter":http://andy-carter.com.

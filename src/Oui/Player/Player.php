@@ -31,10 +31,17 @@
   * @package Oui\Player
   */
 
-namespace Oui\Player;
-
-class Player extends Base implements \Textpattern\Container\ReusableInterface
+class Player extends Admin implements \Textpattern\Container\ReusableInterface
 {
+    /**
+     * Master plugin name.
+     *
+     * @var string
+     * @see getPlugin().
+     */
+
+    protected static $plugin = 'oui_player';
+
     /**
      * Initial plugin tags and attributes.
      *
@@ -94,28 +101,63 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
     protected static $cache = array();
 
     /**
+     * Installed providers as an array of provider names
+     * associated with their extensions related plugin author prefixes.
+     *
+     * @var array
+     * @see setProviders(), getProviders().
+     */
+
+    protected static $providers = array();
+
+    /**
+     * class related preferences event.
+     *
+     * @var string
+     * @see setPrefsEvent(), getPrefsEvent().
+     */
+
+    protected static $prefsEvent;
+
+    /**
+     * Associative array of preference ID's — names without event prefix — and their current values.
+     *
+     * @var array.
+     * @see setPrefs(), getPrefs().
+     */
+
+    protected static $prefs;
+
+    /**
      * Constructor
      * - Register all tags.
      */
 
     public function __construct() {
         parent::__construct();
+        try {
+            self::setProviders();
 
-        // Register initial tags.
-        foreach (self::getIniTagAtts() as $tag => $atts) {
-            $tagMethod = str_replace(array('oui', '_'), array('render', ''), $tag);
-            $tagMethods[$tag] = $tagMethod;
+            if (txpinterface === 'public') {
+                // Register initial tags.
+                foreach (self::getIniTagAtts() as $tag => $atts) {
+                    $tagMethod = str_replace(array('oui', '_'), array('render', ''), $tag);
+                    $tagMethods[$tag] = $tagMethod;
 
-            \Txp::get('\Textpattern\Tag\Registry')->register(array($this, $tagMethod), $tag);
-        }
+                    \Txp::get('\Textpattern\Tag\Registry')->register(array($this, $tagMethod), $tag);
+                }
 
-        // Register providers/extensions related tags.
-        foreach (self::getProviders() as $provider => $author) {
-            $lcProvider = strtolower($provider);
+                // Register providers/extensions related tags.
+                foreach (self::getProviders() as $provider) {
+                    $lcProvider = strtolower($provider);
 
-            foreach ($tagMethods as $tag => $method) {
-                \Txp::get('\Textpattern\Tag\Registry')->register($author . '\\' . $lcProvider . '::' . $method, str_replace('player', $lcProvider, $tag));
+                    foreach ($tagMethods as $tag => $method) {
+                        \Txp::get('\Textpattern\Tag\Registry')->register(__NAMESPACE__ . '\\' . $lcProvider . '::' . $method, str_replace('player', $lcProvider, $tag));
+                    }
+                }
             }
+        } catch (\Exception $e) {
+            trigger_error($e->getMessage());
         }
     }
 
@@ -126,7 +168,7 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
      * @return array
      */
 
-    protected static function getIniTagAtts($tag = null)
+    public static function getIniTagAtts($tag = null)
     {
         return $tag ? static::$iniTagAtts[$tag] : static::$iniTagAtts;
     }
@@ -137,10 +179,26 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
 
     protected static function setProviders()
     {
-        foreach (explode('&', get_pref(self::getPlugin() . '_providers')) as $providerAuthor) {
-            list($provider, $author) = explode('=', $providerAuthor);
-            static::$providers[$provider] = $author;
+        $providers = do_list_unique(self::getPref('providers'));
+
+        foreach ($providers as $provider) {
+            if (!class_exists(__NAMESPACE__ . '\\' . ucfirst($provider))) {
+                throw new \Exception('Unknown provider: ' . $provider);
+            }
+
+            static::$providers[] = $provider;
         }
+    }
+
+    /**
+     * $providers getter.
+     *
+     * @return array
+     */
+
+    protected static function getProviders()
+    {
+        return static::$providers;
     }
 
     /**
@@ -209,8 +267,8 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
         $providers = self::getProviders();
         $media = $this->getMedia();
 
-        foreach ($providers as $provider => $author) {
-            $this->mediaInfos = \Txp::get($author . '\\' . $provider)
+        foreach ($providers as $provider) {
+            $this->mediaInfos = \Txp::get(__NAMESPACE__ . '\\' . $provider)
                 ->setMedia($media)
                 ->getMediaInfos();
 
@@ -228,7 +286,7 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
                 )
             );
 
-            $this->mediaProvider = get_pref(self::getPlugin() . '_provider');
+            $this->mediaProvider = explode(', ', self::getPref('providers'))[0];
         }
 
         return $this->mediaInfos;
@@ -280,8 +338,8 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
 
         if ($tag === self::getPlugin()) {
             // Collects provider attributes.
-            foreach (self::getProviders() as $provider => $author) {
-                $class = $author . '\\' . $provider;
+            foreach (self::getProviders() as $provider) {
+                $class = __NAMESPACE__ . '\\' . $provider;
                 $allAtts = array_merge($allAtts, $class::getTagAtts($tag));
             }
         }
@@ -299,31 +357,31 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
 
     public function renderPlayer($atts)
     {
-        $lAtts = lAtts(self::getTagAtts('oui_player'), $atts);
+        try {
+            $lAtts = lAtts(self::getTagAtts('oui_player'), $atts);
 
-        extract($lAtts);
+            extract($lAtts);
 
-        $playProvider = $this->parsePlayProvider($play, $provider, true, true);
+            $playProvider = $this->parsePlayProvider($play, $provider, true, true);
 
-        if (!$playProvider) {
-            return;
+            extract($playProvider);
+
+            $player = \Txp::get(__NAMESPACE__ . '\\' . $provider)
+                ->setMedia($play, true)
+                ->setDims(
+                    isset($atts['width']) ? $atts['width'] : null,
+                    isset($atts['height']) ? $atts['height'] : null,
+                    isset($atts['ratio']) ? $atts['ratio'] : null,
+                    $responsive
+                )->setParams($atts);
+
+                $label ? $player->setLabel($label, $labeltag) : '';
+                $wraptag ? $player->setWrap($wraptag, $class) : '';
+
+                return $player->render();
+        } catch (\Exception $e) {
+            trigger_error($e->getMessage());
         }
-
-        extract($playProvider);
-
-        $player = \Txp::get(self::getProviders()[$provider] . '\\' . $provider)
-            ->setMedia($play, true)
-            ->setDims(
-                isset($atts['width']) ? $atts['width'] : null,
-                isset($atts['height']) ? $atts['height'] : null,
-                isset($atts['ratio']) ? $atts['ratio'] : null,
-                $responsive
-            )->setParams($atts);
-
-        $label ? $player->setLabel($label, $labeltag) : '';
-        $wraptag ? $player->setWrap($wraptag, $class) : '';
-
-        return $player->render();
     }
 
     /**
@@ -340,25 +398,27 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
 
     public function renderIfPlayer($atts, $thing)
     {
-        $lAtts = lAtts(self::getTagAtts('oui_if_player'), $atts);
+        try {
+            $lAtts = lAtts(self::getTagAtts('oui_if_player'), $atts);
 
-        extract($lAtts);
+            extract($lAtts);
 
-        $playProvider = $this->parsePlayProvider($play, $provider);
+            $playProvider = $this->parsePlayProvider($play, $provider);
 
-        if ($playProvider) {
             extract($playProvider);
 
-            $isValid = \Txp::get(self::getProviders()[$provider] . '\\' . $provider)->setMedia($play)->getMediaInfos();
+            $isValid = \Txp::get(__NAMESPACE__ . '\\' . $provider)->setMedia($play)->getMediaInfos();
 
-            if ($isValid) { // Set the cache.
-                self::setCache(implode(', ', array_keys($isValid)), $provider);
+            if ($isValid) {
+                self::setCache(implode(', ', array_keys($isValid)), $provider); // Set the cache.
                 $out = parse($thing, true); // Set the output.
                 self::setCache(); // Reset the cache.
             }
-        }
 
-        return isset($out) ? $out : parse($thing, false);
+            return isset($out) ? $out : parse($thing, false);
+        } catch (\Exception $e) {
+            trigger_error($e->getMessage());
+        }
     }
 
     /**
@@ -380,7 +440,7 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
 
         if (!$play) { // Set the potentially missing media URL/ID.
             $cache = $cache ? self::getCache() : '';
-            $field = strtolower(self::getMediaField());
+            $field = strtolower(self::getPref('custom_field'));
 
             if ($cache) { // Play the cache related media.
                 $play = $cache['media'];
@@ -388,21 +448,40 @@ class Player extends Base implements \Textpattern\Container\ReusableInterface
             } elseif (isset($thisarticle[$field])) { // Play the field related media.
                 $play = $thisarticle[$field];
             } else {
-                trigger_error('play attribute or related field required');
+                throw new \Exception('play attribute or related field required');
             }
         }
 
-        if ($play) {
-            // Explode the play attribute value if it is a comma separated list of values.
-            explode(', ', $play, -1) ? $play = explode(', ', $play) : '';
+        // Explode the play attribute value if it is a comma separated list of values.
+        explode(', ', $play, -1) ? $play = explode(', ', $play) : '';
 
-            // Find the potentially missing provider name.
-            $provider = $provider ? ucfirst($provider) : $this->setMedia($play)->getMediaProvider($fallback);
-            $play = compact('play', 'provider');
+        // Find the potentially missing provider name.
+        $provider = $provider ? ucfirst($provider) : $this->setMedia($play)->getMediaProvider($fallback);
+
+        if (!class_exists(__NAMESPACE__ . '\\' . $provider)) {
+            throw new \Exception('Unknown provider: ' . $provider);
         }
 
-        return $play;
+        return compact('play', 'provider');
+    }
+
+    /**
+     * Collect provider prefs.
+     *
+     * @param  array $prefs Prefs collected provider after provider.
+     * @return array Collected prefs merged with ones already provided.
+     */
+
+    final public static function getIniPrefs()
+    {
+        return array(
+           'custom_field' => array(
+               'widget'  => 'Oui\Player\Admin::getFieldsWidget',
+               'default' => 'article_image',
+           ),
+           'providers' => '',
+       );
     }
 }
 
-txpinterface === 'public' ? \Txp::get('\Oui\Player\Player') : '';
+\Txp::get('\Oui\Player\Player');

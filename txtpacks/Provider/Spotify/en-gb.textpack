@@ -1,0 +1,9 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_spotify => Spotify
+oui_player_spotify => Spotify player
+oui_player_spotify_prefs => Display the Spotify player preferences
+oui_player_spotify_width => Player width
+oui_player_spotify_height => Player height
+oui_player_spotify_ratio => Player ratio by default
+oui_player_spotify_responsive => Render responsive players from the provided dimensions

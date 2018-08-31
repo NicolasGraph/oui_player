@@ -1,0 +1,34 @@
+h2. Giphy player
+
+h3. Recognised values for the @play@ attribute
+
+* *ID*;
+* http(s)://giphy.com/embed/[*ID*]
+* http(s)://giphy.com/gifs/…-[*ID*].
+
+When using the @oui_player@ tag (vs @oui_giphy@), the right provider needs to be set if the @play@ value or its field related one is an ID. It is optional, but can fasten the rendering, if the value is an URL.
+
+h3. Player customization
+
+h4. Size
+
+If the plugin is not able to get a width and height from two of the @width@, @height@ and @ratio@ values, it will try to get the media dimensions defined by the provider through its oEmbed API.
+The use of oEmbed API's slow down players rendering, it is strongly recommended to cache the result when using it.
+
+- @width@ :=
+Integer; initially set to @480@.
+The width of the player in pixels. =:
+- @height@ :=
+Integer; initially set to @480@.
+The height of the player in pixels. =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set.
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+There is no player parameter available for this provider.

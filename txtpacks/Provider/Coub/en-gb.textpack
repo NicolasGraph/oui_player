@@ -1,0 +1,12 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_coub => Coub
+oui_player_coub => Coub player
+oui_player_coub_prefs => Display the Coub player preferences
+oui_player_coub_width => Player width
+oui_player_coub_height => Player height
+oui_player_coub_ratio => Player ratio by default
+oui_player_coub_responsive => Render responsive players from the provided dimensions
+oui_player_coub_autostart => Automatic playing
+oui_player_coub_muted => <code>muted</code> — Muted by default
+oui_player_coub_startWithHD => <code>startWithHD</code> — Start playing in high definition

@@ -1,0 +1,73 @@
+h2. Tags
+
+h3. oui_player / oui_provider
+
+Embeds a player.
+
+bc(language-markup). <txp:oui_player />
+
+or, using a provider related name:
+
+bc(language-markup). <txp:oui_youtube /> // each included provider has its own tag.
+
+@<txp:oui_youtube />@ is strictly equivalent to @<txp:oui_player provider="youtube" />@, so you shouldn't use the provider attribute with it.
+It is recommended, when possible, to define the provider name to fasten the player rendering, mostly when you need to support many providers.
+
+h4. Presentational attributes
+
+- @label@ :=
+String; empty by default.
+Label for the video. =:
+- @labeltag@ :=
+HTML container tag name; empty by default.
+HTML wraptag for the label, without brackets. =:
+- @wraptag@ :=
+HTML container tag name; empty by default.
+HTML tag to be used as the content wraptag, without brackets. =:
+- @class@ :=
+String; empty by default.
+CSS class for HTML content wraptag. =:
+- @responsive@ :=
+@true@ or @false@, related preference value used by default.
+Adapts the final player size from provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Main tag attributes
+
+Most of the following attributes can be set via the _Preferences_ tab; +always prefer plugin "global" prefs to tag related attributes!+
+
+- @play@ :=
+Valid values differs from one provider to another, check each extension.
+The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values).
+*default:* %(information)changed v1.2.0% the @play@ attribute value of an eventual @<txp:oui_if_play></txp:oui_if_play>@ container tag, or the custom field value of the one selected in the plugin prefs. =:
+- @provider@ :=
+Extension related provider name; uses the related preference value by default.
+The provider to use; *required if* the @play@ attribute is an id, *recommended anyways* if known as it increases the plugin performances by skipping the provider guess. =:
+
+h4. Providers related tag attributes
+
+See each provider related extension.
+
+h3. oui_if_player
+
+Checks the @play@ attribute value againsts defined URL schemes.
+
+bc(language-markup). <txp:oui_if_player>
+[…]
+</txp:oui_if_player>
+
+or, using a provider related name:
+
+bc(language-markup). <txp:oui_if_youtube /> // each included provider has its own tag.
+
+@<txp:oui_if_youtube … />@ is strictly equivalent to @<txp:oui_if_player provider="youtube" … />@, so you shouldn't use the provider attribute with it.
+It is recommended, when possible, to define the provider name to fasten the player rendering, mostly when you need to support many providers.
+
+h4. Attributes
+
+- @play@ :=
+The custom field value of the one selected in the plugin prefs by default.
+The item to play; *required if* it does not use the value of the custom field selected in the plugin prefs (See each provider to know the valid values). =:
+- @provider@ :=
+Extension related provider name; empty by default.
+Check the URL against valid URL schemes of the defined provider. =:

@@ -5,3 +5,5 @@ oui_player_provider => Favourite provider
 oui_player_custom_field => Field used by default
 oui_player_microdata => Add microdata
 oui_player_duplicate_provider_extensions => Duplicate provider extensions found for {provider}. Please disable or delete duplicates.
+#@public
+oui_player_iframe_title => {provider} media player

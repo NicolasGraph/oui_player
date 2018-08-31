@@ -1,0 +1,60 @@
+h2. Mixcloud player
+
+h3. Recognised values for the @play@ attribute
+
+* http(s)://(www.)mixcloud.com/….
+
+h3. Player customization
+
+h4. Size
+
+If the plugin is not able to get a width and height from two of the @width@, @height@ and @ratio@ values, it will try to get the media dimensions defined by the provider through its oEmbed API.
+The use of oEmbed API's slow down players rendering, it is strongly recommended to cache the result when using it.
+
+- @width@ :=
+Integer; initially set to @100%@;
+The width of the player in pixels (OK, pourcentage works also…). =:
+- @height@ :=
+Integer; initially set to @400@ (alt native heights are @120@ and @60@);
+The height of the player in pixels. =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set.
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+From Txp 4.7, paramaters accepting @0@ and @1@ as valid values can be enable through boolean/valueless attributes.
+
+- @autoplay@ :=
+@0@ or @1@; initially set to @0@.
+Whether to play after loading or not. =:
+- @light@ :=
+@0@ or @1@; initially set to @0@.
+Enables the light theme. =:
+- @hide_artwork@ :=
+@0@ or @1@; initially set to @0@.
+Hides the background image. =:
+- @hide_cover@ :=
+@0@ or @1@; initially set to @0@.
+Hides the cover.  =:
+- @mini@ :=
+@0@ or @1@; initially set to @0@.
+Uses the _mini_ player config. =:
+
+h4. Sets
+
+The sets of values below allow to render different player types.
+
+* Picture:
+** initial values;
+* Classic:
+** @hide_cover="1"@;
+** @height="120"@.
+* Mini:
+** @hide_cover="1"@;
+** @height="60"@;
+** @mini="1"@.

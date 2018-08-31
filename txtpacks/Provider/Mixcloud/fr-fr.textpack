@@ -1,0 +1,14 @@
+#@language fr-fr
+#@admin
+oui_player_provider_mixcloud => Mixcloud
+oui_player_mixcloud => Lecteur Mixcloud
+oui_player_mixcloud_prefs => Afficher les préférences du lecteur Mixcloud
+oui_player_mixcloud_width => Largeur du lecteur
+oui_player_mixcloud_height => Hauteur du lecteur
+oui_player_mixcloud_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_mixcloud_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_mixcloud_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_mixcloud_light => <code>light</code> — Activer le thème clair
+oui_player_mixcloud_hide_artwork => <code>artwork</code> — Cacher le visuel d'arrière-plan
+oui_player_mixcloud_hide_cover => <code>hide_cover</code> — Cacher le visuel
+oui_player_mixcloud_mini => <code>mini</code> — Utiliser la configuration <em>mini</em>

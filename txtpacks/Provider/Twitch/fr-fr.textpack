@@ -1,0 +1,12 @@
+#@language fr-fr
+#@admin
+oui_player_provider_twitch => Twitch
+oui_player_twitch => Lecteur Twitch
+oui_player_twitch_prefs => Afficher les préférences du lecteur Twitch
+oui_player_twitch_width => Largeur du lecteur
+oui_player_twitch_height => Hauteur du lecteur
+oui_player_twitch_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_twitch_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_twitch_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_twitch_muted => <code>muted</code> — Désactiver le son par défaut
+oui_player_twitch_time => <code>time</code> — Démarrer la video à:

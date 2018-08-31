@@ -6,3 +6,5 @@ oui_player_custom_field => Champ utilisé par défaut
 oui_player_responsive => Rendre les lecteurs adaptatifs
 oui_player_microdata => Ajouter les microdonnées
 oui_player_duplicate_provider_extensions => Extensions de fournisseur en double trouvées pour {provider}. Veuillez désactiver ou supprimer les doublons.
+#@public
+oui_player_iframe_title => Lecteur média {provider}

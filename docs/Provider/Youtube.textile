@@ -1,0 +1,103 @@
+h2. YouTube player
+
+h3. Valid values for the play attribute
+
+* *ID*;
+* list=[*list_ID*];
+* http(s)://(www.)youtu.be/[*ID*];
+* http(s)://(www.)youtube.com/v/[*ID*](&list=[*list_ID*]);
+* http(s)://(www.)youtube.com/watch?v=[*ID*];
+* http(s)://(www.)youtube.com/embed/[*ID*].
+
+When using the @oui_player@ tag (vs @oui_youtube@), the right provider needs to be set if the @play@ value or its field related one is an ID. It is optional, but can fasten the rendering, if the value is an URL.
+
+h3. Player customization
+
+h4. Size
+
+If the plugin is not able to get a width and height from two of the @width@, @height@ and @ratio@ values, it will try to get the media dimensions defined by the provider through its oEmbed API.
+The use of oEmbed API's slow down players rendering, it is strongly recommended to cache the result when using it.
+
+- @width@ :=
+Integer; initially set to @560@.
+The width of the player in pixels. =:
+- @height@ :=
+Integer; initially set to @315@.
+The height of the player in pixels. =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set.
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+From Txp 4.7, paramaters accepting @0@ and @1@ as valid values can be enable through boolean/valueless attributes.
+
+- @autohide@ :=
+@0@, @1@ or @2@; initially set to @2@.
+Indicates whether the video controls will automatically hide after a video begins playing.
+This parameter has been deprecated for HTML5 players, which display or hide the video progress bar and player controls automatically (autohide=1). =:
+- @autoplay@ :=
+@0@ or @1@; initially set to @0@.
+Specifies whether the initial video will automatically start to play when the player loads. =:
+- @cc_load_policy@ :=
+@0@ or @1@; initially set to @0@.
+1 causes closed captions to be shown by default, even if the user has turned captions off. =:
+- @color@ :=
+@red@ or @white@; initially set to @red@.
+Specifies the color used in the player's progress bar. =:
+- @controls@ :=
+@0@, @1@ or @2@; initially set to @1@.
+Indicates whether the video player controls are displayed. =:
+- @disablekb@ :=
+@0@ or @1@; initially set to @0@;
+Disables keyboard commands. =:
+- @enablejsapi@ :=
+@0@ or @1@; initially set to @0@;
+Enables or disables "the javascript player api":https://developers.google.com/youtube/js_api_reference. =:
+- @end@ :=
+Integer; initially not set.
+Specifies the time, measured in seconds, when the player should stop playing the video. =:
+- @fs@ :=
+@0@ or @1@; initially set to @1@.
+Setting this parameter to 0 prevents the fullscreen button from displaying in the player. =:
+- @hl@ :=
+ISO 639-1 two-letter language code or a fully specified locale; initially not set.
+Sets the player's interface language. =:
+- @iv_load_policy@ :=
+@1@ or @3@; initially set to @1@.
+Setting the parameter's value to 1 causes video annotations to be shown by default. =:
+- @loop@ :=
+@0@ or @1@; initially set to @0@.
+Causes the player to play the video again and again. =:
+- @modestbranding@ :=
+@0@ or @1@; initially set to @0@.
+Lets you use a YouTube player that does not show a YouTube logo. =:
+- @origin@ :=
+URL; initially not set.
+URL scheme (@http://@ or @https://@) and full domain of your host page.
+Required for @https://@ URL's; including it protects against malicious third-party JavaScript being injected into your page and hijacking control of your YouTube player. =:
+- @playlist@ :=
+Comma separeted list of video id's; initially not set.
+A list of video id's to read after the one provided via the @video@ attribute. =:
+- @playsinline@ :=
+Initially not set.
+Controls whether videos play inline or fullscreen in an HTML5 player on iOS. =:
+- @rel@ :=
+@0@ or @1@; initially set to @1@.
+Indicates whether the player should show related videos when playback of the initial video ends. =:
+- @showinfo@ :=
+@0@ or @1@; initially set to @1@.
+Whether to display the video informations or not. =:
+- @start@ :=
+Integer; initially not set.
+Specifies the time (in seconds) when the video should start playing. =:
+- @theme@ :=
+@dark@ or @light@; initially set to @dark@;
+Indicates whether the embedded player will display player controls (like a play button or volume control) within a dark or light control bar.
+This parameter has been deprecated for HTML5 players. =:
+
+p(alert-block information). %(ui-icon ui-icon-info).% Some prefs/attributes may be deprecated for HTML5 players or overriden by the provider depending on several conditions. More informations on "this Youtube webpage":https://developers.google.com/youtube/player_parameters.

@@ -1,0 +1,83 @@
+h2. Dailymotion player
+
+h3. Recognised values for the @play@ attribute
+
+* *ID*;
+* http(s)://dai.ly/[*ID*];
+* http(s)://www.dailymotion.com/video/[*ID*]…;
+* http(s)://www.dailymotion.com/embed/video/[*ID*].
+
+When using the @<txp:oui_player />@ tag (vs @<oui_dailymotion />@), the right provider needs to be set if the @play@ value or its field related one is an ID. It is optional, but can fasten the rendering, if the value is an URL.
+
+h3. Player customization
+
+h4. Size
+
+If the plugin is not able to get a width and height from two of the @width@, @height@ and @ratio@ values, it will try to get the media dimensions defined by the provider through its oEmbed API.
+The use of oEmbed API's slow down players rendering, it is strongly recommended to cache the result when using it.
+
+- @width@ :=
+Integer; initially set to @480@;
+The width of the player in pixels. =:
+- @height@ :=
+Integer; initially set to @270@;
+The height of the player in pixels. =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set;
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+From Txp 4.7, paramaters accepting @true@ and @false@ as valid values can be enable through boolean/valueless attributes.
+
+- @api@ :=
+@false@, @postMessage@, @location@ or @1@; initially set to @false@.
+Enables or disables "the javascript player api":https://developer.dailymotion.com/player#player-api. =:
+- @autoplay@ :=
+@true@ or @false@; initially set to @false@.
+Starts the playback of the video automatically after the player load.
+This parameter may not work on some mobile OS. =:
+- @controls@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the player controls or not. =:
+- @endscreen_enable@ :=
+@true@ or @false@; initially set to @true@.
+Whether to enable the end screen or not. =:
+- @mute@ :=
+@true@ or @false@; initially set to @false@.
+Whether to mute the video or not. =:
+- @origin@ :=
+URL; initially not set.
+The domain of the page hosting the Dailymotion player.
+When using @api="postMessage"@, you might want to specify origin for extra security. =:
+- @quality@ :=
+@240@, @380@, @480@, @720@, @1080@, @1440@ or @2160@; initially set to @auto@.
+Set the suggested playback quality for the video. =:
+- @sharing_enable@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the sharing button or not. =:
+- @start@ :=
+Integer, initially not set.
+Specifies the time (in seconds) from which the video should start playing. =:
+- @subtitles_default@ :=
+Initially not set.
+Specifies the default selected subtitles language. =:
+- @syndication@ :=
+Initially not set.
+Passes your syndication key to the player. =:
+- @ui_highlight@ :=
+Hexadecimal color value; initially set to @ffcc33@.
+Changes the default colour used in the controls. =:
+- @ui_logo@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the Dailymotion logo or not. =:
+- @ui_start_screen_info@ :=
+@true@ or @false@; initially set to @true@.
+Whether to show video information on the start screen or not. =:
+- @ui_theme@ :=
+@dark@ or @light@, initially set to @dark@.
+Choose the default base colour theme. =:

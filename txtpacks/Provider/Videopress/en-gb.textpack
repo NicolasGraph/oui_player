@@ -1,0 +1,12 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_videopress => VideoPress
+oui_player_videopress => VideoPress player
+oui_player_videopress_prefs => Display the VideoPress player preferences
+oui_player_videopress_width => Player width
+oui_player_videopress_height => Player height
+oui_player_videopress_ratio => Player ratio by default
+oui_player_videopress_responsive => Render responsive players from the provided dimensions
+oui_player_videopress_at => <code>at</code> — Start playing at second:
+oui_player_videopress_autoplay => <code>autoplay</code> — Automatic playing
+oui_player_videopress_loop => <code>loop</code> — Replay infinitely

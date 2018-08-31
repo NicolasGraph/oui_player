@@ -1,0 +1,12 @@
+#@language fr-fr
+#@admin
+oui_player_provider_videopress => VideoPress
+oui_player_videopress => Lecteur VideoPress
+oui_player_videopress_prefs => Afficher les préférences du lecteur VideoPress
+oui_player_videopress_width => Largeur du lecteur
+oui_player_videopress_height => Hauteur du lecteur
+oui_player_videopress_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_videopress_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_videopress_at => <code>at</code> — Commencer la lecture à la seconde:
+oui_player_videopress_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_videopress_loop => <code>loop</code> — Lire en boucle

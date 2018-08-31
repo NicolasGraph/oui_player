@@ -1,0 +1,10 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_ted => Ted
+oui_player_ted => Ted player
+oui_player_ted_prefs => Display the Ted player preferences
+oui_player_ted_width => Player width
+oui_player_ted_height => Player height
+oui_player_ted_ratio => Player ratio by default
+oui_player_ted_responsive => Render responsive players from the provided dimensions
+oui_player_ted_lang => <code>lang</code> — Subtitles language ISO_639-1 code

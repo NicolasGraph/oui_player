@@ -1,0 +1,19 @@
+#@language fr-fr
+#@admin
+oui_player_provider_audio => Audio
+oui_player_audio => Lecteur audio HTML
+oui_player_audio_prefs => Afficher les préférences du lecteur audio HTML
+oui_player_audio_width => Largeur du lecteur
+oui_player_audio_responsive => Rendre les lecteurs adaptatifs (= width 100%)
+oui_player_audio_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_audio_controls => <code>controls</code> — Afficher les commandes
+oui_player_audio_loop => <code>loop</code> — Lire en boucle
+oui_player_audio_muted => <code>muted</code> — Désactiver le son
+oui_player_audio_preload => <code>preload</code> — Type de chargement
+oui_player_audio_preload_auto => auto
+oui_player_audio_preload_metadata => metadata
+oui_player_audio_preload_none => none
+oui_player_audio_volume => <code>volume</code> — Volume (0 à 1)
+oui_player_audio_unavailable => Désolé, le lecteur audio HTML n'est pas supporté par votre navigateur.
+#@public
+oui_player_html_player_not_supported => Malheureusement, votre navigateur n'est pas capable de lire <a href="{src}">{file}</a>. La balise HTML5 {player} n'est prise en charge.

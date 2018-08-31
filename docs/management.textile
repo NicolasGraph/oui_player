@@ -1,0 +1,63 @@
+h2. Plugin management
+
+h3. Download and customization
+
+h4. Recommended advanced install
+
+It is recommended to customize the plugin by removing providers you don't need to support and ordering the ones you want to keep from the more often used to the less one.
+These two actions would increase avoid to install useless code and would increase the plugin performances, mainly when the provider is not defined by you.
+
+# "Download":https://github.com/NicolasGraph/oui_player/releases a _Source code_ package;
+# Edit the _manifest.json_ file;
+# Use "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler to compile your custom plugin.
+
+h4. Simple install
+
+# "Download":https://github.com/NicolasGraph/oui_player/releases the @.txt@ or @_zip.txt@ compiled plugin file;
+
+h3. Installation
+
+h4. From the admin interface
+
+Follow the below instructions before or after installing the wanted oui_player extensions:
+
+# Upload its contents through the _Admin > Plugins_ tab;
+# Confirm the plugin install on the preview page.
+# Enable the plugin *and* click the _Options_ link to set the plugin preferences.
+
+h4. Via Composer (not available yet)
+
+After "installing Composer":https://getcomposer.org/doc/00-intro.md…
+
+# Target your project directory:
+@$ cd /path/to/your/textpattern/installation/dir@
+# If it's not already done, lock your version of Txp:
+@$ composer require textpattern/lock:4.6.2@, where @4.6.2@ is the Txp version in use.
+# Install oui_player:
+@$ composer require nicolasgraph/oui_player@
+# Connect to the Txp admin interface and click _Options_ or visit your _Admin > Preferences_ tab to fill the plugin prefs.
+
+h3. Update
+
+h4. From the admin interface
+
+Follow the install instructions.
+
+If you are updating from v1.*, you can install all the wanted extensions before to visit the "Admin > Preferences":?event=prefs#prefs_group_oui_player tab to keep your preference values untouched.
+However, if you proceed like so, note that new preferences may be not displayed in a logical order.
+
+h4. Via Composer (not available yet)
+
+bc. $ composer update nicolasgraph/oui_player
+
+h3. Uninstall
+
+h4. From the admin interface
+
+# In the _Admin > Plugins_ tab, check the box on the left of the plugin related row.
+# Under the plugins list, select the the _Delete_ option.
+# confirm the deletion.
+
+h4. Via Composer (not available yet)
+
+bc. $ composer remove nicolasgraph/oui_player

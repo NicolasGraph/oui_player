@@ -1,0 +1,18 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_video => HTML video
+oui_player_video => HTML video player
+oui_player_video_prefs => Display the HTML video player prefs
+oui_player_video_width => Player width
+oui_player_video_height => Player height
+oui_player_video_ratio => Player ratio by default
+oui_player_video_responsive => Render responsive players from the provided dimensions
+oui_player_video_autoplay => <code>autoplay</code> — automatic playing
+oui_player_video_controls => <code>controls</code> — Display controls
+oui_player_video_loop => <code>loop</code> — Replay once finished
+oui_player_video_muted => <code>muted</code> — Disable sound
+oui_player_video_preload => <code>preload</code> — Loading type
+oui_player_video_preload_auto => auto
+oui_player_video_preload_metadata => metadata
+oui_player_video_preload_none => none
+oui_player_video_poster => <code>poster</code> — Starting shot URL

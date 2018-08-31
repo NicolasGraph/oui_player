@@ -1,0 +1,24 @@
+h2. Preferences/options
+
+Plugin prefs can be set under the _Admin > Preferences_ tab and are mainly used as default values for the @<txp:oui_player />@ tag attributes.
+
+h3. Global prefs
+
+- @Field used by default@ :=
+@article_image@ or any existing custom field; set to @article_image@ by default.
+Defines a field to use as the default @play@ attribute value. =:
+- @Providers in use@ :=
+Comma separated list of providers in use; set to all by default.
+Sorting providers allows to fasten players rendering when the provider is not defined; remove providers you are not using and place the most used ones at first.
+The first one will be used by default. =:
+- @Display the provider player preferences@ :=
+_yes_ or _no_; set to yes by default.
+Displays the defined provider related preferences goup. =:
+
+h3. Providers prefs
+
+See each provider related menu item.
+
+While %(information)some player parameters, related to the item to play, should be used through attributes% (e.g. the Youtube @start@ parameter which defines the second where to start playing the video), %(information)these used as global settings should preferrably be set through the plugin preferences% to %(warning)avoid a massive use of tag attributes%.
+
+Of course, it is still possible to override a plugin pref value via an attribute when needed.

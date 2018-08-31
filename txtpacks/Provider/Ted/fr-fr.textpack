@@ -1,0 +1,10 @@
+#@language fr-fr
+#@admin
+oui_player_provider_ted => Ted
+oui_player_ted => Lecteur Ted
+oui_player_ted_prefs => Afficher les préférences du lecteur Ted
+oui_player_ted_width => Largeur du lecteur
+oui_player_ted_height => Hauteur du lecteur
+oui_player_ted_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_ted_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_ted_lang => <code>lang</code> — Code ISO_639-1 du language des sous-titres

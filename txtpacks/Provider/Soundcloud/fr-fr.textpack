@@ -1,0 +1,26 @@
+#@language fr-fr
+#@admin
+oui_player_provider_soundcloud => Soundcloud
+oui_player_soundcloud => Lecteur Soundcloud
+oui_player_soundcloud_prefs => Afficher les préférences du lecteur Soundcloud
+oui_player_soundcloud_width => Largeur du lecteur
+oui_player_soundcloud_height => Hauteur du lecteur
+oui_player_soundcloud_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_soundcloud_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_soundcloud_auto_play => <code>auto_play</code> — Lecture automatique
+oui_player_soundcloud_color => <code>color</code> — Couleur préférée pour les éléments d'interface du lecteur
+oui_player_soundcloud_buying => <code>buying</code> — Afficher le lien <em>Acheter</em>
+oui_player_soundcloud_hide_related => <code>hide_related</code> — Désactiver les titres liés
+oui_player_soundcloud_download => <code>download</code> — Afficher le bouton <em>Télécharger</em>
+oui_player_soundcloud_sharing => <code>sharing</code> — Activer les fonctionnalités de partage
+oui_player_soundcloud_single_active => <code>single_active</code> — Stopper à l'activation d'un autre lecteur Soundcloud
+oui_player_soundcloud_show_artwork => <code>show_artwork</code> — Afficher la pochette
+oui_player_soundcloud_show_bpm => <code>show_bpm</code> — Afficher les BPM
+oui_player_soundcloud_show_comments => <code>show_comments</code> — Afficher les commentaires
+oui_player_soundcloud_show_playcount => <code>show_playcount</code> — Afficher le compte des lectures
+oui_player_soundcloud_show_reposts => <code>show_reposts</code> — Afficher les partages
+oui_player_soundcloud_show_user => <code>show_user</code> — Afficher le nom d'utilisateur
+oui_player_soundcloud_start_track => <code>start_track</code> — Commencer la lecteur à la seconde:
+oui_player_soundcloud_theme_color => <code>theme_color</code> — Couleur du thème
+oui_player_soundcloud_text_download_track => <code>text_download_track</code> — Texte pour le lien <em>Download</em>
+oui_player_soundcloud_visual => <code>visual</code> — Afficher la pochette en arrière-plan

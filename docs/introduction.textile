@@ -1,0 +1,29 @@
+h1. oui_player
+
+h2. Introduction
+
+This is an extendable plugin to easily embed customized audio and video players in Textpattern CMS.
+
+h3. Supported providers
+
+* "Abc News":http://abcnews.go.com/video;
+* "Archive":https://archive.org/;
+* "Bandcamp":https://bandcamp.com/;
+* "Coub":https://coub.com/;
+* "Dailymotion":http://www.dailymotion.com/;
+* "Giphy":https://giphy.com/;
+* "HTML5 audio":https://developer.mozilla.org/docs/Web/HTML/Element/audio;
+* "HTML5 video":https://developer.mozilla.org/docs/Web/HTML/Element/video;
+* "Mixcloud":https://www.mixcloud.com/;
+* "Myspace videos":https://myspace.com/myspace/videos;
+* "Soundcloud":https://soundcloud.com/;
+* "Spotify":https://www.spotify.com/;
+* "Ted":https://www.ted.com/;
+* "Twitch":https://www.twitch.tv/;
+* "Viddsee":https://www.viddsee.com/;
+* "Vimeo":http://www.vimeo.com/;
+* "Youtube":https://www.youtube.com/.
+
+h3. Plugin requirements
+
+* "Textpattern CMS":http://textpattern.com/ 4.6+;

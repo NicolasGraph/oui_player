@@ -1,0 +1,31 @@
+h2. Viddsee player
+
+h3. Recognised values for the @play@ attribute
+
+* *ID*;
+* http(s):(www.)//viddsee.com/video/…/[*ID*];
+* http(s):(www.)//viddsee.com/player/[*ID*].
+
+When using the @oui_player@ tag (vs @oui_viddsee@), the right provider needs to be set if the <code>play</code> value or its field related one is an ID. It is optional, but can fasten the rendering, if the value is an URL.
+
+h3. Player customization
+
+h4. Size
+
+- @width@ :=
+Integer; initially set to @560@.
+The width of the player in pixels. =:
+- @height@ :=
+Integer; initially set to @315@.
+The height of the player in pixels. =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set.
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+There is no player parameter available for this provider.

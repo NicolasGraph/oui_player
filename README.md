@@ -6,37 +6,50 @@ An extendable plugin to easily embed customized audio and video players.
 
 p(alert-block information). %(ui-icon ui-icon-info).% This plugin does not use oembed, it builds iframe embedding codes and HTML5 players by its own without any external request for better performances.
 
-h3. Supported extensions
+h3. Supported providers
 
 As known at the last plugin release…
 
-* "Abc News":http://abcnews.go.com/video: "oui_abcnews":https://github.com/NicolasGraph/oui_abcnews;
-* "Archive":https://archive.org/: "oui_archive":https://github.com/NicolasGraph/oui_archive;
-* "Bandcamp":https://bandcamp.com/: "oui_bandcamp":https://github.com/NicolasGraph/oui_bandcamp;
-* "Coub":https://coub.com/: "oui_coub":https://github.com/NicolasGraph/oui_coub;
-* "Dailymotion":http://www.dailymotion.com/: "oui_dailymotion":https://github.com/NicolasGraph/oui_dailymotion;
-* "Giphy":https://giphy.com/: "oui_giphy":https://github.com/NicolasGraph/oui_giphy;
-* "HTML5 audio":https://developer.mozilla.org/docs/Web/HTML/Element/audio: "oui_audio":https://github.com/NicolasGraph/oui_audio;
-* "HTML5 video":https://developer.mozilla.org/docs/Web/HTML/Element/video: "oui_video":https://github.com/NicolasGraph/oui_video;
-* "Mixcloud":https://www.mixcloud.com/: "oui_mixcloud":https://github.com/NicolasGraph/oui_mixcloud;
-* "Myspace videos":https://myspace.com/myspace/videos: "oui_myspace":https://github.com/NicolasGraph/oui_myspace;
-* "Soundcloud":https://soundcloud.com/: "oui_soundcloud":https://github.com/NicolasGraph/oui_soundcloud;
-* "Spotify":https://www.spotify.com/: "oui_spotify":https://github.com/NicolasGraph/oui_spotify;
-* "Ted":https://www.ted.com/: "oui_ted":https://github.com/NicolasGraph/oui_ted;
-* "Twitch":https://www.twitch.tv/: "oui_twitch":https://github.com/NicolasGraph/oui_twitch;
-* "Viddsee":https://www.viddsee.com/: "oui_viddsee":https://github.com/NicolasGraph/oui_viddsee;
-* "Vimeo":http://www.vimeo.com/: "oui_vimeo":https://github.com/NicolasGraph/oui_vimeo;
-* "Youtube":https://www.youtube.com/: "oui_youtube":https://github.com/NicolasGraph/oui_youtube.
+* "Abc News":http://abcnews.go.com/video;
+* "Archive":https://archive.org/;
+* "Bandcamp":https://bandcamp.com/;
+* "Coub":https://coub.com/;
+* "Dailymotion":http://www.dailymotion.com/;
+* "Giphy":https://giphy.com/;
+* "HTML5 audio":https://developer.mozilla.org/docs/Web/HTML/Element/audio;
+* "HTML5 video":https://developer.mozilla.org/docs/Web/HTML/Element/video;
+* "Mixcloud":https://www.mixcloud.com/;
+* "Myspace videos":https://myspace.com/myspace/videos;
+* "Soundcloud":https://soundcloud.com/;
+* "Spotify":https://www.spotify.com/;
+* "Ted":https://www.ted.com/;
+* "Twitch":https://www.twitch.tv/;
+* "Viddsee":https://www.viddsee.com/;
+* "Vimeo":http://www.vimeo.com/;
+* "Youtube":https://www.youtube.com/.
 
 h3. Plugin requirements
 
 oui_player's minimum requirements:
 
 * "Textpattern CMS":http://textpattern.com/ 4.6+;
-* "oui_provider":https://github.com/NicolasGraph/oui_provider v1+;
-* Any of the above provider related extension.
 
 h2. Plugin management
+
+h3. Download and customization
+
+h4. Recommended advanced install
+
+It is recommended to customize the plugin by removing providers you don't need to support and ordering the ones you want to keep from the more often used to the less one.
+These two actions would increase avoid to install useless code and would increase the plugin performances, mainly when the provider is not defined by you.
+
+# "Download":https://github.com/NicolasGraph/oui_player/releases a _Source code_ package;
+# Edit the _manifest.json_ file;
+# Use "MassPlugCompiler":https://github.com/NicolasGraph/MassPlugCompiler to compile your custom plugin.
+
+h4. Simple install
+
+# "Download":https://github.com/NicolasGraph/oui_player/releases the @.txt@ or @_zip.txt@ compiled plugin file;
 
 h3. Installation
 
@@ -44,7 +57,6 @@ h4. From the admin interface
 
 Follow the below instructions before or after installing the wanted oui_player extensions:
 
-# "Download":https://github.com/NicolasGraph/oui_player/releases the @.txt@ or @_zip.txt@ compiled plugin file;
 # Upload its contents through the _Admin > Plugins_ tab;
 # Confirm the plugin install on the preview page.
 # Enable the plugin *and* click the _Options_ link to set the plugin preferences.
@@ -108,17 +120,26 @@ Displays the defined provider prefs as a goup of prefs.
 
 h3. Providers prefs
 
+See each provider related menu item.
+
 While %(information)some player parameters, related to the item to play, should be used through attributes% (e.g. the Youtube @start@ parameter which defines the second where to start playing the video), %(information)these used as global settings should preferrably be set through the plugin preferences% to %(warning)avoid a massive use of tag attributes%.
 
 Of course, it is still possible to override a plugin pref value via an attribute when needed.
 
 h2. Tags
 
-h3. oui_player
+h3. oui_player / oui_provider
 
 Embeds a player.
 
 bc(language-markup). <txp:oui_player />
+
+or, using a provider related name:
+
+bc(language-markup). <txp:oui_youtube /> // each included provider has its own tag.
+
+@<txp:oui_youtube />@ is strictly equivalent to @<txp:oui_player provider="youtube" />@, so you shouldn't use the provider attribute with it.
+It is recommended, when possible, to define the provider name to fasten the player rendering, mostly when you need to support many providers.
 
 h4. Presentational attributes
 
@@ -162,6 +183,13 @@ Checks the @play@ attribute value againsts defined URL schemes.
 bc(language-markup). <txp:oui_if_player>
 […]
 </txp:oui_if_player>
+
+or, using a provider related name:
+
+bc(language-markup). <txp:oui_if_youtube /> // each included provider has its own tag.
+
+@<txp:oui_if_youtube … />@ is strictly equivalent to @<txp:oui_if_player provider="youtube" … />@, so you shouldn't use the provider attribute with it.
+It is recommended, when possible, to define the provider name to fasten the player rendering, mostly when you need to support many providers.
 
 h4. Attributes
 
@@ -231,14 +259,12 @@ h3. Changelog
 
 * *v2.0.0* (2018-08-22)
 ** Changed: excerpt field no longer supported;
+** Added: HTML5 valid rendering;
 ** Added: responsive embedding;
+** Added: @pluggable_ui@ event (@oui_player_ui@) and steps (provider names);
 *** changed: providers related preferences displayed by default;
 ** changed: code rework:
-*** providers now work as pluggable extensions;
-*** author prefix related namespace;
-*** new class names (@Admin@ => @PlayerAdmin@, @Main@ => @Player@, @Player@ => @PlayerBase@);
 *** tags now registered with related callback methods from the @Player@ class;
-*** providers stored with their plugin author related prefix/namespace.
 *** instances created/get via @Txp::get()@.
 * *v1.3.1* (2017-07-13)
 * *v1.3.0* (2017-05-24)

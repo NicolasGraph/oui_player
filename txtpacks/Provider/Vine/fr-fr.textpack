@@ -1,0 +1,13 @@
+#@language fr-fr
+#@admin
+oui_player_provider_vine => Vine
+oui_player_vine => Lecteur Vine
+oui_player_vine_prefs => Afficher les préférences du lecteur Vine
+oui_player_vine_width => Largeur de la vidéo
+oui_player_vine_height => Hauteur de la vidéo
+oui_player_vine_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_vine_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_vine_type => <code>type</code> — Type de lecteur
+oui_player_vine_type_simple => Simple
+oui_player_vine_type_postcard => Postcard
+oui_player_vine_audio => <code>audio</code> — Activer le son par défaut

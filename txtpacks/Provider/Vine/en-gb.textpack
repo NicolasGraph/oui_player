@@ -1,0 +1,13 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_vine => Vine
+oui_player_vine => Vine player
+oui_player_vine_prefs => Display the Vine player preferences
+oui_player_vine_width => Video width
+oui_player_vine_height => Video height
+oui_player_vine_ratio => Player ratio by default
+oui_player_vine_responsive => Render responsive players from the provided dimensions
+oui_player_vine_type => <code>type</code> — Display type
+oui_player_vine_type_simple => Simple
+oui_player_vine_type_postcard => Postcard
+oui_player_vine_audio => <code>audio</code> — Enable sound by default

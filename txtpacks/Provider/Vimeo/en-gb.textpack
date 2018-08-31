@@ -1,0 +1,27 @@
+#Default language, en-us, en-gb
+#@admin
+oui_player_provider_vimeo => Vimeo
+oui_player_vimeo => Vimeo player
+oui_player_vimeo_prefs => Display the Vimeo player preferences
+oui_player_vimeo_width => Player width
+oui_player_vimeo_height => Player height
+oui_player_vimeo_ratio => Player ratio by default
+oui_player_vimeo_responsive => Render responsive players from the provided dimensions/ratio
+oui_player_vimeo_api => <code>api</code> — Enable the player JS API
+oui_player_vimeo_autopause => <code>autopause</code> — Automatic pausing when another video is playing
+oui_player_vimeo_autoplay => <code>autoplay</code> — Automatic playing
+oui_player_vimeo_background => <code>background</code> — Toggle player elements, play automatically, loop and mute
+oui_player_vimeo_badge => <code>badge</code> — Display the badge
+oui_player_vimeo_byline => <code>byline</code> — Display the video author
+oui_player_vimeo_color => <code>color</code> — Preferred colour for UI player elements
+oui_player_vimeo_dnt => <code>dnt</code> — Disable tracking
+oui_player_vimeo_fun => <code>fun</code> — Remove error messages in the player
+oui_player_vimeo_loop => <code>loop</code> — Replay the video once finished
+oui_player_vimeo_muted => <code>muted</code> — Muted by default
+oui_player_vimeo_title => <code>title</code> — Display the video title
+oui_player_vimeo_playsinline => <code>playsinline</code> — Play video inline on mobile devices
+oui_player_vimeo_portrait => <code>portrait</code> — Display the author avatar
+oui_player_vimeo_quality => <code>quality</code> — Default quality
+oui_player_vimeo_speed => <code>speed</code> — Show speed controls in the preference menu
+oui_player_vimeo_transparent => <code>transparent</code> — Transparent background (vs black)
+oui_player_vimeo_#t => <code>#t</code> — Start playing at:

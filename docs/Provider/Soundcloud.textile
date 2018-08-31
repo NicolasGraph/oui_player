@@ -1,0 +1,95 @@
+h2. Soundcloud player
+
+h3. Recognised values for the @play@ attribute
+
+* http(s)://(api.)soundcloud.com/….
+
+When using the <code>oui_player</code> tag (vs <code>oui_soundcloud</code>), the right provider needs to be set if the <code>play</code> value or its field related one is an ID. It is optional, but can fasten the rendering, if the value is an URL.
+
+h3. Player customization
+
+h4. Size
+
+If the plugin is not able to get a width and height from two of the @width@, @height@ and @ratio@ values, it will try to get the media dimensions defined by the provider through its oEmbed API.
+The use of oEmbed API's slow down players rendering, it is strongly recommended to cache the result when using it.
+
+- @width@ :=
+Integer; initially set to @100%@.
+The width of the player in pixels (OK, pourcentage works also…).
+*Default:* related plugin pref =:
+- @height@ :=
+Integer; initially set to @166@ (alt height is @450@, usually when @visual="true"@).
+The height of the player in pixels =:
+- @ratio@ :=
+Integer[@:@]integer; initially not set.
+The ratio used to calculate the missing value for the width or the height. =:
+- @responsive@ :=
+@true@ or @false@; initially set to @false@.
+Adapts the final player size from the provided width and/or height and/or ratio values to fit the container width.
+Wraps the player and adds some styles. =:
+
+h4. Parameters (a→z)
+
+Some prefs/attributes can conditionate the behavior of others (e.g. <code>visual="true"</code> desactivates <code>color</code>).
+From Txp 4.7, paramaters accepting @true@ and @false@ as valid values can be enable through boolean/valueless attributes.
+
+- @auto_play@ :=
+@true@ or @false@; initially set to @false@.
+Whether to play after loading or not. =:
+- @buying@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the _Buy_ button or not. =:
+- @color@ :=
+Hexadecimal color value; initially set to @#ff8800@.
+Changes the colour of the user interface elements. =:
+- @download@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the _Download_ button or not. =:
+- @hide_related@ :=
+@true@ or @false@; initially set to @false@.
+Whether to display related tracks or not. =:
+- @sharing@ :=
+@true@ or @false@; initially set to @true@.
+Whether to enable the sharing features or not. =:
+- @show_artwork@ :=
+@true@ or @false@; initially set to @true@;
+Whether to display the artwork or not. =:
+- @show_comments@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display comments or not. =:
+- @show_reposts@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display reposts or not. =:
+- @show_playcount@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the playcount or not. =:
+- @show_user@ :=
+@true@ or @false@; initially set to @true@.
+Whether to display the uploader or not. =:
+- @single_active@ :=
+@true@ or @false@; initially set to @true@.
+Whether to stop playing while another player is on or not. =:
+- @start_track@ :=
+Integer; initially set to @0@;
+Specifies the time (in seconds) when the track should start playing. =:
+- @theme_color@ :=
+Hexadecimal color value; initially set to @#ff3300@.
+Changes the color of the player theme. =:
+- @visual@ :=
+@true@ or @false@; initially set to @false@.
+Whether to display the artwork as a background or not. =:
+
+h4. Sets
+
+* Album:
+** big:
+*** @height="450"@;
+*** @visual="true"@.
+** medium:
+*** @height="300"@.
+* track :
+** big:
+*** @height="300"@;
+*** @visual="true"@.
+** medium:
+*** initial values.

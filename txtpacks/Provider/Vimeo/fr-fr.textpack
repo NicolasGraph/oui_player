@@ -1,0 +1,27 @@
+#@language fr-fr
+#@admin
+oui_player_provider_vimeo => Vimeo
+oui_player_vimeo => Lecteur Vimeo
+oui_player_vimeo_prefs => Afficher les préférences du lecteur Vimeo
+oui_player_vimeo_width => Largeur du lecteur
+oui_player_vimeo_height => Hauteur du lecteur
+oui_player_vimeo_ratio => Ratio utilisé en l'absence de l'une des dimensions
+oui_player_vimeo_responsive => Rendre les lecteurs adaptatifs à partir des dimensions fournies
+oui_player_vimeo_api => <code>api</code> — Activer l'API JS du lecteur
+oui_player_vimeo_autopause => <code>autopause</code> — Pause automatique
+oui_player_vimeo_autoplay => <code>autoplay</code> — Lecture automatique
+oui_player_vimeo_badge => <code>badge</code> — Afficher le badge
+oui_player_vimeo_background => <code>background</code> — Supprimer les éléments du lecteur; lire automatiquement, en boucle et en sourdine.
+oui_player_vimeo_byline => <code>byline</code> — Afficher l'auteur
+oui_player_vimeo_color => <code>color</code> — Couleur préférée pour les éléments d'interface du lecteur
+oui_player_vimeo_dnt => <code>dnt</code> — Désactiver le suivi
+oui_player_vimeo_fun => <code>fun</code> — Supprimer les messages d'erreur du lecteur
+oui_player_vimeo_loop => <code>loop</code> — Lire en boucle
+oui_player_vimeo_muted => <code>muted</code> — Muet par défaut
+oui_player_vimeo_title => <code>title</code> — Afficher le titre de la vidéo
+oui_player_vimeo_portrait => <code>portrait</code> — Afficher l'avatar de l'auteur
+oui_player_vimeo_playsinline => <code>playsinline</code> — Empêcher la lecture plein écran par défaut sur les mobiles
+oui_player_vimeo_quality => <code>quality</code> — Qualité par défaut
+oui_player_vimeo_speed => <code>speed</code> — Afficher les commandes de vitesse dans le menu
+oui_player_vimeo_transparent => <code>transparent</code> — Fond transparent (vs noir)
+oui_player_vimeo_#t => <code>#t</code> — Commencer la lecture à:
