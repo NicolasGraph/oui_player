@@ -51,7 +51,10 @@ class Videopress extends Oembed
         'id'     => '2',
     );
     protected static $iniParams = array(
-        'at'       => '',
+        'at'       => array(
+            'default' => '0',
+            'valid'   => 'number',
+        ),
         'autoplay' => array(
             'default' => '0',
             'valid'   => array('0', '1'),
