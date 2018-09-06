@@ -17,6 +17,7 @@ h3. Changelog
 
 * *v2.0.0-BETA4* (2018-08-31)
 ** Changed: code rework;
+** Changed: language select list support for iso 639-1 related preferences;
 ** removed: @oui_player_provider@ preference, the default provider will be the first defined through @oui_player_providers@;
 ** changed: @oui_player_providers@ now visible and editable to sort providers in use;
 ** changed: excerpt field no longer supported;
