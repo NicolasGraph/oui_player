@@ -182,7 +182,7 @@ abstract class Admin
             return static::$prefs[$name];
         }
 
-        throw new \Exception("Unknown preference:" . $name);
+        throw new \Exception("Unknown preference: " . $name);
     }
 
     /**
