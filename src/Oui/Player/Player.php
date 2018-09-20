@@ -134,9 +134,11 @@ class Player extends Admin implements \Textpattern\Container\ReusableInterface
      */
 
     public function __construct() {
+        global $event;
+
         parent::__construct();
         try {
-            self::setProviders();
+            $event === "plugin" ?: self::setProviders();
 
             if (txpinterface === 'public') {
                 // Register initial tags.
