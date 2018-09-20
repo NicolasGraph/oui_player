@@ -146,15 +146,6 @@ class Player extends Admin implements \Textpattern\Container\ReusableInterface
 
                     \Txp::get('\Textpattern\Tag\Registry')->register(array($this, $tagMethod), $tag);
                 }
-
-                // Register providers/extensions related tags.
-                foreach (self::getProviders() as $provider) {
-                    $lcProvider = strtolower($provider);
-
-                    foreach ($tagMethods as $tag => $method) {
-                        \Txp::get('\Textpattern\Tag\Registry')->register(__NAMESPACE__ . '\\' . $lcProvider . '::' . $method, str_replace('player', $lcProvider, $tag));
-                    }
-                }
             }
         } catch (\Exception $e) {
             trigger_error($e->getMessage());
