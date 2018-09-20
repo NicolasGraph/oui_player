@@ -234,9 +234,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $label property getter.
-     *
-     * @return object $this
+     * {@inheritDoc}
      */
 
     final public function setLabel($txt, $tag = '') {
@@ -256,9 +254,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $wrap property getter.
-     *
-     * @return object $this
+     * {@inheritDoc}
      */
 
     final public function setWrap($tag, $class = '') {
@@ -278,9 +274,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $media property setter.
-     *
-     * @return object $this.
+     * {@inheritDoc}
      */
 
     final public function setMedia($value, $fallback = false)
@@ -292,10 +286,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $media property getter.
-     *
-     * @return string|array
-     * @throws \Exception
+     * {@inheritDoc}
      */
 
     final public function getMedia()
@@ -308,9 +299,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $params property setter.
-     *
-     * @return object $this
+     * {@inheritDoc}
      */
 
     public function setParams($nameVals = null)
@@ -338,9 +327,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $params property getter.
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     public function getParams()
@@ -374,9 +361,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $provider property getter.
-     *
-     * @return string
+     * {@inheritDoc}
      */
 
     final public static function getProvider()
@@ -387,10 +372,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $script property getter.
-     *
-     * @param  bool  $wrap Whether to wrap to embed the script URL in a script tag or not;
-     * @return string|null URL or HTML script tag; null if the property is not set.
+     * {@inheritDoc}
      */
 
     final public static function getScript($wrap = false)
@@ -486,7 +468,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Embed the provider script.
+     * {@inheritDoc}
      */
 
     final public function embedScript()
@@ -500,10 +482,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Collect provider prefs.
-     *
-     * @param  array $prefs Prefs collected provider after provider.
-     * @return array Collected prefs merged with ones already provided.
+     * {@inheritDoc}
      */
 
     final public static function getIniPrefs()
@@ -512,11 +491,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Get a tag attributes.
-     *
-     * @param  string $tag      The plugin tag.
-     * @param  array  $get_atts Stores attributes provider after provider.
-     * @return array
+     * {@inheritDoc}
      */
 
     final public static function getTagAtts($tag)
@@ -588,9 +563,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $mediaInfos getter.
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     final public function getMediaInfos($fallback = false)
@@ -601,11 +574,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Get the player size.
-     *
-     * @return array 'width' and 'height' and 'responsive' associated values — Height could be not set (i.e. HTML5 audio player).
-     * @throws \Exception
-     * @TODO override the HTML audio player related method to remove $height + $ratio.
+     * {@inheritDoc}
      */
 
     final public function setDims(
@@ -701,9 +670,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * $dims getter.
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     final public function getDims()
@@ -738,9 +705,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Generate the player code.
-     *
-     * @return string HTML
+     * {@inheritDoc}
      */
 
     public function getHTML() {
@@ -802,7 +767,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Render the player.
+     * {@inheritDoc}
      */
 
     final public function render()
@@ -811,7 +776,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Main provider related tag callback method.
+     * {@inheritDoc}
      */
 
     final public static function renderPlayer($atts)
@@ -822,7 +787,7 @@ abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
     }
 
     /**
-     * Conditional provider related tag callback method.
+     * {@inheritDoc}
      */
 
     final public static function renderIfPlayer($atts, $thing)

@@ -102,9 +102,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * $plugin getter.
-     *
-     * @return string
+     * {@inheritDoc}
      */
 
     public static function getPlugin()
@@ -113,9 +111,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * $privs getter.
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     public static function getPrivs()
@@ -124,9 +120,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * $iniPrefs getter
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     public static function getIniPrefs()
@@ -156,9 +150,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * $prefs getter.
-     *
-     * @return array
+     * {@inheritDoc}
      */
 
     public static function getPrefs()
@@ -167,11 +159,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * $prefs item getter.
-     *
-     * @param  array $name Preference name (without the event related prefix).
-     * @return string The preference value.
-     * @throws \Exception
+     * {@inheritDoc}
      */
 
     final public static function getPref($name)
@@ -186,7 +174,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Install/update preferences.
+     * {@inheritDoc}
      */
 
     public function install()
@@ -264,7 +252,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Redirect Options links to the general preferences tab.
+     * {@inheritDoc}
      */
 
     public function redirectPrefs()
@@ -273,7 +261,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Add plugin preferences visibility related privilege levels to the Preferences panel.
+     * {@inheritDoc}
      */
 
     public function addPrivs()
@@ -293,7 +281,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Remove $prefsEvent related preferences.
+     * {@inheritDoc}
      */
 
     public function uninstall()
@@ -329,13 +317,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Generate a Yes/No radio button toggle using 'true' and 'false' as values.
-     *
-     * @param  string $field    The field name
-     * @param  string $checked  The checked button, either 'true', 'false'
-     * @param  int    $tabindex The HTML tabindex
-     * @param  string $id       The HTML id
-     * @return string HTML
+     * {@inheritDoc}
      */
 
     public static function truefalseradio(
@@ -353,11 +335,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Plugin preference widget.
-     *
-     * @param  string $name The preference name
-     * @param  string $val  The preference value
-     * @return string HTML
+     * {@inheritDoc}
      */
 
     public static function prefFunction($name, $val)
@@ -382,11 +360,7 @@ abstract class AbstractAdmin implements AdminInterface
     }
 
     /**
-     * Generate a select list of article_image + custom fields.
-     *
-     * @param  string $name The name of the preference
-     * @param  string $val  The value of the preference
-     * @return string HTML
+     * {@inheritDoc}
      */
 
     public static function getFieldsWidget($name, $val)
