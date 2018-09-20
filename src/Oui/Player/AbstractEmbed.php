@@ -24,12 +24,12 @@
  */
 
 /**
- * Embed
+ * AbstractEmbed
  *
  * @package Oui\Player
  */
 
-abstract class Embed extends Admin
+abstract class AbstractEmbed extends AbstractAdmin implements EmbedInterface
 {
     /**
      * The provider name (set from the class name).

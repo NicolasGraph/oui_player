@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Viddsee extends Embed
+class Viddsee extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

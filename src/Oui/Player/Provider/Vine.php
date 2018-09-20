@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Vine extends Embed
+class Vine extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

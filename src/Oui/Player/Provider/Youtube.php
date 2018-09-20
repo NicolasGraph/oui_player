@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Youtube extends Oembed
+class Youtube extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

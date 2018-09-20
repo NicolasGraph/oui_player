@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Vimeo extends Oembed
+class Vimeo extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

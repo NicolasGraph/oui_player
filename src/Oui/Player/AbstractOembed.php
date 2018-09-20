@@ -24,12 +24,12 @@
  */
 
 /**
- * Provider
+ * AbstractOembed
  *
  * @package Oui\Player
  */
 
-abstract class Oembed extends Embed
+abstract class AbstractOembed extends AbstractEmbed
 {
     /**
      * JSON related API endpoint.

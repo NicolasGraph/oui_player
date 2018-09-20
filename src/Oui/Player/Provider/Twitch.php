@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Twitch extends Oembed
+class Twitch extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

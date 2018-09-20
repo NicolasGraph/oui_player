@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Dailymotion extends Oembed
+class Dailymotion extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

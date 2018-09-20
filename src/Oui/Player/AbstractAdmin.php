@@ -24,14 +24,14 @@
  */
 
 /**
- * Admin
+ * AbstractAdmin
  *
  * Manages admin side plugin features.
  *
  * @package Oui\Player
  */
 
-abstract class Admin
+abstract class AbstractAdmin implements AdminInterface
 {
     /**
      * Master plugin name.

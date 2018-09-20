@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Bandcamp extends Embed
+class Bandcamp extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

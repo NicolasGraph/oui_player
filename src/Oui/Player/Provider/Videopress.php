@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Videopress extends Oembed
+class Videopress extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

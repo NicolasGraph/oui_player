@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Mixcloud extends Oembed
+class Mixcloud extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Archive extends Embed
+class Archive extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

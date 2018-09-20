@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Soundcloud extends Oembed
+class Soundcloud extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

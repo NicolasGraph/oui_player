@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Giphy extends Oembed
+class Giphy extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

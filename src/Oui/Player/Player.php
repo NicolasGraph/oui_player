@@ -31,17 +31,8 @@
   * @package Oui\Player
   */
 
-class Player extends Admin implements \Textpattern\Container\ReusableInterface
+class Player extends AbstractAdmin implements \Textpattern\Container\ReusableInterface
 {
-    /**
-     * Master plugin name.
-     *
-     * @var string
-     * @see getPlugin().
-     */
-
-    protected static $plugin = 'oui_player';
-
     /**
      * Initial plugin tags and attributes.
      *
@@ -134,19 +125,15 @@ class Player extends Admin implements \Textpattern\Container\ReusableInterface
      */
 
     public function __construct() {
-        global $event;
-
         parent::__construct();
-        try {
-            $event === "plugin" ?: self::setProviders();
 
+        try {
             if (txpinterface === 'public') {
                 // Register initial tags.
                 foreach (self::getIniTagAtts() as $tag => $atts) {
-                    $tagMethod = str_replace(array('oui', '_'), array('render', ''), $tag);
-                    $tagMethods[$tag] = $tagMethod;
+                    $method = str_replace(array('oui', '_'), array('render', ''), $tag);
 
-                    \Txp::get('\Textpattern\Tag\Registry')->register(array($this, $tagMethod), $tag);
+                    \Txp::get('\Textpattern\Tag\Registry')->register(array($this, $method), $tag);
                 }
             }
         } catch (\Exception $e) {
@@ -191,6 +178,8 @@ class Player extends Admin implements \Textpattern\Container\ReusableInterface
 
     protected static function getProviders()
     {
+        static::$providers ?: self::setProviders();
+
         return static::$providers;
     }
 
@@ -469,7 +458,7 @@ class Player extends Admin implements \Textpattern\Container\ReusableInterface
     {
         return array(
            'custom_field' => array(
-               'widget'  => 'Oui\Player\Admin::getFieldsWidget',
+               'widget'  => 'Oui\Player\Player::getFieldsWidget',
                'default' => 'article_image',
            ),
            'providers' => '',

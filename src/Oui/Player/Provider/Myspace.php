@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Myspace extends Embed
+class Myspace extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

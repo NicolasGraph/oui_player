@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Ted extends Oembed
+class Ted extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

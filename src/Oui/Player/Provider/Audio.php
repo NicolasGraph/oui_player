@@ -31,7 +31,7 @@
  * @package Oui\Player
  */
 
-class Audio extends Embed
+class Audio extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

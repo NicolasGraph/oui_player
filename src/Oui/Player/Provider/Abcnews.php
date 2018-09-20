@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Abcnews extends Embed
+class Abcnews extends AbstractEmbed
 {
     protected static $provider;
     protected static $prefsEvent;

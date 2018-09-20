@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Coub extends Oembed
+class Coub extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;

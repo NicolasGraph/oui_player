@@ -29,7 +29,7 @@
  * @package Oui\Player
  */
 
-class Spotify extends Oembed
+class Spotify extends AbstractOembed
 {
     protected static $provider;
     protected static $prefsEvent;
